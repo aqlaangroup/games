@@ -2,7 +2,7 @@
 
 Use this in Google Flow: Nano Banana for images, Veo for video. Make the images first, then use them as **ingredients** (references) for every video, so the characters look the same in every shot.
 
-Save every result into `qahwet-sitti/art/` with the file name given, and I'll put them into the game demo.
+Save every result into `art/` with the file name given, and I'll put them into the game demo.
 
 ---
 

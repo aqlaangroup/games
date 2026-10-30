@@ -1,7 +1,7 @@
 # Qahwet Sitti (قهوة ستّي): the game and the plan
 
-Source research: `reports/Qahwet Sitti concept deep research.md`.
-Playable prototype: `qahwet-sitti/index.html` (open it in a browser).
+Source research: `research/reports/Qahwet Sitti concept deep research.md`.
+Playable prototype: `prototype/index.html` (open it in a browser).
 
 ## 1. What the game is
 

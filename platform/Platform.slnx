@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Platform.Domain/Platform.Domain.csproj" />
+    <Project Path="src/Platform.Api/Platform.Api.csproj" />
+  </Folder>
+</Solution>
