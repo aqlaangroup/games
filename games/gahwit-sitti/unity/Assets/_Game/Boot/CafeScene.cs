@@ -6,6 +6,7 @@ using Gahwit.Cafe;
 using Gahwit.Core;
 using Gahwit.Memories;
 using Gahwit.Merge;
+using Gahwit.Platform;
 using Gahwit.Save;
 using Gahwit.Story;
 using Gahwit.UI;
@@ -26,6 +27,8 @@ namespace Gahwit.Boot
         CafeRoom cafe;
         AccountService account;
         AudioService audio;
+        PlatformAnalytics analytics;
+        float sessionStartedAt;
         string cafeMusic;
         long gemsHeard;
         readonly Dictionary<string, string> generatorCues = new Dictionary<string, string>();
@@ -59,6 +62,8 @@ namespace Gahwit.Boot
             account.Ui = ui;
             ui.Dialogue.ShowGlosses = saves.Data.Settings.Glossary;
 
+            analytics = services.Analytics;
+            TrackGame();
             audio = services.Audio;
             ApplySoundSettings();
             account.SettingChanged += ApplySoundSettings;
@@ -100,6 +105,35 @@ namespace Gahwit.Boot
                 audio.PlayMusic(cafeMusic);
                 ResumeMemories();
             });
+        }
+
+        // The events in GAME_SYSTEMS.md section 15 and missing/16 that the game has so far. Ads, the shop and live
+        // events add theirs when they're built; the tutorial adds tutorial_step.
+        void TrackGame()
+        {
+            sessionStartedAt = Time.realtimeSinceStartup;
+            Track("session_start", "energy", game.State.Energy, "level", game.State.Level);
+            game.ItemSpawned += cell =>
+            {
+                var item = game.ItemAt(cell);
+                Track("generator_tap", "chain", item?.Chain, "level", item?.Level, "energyLeft", game.State.Energy);
+                if (game.State.Energy < game.Config.Generators.TapEnergyCost)
+                    Track("energy_empty", "secondsIntoSession", (int)(Time.realtimeSinceStartup - sessionStartedAt));
+                if (game.EmptyCells == 0) Track("board_full");
+            };
+            game.ItemsMerged += cell => Track("merge", "chain", game.ItemAt(cell)?.Chain, "level", game.ItemAt(cell)?.Level);
+            game.OrderServed += order => Track("order_served", "coins", order.Coins, "xp", order.Xp,
+                "character", order.IsCharacter ? order.Customer : null, "lines", order.Lines.Count);
+            game.TaskCompleted += task => Track("task_complete", "chapter", game.State.Chapter, "task", task.Id,
+                "style", game.State.TaskStyles.TryGetValue(task.Id, out var style) ? style : null);
+            game.LeveledUp += level => Track("level_up", "level", level);
+        }
+
+        void Track(string name, params object[] pairs)
+        {
+            var fields = new Dictionary<string, object>();
+            for (int i = 0; i + 1 < pairs.Length; i += 2) fields[(string)pairs[i]] = pairs[i + 1];
+            analytics.Track(name, fields);
         }
 
         // The café's music follows the time of day (missing/14); the afternoon shares the morning's track for now.
@@ -211,6 +245,7 @@ namespace Gahwit.Boot
                 PlayScene(story, def.IntroKnot, () => ui.Memory.PlayPour(new PourGame(config, easyAssist: false), stars =>
                 {
                     game.RecordMemory(memoryId, stars);
+                    Track("memory_played", "memory", memoryId, "stars", stars);
                     ui.Toast.Show(Loc.T("memory.stars", stars, config.Stars[1]));
                     PlayScene(story, stars >= config.Stars[1] ? def.PerfectKnot : def.OkKnot, () =>
                         PlayScene(story, def.OutroKnot, () =>
@@ -242,6 +277,7 @@ namespace Gahwit.Boot
                 foreach (var knot in new[] { def.Knot, def.VoiceKnot, def.NotifyKnot })
                     if (!game.State.ScenesSeen.Contains(knot)) game.State.ScenesSeen.Add(knot);
                 game.FindLetter(letterId);
+                Track("letter_found", "letter", letterId);
             });
         }
 
@@ -268,9 +304,11 @@ namespace Gahwit.Boot
                 then?.Invoke();
                 return;
             }
+            float startedAt = Time.realtimeSinceStartup;
             ui.Dialogue.Play(story, knot,
                 () =>
                 {
+                    Track("scene_viewed", "scene", knot, "seconds", (int)(Time.realtimeSinceStartup - startedAt));
                     if (!game.State.ScenesSeen.Contains(knot)) game.State.ScenesSeen.Add(knot);
                     dirty = true;
                     while (afterScene.Count > 0) afterScene.Dequeue()();
@@ -314,6 +352,7 @@ namespace Gahwit.Boot
             {
                 nextSync = Time.unscaledTime + game.Config.Saves.CloudEverySeconds; // COMPLETE_SPEC.md section 9
                 Run(() => account.Sync(false));
+                Run(analytics.Flush);
             }
         }
 
@@ -329,8 +368,16 @@ namespace Gahwit.Boot
 
         void OnApplicationPause(bool paused)
         {
-            if (!paused || account == null) return;
+            if (account == null) return;
+            if (!paused)
+            {
+                sessionStartedAt = Time.realtimeSinceStartup;
+                Track("session_start", "energy", game.State.Energy, "level", game.State.Level);
+                return;
+            }
+            Track("session_end", "seconds", (int)(Time.realtimeSinceStartup - sessionStartedAt));
             Save();
+            Run(analytics.Flush);
             Run(() => account.Sync(false)); // also sent when the app goes to the background
         }
 
@@ -357,6 +404,14 @@ namespace Gahwit.Boot
             catch (Exception e) { Debug.LogException(e); }
         }
 
-        void OnApplicationQuit() => Save();
+        void OnApplicationQuit()
+        {
+            if (analytics != null)
+            {
+                Track("session_end", "seconds", (int)(Time.realtimeSinceStartup - sessionStartedAt));
+                analytics.Keep(); // sent on the next launch
+            }
+            Save();
+        }
     }
 }

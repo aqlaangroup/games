@@ -42,6 +42,7 @@ public static partial class AdminEndpoints
         admin.MapPut("/staff", SetStaff).AddEndpointFilter(new StaffFilter(StaffRole.Owner));
         admin.MapDelete("/staff/{adminId:guid}", RemoveStaff).AddEndpointFilter(new StaffFilter(StaffRole.Owner));
         admin.MapGet("/audit", Audit).AddEndpointFilter(new StaffFilter(StaffRole.Owner));
+        admin.MapGet("/metrics", Metrics.Get).AddEndpointFilter(new StaffFilter(StaffRole.Viewer));
     }
 
     static async Task<IResult> SignIn(AdminSignInRequest request, StaffAccounts staff, TokenService tokens, CancellationToken ct)

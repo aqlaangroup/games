@@ -22,6 +22,7 @@ namespace Gahwit.Boot
         public PlatformConfig PlatformConfig { get; private set; }
         public PlatformClient Platform { get; private set; }
         public AudioService Audio { get; private set; }
+        public PlatformAnalytics Analytics { get; private set; }
 
         // A coroutine, because the text tables load in the background (a blocking wait hangs on the phone).
         public static IEnumerator Start()
@@ -42,10 +43,18 @@ namespace Gahwit.Boot
             services.Platform = new PlatformClient(new UnityPlatformHttp(), new DeviceSecrets(), services.PlatformConfig.ActiveBaseUrl,
                 services.PlatformConfig.Slug, SystemInfo.deviceModel, Application.version, () => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
             services.Audio = AudioService.Shared;
+            services.Analytics = new PlatformAnalytics(services.Platform, () => services.Time.NowMs, "gahwit-sitti-events");
+            services.Analytics.CatchErrors();
             Current = services;
         }
 
         // Forgets everything, so the Boot scene loads it again: after a new language, a cloud save or a deleted account.
-        public static void Reset() => Current = null;
+        public static void Reset()
+        {
+            if (Current == null) return;
+            Current.Analytics.StopCatchingErrors();
+            Current.Analytics.Keep();
+            Current = null;
+        }
     }
 }

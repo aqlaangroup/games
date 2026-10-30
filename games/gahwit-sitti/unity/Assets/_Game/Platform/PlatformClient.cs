@@ -158,6 +158,14 @@ namespace Gahwit.Platform
         public Task<Reply<JObject>> Spend(string item, string requestId) =>
             Call<JObject>("POST", "/players/me/spend", new JObject { ["item"] = item, ["requestId"] = requestId });
 
+        public Task<Reply<JObject>> SendEvents(JArray events) =>
+            Call<JObject>("POST", "/players/me/events", new JObject
+            {
+                ["events"] = events,
+                ["gameVersion"] = gameVersion,
+                ["device"] = device
+            });
+
         public static long WalletGems(JObject reply) => reply?["wallet"]?["gems"]?.Value<long>() ?? 0;
 
         // Sends the player id automatically, with the game version and the phone (COMPLETE_SPEC.md section 16).

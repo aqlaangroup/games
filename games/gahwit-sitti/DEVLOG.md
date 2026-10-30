@@ -2,6 +2,26 @@
 
 Decisions and known gaps. Newest first. Read this at the start of each session (`/CLAUDE.md`).
 
+## 2026-10-31: game events and tester numbers on our own platform (missing/16)
+
+- **Choice:** events go to our platform first, so the ring 1 tester gate needs no third-party account. `IAnalytics` (Core) lets Firebase or GameAnalytics sit behind the same calls later, for crash dumps and push.
+- **Game:** `PlatformAnalytics` queues events.
+  - They're kept on the phone while it's offline (up to 2,000) and sent in batches of 200 with each cloud sync and when the app goes to the background.
+  - Errors and exceptions become `client_error`, once per message per session.
+  - Tests cover offline queuing and deduplication.
+- **Events sent now:** `session_start`, `session_end`, `generator_tap`, `merge`, `order_served`, `task_complete`, `level_up`, `energy_empty`, `board_full`, `scene_viewed`, `memory_played` and `letter_found`.
+  - `tutorial_step` comes with the tutorial (missing/06). Ads, shop and live-event events come with those systems.
+  - Scenes can't be skipped yet, so there's no `scene_skipped`.
+- **Platform:**
+  - `POST …/players/me/events` stores events. They're deleted with the account.
+  - `GET …/admin/metrics` (viewer) gives the gate numbers: players, sessions, players per tutorial step, reached the first memory, found the letter, day 1 return, average session length, and error-free sessions. It works in memory, which is fine for playtests; move it to SQL before soft launch.
+  - 48 tests.
+- **Checked end to end:** Editor sessions reached the database, including one queued at quit and sent on the next launch.
+- **Not done:**
+  - Native crash dumps need an SDK (Crashlytics, or Unity's).
+  - Attribution for paid installs, and the soft-launch dashboards.
+  - Apple's tracking prompt, only if ads or attribution use the advertising id (missing/17, 21).
+
 ## 2026-10-31: music, effects and haptics play (missing/14)
 
 - **Cues by id:** `AudioCatalog` (`Resources/Audio/AudioCatalog.asset`) lists every file under `Assets/Audio` by name. Rebuild it with **Gahwit Sitti > Rebuild audio catalog**. A test checks that every cue named in code exists.

@@ -34,6 +34,21 @@ public class RewardClaim
     public DateTimeOffset ClaimedAt { get; set; } = DateTimeOffset.UtcNow;
 }
 
+/// <summary>One game event (GAME_SYSTEMS.md section 15), sent in batches by the game.</summary>
+public class AnalyticsEvent
+{
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid GameId { get; set; }
+    public Guid PlayerId { get; set; }
+    public required string SessionId { get; set; }
+    public required string Name { get; set; }        // "merge", "tutorial_step"...
+    public required string FieldsJson { get; set; }  // {"chain":"coffee","level":3}
+    public DateTimeOffset ClientTime { get; set; }   // the game's trusted time when it happened
+    public DateTimeOffset ReceivedAt { get; set; } = DateTimeOffset.UtcNow;
+    public string? GameVersion { get; set; }
+    public string? Device { get; set; }
+}
+
 /// <summary>Gems spent in the game. The phone's request id makes a repeated call spend only once.</summary>
 public class GemSpend
 {

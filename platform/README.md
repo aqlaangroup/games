@@ -91,6 +91,7 @@ Every table has a `GameId`, except `Games` (it is the game) and `AdminUsers` (st
 | WalletEntry | every wallet change: amount, source (purchase or admin), reason, who |
 | RewardClaim | a reward the game earned (`levelUp:7`, `chapter:2`) and its gems; one per player and id |
 | GemSpend | gems spent on an item, with what the game gets; one per player and request id |
+| AnalyticsEvent | one game event: name, fields, the game's time, session, version, device. Deleted with the account |
 | Product | sku, type (consumable, non-consumable, subscription, non-renewing for a fixed-length pass), what it grants |
 | Purchase | store, store transaction id (unique), sku, price, currency, status (verified, refunded) |
 | SupportTicket | a Help form message, with game version, device and language |
@@ -136,6 +137,7 @@ All JSON is camelCase. Errors look like `{ "error": "code" }`. Every game route 
 | `GET /games/{slug}/players/me/wallet` | `{ wallet: { gems } }` |
 | `POST /games/{slug}/players/me/rewards` | `{ id: "levelUp:7" \| "chapter:2" }` → `{ granted: { gems }, wallet }`, or `{ alreadyClaimed, wallet }`. Each id grants once. The latest cloud save must show it: `409 not_earned_yet` until the game uploads it. `400 unknown_reward` |
 | `POST /games/{slug}/players/me/spend` | `{ item, requestId }` → `{ item, gems, grant, wallet }`. Items: `energyRefill` (each refill today costs more), `storageSlot:N` (once), `bubble:L`, `memoryRetry:<memory>`. A repeated `requestId` returns `{ alreadySpent }` without spending again. `409 not_enough_gems`, `409 already_owned`, `400 unknown_item`. The game applies `grant` only after this reply |
+| `POST /games/{slug}/players/me/events` | `{ events: [{ name, fields, timeMs, sessionId }], gameVersion, device }` (up to 200) → `202 { accepted }`. Bad events are dropped, not the batch |
 | `POST /games/{slug}/players/me/support` | `{ message, email?, gameVersion, device, language }` → `201 { ticketId }` |
 | `POST /games/{slug}/purchases/verify` | `{ store, sku, receipt }` → `{ granted, wallet }` or `{ alreadyGranted, wallet }` |
 
@@ -155,6 +157,7 @@ All JSON is camelCase. Errors look like `{ "error": "code" }`. Every game route 
 | `PUT /games/{slug}/admin/staff` | owner | `{ email, role }`. A new email gets an account; the reply has its `temporaryPassword`, shown once |
 | `DELETE /games/{slug}/admin/staff/{adminId}` | owner | Remove from this game. `400 last_owner` |
 | `GET /games/{slug}/admin/audit` | owner | The newest 200 staff writes |
+| `GET /games/{slug}/admin/metrics?days=30` | viewer | Tester gate numbers from game events: players, sessions, players per tutorial step, reached the first memory, found the letter, day 1 return, average session length, error-free sessions |
 
 **Store notifications:** `POST /webhooks/apple` and `POST /webhooks/google` (to do: refunds, renewals, cancellations).
 

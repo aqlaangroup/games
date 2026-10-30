@@ -114,6 +114,7 @@ PlayerEndpoints.MapSignOut(signedIn);
 SaveEndpoints.Map(me);
 SupportEndpoints.Map(me);
 RewardEndpoints.Map(me);
+EventEndpoints.Map(me);
 PurchaseEndpoints.Map(signedIn);
 AdminEndpoints.MapGame(games);
 
