@@ -1,24 +1,33 @@
-using System.Collections.Generic;
-using Newtonsoft.Json;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
+using UnityEngine.Localization.Tables;
 
 namespace Gahwit.Core
 {
-    // Text table. Every string on screen comes from Resources/Loc/<language>.json, never from code or scenes.
+    // On-screen text from the Unity Localization "UI" string table (Assets/Content/Localization).
+    // Never type player-facing text into code or a scene (CLAUDE.md).
     public static class Loc
     {
-        static Dictionary<string, string> table = new Dictionary<string, string>();
+        public const string UiTable = "UI";
 
+        static StringTable table;
+
+        // Loads the table for "ar" or "en" synchronously; the table is marked to preload, so this is quick.
         public static void Load(string language)
         {
-            var asset = Resources.Load<TextAsset>("Loc/" + language);
-            table = asset != null
-                ? JsonConvert.DeserializeObject<Dictionary<string, string>>(asset.text)
-                : new Dictionary<string, string>();
-            if (asset == null) Debug.LogError($"[Loc] Missing Resources/Loc/{language}.json");
+            LocalizationSettings.InitializationOperation.WaitForCompletion();
+            var locale = LocalizationSettings.AvailableLocales.GetLocale(new LocaleIdentifier(language));
+            if (locale != null) LocalizationSettings.SelectedLocale = locale;
+            table = LocalizationSettings.StringDatabase.GetTable(UiTable, locale);
+            if (table == null) Debug.LogError($"[Loc] No '{UiTable}' string table for '{language}'.");
         }
 
-        public static string T(string key) => table.TryGetValue(key, out var value) ? value : key;
+        public static string T(string key)
+        {
+            var entry = table != null ? table.GetEntry(key) : null;
+            return entry != null && !string.IsNullOrEmpty(entry.Value) ? entry.Value : key;
+        }
 
         public static string T(string key, params object[] args) => string.Format(T(key), args);
     }

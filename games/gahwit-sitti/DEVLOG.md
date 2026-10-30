@@ -2,6 +2,15 @@
 
 Decisions and known gaps. Newest first. Read this at the start of each session (`/CLAUDE.md`).
 
+## 2026-10-30: Unity Localization (backlog 5)
+
+- Player-facing text comes from the Unity Localization **"UI" string table** (`Assets/Content/Localization`), with Arabic and English locales. `Loc.T(key)` reads it; the old `Resources/Loc/ar.json` is gone.
+- The table preloads, and `Loc.Load` waits for it once at startup, so lookups are instant.
+- **Gahwit Sitti > Set up localization** recreates the settings, locales and table if they are missing.
+- **Tests check** that every key has Arabic and English text, that every key written in code exists, and that every character, walk-in and task has its text.
+- English UI text was written by Claude Code and needs a review. The language setting (`settings.language`) is saved, but there's no settings screen yet.
+- Dialogue stays in Ink (CLAUDE.md). A glossary table and English dialogue come with the story localization work.
+
 ## 2026-10-30: time service, save schema, generators on the board (backlog 3, 4, 6)
 
 - **Time service** (`Core/TimeService.cs`): trusted time is server time (when the platform gives it) moved forward by the phone's uptime counter, which keeps counting while the phone sleeps. On Android that counter is `elapsedRealtime`, on iOS `CLOCK_MONOTONIC` (`Plugins/iOS/GahwitUptime.mm`). Changing the phone clock adds no energy (tested). After a restart the uptime counter starts again, so time falls back to the phone clock but never goes backwards. The platform's sanity check covers the rest (COMPLETE_SPEC.md section 11).
@@ -40,7 +49,7 @@ Decisions and known gaps. Newest first. Read this at the start of each session (
 - Items, icons and the café are code-made shapes and colours until art arrives.
 
 **Known gaps against the spec (next sessions, BUILD_GUIDE ring 1 order)**
-- Text uses a JSON table (`Resources/Loc/ar.json`), not Unity Localization string tables (CLAUDE.md). Move it in backlog item 5.
+- ~~Text uses a JSON table, not Unity Localization (backlog 5).~~ Done, see above.
 - ~~The save shape is not `save_schema.json` yet (backlog 3).~~ Done, see the entry above.
 - ~~Energy uses the phone clock (backlog 4).~~ Done, see the entry above.
 - There is one scene. Boot and Café scenes and a service locator are backlog 1.

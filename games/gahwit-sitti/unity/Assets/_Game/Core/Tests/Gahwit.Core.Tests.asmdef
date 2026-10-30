@@ -3,6 +3,8 @@
     "rootNamespace": "Gahwit.Core.Tests",
     "references": [
         "Gahwit.Core",
+        "Unity.Localization",
+        "Unity.Localization.Editor",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner"
     ],

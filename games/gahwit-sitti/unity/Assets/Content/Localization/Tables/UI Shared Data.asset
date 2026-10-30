@@ -1,0 +1,256 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: UI Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: UI
+  m_TableCollectionNameGuidString: ec8c9cbfb0f664348addac197d0bdeeb
+  m_Entries:
+  - m_Id: 850386944
+    m_Key: hud.energyFull
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775552
+    m_Key: hud.energyNext
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775553
+    m_Key: tab.kitchen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775554
+    m_Key: tab.cafe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775555
+    m_Key: kitchen.hint.start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775556
+    m_Key: kitchen.generator
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775557
+    m_Key: kitchen.generatorHint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775558
+    m_Key: kitchen.hint.merge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775559
+    m_Key: kitchen.hint.full
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775560
+    m_Key: kitchen.hint.lowEnergy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775561
+    m_Key: kitchen.selected
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775562
+    m_Key: kitchen.next
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775563
+    m_Key: kitchen.top
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775564
+    m_Key: kitchen.sell
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775565
+    m_Key: kitchen.noEnergy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775566
+    m_Key: kitchen.boardFull
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775567
+    m_Key: gen.level
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775568
+    m_Key: gen.cost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775569
+    m_Key: order.serve
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775570
+    m_Key: order.notReady
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775571
+    m_Key: order.reward
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775572
+    m_Key: toast.served
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775573
+    m_Key: toast.sold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775574
+    m_Key: toast.levelUp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775575
+    m_Key: toast.chapterDone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775576
+    m_Key: cafe.chapter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775577
+    m_Key: cafe.progress
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775578
+    m_Key: cafe.restore
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775579
+    m_Key: cafe.need
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775580
+    m_Key: cafe.toKitchen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775581
+    m_Key: cafe.soon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775582
+    m_Key: cafe.hintOrbit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775583
+    m_Key: dialogue.next
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775584
+    m_Key: dialogue.done
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775585
+    m_Key: char.salma
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775586
+    m_Key: char.teta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775587
+    m_Key: char.abu_fadi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775588
+    m_Key: char.samira
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775589
+    m_Key: char.karim
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775590
+    m_Key: char.lana
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775591
+    m_Key: walkin.customer_f
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775592
+    m_Key: walkin.customer_m
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775593
+    m_Key: walkin.neighbour
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775594
+    m_Key: walkin.student
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775595
+    m_Key: task.sign.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775596
+    m_Key: task.sign.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775597
+    m_Key: task.floor.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775598
+    m_Key: task.floor.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775599
+    m_Key: task.chairs.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775600
+    m_Key: task.chairs.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775601
+    m_Key: task.dallahs.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775602
+    m_Key: task.dallahs.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775603
+    m_Key: task.lights.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775604
+    m_Key: task.lights.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775605
+    m_Key: task.counter.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775606
+    m_Key: task.counter.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 858775607
+    m_Key: cafe.sign
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 7067431640537235840
+  references:
+    version: 2
+    RefIds:
+    - rid: 7067431640537235840
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1793380574204

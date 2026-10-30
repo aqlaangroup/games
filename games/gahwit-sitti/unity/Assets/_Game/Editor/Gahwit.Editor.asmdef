@@ -2,7 +2,9 @@
     "name": "Gahwit.Editor",
     "rootNamespace": "Gahwit.EditorTools",
     "references": [
-        "Gahwit.Core"
+        "Gahwit.Core",
+        "Unity.Localization",
+        "Unity.Localization.Editor"
     ],
     "includePlatforms": [
         "Editor"

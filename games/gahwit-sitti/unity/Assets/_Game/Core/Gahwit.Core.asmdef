@@ -2,7 +2,9 @@
     "name": "Gahwit.Core",
     "rootNamespace": "Gahwit.Core",
     "references": [
-        "Unity.TextMeshPro"
+        "Unity.TextMeshPro",
+        "Unity.Localization",
+        "Unity.ResourceManager"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
