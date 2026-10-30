@@ -668,6 +668,10 @@ MonoBehaviour:
     m_Localized: Sending messages needs the internet.
     m_Metadata:
       m_Items: []
+  - m_Id: 95176130289664
+    m_Localized: Haptics
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

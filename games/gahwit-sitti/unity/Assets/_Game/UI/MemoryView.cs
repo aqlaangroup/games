@@ -57,7 +57,11 @@ namespace Gahwit.UI
             var hold = UiKit.Button(card.transform, "Hold", Loc.T("pour.hold"), Palette.Rose, Color.white, 32, null, 40);
             ((RectTransform)hold.transform).Bottom(110, 110, 80, 80);
             var holdInput = hold.gameObject.AddComponent<HoldButton>();
-            holdInput.Pressed += () => pour?.Press();
+            holdInput.Pressed += () =>
+            {
+                pour?.Press();
+                UiSound.Loop("pour", pour != null);
+            };
             holdInput.Released += Release;
 
             hint = UiKit.Text(card.transform, "Hint", "", 28, Palette.InkSoft, TextAlignmentOptions.Center);
@@ -103,12 +107,14 @@ namespace Gahwit.UI
 
         void Release()
         {
+            UiSound.Loop("pour", false);
             if (pour == null || pour.Finished) return;
             ShowResult(pour.Release());
         }
 
         void ShowResult(PourResult result)
         {
+            UiSound.Loop("pour", false); // a spill ends the pour even while the finger is still down
             if (result == PourResult.KeepPouring) hint.text = Loc.T("pour.more");
             else if (result == PourResult.Perfect) hint.text = Loc.T("pour.perfect");
             else if (result == PourResult.Overfilled || result == PourResult.Spilled) hint.text = Loc.T("pour.over");

@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38125bf2b12fc46b3910ea9ed50bf4e0, type: 3}
+  m_Name: AudioCatalog
+  m_EditorClassIdentifier: Gahwit.Core::Gahwit.Core.AudioCatalog
+  Cues:
+  - Id: music_cafe_evening
+    Clip: {fileID: 8300000, guid: 0840aed10b6954ed684dbf5fc6e94315, type: 3}
+    Group: 0
+  - Id: music_cafe_morning
+    Clip: {fileID: 8300000, guid: 51f36a41a43754b2da528a082b7afa51, type: 3}
+    Group: 0
+  - Id: music_cafe_night
+    Clip: {fileID: 8300000, guid: dc256ba94b3154afcbac13dc940c7d5e, type: 3}
+    Group: 0
+  - Id: music_main_theme
+    Clip: {fileID: 8300000, guid: 2112688f347944b1783e77a5412ba583, type: 3}
+    Group: 0
+  - Id: music_memory
+    Clip: {fileID: 8300000, guid: 778ac8815201d4c058fff6b4137d1d12, type: 3}
+    Group: 0
+  - Id: bubble_pop
+    Clip: {fileID: 8300000, guid: 77727ec74dbb04b1e9918cb590f9f131, type: 3}
+    Group: 3
+  - Id: decor_place
+    Clip: {fileID: 8300000, guid: 9759274fe30bf41d9b9deb3f293568ec, type: 3}
+    Group: 4
+  - Id: door_bell
+    Clip: {fileID: 8300000, guid: fc4aa6716e9174c8ab1d7a73848cf160, type: 3}
+    Group: 4
+  - Id: drawer_open
+    Clip: {fileID: 8300000, guid: f0d574ef80e27449b9e6c5e150f6d18e, type: 3}
+    Group: 5
+  - Id: gen_tap_coffee
+    Clip: {fileID: 8300000, guid: 972e58e3853a74734aa40a40fe977745, type: 3}
+    Group: 3
+  - Id: gen_tap_sweets
+    Clip: {fileID: 8300000, guid: c09a95c9b35c340a6b3bb1119230ea57, type: 3}
+    Group: 3
+  - Id: letter_unfold
+    Clip: {fileID: 8300000, guid: cdf604401bc1d49729ba7bef17b7bea8, type: 3}
+    Group: 5
+  - Id: merge
+    Clip: {fileID: 8300000, guid: 421a6ef1890794c59a7a4a7443a792b1, type: 3}
+    Group: 3
+  - Id: merge_top
+    Clip: {fileID: 8300000, guid: b6e029e1855de46d29a86ff2fc191303, type: 3}
+    Group: 3
+  - Id: order_served
+    Clip: {fileID: 8300000, guid: aca0532000c454fefaf1a77f69f20b87, type: 3}
+    Group: 3
+  - Id: page_turn
+    Clip: {fileID: 8300000, guid: a91b819df159f42699f2d0b9e357e245, type: 3}
+    Group: 5
+  - Id: pour
+    Clip: {fileID: 8300000, guid: 3e4a2a8820edb46ce8ece2f091df7db9, type: 3}
+    Group: 5
+  - Id: sell
+    Clip: {fileID: 8300000, guid: 43d2903721d7e4caa98df9c7727fc024, type: 3}
+    Group: 3
+  - Id: ui_coin
+    Clip: {fileID: 8300000, guid: 58810585cad9f45a78251d868ac78bc1, type: 3}
+    Group: 2
+  - Id: ui_error
+    Clip: {fileID: 8300000, guid: af8ae1f26e1544bab988332b3d8b2180, type: 3}
+    Group: 2
+  - Id: ui_gem
+    Clip: {fileID: 8300000, guid: d543f824eac4047aa9e15b543830fd15, type: 3}
+    Group: 2
+  - Id: ui_level_up
+    Clip: {fileID: 8300000, guid: 1c9260c0a993d45d6b84641bf5a27474, type: 3}
+    Group: 2
+  - Id: ui_panel_close
+    Clip: {fileID: 8300000, guid: 83ed667956cd54bb99044efb6552feb3, type: 3}
+    Group: 2
+  - Id: ui_panel_open
+    Clip: {fileID: 8300000, guid: bdb9944222e384939afc49dffffe2aaf, type: 3}
+    Group: 2
+  - Id: ui_tap
+    Clip: {fileID: 8300000, guid: 85f125067e2f446e19073faed4478604, type: 3}
+    Group: 2

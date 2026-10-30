@@ -2,6 +2,30 @@
 
 Decisions and known gaps. Newest first. Read this at the start of each session (`/CLAUDE.md`).
 
+## 2026-10-31: music, effects and haptics play (missing/14)
+
+- **Cues by id:** `AudioCatalog` (`Resources/Audio/AudioCatalog.asset`) lists every file under `Assets/Audio` by name. Rebuild it with **Gahwit Sitti > Rebuild audio catalog**. A test checks that every cue named in code exists.
+- **Import settings** (`AudioCatalogBuilder`): music streams. Effects load decompressed and in mono, so playing one costs nothing and the download stays small.
+- **`AudioService`** (Boot) plays cues on 8 pooled sources with no allocation per play. It lives for the whole run, so music doesn't restart when the game reloads.
+  - Groups are volumes in code: the sound switch mutes every effect, and the music switch mutes the music.
+  - A mixer asset can come later, when a group needs its own effects.
+  - The interface asks for sounds through `UI/UiSound`, which does nothing until the service exists, so tests run silent.
+- **What plays:**
+  - Every button: `ui_tap`.
+  - Panels opening and closing.
+  - Kitchen: generator taps (chains without their own sound use coffee's), merges that rise in pitch with the item's level, `merge_top` for a chain's top item, sell, serve with coins, level up.
+  - Café: a task done plays `decor_place`.
+  - Gems arriving, errors (no energy, board full), the drawer, the letter, and the pour loop while held.
+- **Music:**
+  - The café track follows the time of day; the afternoon shares the morning track.
+  - The memory theme plays in 1974.
+  - The main theme plays for the intro and for 30 seconds after a finished chapter.
+  - Music ducks under Teta's voice note.
+- **Haptics:** light for a merge, medium for a serve, success for a level-up. They use `Plugins/iOS/GahwitHaptics.mm`, with a new haptics switch in settings. Android vibration comes with the Android build (missing/23).
+- **Still missing:** ambience tracks, more generator sounds, loudness checks, and native listening for the drafts (missing/14, "Audio not made yet").
+- **iPhone build** (2026-10-31): Sentis and App UI are gone from `Builds/iOS/Libraries`.
+  - The app is 176 MB, mostly debug symbols in `UnityFramework`; an App Store archive strips them. Measure the real download in missing/23.
+
 ## 2026-10-31: gems earned and spent through the platform, update required (missing/03, 04)
 
 **Platform** (46 tests)

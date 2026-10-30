@@ -101,6 +101,7 @@ namespace Gahwit.UI
             notification.SetActive(false);
             more.gameObject.SetActive(false);
             playedAt = notifiedAt = -1;
+            UiSound.Play("letter_unfold");
 
             UiKit.Clear(lines);
             lineGroups.Clear();
@@ -136,7 +137,11 @@ namespace Gahwit.UI
             if (playedAt >= 0) return;
             playedAt = Time.unscaledTime;
             play.interactable = false;
-            if (voicePlayer.clip != null) voicePlayer.Play();
+            if (voicePlayer.clip != null)
+            {
+                UiSound.Duck(true);
+                voicePlayer.Play();
+            }
         }
 
         void Update()
@@ -159,6 +164,7 @@ namespace Gahwit.UI
                 if (Time.unscaledTime - playedAt >= voiceSeconds + AfterVoiceSeconds)
                 {
                     voice.SetActive(false);
+                    UiSound.Duck(false);
                     shade.enabled = false;
                     notification.SetActive(true);
                     notifiedAt = Time.unscaledTime;

@@ -21,6 +21,7 @@ namespace Gahwit.Boot
         public TimeService Time { get; private set; }
         public PlatformConfig PlatformConfig { get; private set; }
         public PlatformClient Platform { get; private set; }
+        public AudioService Audio { get; private set; }
 
         // A coroutine, because the text tables load in the background (a blocking wait hangs on the phone).
         public static IEnumerator Start()
@@ -40,6 +41,7 @@ namespace Gahwit.Boot
             services.PlatformConfig = PlatformConfig.Load();
             services.Platform = new PlatformClient(new UnityPlatformHttp(), new DeviceSecrets(), services.PlatformConfig.ActiveBaseUrl,
                 services.PlatformConfig.Slug, SystemInfo.deviceModel, Application.version, () => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
+            services.Audio = AudioService.Shared;
             Current = services;
         }
 

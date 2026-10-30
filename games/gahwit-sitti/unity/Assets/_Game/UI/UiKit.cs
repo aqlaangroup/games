@@ -71,6 +71,7 @@ namespace Gahwit.UI
             colors.disabledColor = new Color(1f, 1f, 1f, 0.55f);
             colors.fadeDuration = 0.08f;
             button.colors = colors;
+            button.onClick.AddListener(() => UiSound.Play("ui_tap"));
             if (onClick != null) button.onClick.AddListener(onClick);
             Text(image.transform, "Label", label, fontSize, foreground, TextAlignmentOptions.Center).rectTransform.Stretch(10, 10, 4, 4);
             return button;

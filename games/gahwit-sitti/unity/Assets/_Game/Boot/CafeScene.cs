@@ -25,6 +25,10 @@ namespace Gahwit.Boot
         GameUi ui;
         CafeRoom cafe;
         AccountService account;
+        AudioService audio;
+        string cafeMusic;
+        long gemsHeard;
+        readonly Dictionary<string, string> generatorCues = new Dictionary<string, string>();
         bool dirty, reloading;
         float nextSave, nextTick, nextSync;
 
@@ -45,7 +49,8 @@ namespace Gahwit.Boot
             var camera = Camera.main;
             cafe = new GameObject("Cafe").AddComponent<CafeRoom>();
             cafe.Build(FindSun(), camera);
-            cafe.SetTimeOfDay(CafeRoom.TimeFromClock(DateTime.Now, config.LevelB.Cafe.TimeOfDayStartHours));
+            var timeOfDay = CafeRoom.TimeFromClock(DateTime.Now, config.LevelB.Cafe.TimeOfDayStartHours);
+            cafe.SetTimeOfDay(timeOfDay);
             cafe.Apply(game.CompletedTaskIds(), game.State.TaskStyles, game.Content.Styles);
             var cafeCamera = camera.gameObject.AddComponent<CafeCamera>();
 
@@ -53,6 +58,13 @@ namespace Gahwit.Boot
             ui = GameUi.Create(game, cafeCamera, cafe, () => time.NowMs, OpenDrawer, account);
             account.Ui = ui;
             ui.Dialogue.ShowGlosses = saves.Data.Settings.Glossary;
+
+            audio = services.Audio;
+            ApplySoundSettings();
+            account.SettingChanged += ApplySoundSettings;
+            WireSounds();
+            cafeMusic = CafeMusic(timeOfDay);
+            audio.PlayMusic(cafeMusic);
 
             game.Changed += () => dirty = true;
             game.OrderServed += order => ui.Toast.Show(Loc.T("toast.served", order.Coins, order.Xp));
@@ -77,9 +89,79 @@ namespace Gahwit.Boot
         void PlayIntro()
         {
             string intro = game.Content.IntroKnot;
-            if (!game.State.ScenesSeen.Contains(intro)) PlayScene(StoryFor(game.State.Chapter), intro, ResumeMemories);
-            else ResumeMemories();
+            if (game.State.ScenesSeen.Contains(intro))
+            {
+                ResumeMemories();
+                return;
+            }
+            audio.PlayMusic("music_main_theme");
+            PlayScene(StoryFor(game.State.Chapter), intro, () =>
+            {
+                audio.PlayMusic(cafeMusic);
+                ResumeMemories();
+            });
         }
+
+        // The café's music follows the time of day (missing/14); the afternoon shares the morning's track for now.
+        static string CafeMusic(TimeOfDay timeOfDay) => timeOfDay switch
+        {
+            TimeOfDay.Evening => "music_cafe_evening",
+            TimeOfDay.Night => "music_cafe_night",
+            _ => "music_cafe_morning"
+        };
+
+        void ApplySoundSettings()
+        {
+            var settings = saves.Data.Settings;
+            audio.SoundOn = settings.Sound;
+            audio.MusicOn = settings.Music;
+            audio.HapticsOn = settings.Haptics;
+        }
+
+        // Each kitchen and café action has its cue (missing/14). Merges rise in pitch with the new item's level.
+        void WireSounds()
+        {
+            game.ItemSpawned += cell => audio.Play(GeneratorCue(game.ItemAt(cell)?.Chain));
+            game.ItemsMerged += cell =>
+            {
+                var item = game.ItemAt(cell);
+                if (item == null) return;
+                bool top = !item.IsGenerator && item.Level >= game.Config.MaxItemLevel(item.Chain);
+                audio.Play(top ? "merge_top" : "merge", 1f + 0.06f * (item.Level - 2));
+                audio.Buzz(Haptic.Light);
+            };
+            game.OrderServed += _ =>
+            {
+                audio.Play("order_served");
+                audio.Play("ui_coin");
+                audio.Buzz(Haptic.Medium);
+            };
+            game.LeveledUp += _ =>
+            {
+                audio.Play("ui_level_up");
+                audio.Buzz(Haptic.Success);
+            };
+            game.TaskCompleted += _ => audio.Play("decor_place");
+            gemsHeard = Wallet.Gems;
+            Wallet.Changed += OnGemsChanged;
+        }
+
+        void OnGemsChanged()
+        {
+            if (Wallet.Gems > gemsHeard) audio.Play("ui_gem");
+            gemsHeard = Wallet.Gems;
+        }
+
+        // Chains without their own tap sound yet use the coffee one.
+        string GeneratorCue(string chain)
+        {
+            if (chain == null) return "gen_tap_coffee";
+            if (!generatorCues.TryGetValue(chain, out var cue))
+                generatorCues[chain] = cue = audio.Has("gen_tap_" + chain) ? "gen_tap_" + chain : "gen_tap_coffee";
+            return cue;
+        }
+
+        void OnDestroy() => Wallet.Changed -= OnGemsChanged;
 
         // A memory cut short by closing the app plays again on the next launch.
         void ResumeMemories()
@@ -120,6 +202,7 @@ namespace Gahwit.Boot
             {
                 // 1974: the café as Teta ran it, in faded film colours.
                 cafe.SetPast(true);
+                audio.PlayMusic("music_memory");
                 // Teta ran it in the old Levantine style.
                 cafe.Apply(game.Content.Chapters.SelectMany(c => c.Tasks).Select(t => t.Id).ToList(),
                     new Dictionary<string, string> { ["sign"] = "old", ["chairs"] = "old" }, game.Content.Styles);
@@ -133,6 +216,7 @@ namespace Gahwit.Boot
                         PlayScene(story, def.OutroKnot, () =>
                         {
                             cafe.SetPast(false);
+                            audio.PlayMusic(cafeMusic);
                             cafe.Apply(game.CompletedTaskIds(), game.State.TaskStyles, game.Content.Styles);
                             ui.Memory.ShowBanner(false);
                             PlayScene(story, def.ReturnKnot, null);
@@ -146,6 +230,7 @@ namespace Gahwit.Boot
         {
             string letterId = game.LetterWaiting();
             if (letterId == null || ui.Dialogue.IsOpen) return;
+            audio.Play("drawer_open");
             var def = game.Content.Letters[letterId];
             var story = Story(def.Story);
             var letter = story.ReadAll(def.Knot);
@@ -165,6 +250,15 @@ namespace Gahwit.Boot
             var reward = game.Config.Chapter(chapter).Reward;
             string generator = game.Config.GeneratorDef(reward.GeneratorCopy)?.Ar ?? "";
             afterScene.Enqueue(() => ui.Toast.Show(Loc.T("toast.chapterDone", chapter, reward.Energy, generator)));
+            StartCoroutine(PlayTheme());
+        }
+
+        // The main theme marks a finished chapter, then the café's music comes back.
+        IEnumerator PlayTheme()
+        {
+            audio.PlayMusic("music_main_theme");
+            yield return new WaitForSecondsRealtime(30f);
+            audio.PlayMusic(cafeMusic);
         }
 
         void PlayScene(StoryPlayer story, string knot, Action then)

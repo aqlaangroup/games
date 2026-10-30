@@ -655,6 +655,10 @@ MonoBehaviour:
     m_Key: help.offlineBanner
     m_Metadata:
       m_Items: []
+  - m_Id: 95176130289664
+    m_Key: settings.haptics
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -13,7 +13,7 @@ namespace Gahwit.UI
     // account and help rows. Switches show their state by the knob's side as well as the colour.
     public sealed class SettingsView : MonoBehaviour
     {
-        public static readonly string[] Switches = { "sound", "music", "notifications", "glossary", "voice" };
+        public static readonly string[] Switches = { "sound", "music", "haptics", "notifications", "glossary", "voice" };
         public static readonly string[] WithSubtitle = { "notifications", "glossary", "voice" };
         public static readonly string[] Languages = { "ar", "en" };
 
@@ -73,11 +73,16 @@ namespace Gahwit.UI
 
         public void Show()
         {
+            UiSound.Play("ui_panel_open");
             gameObject.SetActive(true);
             Refresh();
         }
 
-        void Close() => gameObject.SetActive(false);
+        void Close()
+        {
+            UiSound.Play("ui_panel_close");
+            gameObject.SetActive(false);
+        }
 
         void Refresh()
         {

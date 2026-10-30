@@ -51,6 +51,7 @@ namespace Gahwit.UI
         void TapGenerator(int cell)
         {
             var result = game.TapGenerator(cell, now(), out _);
+            if (result == TapResult.NoEnergy || result == TapResult.BoardFull) UiSound.Play("ui_error");
             if (result == TapResult.NoEnergy) ui.Toast.Show(Loc.T("kitchen.noEnergy"));
             else if (result == TapResult.BoardFull) ui.Toast.Show(Loc.T("kitchen.boardFull"));
         }
@@ -66,6 +67,7 @@ namespace Gahwit.UI
             int cell = board.Selected;
             if (cell < 0 || !game.CanSell(game.ItemAt(cell))) return;
             int coins = game.Sell(cell);
+            UiSound.Play("sell");
             board.ClearSelection();
             ui.Toast.Show(Loc.T("toast.sold", coins));
         }

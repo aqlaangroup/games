@@ -59,6 +59,7 @@ namespace Gahwit.Boot
 
         public GameUi Ui { private get; set; }
         public event Action Changed;
+        public event Action SettingChanged;
 
         public CloudStatus Cloud => cloud;
         public string LinkedProvider => client.Account?.Providers?.FirstOrDefault();
@@ -356,6 +357,7 @@ namespace Gahwit.Boot
             switch (id)
             {
                 case "sound": return s.Sound;
+                case "haptics": return s.Haptics;
                 case "music": return s.Music;
                 case "notifications": return s.Notifications;
                 case "glossary": return s.Glossary;
@@ -370,12 +372,14 @@ namespace Gahwit.Boot
             switch (id)
             {
                 case "sound": s.Sound = on; break;
+                case "haptics": s.Haptics = on; break;
                 case "music": s.Music = on; break;
                 case "notifications": s.Notifications = on; break;
                 case "glossary": s.Glossary = on; break;
                 case "voice": s.Voice = on; break;
             }
             if (Ui != null) Ui.Dialogue.ShowGlosses = s.Glossary;
+            SettingChanged?.Invoke();
             saveNow();
         }
 

@@ -22,7 +22,11 @@ namespace Gahwit.UI
             this.account = account;
             this.toast = toast;
             var card = Sheet.Card(transform, 980, 1720);
-            Sheet.Title(card, Loc.T("help.title"), () => gameObject.SetActive(false));
+            Sheet.Title(card, Loc.T("help.title"), () =>
+            {
+                UiSound.Play("ui_panel_close");
+                gameObject.SetActive(false);
+            });
 
             var column = Sheet.Column(card, 130, 40, 18);
             for (int n = 1; n <= Questions; n++)
@@ -49,6 +53,7 @@ namespace Gahwit.UI
         public void Show()
         {
             offline.SetActive(account.Cloud == CloudStatus.Offline);
+            UiSound.Play("ui_panel_open");
             transform.SetAsLastSibling();
             gameObject.SetActive(true);
         }
