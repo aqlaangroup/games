@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>Friends and gifts</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rakkas&amp;family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#1D6C67}a:hover{color:#14504C}
+</style>
+</helmet>
+<div dir="rtl" style="width: 390px; height: 844px; box-sizing: border-box; background: #FAF6F1; color: #2A1D17; font-family: 'IBM Plex Sans Arabic', system-ui, sans-serif; display: flex; flex-direction: column; overflow: hidden">
+  <div style="padding: 18px 16px 8px; display: flex; justify-content: space-between; align-items: center">
+    <div style="font-family: 'Rakkas', serif; font-size: 28px">صحباتي</div>
+    <div style="font-size: 13px; color: #6E5E55">هدايا اليوم: باقي <b style="color: #2A1D17">{{left}}</b> من 5</div>
+  </div>
+
+  <div style="margin: 0 14px; background: #1D6C67; color: #FAF6F1; border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 8px">
+    <div style="font-size: 13px; color: #DCEDEA">كود صداقتك</div>
+    <div style="display: flex; align-items: center; gap: 10px">
+      <div style="flex: 1; font-size: 26px; font-weight: 700; letter-spacing: 0.08em; direction: ltr; text-align: right">QS-4821</div>
+      <button type="button" style="height: 44px; padding: 0 14px; border: 0; border-radius: 10px; background: #F6D88A; color: #2A1D17; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer">انسخي</button>
+    </div>
+    <div style="font-size: 12px; color: #BFD9D5">ابعتيه لصحباتك بالواتساب. ما في دردشة داخل اللعبة.</div>
+  </div>
+
+  <div style="margin: 12px 14px 0; display: flex; gap: 8px">
+    <label for="friend-code" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">كود صاحبتك</label>
+    <input id="friend-code" type="text" placeholder="اكتبي كود صاحبتك" style="flex: 1; min-width: 0; height: 48px; border-radius: 12px; border: 2px solid #E6DCD2; background: #FFFFFF; padding: 0 12px; font-family: inherit; font-size: 15px">
+    <button type="button" style="height: 48px; padding: 0 16px; border: 0; border-radius: 12px; background: #1D6C67; color: #FFFFFF; font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer">زيدي</button>
+  </div>
+
+  <div style="padding: 16px 16px 6px; font-size: 15px; font-weight: 700">وصلك</div>
+  <div style="margin: 0 14px; background: #F6E8C6; border-radius: 14px; padding: 10px 12px; display: flex; align-items: center; gap: 10px">
+    <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 L4 14 h7 l-1 8 9-12 h-7z" fill="#C98E10"></path></svg>
+    <div style="flex: 1; font-size: 14px"><b>نور وريم</b> بعتولك 10 طاقة</div>
+    <button type="button" style="height: 40px; padding: 0 14px; border: 0; border-radius: 10px; background: #1D6C67; color: #FFFFFF; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer">خديهم</button>
+  </div>
+
+  <div style="padding: 16px 16px 6px; font-size: 15px; font-weight: 700">الصحبات</div>
+  <div style="padding: 0 14px; display: flex; flex-direction: column; gap: 8px">
+    <sc-for list="{{friends}}" as="f" hint-placeholder-count="4">
+      <div style="display: flex; align-items: center; gap: 10px; background: #FFFFFF; border: 1px solid #E6DCD2; border-radius: 14px; padding: 10px 12px">
+        <div style="width: 42px; height: 42px; border-radius: 50%; background: {{f.c}}; color: #FFFFFF; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0">{{f.i}}</div>
+        <div style="flex: 1; min-width: 0">
+          <div style="font-size: 15px; font-weight: 700">{{f.n}}</div>
+          <div style="font-size: 12px; color: #6E5E55">قهوتها: الفصل {{f.ch}} · {{f.city}}</div>
+        </div>
+        <button type="button" aria-label="زوري قهوتها" style="width: 44px; height: 44px; border: 2px solid #E6DCD2; border-radius: 10px; background: #FFFFFF; cursor: pointer; display: flex; align-items: center; justify-content: center">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2A1D17" stroke-width="2" aria-hidden="true"><path d="M3 10 L12 3 L21 10 V21 H3z"></path></svg>
+        </button>
+        <button type="button" onClick="{{f.send}}" style="height: 44px; padding: 0 12px; border: 0; border-radius: 10px; background: {{f.btnBg}}; color: {{f.btnFg}}; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer">{{f.btn}}</button>
+      </div>
+    </sc-for>
+  </div>
+  <div style="flex-grow: 1"></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { sent: { 'ريم': true } }; }
+  renderVals() {
+    var self = this;
+    var raw = [
+      { n: 'نور', i: 'ن', c: '#4C6B2E', ch: 5, city: 'عمّان' },
+      { n: 'ريم', i: 'ر', c: '#7E2F43', ch: 7, city: 'جدّة' },
+      { n: 'هيا', i: 'ه', c: '#8A5F00', ch: 3, city: 'الرياض' },
+      { n: 'دانة', i: 'د', c: '#5E8A86', ch: 2, city: 'دبي' }
+    ];
+    var sent = this.state.sent;
+    var left = 5 - Object.keys(sent).length;
+    return {
+      left: left,
+      friends: raw.map(function (f) {
+        var s = !!sent[f.n];
+        return Object.assign({}, f, {
+          btn: s ? 'انبعتت' : 'ابعتي ⚡5', btnBg: s ? '#F1E9DF' : '#C98E10', btnFg: s ? '#6E5E55' : '#FFFFFF',
+          send: function () { if (!s) { var n = Object.assign({}, sent); n[f.n] = true; self.setState({ sent: n }); } }
+        });
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

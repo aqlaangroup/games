@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>Ramadan event</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rakkas&amp;family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#F6D88A}a:hover{color:#FFFFFF}
+</style>
+</helmet>
+<div dir="rtl" style="width: 390px; height: 844px; box-sizing: border-box; background: #10302E; color: #FAF6F1; font-family: 'IBM Plex Sans Arabic', system-ui, sans-serif; display: flex; flex-direction: column; overflow: hidden; position: relative">
+
+  <div style="position: relative; height: 270px; flex-shrink: 0">
+    <svg width="390" height="270" viewBox="0 0 390 270" aria-hidden="true" style="position: absolute; inset: 0">
+      <path d="M318 34 a34 34 0 1 0 26 58 a27 27 0 1 1 -26 -58z" fill="#F6D88A"></path>
+      <circle cx="60" cy="40" r="2" fill="#F6D88A"></circle><circle cx="120" cy="70" r="1.5" fill="#F6D88A"></circle>
+      <circle cx="220" cy="30" r="2" fill="#F6D88A"></circle><circle cx="260" cy="110" r="1.5" fill="#F6D88A"></circle>
+      <circle cx="30" cy="120" r="1.5" fill="#F6D88A"></circle>
+      <path d="M0 22 Q100 52 200 26 T390 30" stroke="#BFD9D5" stroke-width="1.2" fill="none"></path>
+      <line x1="50" y1="34" x2="50" y2="60" stroke="#BFD9D5" stroke-width="1"></line>
+      <path d="M42 60 h16 l-3 22 h-10z" fill="#C98E10"></path><path d="M44 62 h12 l-2 16 h-8z" fill="#F6D88A"></path>
+      <line x1="140" y1="40" x2="140" y2="78" stroke="#BFD9D5" stroke-width="1"></line>
+      <path d="M132 78 h16 l-3 22 h-10z" fill="#B84A60"></path><path d="M134 80 h12 l-2 16 h-8z" fill="#F6D88A"></path>
+      <line x1="236" y1="30" x2="236" y2="56" stroke="#BFD9D5" stroke-width="1"></line>
+      <path d="M228 56 h16 l-3 22 h-10z" fill="#C98E10"></path><path d="M230 58 h12 l-2 16 h-8z" fill="#F6D88A"></path>
+      <path d="M0 270 V210 h40 v-30 a14 14 0 0 1 28 0 v30 h50 v-50 l20 -24 l20 24 v50 h60 v-20 h50 v-40 a20 20 0 0 1 40 0 v60 h82 v60z" fill="#0A2120"></path>
+    </svg>
+    <div style="position: absolute; top: 18px; right: 16px; left: 16px; display: flex; justify-content: space-between; align-items: center">
+      <a href="Board.dc.html" aria-label="رجوع" style="width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; color: #FAF6F1">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M9 5 l7 7 -7 7"></path></svg>
+      </a>
+      <div style="background: rgba(255,255,255,0.12); border-radius: 999px; padding: 6px 12px; font-size: 13px; font-weight: 700">باقي 12 يوم</div>
+    </div>
+    <div style="position: absolute; bottom: 26px; right: 20px; left: 20px">
+      <div style="font-family: 'Rakkas', serif; font-size: 44px; line-height: 1.1; color: #F6D88A">ليالي رمضان</div>
+      <div style="font-size: 15px; color: #DCEDEA">حضّري سحور الحارة، وكل ليلة إلها مشهد جديد</div>
+    </div>
+  </div>
+
+  <div style="padding: 18px 16px 0; display: flex; flex-direction: column; gap: 16px; flex-grow: 1">
+    <div style="background: #173F3C; border-radius: 18px; padding: 16px">
+      <div style="display: flex; justify-content: space-between; align-items: baseline">
+        <div style="font-size: 15px; font-weight: 700">فوانيس الحدث</div>
+        <div style="font-size: 14px; color: #F6D88A; font-weight: 700">340 / 600</div>
+      </div>
+      <div style="position: relative; height: 72px; margin-top: 14px">
+        <div style="position: absolute; top: 18px; right: 10px; left: 10px; height: 8px; border-radius: 4px; background: #0A2120"></div>
+        <div style="position: absolute; top: 18px; right: 10px; width: 52%; height: 8px; border-radius: 4px; background: #C98E10"></div>
+        <div style="position: absolute; inset: 0; display: flex; justify-content: space-between">
+          <sc-for list="{{steps}}" as="s" hint-placeholder-count="5">
+            <div style="width: 62px; display: flex; flex-direction: column; align-items: center; gap: 6px">
+              <div style="width: 44px; height: 44px; border-radius: 12px; background: {{s.bg}}; border: 2px solid {{s.ring}}; box-sizing: border-box; display: flex; align-items: center; justify-content: center">
+                <sc-if value="{{s.done}}" hint-placeholder-val="{{false}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10302E" stroke-width="3" aria-hidden="true"><path d="M5 12 l5 5 9-10"></path></svg></sc-if>
+                <sc-if value="{{s.todo}}" hint-placeholder-val="{{true}}"><svg width="20" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 6 h10 l-2 14 h-6z" fill="{{s.icon}}"></path><path d="M10 3 h4 v3 h-4z" fill="{{s.icon}}"></path></svg></sc-if>
+              </div>
+              <div style="font-size: 11px; color: #DCEDEA; text-align: center; line-height: 1.3">{{s.label}}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+
+    <div style="font-size: 15px; font-weight: 700">مهام الليلة</div>
+    <div style="display: flex; flex-direction: column; gap: 10px">
+      <div style="display: flex; align-items: center; gap: 12px; background: #173F3C; border-radius: 14px; padding: 12px">
+        <div style="width: 44px; height: 44px; border-radius: 10px; background: #F6E8C6; display: flex; align-items: center; justify-content: center"><svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 14 a9 6 0 0 0 18 0z" fill="#E9C27A"></path><path d="M5 14 q7 -5 14 0" fill="#FAF6F1"></path></svg></div>
+        <div style="flex: 1; min-width: 0">
+          <div style="font-size: 14px; font-weight: 700">حضّري 8 صحون قطايف</div>
+          <div style="height: 6px; border-radius: 3px; background: #0A2120; margin-top: 6px"><div style="width: 62%; height: 6px; border-radius: 3px; background: #5BB8AE"></div></div>
+        </div>
+        <div style="font-size: 13px; color: #F6D88A; font-weight: 700">5/8</div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px; background: #173F3C; border-radius: 14px; padding: 12px">
+        <div style="width: 44px; height: 44px; border-radius: 10px; background: #DCEDEA; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9 h12 l-2 8 h-8z" fill="#FFFFFF" stroke="#1D6C67" stroke-width="1.8"></path><path d="M7 11 h10" stroke="#B84A60" stroke-width="2"></path></svg></div>
+        <div style="flex: 1; min-width: 0">
+          <div style="font-size: 14px; font-weight: 700">قدّمي 3 كاسات قمر الدين</div>
+          <div style="height: 6px; border-radius: 3px; background: #0A2120; margin-top: 6px"><div style="width: 33%; height: 6px; border-radius: 3px; background: #5BB8AE"></div></div>
+        </div>
+        <div style="font-size: 13px; color: #F6D88A; font-weight: 700">1/3</div>
+      </div>
+    </div>
+
+    <div style="flex-grow: 1"></div>
+    <a href="Board.dc.html" style="height: 58px; margin-bottom: 26px; border-radius: 16px; background: #F6D88A; color: #2A1D17; text-decoration: none; font-family: 'Rakkas', serif; font-size: 24px; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 0 #8A5F00">العبي الحدث</a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var raw = [
+      { label: 'فانوس نحاس', done: true },
+      { label: 'زينة السطح', done: true },
+      { label: 'طاولة سحور', done: false, next: true },
+      { label: 'فستان العيد', done: false },
+      { label: 'مشهد خاص', done: false }
+    ];
+    return {
+      steps: raw.map(function (s) {
+        return {
+          label: s.label, done: s.done, todo: !s.done,
+          bg: s.done ? '#C98E10' : '#0A2120',
+          ring: s.next ? '#F6D88A' : (s.done ? '#C98E10' : '#2D5A56'),
+          icon: s.next ? '#F6D88A' : '#5E8A86'
+        };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

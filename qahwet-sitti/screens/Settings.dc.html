@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>Settings</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rakkas&amp;family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#1D6C67}a:hover{color:#14504C}
+</style>
+</helmet>
+<div dir="rtl" style="width: 390px; height: 844px; box-sizing: border-box; background: #FAF6F1; color: #2A1D17; font-family: 'IBM Plex Sans Arabic', system-ui, sans-serif; display: flex; flex-direction: column; overflow: hidden">
+  <div style="padding: 18px 16px 10px; display: flex; align-items: center; gap: 12px">
+    <a href="Board.dc.html" aria-label="رجوع" style="width: 44px; height: 44px; border-radius: 50%; background: #FFFFFF; border: 1px solid #E6DCD2; box-sizing: border-box; display: flex; align-items: center; justify-content: center; color: #2A1D17">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M9 5 l7 7 -7 7"></path></svg>
+    </a>
+    <div style="font-family: 'Rakkas', serif; font-size: 28px">الإعدادات</div>
+  </div>
+
+  <div style="margin: 0 14px; background: #FFFFFF; border: 1px solid #E6DCD2; border-radius: 16px; padding: 12px 14px; display: flex; align-items: center; gap: 12px">
+    <div style="width: 52px; height: 52px; border-radius: 50%; background: #B84A60; color: #FFFFFF; font-family: 'Rakkas', serif; font-size: 24px; display: flex; align-items: center; justify-content: center">س</div>
+    <div style="flex: 1; min-width: 0">
+      <div style="font-size: 16px; font-weight: 700">قهوة سلمى · المستوى 10</div>
+      <div style="font-size: 12px; color: #1D6C67; font-weight: 600">التقدّم محفوظ على السحابة</div>
+    </div>
+    <button type="button" style="height: 40px; padding: 0 12px; border: 2px solid #E6DCD2; border-radius: 10px; background: #FFFFFF; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer">غيّري الصورة</button>
+  </div>
+
+  <div style="padding: 16px 16px 6px; font-size: 13px; font-weight: 700; color: #6E5E55">اللعب</div>
+  <div style="margin: 0 14px; background: #FFFFFF; border: 1px solid #E6DCD2; border-radius: 16px; overflow: hidden">
+    <sc-for list="{{toggles}}" as="t" hint-placeholder-count="5">
+      <div style="display: flex; align-items: center; gap: 10px; padding: 0 14px; min-height: 54px; border-bottom: 1px solid #F1E9DF">
+        <label for="{{t.id}}" style="flex: 1; font-size: 15px">{{t.n}}<span style="display: block; font-size: 12px; color: #6E5E55">{{t.sub}}</span></label>
+        <button type="button" id="{{t.id}}" role="switch" aria-checked="{{t.aria}}" onClick="{{t.flip}}" style="width: 52px; height: 30px; border-radius: 15px; border: 0; background: {{t.track}}; position: relative; cursor: pointer; padding: 0">
+          <span style="position: absolute; top: 3px; {{t.side}}: 3px; width: 24px; height: 24px; border-radius: 50%; background: #FFFFFF; box-shadow: 0 1px 3px rgba(0,0,0,0.25)"></span>
+        </button>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="padding: 16px 16px 6px; font-size: 13px; font-weight: 700; color: #6E5E55">الحساب والمساعدة</div>
+  <div style="margin: 0 14px; background: #FFFFFF; border: 1px solid #E6DCD2; border-radius: 16px; overflow: hidden">
+    <sc-for list="{{links}}" as="l" hint-placeholder-count="5">
+      <a href="{{l.href}}" style="display: flex; justify-content: space-between; align-items: center; padding: 0 14px; min-height: 52px; border-bottom: 1px solid #F1E9DF; color: {{l.c}}; text-decoration: none; font-size: 15px">
+        <span>{{l.n}}</span><span style="font-size: 13px; color: #6E5E55">{{l.v}}</span>
+      </a>
+    </sc-for>
+  </div>
+  <div style="flex-grow: 1"></div>
+  <div style="padding: 0 16px 22px; font-size: 12px; color: #6E5E55; text-align: center">قهوة ستّي · نسخة 0.1 · تصنيف +12</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { snd: true, mus: true, push: true, gloss: true, voice: false }; }
+  renderVals() {
+    var self = this, s = this.state;
+    var rows = [
+      ['snd', 'الأصوات', ''], ['mus', 'الموسيقى', ''],
+      ['push', 'التنبيهات', 'لما تمتلي الطاقة أو يبلّش حدث'],
+      ['gloss', 'شرح الكلمات المحلية', 'كلمات مظلّلة بالقصة بتشرح معناها'],
+      ['voice', 'صوت الحوار كامل', 'إذا مسكّر: الشخصيات الأساسية بس']
+    ];
+    return {
+      toggles: rows.map(function (r) {
+        var on = !!s[r[0]];
+        return {
+          id: 'set-' + r[0], n: r[1], sub: r[2], aria: on ? 'true' : 'false',
+          track: on ? '#1D6C67' : '#D8CBBE', side: on ? 'left' : 'right',
+          flip: function () { var n = {}; n[r[0]] = !s[r[0]]; self.setState(n); }
+        };
+      }),
+      links: [
+        { n: 'اللغة', v: 'العربية', href: 'AgeGate.dc.html', c: '#2A1D17' },
+        { n: 'ربط الحساب', v: 'Apple / Google', href: '#link', c: '#2A1D17' },
+        { n: 'المساعدة والتواصل', v: '', href: '#help', c: '#2A1D17' },
+        { n: 'الخصوصية والشروط', v: '', href: '#privacy', c: '#2A1D17' },
+        { n: 'احذفي حسابي', v: '', href: '#delete', c: '#9B2C3F' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

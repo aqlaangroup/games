@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>Friday market mini board</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rakkas&amp;family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#14504C}a:hover{color:#1D6C67}
+</style>
+</helmet>
+<div dir="rtl" style="width: 390px; height: 844px; box-sizing: border-box; background: #DCEDEA; color: #2A1D17; font-family: 'IBM Plex Sans Arabic', system-ui, sans-serif; display: flex; flex-direction: column; overflow: hidden">
+  <div style="height: 30px; background: repeating-linear-gradient(90deg, #1D6C67 0 26px, #FAF6F1 26px 52px); border-radius: 0 0 14px 14px"></div>
+  <div style="padding: 10px 16px 6px; display: flex; justify-content: space-between; align-items: center">
+    <a href="EventsHub.dc.html" aria-label="رجوع" style="width: 44px; height: 44px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; color: #2A1D17">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M9 5 l7 7 -7 7"></path></svg>
+    </a>
+    <div style="display: flex; gap: 6px">
+      <div style="background: #FFFFFF; border-radius: 999px; padding: 4px 12px; font-size: 14px; font-weight: 700">14 سلّة</div>
+      <div style="background: #FFFFFF; border-radius: 999px; padding: 4px 12px; font-size: 13px; font-weight: 700">باقي 3 أيام</div>
+    </div>
+  </div>
+  <div style="padding: 0 18px 8px">
+    <div style="font-family: 'Rakkas', serif; font-size: 30px; color: #14504C; line-height: 1.2">سوق الجمعة</div>
+    <div style="font-size: 13px; color: #2A1D17">ادمجي البهارات لحد ما توصلي صينية الزعتر. كل طلب على اللوحة الكبيرة = سلّتين.</div>
+  </div>
+
+  <div style="margin: 4px 14px 0; background: #FFFFFF; border-radius: 14px; padding: 10px 12px">
+    <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 700"><span>المرحلة 4 من 10</span><span>الجايزة: 20 جوهرة</span></div>
+    <div style="display: flex; gap: 4px; margin-top: 8px">
+      <sc-for list="{{steps}}" as="s" hint-placeholder-count="10">
+        <div style="flex: 1; height: 10px; border-radius: 3px; background: {{s.c}}"></div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="margin: 12px 30px 0; padding: 8px; background: #F1E9DF; border-radius: 16px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px">
+    <sc-for list="{{cells}}" as="c" hint-placeholder-count="30">
+      <div style="aspect-ratio: 1; border-radius: 10px; background: {{c.bg}}; position: relative; display: flex; align-items: center; justify-content: center">
+        <sc-if value="{{c.has}}" hint-placeholder-val="{{false}}">
+          <svg width="34" height="34" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8 h10 v11 a2 2 0 0 1 -2 2 h-6 a2 2 0 0 1 -2 -2z" fill="{{c.jar}}"></path><rect x="6" y="5" width="12" height="4" rx="1.5" fill="#7A4A2A"></rect><path d="M9 14 h6" stroke="#FAF6F1" stroke-width="1.6"></path></svg>
+          <div style="position: absolute; left: 4px; bottom: 2px; font-size: 10px; font-weight: 700; color: #6E5E55">{{c.lv}}</div>
+        </sc-if>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="flex-grow: 1"></div>
+  <div style="padding: 0 16px 24px; display: flex; gap: 10px; align-items: center">
+    <button type="button" style="flex: 1; height: 60px; border: 2px solid #C98E10; border-radius: 14px; background: #F6E8C6; font-family: inherit; font-size: 16px; font-weight: 700; color: #2A1D17; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer">
+      <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9 h18 l-2 11 h-14z" fill="#C98E10"></path><path d="M7 9 l3 -5 M17 9 l-3 -5" stroke="#8A5F00" stroke-width="1.8"></path></svg>
+      سلّة البهارات · 1 سلّة
+    </button>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var jars = ['#C9A227', '#B85A2A', '#7E2F43', '#4C6B2E', '#1D6C67', '#8A5F00', '#B84A60', '#14504C'];
+    var layout = [1, 1, 0, 2, 0, 0, 3, 2, 0, 1, 4, 0, 0, 0, 0, 0, 2, 0, 5, 0, 1, 0, 0, 0, 3, 0, 0, 1, 0, 0];
+    return {
+      steps: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(function (n) { return { c: n < 4 ? '#1D6C67' : n === 4 ? '#C98E10' : '#E6DCD2' }; }),
+      cells: layout.map(function (lv) { return { has: lv > 0, lv: lv || '', jar: jars[(lv || 1) - 1], bg: lv > 0 ? '#FFFFFF' : '#F7F1EA' }; })
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>Memory album</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rakkas&amp;family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#1D6C67}a:hover{color:#14504C}
+</style>
+</helmet>
+<div dir="rtl" style="width: 390px; height: 844px; box-sizing: border-box; background: #F1E9DF; color: #2A1D17; font-family: 'IBM Plex Sans Arabic', system-ui, sans-serif; display: flex; flex-direction: column; overflow: hidden">
+  <div style="padding: 18px 16px 6px; display: flex; justify-content: space-between; align-items: center">
+    <a href="EventsHub.dc.html" aria-label="رجوع" style="width: 44px; height: 44px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; color: #2A1D17">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M9 5 l7 7 -7 7"></path></svg>
+    </a>
+    <div style="font-size: 13px; font-weight: 700; color: #6E5E55">باقي 31 يوم</div>
+  </div>
+  <div style="padding: 0 18px 10px">
+    <div style="font-family: 'Rakkas', serif; font-size: 30px; color: #7E2F43; line-height: 1.2">ألبوم الذكريات</div>
+    <div style="font-size: 14px; color: #6E5E55">صور ستّي القديمة. كل 8 طلبات بتجيكِ رزمة صور.</div>
+  </div>
+
+  <div style="display: flex; gap: 6px; padding: 0 14px 10px; overflow: hidden">
+    <sc-for list="{{sets}}" as="s" hint-placeholder-count="5">
+      <button type="button" onClick="{{s.pick}}" style="flex-shrink: 0; min-height: 40px; padding: 0 12px; border-radius: 999px; border: 2px solid {{s.ring}}; background: {{s.bg}}; font-family: inherit; font-size: 13px; font-weight: 700; color: #2A1D17; cursor: pointer">{{s.n}} · {{s.got}}/9</button>
+    </sc-for>
+  </div>
+
+  <div style="margin: 0 14px; background: #FFFFFF; border-radius: 18px; padding: 12px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+    <sc-for list="{{cards}}" as="c" hint-placeholder-count="9">
+      <div style="aspect-ratio: 3 / 4; border-radius: 10px; background: {{c.bg}}; border: 3px solid {{c.frame}}; box-sizing: border-box; position: relative; overflow: hidden; display: flex; align-items: flex-end">
+        <sc-if value="{{c.has}}" hint-placeholder-val="{{true}}">
+          <div style="position: absolute; top: 14%; left: 50%; transform: translateX(-50%); width: 36%; aspect-ratio: 1; border-radius: 50%; background: {{c.tone}}"></div>
+          <div style="position: absolute; bottom: 24%; left: 18%; right: 18%; height: 26%; border-radius: 40px 40px 0 0; background: {{c.tone2}}"></div>
+          <div style="position: relative; width: 100%; background: rgba(255,255,255,0.88); font-size: 11px; font-weight: 700; text-align: center; padding: 3px 2px">{{c.n}}</div>
+        </sc-if>
+        <sc-if value="{{c.missing}}" hint-placeholder-val="{{false}}">
+          <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: 'Rakkas', serif; font-size: 28px; color: #B3A398">؟</div>
+        </sc-if>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="margin: 12px 14px 0; background: #FFFFFF; border-radius: 14px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px">
+    <div style="display: flex; justify-content: space-between; font-size: 14px; font-weight: 700"><span>نجوم الصور المكرّرة</span><span>34 / 50</span></div>
+    <div style="height: 8px; border-radius: 4px; background: #F1E9DF"><div style="height: 8px; border-radius: 4px; width: 68%; background: #C98E10"></div></div>
+    <div style="font-size: 12px; color: #6E5E55">صندوق النجوم فيه: 25 جوهرة + 100 طاقة + نسخة من صندوق الشاي</div>
+  </div>
+  <div style="flex-grow: 1"></div>
+  <div style="margin: 0 14px 10px; background: #F6E8C6; border-radius: 12px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center">
+    <div style="font-size: 14px"><b>جايزة المجموعة:</b> كرسي ستّي الهزّاز</div>
+    <div style="font-size: 13px; font-weight: 700; color: #6B4A00">6/9</div>
+  </div>
+  <div style="padding: 0 16px 22px; font-size: 12px; color: #6E5E55; text-align: center">رزم الصور ما بتنباع بمصاري. بتجي من اللعب بس.</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { set: 1 }; }
+  renderVals() {
+    var self = this;
+    var setNames = [['عرس ستّي', 9], ['بيت ستّي', 6], ['شارع الرينبو', 4], ['رحلة الرياض', 2], ['العيد', 0]];
+    var names = ['ستّي صبية', 'جدّي خليل', 'باب البيت', 'شجرة الليمون', 'المطبخ القديم', 'الدلّة الأولى', 'سهرة الجيران', 'سلمى صغيرة', 'لانا صغيرة'];
+    var tones = [['#E8C3A0', '#7E2F43'], ['#D8B48A', '#1D6C67'], ['#C9A27A', '#8A5F00'], ['#E8C3A0', '#4C6B2E']];
+    var got = setNames[this.state.set][1];
+    return {
+      sets: setNames.map(function (s, i) {
+        return { n: s[0], got: s[1], ring: self.state.set === i ? '#7E2F43' : '#E6DCD2', bg: self.state.set === i ? '#FFFFFF' : '#FAF6F1', pick: function () { self.setState({ set: i }); } };
+      }),
+      cards: names.map(function (n, i) {
+        var has = i < got, t = tones[i % 4];
+        return { n: n, has: has, missing: !has, bg: has ? '#EDE0D0' : '#F7F1EA', frame: has ? '#C98E10' : '#E6DCD2', tone: t[0], tone2: t[1] };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

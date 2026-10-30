@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>Storage</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rakkas&amp;family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#1D6C67}a:hover{color:#14504C}
+</style>
+</helmet>
+<div dir="rtl" style="width: 390px; height: 844px; box-sizing: border-box; background: #FAF6F1; color: #2A1D17; font-family: 'IBM Plex Sans Arabic', system-ui, sans-serif; position: relative; overflow: hidden">
+  <div style="position: absolute; top: 90px; left: 10px; right: 10px; padding: 6px; background: #F1E9DF; border-radius: 16px; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px">
+    <sc-for list="{{board}}" as="c" hint-placeholder-count="42">
+      <div style="aspect-ratio: 1; border-radius: 9px; background: {{c.bg}}"></div>
+    </sc-for>
+  </div>
+  <div style="position: absolute; inset: 0; background: rgba(42,29,23,0.4)"></div>
+
+  <div style="position: absolute; bottom: 0; left: 0; right: 0; background: #FFFFFF; border-radius: 24px 24px 0 0; padding: 12px 18px 28px; display: flex; flex-direction: column; gap: 14px">
+    <div style="width: 44px; height: 5px; border-radius: 3px; background: #E6DCD2; align-self: center"></div>
+    <div style="display: flex; justify-content: space-between; align-items: baseline">
+      <div style="font-family: 'Rakkas', serif; font-size: 26px">الخزانة</div>
+      <div style="font-size: 14px; color: #6E5E55">4 من 6 مليانين</div>
+    </div>
+    <div style="font-size: 14px; color: #6E5E55; line-height: 1.6">خبّي القطع اللي بدّك إياها بعدين، عشان تضل اللوحة فاضية للشغل.</div>
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px">
+      <sc-for list="{{slots}}" as="s" hint-placeholder-count="8">
+        <div style="aspect-ratio: 1; border-radius: 14px; background: {{s.bg}}; border: 2px {{s.border}}; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; position: relative">
+          <sc-if value="{{s.cup}}" hint-placeholder-val="{{false}}"><svg width="38" height="38" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9 h12 l-2 8 h-8z" fill="#FFFFFF" stroke="#1D6C67" stroke-width="1.8"></path><path d="M7 11 h10" stroke="#7A4A2A" stroke-width="2"></path><path d="M4 20 h16" stroke="#1D6C67" stroke-width="2" stroke-linecap="round"></path></svg></sc-if>
+          <sc-if value="{{s.cookie}}" hint-placeholder-val="{{false}}"><svg width="38" height="38" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="8" fill="#E9C27A"></circle><circle cx="12" cy="13" r="4.5" fill="none" stroke="#B88A3E" stroke-width="1.4"></circle></svg></sc-if>
+          <sc-if value="{{s.tea}}" hint-placeholder-val="{{false}}"><svg width="38" height="38" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5 h8 l-1.5 15 h-5z" fill="#F6E8C6" stroke="#C98E10" stroke-width="1.4"></path><path d="M8.6 10 h6.8 l-1 10 h-4.8z" fill="#B85A2A"></path></svg></sc-if>
+          <sc-if value="{{s.locked}}" hint-placeholder-val="{{false}}">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6E5E55" stroke-width="2" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11 V8 a4 4 0 0 1 8 0 V11"></path></svg>
+            <div style="font-size: 12px; font-weight: 700; color: #14504C; display: flex; align-items: center; gap: 2px">{{s.cost}}<svg width="11" height="11" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 L20 10 L12 21 L4 10z" fill="#1D6C67"></path></svg></div>
+          </sc-if>
+          <sc-if value="{{s.hasLv}}" hint-placeholder-val="{{false}}"><div style="position: absolute; left: 6px; bottom: 3px; font-size: 11px; font-weight: 700; color: #6E5E55">{{s.lv}}</div></sc-if>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display: flex; gap: 10px">
+      <button type="button" style="flex: 1; height: 50px; border: 0; border-radius: 14px; background: #1D6C67; color: #FFFFFF; font-family: inherit; font-size: 16px; font-weight: 700; cursor: pointer">رجّعي القطعة للوحة</button>
+      <button type="button" style="flex: 1; height: 50px; border: 2px solid #1D6C67; border-radius: 14px; background: #FFFFFF; color: #14504C; font-family: inherit; font-size: 16px; font-weight: 700; cursor: pointer">افتحي خانة · 30</button>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var board = [];
+    for (var i = 0; i < 42; i++) board.push({ bg: (i * 5 + 2) % 4 < 2 ? '#FFFFFF' : '#F7F1EA' });
+    var base = { cup: false, cookie: false, tea: false, locked: false, hasLv: false, lv: '', cost: '' };
+    function s(o) { return Object.assign({}, base, o); }
+    var slots = [
+      s({ cup: true, hasLv: true, lv: 6, bg: '#FFFFFF', border: 'solid #C98E10' }),
+      s({ cookie: true, hasLv: true, lv: 5, bg: '#FFFFFF', border: 'solid #E6DCD2' }),
+      s({ tea: true, hasLv: true, lv: 4, bg: '#FFFFFF', border: 'solid #E6DCD2' }),
+      s({ cookie: true, hasLv: true, lv: 5, bg: '#FFFFFF', border: 'solid #E6DCD2' }),
+      s({ bg: '#F7F1EA', border: 'dashed #D8CBBE' }),
+      s({ bg: '#F7F1EA', border: 'dashed #D8CBBE' }),
+      s({ locked: true, cost: 30, bg: '#F1E9DF', border: 'solid #E6DCD2' }),
+      s({ locked: true, cost: 60, bg: '#F1E9DF', border: 'solid #E6DCD2' })
+    ];
+    return { board: board, slots: slots };
+  }
+}
+</script>
+</body>
+</html>

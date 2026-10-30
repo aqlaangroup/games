@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>Events hub</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rakkas&amp;family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#1D6C67}a:hover{color:#14504C}
+</style>
+</helmet>
+<div dir="rtl" style="width: 390px; height: 844px; box-sizing: border-box; background: #FAF6F1; color: #2A1D17; font-family: 'IBM Plex Sans Arabic', system-ui, sans-serif; display: flex; flex-direction: column; overflow: hidden">
+  <div style="padding: 18px 16px 10px; display: flex; justify-content: space-between; align-items: center">
+    <div style="font-family: 'Rakkas', serif; font-size: 28px">الفعاليات</div>
+    <div style="background: #F6E8C6; color: #6B4A00; border-radius: 999px; padding: 4px 12px; font-size: 13px; font-weight: 700">ويكند الضعف: العملات ×2</div>
+  </div>
+
+  <div style="padding: 0 14px; display: flex; flex-direction: column; gap: 10px">
+    <sc-for list="{{events}}" as="e" hint-placeholder-count="4">
+      <a href="{{e.href}}" style="display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 16px; background: {{e.bg}}; color: {{e.fg}}; text-decoration: none; min-height: 76px">
+        <div style="width: 52px; height: 52px; border-radius: 12px; background: {{e.iconBg}}; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: 'Rakkas', serif; font-size: 22px; color: {{e.iconFg}}">{{e.mark}}</div>
+        <div style="flex: 1; min-width: 0">
+          <div style="font-size: 16px; font-weight: 700">{{e.t}}</div>
+          <div style="font-size: 12px; opacity: 0.85">{{e.sub}}</div>
+          <div style="height: 6px; border-radius: 3px; background: rgba(0,0,0,0.12); margin-top: 6px"><div style="height: 6px; border-radius: 3px; width: {{e.pct}}; background: {{e.bar}}"></div></div>
+        </div>
+        <div style="font-size: 12px; font-weight: 700; white-space: nowrap; opacity: 0.9">{{e.time}}</div>
+      </a>
+    </sc-for>
+  </div>
+
+  <div style="padding: 16px 16px 6px; font-size: 16px; font-weight: 700">مهام اليوم</div>
+  <div style="padding: 0 14px; display: flex; flex-direction: column; gap: 8px">
+    <sc-for list="{{tasks}}" as="t" hint-placeholder-count="3">
+      <div style="display: flex; align-items: center; gap: 10px; background: #FFFFFF; border: 1px solid #E6DCD2; border-radius: 12px; padding: 10px 12px">
+        <div style="flex: 1; min-width: 0">
+          <div style="font-size: 14px; font-weight: 600">{{t.t}}</div>
+          <div style="height: 5px; border-radius: 3px; background: #F1E9DF; margin-top: 6px"><div style="height: 5px; border-radius: 3px; width: {{t.pct}}; background: #1D6C67"></div></div>
+        </div>
+        <div style="font-size: 13px; font-weight: 700; color: #6E5E55; width: 46px; text-align: center">{{t.prog}}</div>
+        <sc-if value="{{t.done}}" hint-placeholder-val="{{false}}">
+          <button type="button" style="height: 40px; padding: 0 12px; border: 0; border-radius: 10px; background: #1D6C67; color: #FFFFFF; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer">خديها</button>
+        </sc-if>
+      </div>
+    </sc-for>
+    <div style="font-size: 12px; color: #6E5E55">كل مهمة: جوهرتين + 50 نقطة للتذكرة</div>
+  </div>
+
+  <div style="flex-grow: 1"></div>
+  <div style="margin: 0 14px 22px; padding: 12px 14px; border-radius: 14px; background: #10302E; color: #F6D88A; display: flex; justify-content: space-between; align-items: center">
+    <div><div style="font-size: 12px; color: #BFD9D5">جاي قريباً</div><div style="font-family: 'Rakkas', serif; font-size: 20px">ليالي رمضان</div></div>
+    <a href="Event.dc.html" style="color: #F6D88A; font-size: 14px; font-weight: 700; min-height: 44px; display: flex; align-items: center">شوفي ←</a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      events: [
+        { t: 'سباق القهوة', sub: 'إنتِ التانية من 5 · 18 من 30 طلب', time: '21 ساعة', pct: '60%', href: 'Race.dc.html', bg: '#1D6C67', fg: '#FFFFFF', iconBg: '#F6D88A', iconFg: '#2A1D17', bar: '#F6D88A', mark: '2' },
+        { t: 'تذكرة الموسم', sub: 'الدرجة 12 من 30', time: '16 يوم', pct: '40%', href: 'Pass.dc.html', bg: '#FFFFFF', fg: '#2A1D17', iconBg: '#F6E8C6', iconFg: '#6B4A00', bar: '#C98E10', mark: '12' },
+        { t: 'ألبوم الذكريات', sub: 'صور ستّي القديمة · 31 من 81', time: '31 يوم', pct: '38%', href: 'Album.dc.html', bg: '#FFFFFF', fg: '#2A1D17', iconBg: '#F1E9DF', iconFg: '#7E2F43', bar: '#B84A60', mark: '31' },
+        { t: 'سوق الجمعة', sub: 'لوحة صغيرة · جوائز لحد 10 مراحل', time: 'بعد يوم', pct: '0%', href: 'MiniBoard.dc.html', bg: '#FFFFFF', fg: '#2A1D17', iconBg: '#DCEDEA', iconFg: '#14504C', bar: '#1D6C67', mark: '5' }
+      ],
+      tasks: [
+        { t: 'قدّمي 10 طلبات', prog: '10/10', pct: '100%', done: true },
+        { t: 'ادمجي 30 مرة', prog: '22/30', pct: '73%', done: false },
+        { t: 'اصرفي 100 طاقة', prog: '64/100', pct: '64%', done: false }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
