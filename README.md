@@ -21,7 +21,8 @@ games/                     one folder per game
 unity-shared/              shared Unity package (com.aqlaan.cozykit) for systems every game reuses
 platform/                  ONE .NET application for every game
   src/Platform.Domain      shared data model
-  src/Platform.Api         player sign-in, saves, purchases, config, events
+  src/Platform.Api         player accounts and sign-in, cloud saves, support, purchases, config, events, staff admin API
+  tests/Platform.Tests     API tests on a throwaway PostgreSQL database
   (admin web app to come)  one admin panel for all games
 ```
 

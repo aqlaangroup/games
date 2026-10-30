@@ -3,7 +3,7 @@
   "name": { "ar": "قهوة ستّي", "en": "Gahwit Sitti" },
   "stores": {
     "apple": { "bundleId": "com.aqlaan.gahwitsitti", "appId": "[set after App Store Connect setup]" },
-    "google": { "packageName": "com.aqlaan.gahwitsitti" }
+    "google": { "packageName": "com.aqlaan.gahwitsitti", "signInClientIds": ["[set after Google Cloud setup]"] }
   },
   "balanceConfig": "design/balance.json",
   "products": [

@@ -6,3 +6,4 @@ TestResults/
 # IDE
 *.user
 *.suo
+.vs/

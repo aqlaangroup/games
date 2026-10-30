@@ -1,86 +1,121 @@
-using System.Collections.Concurrent;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Threading.RateLimiting;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Platform.Api;
+using Platform.Api.Admin;
+using Platform.Api.Auth;
+using Platform.Api.Data;
+using Platform.Api.Games;
+using Platform.Api.Players;
 using Platform.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
+var services = builder.Services;
 
-// In-memory stores keep the skeleton runnable. Replace with EF Core + PostgreSQL.
-builder.Services.AddSingleton<PlatformStore>();
-builder.Services.AddSingleton<IStoreVerifier>(new NotConfiguredVerifier(Store.Apple));
-builder.Services.AddSingleton<IStoreVerifier>(new NotConfiguredVerifier(Store.Google));
+services.AddDbContext<PlatformDb>((sp, options) => options.UseNpgsql(
+    sp.GetRequiredService<IConfiguration>().GetConnectionString("Platform")
+    ?? throw new InvalidOperationException("ConnectionStrings:Platform is not set.")));
+services.ConfigureHttpJsonOptions(o =>
+    o.SerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)));
+
+services.AddSingleton(TimeProvider.System);
+services.AddSingleton<SigningKeys>();
+services.AddSingleton<TokenService>();
+services.AddHttpClient("jwks");
+services.AddSingleton<IJwksProvider, HttpJwksProvider>();
+services.AddSingleton<IdentityVerifier>();
+services.AddSingleton<IAppleTokenRevoker, NotConfiguredAppleTokenRevoker>();
+services.AddSingleton<SaveSanity>();
+services.AddScoped<GameRegistry>();
+services.AddScoped<AccountService>();
+services.AddScoped<WalletService>();
+services.AddScoped<AccountPurger>();
+services.AddScoped<StaffAccounts>();
+services.AddHostedService<AccountPurgeService>();
+
+// Store verification is a stub that refuses every receipt until the real Apple and Google calls are added.
+services.AddSingleton<IStoreVerifier>(new NotConfiguredVerifier(Store.Apple));
+services.AddSingleton<IStoreVerifier>(new NotConfiguredVerifier(Store.Google));
+
+// Two kinds of access token: players (one game each) and staff.
+services.AddAuthentication().AddJwtBearer(AuthSchemes.Player).AddJwtBearer(AuthSchemes.Admin);
+foreach (var scheme in new[] { AuthSchemes.Player, AuthSchemes.Admin })
+    services.AddOptions<JwtBearerOptions>(scheme).Configure<SigningKeys>((o, keys) =>
+    {
+        o.MapInboundClaims = false;
+        o.TokenValidationParameters = keys.Parameters(scheme);
+    });
+services.AddAuthorizationBuilder()
+    .AddPolicy(AuthSchemes.Player, p => p.AddAuthenticationSchemes(AuthSchemes.Player).RequireAuthenticatedUser())
+    .AddPolicy(AuthSchemes.Admin, p => p.AddAuthenticationSchemes(AuthSchemes.Admin).RequireAuthenticatedUser());
+services.AddRateLimiter(RateLimits.Configure);
 
 var app = builder.Build();
 
-app.MapGet("/health", () => Results.Ok(new { status = "ok" }));
+// Fails at startup, not at the first sign-in, when the signing key is missing outside Development.
+app.Services.GetRequiredService<SigningKeys>();
 
-var games = app.MapGroup("/games/{slug}");
-
-games.MapGet("/time", () => Results.Ok(new { now = DateTimeOffset.UtcNow }));
-
-games.MapGet("/config", (string slug, PlatformStore db) =>
+await using (var scope = app.Services.CreateAsyncScope())
 {
-    var game = db.FindGame(slug);
-    if (game is null) return Results.NotFound();
-    var config = db.Configs.Values.Where(c => c.GameId == game.Id && c.IsActive).MaxBy(c => c.Version);
+    var db = scope.ServiceProvider.GetRequiredService<PlatformDb>();
+    if (app.Environment.IsDevelopment() || app.Configuration.GetValue<bool>("Database:MigrateOnStartup") || args is ["create-owner", ..])
+        await db.Database.MigrateAsync();
+    await scope.ServiceProvider.GetRequiredService<GameRegistry>().SyncAsync();
+
+    // dotnet run -- create-owner someone@example.com
+    if (args is ["create-owner", var ownerEmail])
+    {
+        var password = await scope.ServiceProvider.GetRequiredService<StaffAccounts>().CreateOwnerAsync(ownerEmail, default);
+        Console.WriteLine($"{StaffAccounts.Normalize(ownerEmail)} is an owner of every registered game.");
+        Console.WriteLine($"Temporary password (shown once; change it after signing in): {password}");
+        return;
+    }
+}
+
+app.UseRateLimiter();
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapGet("/health", () => Results.Ok(new { status = "ok" }));
+AdminEndpoints.MapStaff(app);
+
+var games = app.MapGroup("/games/{slug}").AddEndpointFilter<GameFilter>();
+
+games.MapGet("/time", (TimeProvider clock) =>
+{
+    var now = clock.GetUtcNow();
+    return Results.Ok(new { now, nowMs = now.ToUnixTimeMilliseconds() });
+});
+
+games.MapGet("/config", async (HttpContext http, PlatformDb db, CancellationToken ct) =>
+{
+    var gameId = http.Game().Id;
+    var config = await db.Configs.Where(c => c.GameId == gameId && c.IsActive)
+        .OrderByDescending(c => c.Version).FirstOrDefaultAsync(ct);
     return config is null ? Results.NotFound() : Results.Text(config.Json, "application/json");
 });
 
-games.MapGet("/events", (string slug, PlatformStore db) =>
+games.MapGet("/events", async (HttpContext http, PlatformDb db, TimeProvider clock, CancellationToken ct) =>
 {
-    var game = db.FindGame(slug);
-    if (game is null) return Results.NotFound();
-    var now = DateTimeOffset.UtcNow;
-    return Results.Ok(db.Events.Values.Where(e => e.GameId == game.Id && e.StartsAt <= now && e.EndsAt > now));
+    var gameId = http.Game().Id;
+    var now = clock.GetUtcNow();
+    return Results.Ok(await db.Events.Where(e => e.GameId == gameId && e.StartsAt <= now && e.EndsAt > now).ToListAsync(ct));
 });
 
-// TODO: replace the playerId query parameter with the player from a verified sign-in token.
-games.MapPost("/purchases/verify", async (string slug, Guid playerId, VerifyRequest request,
-    PlatformStore db, IEnumerable<IStoreVerifier> verifiers, CancellationToken ct) =>
-{
-    var game = db.FindGame(slug);
-    if (game is null) return Results.NotFound();
-
-    var product = db.Products.Values.FirstOrDefault(p => p.GameId == game.Id && p.Sku == request.Sku);
-    if (product is null) return Results.BadRequest(new { error = "Unknown product for this game." });
-
-    var verifier = verifiers.First(v => v.Store == request.Store);
-    var receipt = await verifier.VerifyAsync(game, request, ct);
-    if (receipt is null) return Results.BadRequest(new { error = "The store did not confirm this purchase." });
-
-    // The same store transaction can only grant once.
-    var key = $"{request.Store}:{receipt.StoreTransactionId}";
-    var purchase = new Purchase
-    {
-        GameId = game.Id, PlayerId = playerId, Store = request.Store,
-        StoreTransactionId = receipt.StoreTransactionId, Sku = receipt.Sku,
-        Price = receipt.Price, Currency = receipt.Currency, PurchasedAt = receipt.PurchasedAt,
-    };
-    if (!db.Purchases.TryAdd(key, purchase)) return Results.Ok(new { alreadyGranted = true });
-
-    var wallet = db.Wallets.GetOrAdd((game.Id, playerId), _ => new Wallet { GameId = game.Id, PlayerId = playerId });
-    lock (wallet)
-    {
-        foreach (var (item, amount) in product.Grants)
-            if (long.TryParse(amount, out var n))
-                wallet.Balances[item] = wallet.Balances.GetValueOrDefault(item) + n;
-    }
-    return Results.Ok(new { granted = product.Grants, wallet = wallet.Balances });
-});
+var signedIn = games.MapGroup("").RequireAuthorization(AuthSchemes.Player).AddEndpointFilter<PlayerFilter>();
+var me = signedIn.MapGroup("/players/me");
+PlayerEndpoints.Map(games, me);
+PlayerEndpoints.MapSignOut(signedIn);
+SaveEndpoints.Map(me);
+SupportEndpoints.Map(me);
+PurchaseEndpoints.Map(signedIn);
+AdminEndpoints.MapGame(games);
 
 app.MapPost("/webhooks/apple", () => Results.Ok());   // TODO: App Store Server Notifications v2
 app.MapPost("/webhooks/google", () => Results.Ok());  // TODO: Real-time developer notifications
 
 app.Run();
 
-/// <summary>Temporary in-memory data. Every collection is keyed or filtered by GameId.</summary>
-public class PlatformStore
-{
-    public ConcurrentDictionary<Guid, Game> Games { get; } = new();
-    public ConcurrentDictionary<Guid, Product> Products { get; } = new();
-    public ConcurrentDictionary<Guid, ConfigVersion> Configs { get; } = new();
-    public ConcurrentDictionary<Guid, LiveEvent> Events { get; } = new();
-    public ConcurrentDictionary<string, Purchase> Purchases { get; } = new();
-    public ConcurrentDictionary<(Guid GameId, Guid PlayerId), Wallet> Wallets { get; } = new();
-
-    public Game? FindGame(string slug) => Games.Values.FirstOrDefault(g => g.Slug == slug);
-}
+public partial class Program;
