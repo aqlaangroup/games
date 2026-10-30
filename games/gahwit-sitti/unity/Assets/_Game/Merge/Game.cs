@@ -14,8 +14,6 @@ namespace Gahwit.Merge
     // Times are trusted milliseconds from TimeService, never the phone clock.
     public sealed class Game
     {
-        // The "FromLevel5" in balance.json's orders.twoItemOrderChanceFromLevel5.
-        const int TwoLineOrdersFromLevel = 5;
 
         public readonly BalanceConfig Config;
         public readonly ChapterContent Content;
@@ -297,8 +295,8 @@ namespace Gahwit.Merge
             // Fairness (GAME_SYSTEMS.md section 6): orders only use chains whose generator the player has.
             var pool = AllPieces.Where(p => p.IsGenerator).Select(p => p.Chain).Distinct().OrderBy(c => c).ToList();
             float size = Config.OrderSizeUnits(State.Level);
-            bool twoLines = State.Level >= TwoLineOrdersFromLevel && pool.Count > 1 &&
-                            rng.NextDouble() < Config.Orders.TwoItemOrderChanceFromLevel5;
+            bool twoLines = State.Level >= Config.Orders.TwoItemOrderFromLevel && pool.Count > 1 &&
+                            rng.NextDouble() < Config.Orders.TwoItemOrderChance;
             int lineCount = twoLines ? 2 : 1;
 
             var lines = new List<OrderLine>();

@@ -1,4 +1,4 @@
-{"v":3,"createdOnFiles":{"v":1,"at":"2026-10-30T12:00:00Z"},"title":"Qahwet Sitti Screens","launch":{"view":"canvas"},"pages":[],"boards":{
+{"v":3,"createdOnFiles":{"v":1,"at":"2026-10-30T12:00:00Z"},"title":"Gahwit Sitti Screens","launch":{"view":"canvas"},"pages":[],"boards":{
 "Main.dc.html":{"x":0,"y":0,"w":390,"h":844,"title":"1.1 · Title screen","is_interactive":true},
 "AgeGate.dc.html":{"x":470,"y":0,"w":390,"h":844,"title":"1.2 · Language and age","is_interactive":true},
 "Tutorial.dc.html":{"x":940,"y":0,"w":390,"h":844,"title":"1.3 · First merge tutorial","is_interactive":true},
@@ -13,7 +13,6 @@
 "ChapterDone.dc.html":{"x":940,"y":2600,"w":390,"h":844,"title":"3.3 · Chapter complete","is_interactive":true},
 "Journal.dc.html":{"x":1410,"y":2600,"w":390,"h":844,"title":"3.4 · Story journal","is_interactive":true},
 "EventsHub.dc.html":{"x":0,"y":3900,"w":390,"h":844,"title":"4.1 · Events hub","is_interactive":true},
-"Race.dc.html":{"x":470,"y":3900,"w":390,"h":844,"title":"4.2 · Coffee race","is_interactive":true},
 "Album.dc.html":{"x":940,"y":3900,"w":390,"h":844,"title":"4.3 · Memory album","is_interactive":true},
 "Pass.dc.html":{"x":1410,"y":3900,"w":390,"h":844,"title":"4.4 · Season pass","is_interactive":true},
 "MiniBoard.dc.html":{"x":1880,"y":3900,"w":390,"h":844,"title":"4.5 · Friday market mini board","is_interactive":true},
@@ -23,7 +22,7 @@
 "Friends.dc.html":{"x":940,"y":5200,"w":390,"h":844,"title":"5.3 · Friends and gifts","is_interactive":true},
 "Settings.dc.html":{"x":1410,"y":5200,"w":390,"h":844,"title":"5.4 · Settings","is_interactive":true}
 },
-"order":["Main.dc.html","AgeGate.dc.html","Tutorial.dc.html","DailyLogin.dc.html","Board.dc.html","Bubble.dc.html","Storage.dc.html","OutOfEnergy.dc.html","LevelUp.dc.html","Cafe.dc.html","Story.dc.html","ChapterDone.dc.html","Journal.dc.html","EventsHub.dc.html","Race.dc.html","Album.dc.html","Pass.dc.html","MiniBoard.dc.html","Event.dc.html","Shop.dc.html","Starter.dc.html","Friends.dc.html","Settings.dc.html"],
+"order":["Main.dc.html","AgeGate.dc.html","Tutorial.dc.html","DailyLogin.dc.html","Board.dc.html","Bubble.dc.html","Storage.dc.html","OutOfEnergy.dc.html","LevelUp.dc.html","Cafe.dc.html","Story.dc.html","ChapterDone.dc.html","Journal.dc.html","EventsHub.dc.html","Album.dc.html","Pass.dc.html","MiniBoard.dc.html","Event.dc.html","Shop.dc.html","Starter.dc.html","Friends.dc.html","Settings.dc.html"],
 "notes":{
 "rowA":{"x":0,"y":-300,"text":"1 · البداية — Start","kind":"title1","maxW":1800},
 "rowB":{"x":0,"y":1000,"text":"2 · اللعب — Core play","kind":"title1","maxW":2270},

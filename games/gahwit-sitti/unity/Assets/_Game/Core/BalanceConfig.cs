@@ -19,6 +19,8 @@ namespace Gahwit.Core
         public OrdersConfig Orders;
         public List<ChapterConfig> Chapters;
         public PlayerLevelsConfig PlayerLevels;
+        public SavesConfig Saves;
+        public UiConfig Ui;
         public LevelBConfig LevelB;
 
         public static BalanceConfig Parse(string json) => JsonConvert.DeserializeObject<BalanceConfig>(json);
@@ -140,7 +142,8 @@ namespace Gahwit.Core
         public float XpPerUnit;
         public Dictionary<string, int> SlotsByPlayerLevel;
         public Dictionary<string, int> MaxItemLevelByPlayerLevel;
-        public float TwoItemOrderChanceFromLevel5;
+        public float TwoItemOrderChance;
+        public int TwoItemOrderFromLevel;
         public float CharacterOrderChance;
     }
 
@@ -170,9 +173,32 @@ namespace Gahwit.Core
         public int Energy; // gems come from Formulas.LevelUpGems
     }
 
+    public sealed class SavesConfig
+    {
+        public float LocalEverySeconds;
+        public float CloudEverySeconds;
+    }
+
+    public sealed class UiConfig
+    {
+        public KitchenHintsConfig KitchenHints;
+    }
+
+    public sealed class KitchenHintsConfig
+    {
+        public int LowEnergy;
+        public int NearlyFullEmptySquares;
+    }
+
     public sealed class LevelBConfig
     {
+        public CafeConfig Cafe;
         public MemoriesConfig Memories;
+    }
+
+    public sealed class CafeConfig
+    {
+        public Dictionary<string, int> TimeOfDayStartHours; // morning, afternoon, evening, night
     }
 
     public sealed class MemoriesConfig

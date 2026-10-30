@@ -16,6 +16,6 @@
     { "sku": "gs.gems.max", "type": "consumable", "usdTier": 99.99, "grants": { "gems": 7500 } },
     { "sku": "gs.energy", "type": "consumable", "usdTier": 2.99, "grants": { "energy": 500, "gems": 20 } },
     { "sku": "gs.decor.eid", "type": "non-consumable", "usdTier": 4.99, "grants": { "decorSet": "eid_lanterns", "outfit": "salma_eid", "gems": 60 } },
-    { "sku": "gs.pass", "type": "subscription", "usdTier": 7.99, "periodDays": 28, "grants": { "passPremium": true } }
+    { "sku": "gs.pass", "type": "non-renewing", "usdTier": 7.99, "periodDays": 28, "grants": { "passPremium": true } }
   ]
 }

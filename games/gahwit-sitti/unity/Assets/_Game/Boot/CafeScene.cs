@@ -17,9 +17,6 @@ namespace Gahwit.Boot
     // scene), plays story scenes, saves on the phone and keeps the cloud save up to date.
     public sealed class CafeScene : MonoBehaviour
     {
-        const float SaveEverySeconds = 2f;   // COMPLETE_SPEC.md section 9
-        const float SyncEverySeconds = 60f;  // same section: sent to the platform every 60 seconds
-
         readonly Dictionary<string, StoryPlayer> stories = new Dictionary<string, StoryPlayer>();
         readonly Queue<Action> afterScene = new Queue<Action>();
         TimeService time;
@@ -48,7 +45,7 @@ namespace Gahwit.Boot
             var camera = Camera.main;
             cafe = new GameObject("Cafe").AddComponent<CafeRoom>();
             cafe.Build(FindSun(), camera);
-            cafe.SetTimeOfDay(CafeRoom.TimeFromClock(DateTime.Now));
+            cafe.SetTimeOfDay(CafeRoom.TimeFromClock(DateTime.Now, config.LevelB.Cafe.TimeOfDayStartHours));
             cafe.Apply(game.CompletedTaskIds(), game.State.TaskStyles, game.Content.Styles);
             var cafeCamera = camera.gameObject.AddComponent<CafeCamera>();
 
@@ -64,7 +61,7 @@ namespace Gahwit.Boot
             game.ChapterCompleted += OnChapterCompleted;
             Debug.Log("[Boot] Café and interface built.");
 
-            nextSync = Time.unscaledTime + SyncEverySeconds;
+            nextSync = Time.unscaledTime + game.Config.Saves.CloudEverySeconds; // COMPLETE_SPEC.md section 9
             Run(account.Start);
             if (account.NeedsAgeGate) ui.AgeGate.Show(account.Language, (language, birthYear) =>
             {
@@ -218,7 +215,7 @@ namespace Gahwit.Boot
             if (dirty && Time.unscaledTime >= nextSave) Save();
             if (Time.unscaledTime >= nextSync)
             {
-                nextSync = Time.unscaledTime + SyncEverySeconds;
+                nextSync = Time.unscaledTime + game.Config.Saves.CloudEverySeconds; // COMPLETE_SPEC.md section 9
                 Run(() => account.Sync(false));
             }
         }
@@ -227,7 +224,7 @@ namespace Gahwit.Boot
         {
             if (reloading || game == null) return;
             dirty = false;
-            nextSave = Time.unscaledTime + SaveEverySeconds;
+            nextSave = Time.unscaledTime + game.Config.Saves.LocalEverySeconds;
             saves.Save(game.State, time);
         }
 

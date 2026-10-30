@@ -1,7 +1,7 @@
 namespace Platform.Domain;
 
 public enum Store { Apple, Google }
-public enum ProductType { Consumable, NonConsumable, Subscription }
+public enum ProductType { Consumable, NonConsumable, Subscription, NonRenewing }
 public enum PurchaseStatus { Verified, Refunded, Revoked }
 public enum TicketStatus { Open, Closed }
 

@@ -17,7 +17,7 @@ This repo holds several mobile games and one shared .NET platform. Games are bui
 - **Every new system ships with EditMode tests** for its rules.
 - **Text:**
   - All player-facing text comes from Unity Localization string tables and renders with RTLTMPro. Never type Arabic into a scene or a string literal.
-  - Dialogue lives in Ink files under `Content/Story/`.
+  - Dialogue lives in Ink files under `Content/Resources/Story/` (Resources, so the game can load them at runtime).
 - **Money and time:**
   - Gems, purchases and anything bought with money are changed only from platform API replies. Never grant them on the client.
   - Energy and event timers use the time service: server time plus the phone's uptime counter, never the phone clock alone.

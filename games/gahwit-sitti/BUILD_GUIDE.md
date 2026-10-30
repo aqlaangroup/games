@@ -57,7 +57,7 @@ Don't build everything at once. Each ring is playable and testable on its own.
 | Ring | Contains | Purpose |
 |---|---|---|
 | **1. Vertical slice** | Café floor (15 decor), merge kitchen (coffee + sweets), Abu Fadi as a regular, chapter 1, pour memory, the letter, 5 wardrobe pieces, tutorial, local save | Test with 30–50 women. Gate: 70%+ want to keep playing |
-| **2. Soft-launch MVP** | Chapters 1–5, tea and Saudi coffee chains, 6 regulars, 10 recipes, 5 memories (pour, rhythm, find, restore, choose), 30 decor, 20 wardrobe pieces, pass, album, mini board, shop, rewarded ads, cloud save, platform purchases, analytics, notifications, settings, postcards | Soft launch in Jordan, Egypt, Saudi Arabia |
+| **2. Soft-launch MVP** | Chapters 1–5, tea and Saudi coffee chains, 6 regulars, 10 recipes, 5 memories (pour, rhythm, find, restore, and find again in chapter 5), 30 decor, 20 wardrobe pieces, pass, album, mini board, shop, rewarded ads, cloud save, platform purchases, analytics, notifications, settings, postcards | Soft launch in Jordan, Egypt, Saudi Arabia |
 | **3. Full season 1** | Chapters 6–10, rooftop, breakfast chain, 12 regulars, 20 recipes, 10 memories, 60 decor, 40 wardrobe pieces, friends, hosting, visits, Sitti wall | Launch |
 
 **Moved out of the MVP on purpose**

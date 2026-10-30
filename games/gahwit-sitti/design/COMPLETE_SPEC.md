@@ -30,26 +30,28 @@ Goal: the player feels the story within 60 seconds and has served Abu Fadi withi
 | Player level | Unlocks |
 |---|---|
 | 1 | Kitchen, coffee and sweets chains, café floor, chapter 1 |
-| 2 | Storage (2 slots), decor shop (5 pieces) |
+| 2 | Storage (6 slots), decor shop (5 pieces) |
 | 3 | Daily gift, starter pack offer, rewarded ads |
 | 4 | 4th order slot, Salma's wardrobe |
 | 5 | Recipes (the cooking pan) |
 | 6 | Season pass, regulars' friendship levels |
 | 7 | Memory album event |
 | 8 | Mini board events |
-| 10 | Friends, gifts, café visits, postcards |
+| 10 | Friends, gifts, café visits, postcards, Sitti wall |
 | 12 | 5th order slot, hosting (big orders with friends) |
-| 14 | Sitti wall |
+| 15 | Events show their full calendar |
 | Chapter 3 | Tea chain |
 | Chapter 5 | Saudi coffee chain |
 | Chapter 6 | Rooftop |
 | Chapter 7 | Breakfast chain |
 
+**Numbers:** the schedule lives in `balance.json` `unlocks` (this table and GAME_SYSTEMS.md section 8 were merged on 2026-10-31).
+
 **How unlocks are shown:** each one gets a short frosted card with one sentence and one button. It never shows more than one card per session.
 
 ## 3. Notifications
 
-Notifications are opt-in. The game asks only after the first memory, never at first launch. There are at most 2 a day and none between 23:00 and 08:00 local time, except when the player has chosen the Ramadan night option.
+Notifications are opt-in. Their text is in Salma's café voice (Amman dialect), like dialogue; CLAUDE.md's neutral Arabic is for menus. The numbers below live in `balance.json` `notifications`. The game asks only after the first memory, never at first launch. There are at most 2 a day and none between 23:00 and 08:00 local time, except when the player has chosen the Ramadan night option.
 
 | Trigger | Text |
 |---|---|

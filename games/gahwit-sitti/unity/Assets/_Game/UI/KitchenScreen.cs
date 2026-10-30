@@ -10,7 +10,6 @@ namespace Gahwit.UI
     // The merge kitchen: orders on top, the board with its generators, and a line about the selected piece.
     public sealed class KitchenScreen : MonoBehaviour
     {
-        const int LowEnergy = 5, NearlyFullSquares = 8;
 
         Game game;
         GameUi ui;
@@ -92,8 +91,8 @@ namespace Gahwit.UI
                 sell.Label().text = Loc.T("kitchen.sell", game.SellValue(item));
             }
             else if (game.State.OrdersServed == 0) info.text = Loc.T("kitchen.hint.start") + $"\n<size=22>{Loc.T("kitchen.hint.merge")}</size>";
-            else if (game.EmptyCells < NearlyFullSquares) info.text = Loc.T("kitchen.hint.full");
-            else if (game.State.Energy < LowEnergy) info.text = Loc.T("kitchen.hint.lowEnergy");
+            else if (game.EmptyCells < game.Config.Ui.KitchenHints.NearlyFullEmptySquares) info.text = Loc.T("kitchen.hint.full");
+            else if (game.State.Energy < game.Config.Ui.KitchenHints.LowEnergy) info.text = Loc.T("kitchen.hint.lowEnergy");
             else info.text = Loc.T("kitchen.hint.merge");
         }
     }

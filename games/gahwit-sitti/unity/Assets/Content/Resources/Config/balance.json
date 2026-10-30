@@ -1,17 +1,37 @@
 {
   "version": 1,
-  "notes": "Single source of truth for Qahwet Sitti season 1 balance. Unity loads this (or a remote-config copy). All numbers are starting values to tune with soft-launch data.",
+  "notes": "Single source of truth for Gahwit Sitti season 1 balance. Unity loads this (or a remote-config copy). All numbers are starting values to tune with soft-launch data.",
   "formulas": {
     "notes": "Machine-readable versions of the prose formulas below. Unity reads these; keep both in step, and update sim/simulate.py if they change.",
-    "itemUnits": { "base": 2, "comment": "a level-L item is worth base^(L-1) units" },
+    "itemUnits": {
+      "base": 2,
+      "comment": "a level-L item is worth base^(L-1) units"
+    },
     "sellCoinsPerLevel": 1,
-    "orderSizeUnits": { "base": 6, "perLevel": 1.6 },
+    "orderSizeUnits": {
+      "base": 6,
+      "perLevel": 1.6
+    },
     "orderMaxItemsPerLine": 3,
-    "orderLevelPick": { "topLevelChance": 0.5, "spread": 2, "comment": "half the lines ask for the level cap; the rest pick evenly from up to 'spread' levels below it" },
+    "orderLevelPick": {
+      "topLevelChance": 0.5,
+      "spread": 2,
+      "comment": "half the lines ask for the level cap; the rest pick evenly from up to 'spread' levels below it"
+    },
     "orderMinCoins": 3,
-    "xpToNext": { "base": 60, "perLevel": 30, "perLevelSquared": 2 },
-    "levelUpGems": { "base": 5, "levelDivisor": 2 },
-    "taskXp": { "base": 10, "perChapter": 2 }
+    "xpToNext": {
+      "base": 60,
+      "perLevel": 30,
+      "perLevelSquared": 2
+    },
+    "levelUpGems": {
+      "base": 5,
+      "levelDivisor": 2
+    },
+    "taskXp": {
+      "base": 10,
+      "perChapter": 2
+    }
   },
   "board": {
     "cols": 7,
@@ -26,6 +46,7 @@
       300
     ],
     "freeSpaceTargetPct": 25,
+    "freeSpaceOfferAfterHoursAway": 4,
     "mergeRule": "two identical items of the same chain and level become one item of the next level"
   },
   "energy": {
@@ -356,7 +377,8 @@
       "20": 9,
       "25": 10
     },
-    "twoItemOrderChanceFromLevel5": 0.3,
+    "twoItemOrderChance": 0.3,
+    "twoItemOrderFromLevel": 5,
     "characterOrderChance": 0.4,
     "rewardRounding": "round to whole coins; minimum 3 coins",
     "rewardedAdDoubleCoinsPerDay": 3
@@ -373,8 +395,112 @@
     "rewards": {
       "energy": 50,
       "gems": "5 + floor(L/2)",
-      "notes": "Level 4: 4th order slot. Level 8: inventory tutorial. Level 10: friends and gifting. Level 12: 5th order slot. Level 15: first generator copy outside story."
+      "notes": "What unlocks at each level is in 'unlocks'."
     }
+  },
+  "unlocks": {
+    "notes": "The one unlock schedule: COMPLETE_SPEC.md section 2 and GAME_SYSTEMS.md section 8 merged on 2026-10-31. Order slots come from orders.slotsByPlayerLevel and chains from chains.*.unlockChapter; they're listed here only so the unlock cards know what to announce. At most one unlock card per session.",
+    "byPlayerLevel": {
+      "1": [
+        "kitchen",
+        "chain_coffee",
+        "chain_sweets",
+        "cafe_floor",
+        "chapter_1"
+      ],
+      "2": [
+        "storage",
+        "decor_shop"
+      ],
+      "3": [
+        "daily_gift",
+        "starter_pack",
+        "rewarded_ads",
+        "shop"
+      ],
+      "4": [
+        "order_slot_4",
+        "wardrobe"
+      ],
+      "5": [
+        "recipes"
+      ],
+      "6": [
+        "season_pass",
+        "regular_friendship"
+      ],
+      "7": [
+        "album_event"
+      ],
+      "8": [
+        "mini_board_event"
+      ],
+      "10": [
+        "friends",
+        "gifts",
+        "cafe_visits",
+        "postcards",
+        "sitti_wall"
+      ],
+      "12": [
+        "order_slot_5",
+        "hosting"
+      ],
+      "15": [
+        "full_event_calendar"
+      ]
+    },
+    "byChapter": {
+      "3": [
+        "chain_tea"
+      ],
+      "5": [
+        "chain_saudi"
+      ],
+      "6": [
+        "rooftop"
+      ],
+      "7": [
+        "chain_dairy"
+      ]
+    },
+    "decorShopPiecesAtUnlock": 5,
+    "noShopOrAdsBeforeLevel": 3,
+    "unlockCardsPerSession": 1
+  },
+  "tutorial": {
+    "steps": 11,
+    "easyOrdersAfter": 3,
+    "easyOrder": {
+      "lines": 1,
+      "maxItemLevel": 2
+    },
+    "notes": "COMPLETE_SPEC.md section 1. The easy order's shape is proposed (2026-10-31)."
+  },
+  "saves": {
+    "localEverySeconds": 2,
+    "cloudEverySeconds": 60,
+    "notes": "COMPLETE_SPEC.md section 9. Account deletion (30 days) is a platform setting: Accounts:DeletionGraceDays."
+  },
+  "notifications": {
+    "maxPerDay": 2,
+    "quietHoursStart": 23,
+    "quietHoursEnd": 8,
+    "awayDays": 3,
+    "eventEndingHours": 6,
+    "askAfterFirstMemory": true,
+    "notes": "COMPLETE_SPEC.md section 3."
+  },
+  "ui": {
+    "largeTextScale": 1.2,
+    "minTextPt": 12,
+    "minTouchTargetPt": 44,
+    "panelSlideSeconds": 0.35,
+    "kitchenHints": {
+      "lowEnergy": 5,
+      "nearlyFullEmptySquares": 8
+    },
+    "notes": "COMPLETE_SPEC.md sections 5 and 8; CLAUDE.md for touch targets. kitchenHints say when the kitchen shows 'low energy' and 'board nearly full'."
   },
   "chapters": [
     {
@@ -600,7 +726,72 @@
     "rewardEach": {
       "gems": 2,
       "passPoints": 50
-    }
+    },
+    "list": [
+      {
+        "id": "serve_10",
+        "en": "Serve 10 orders",
+        "target": 10
+      },
+      {
+        "id": "merge_30",
+        "en": "Merge 30 times",
+        "target": 30
+      },
+      {
+        "id": "spend_energy_100",
+        "en": "Spend 100 energy",
+        "target": 100
+      },
+      {
+        "id": "tap_generators_40",
+        "en": "Tap generators 40 times",
+        "target": 40
+      },
+      {
+        "id": "serve_regular_3",
+        "en": "Serve a regular 3 times",
+        "target": 3
+      },
+      {
+        "id": "make_level5_2",
+        "en": "Make 2 level-5 items",
+        "target": 2
+      },
+      {
+        "id": "sell_5",
+        "en": "Sell 5 items",
+        "target": 5
+      },
+      {
+        "id": "earn_coins_300",
+        "en": "Earn 300 coins",
+        "target": 300
+      },
+      {
+        "id": "place_decor_1",
+        "en": "Place or move a decor piece",
+        "target": 1
+      },
+      {
+        "id": "wear_outfit_1",
+        "en": "Change Salma's outfit",
+        "target": 1
+      },
+      {
+        "id": "send_gifts_3",
+        "en": "Send 3 gifts to friends",
+        "target": 3,
+        "fromLevel": 10
+      },
+      {
+        "id": "help_hosting_5",
+        "en": "Give 5 items to a hosting order",
+        "target": 5,
+        "fromLevel": 12
+      }
+    ],
+    "proposed": "Proposed on 2026-10-31 where the specs gave no number (missing/02). Tune in playtests. Applies to list."
   },
   "currencies": {
     "coins": "soft; earned from orders; spent on café tasks and decor",
@@ -613,84 +804,12 @@
       "Every bundle lists its exact contents",
       "Prices use App Store / Google Play local tiers (SAR, AED, EGP, JOD)"
     ],
-    "products": [
-      {
-        "id": "starter",
-        "usd": 0.99,
-        "oncePerPlayer": true,
-        "contents": {
-          "gems": 80,
-          "energy": 200,
-          "generatorCopy": "gen_coffee"
-        },
+    "productsSource": "game.json (the platform grants from it)",
+    "productDisplay": {
+      "gs.starter": {
         "showAfterPlayerLevel": 3
-      },
-      {
-        "id": "gems_s",
-        "usd": 1.99,
-        "contents": {
-          "gems": 100
-        }
-      },
-      {
-        "id": "gems_m",
-        "usd": 4.99,
-        "contents": {
-          "gems": 275
-        }
-      },
-      {
-        "id": "gems_l",
-        "usd": 9.99,
-        "contents": {
-          "gems": 600
-        }
-      },
-      {
-        "id": "gems_xl",
-        "usd": 19.99,
-        "contents": {
-          "gems": 1300
-        }
-      },
-      {
-        "id": "gems_xxl",
-        "usd": 49.99,
-        "contents": {
-          "gems": 3500
-        }
-      },
-      {
-        "id": "gems_max",
-        "usd": 99.99,
-        "contents": {
-          "gems": 7500
-        }
-      },
-      {
-        "id": "energy_pack",
-        "usd": 2.99,
-        "contents": {
-          "energy": 500,
-          "gems": 20
-        }
-      },
-      {
-        "id": "decor_eid",
-        "usd": 4.99,
-        "contents": {
-          "decorSet": "eid_lanterns",
-          "outfit": "salma_eid",
-          "gems": 60
-        }
-      },
-      {
-        "id": "season_pass",
-        "usd": 7.99,
-        "periodDays": 28,
-        "contents": "premium track of the season pass"
       }
-    ]
+    }
   },
   "events": {
     "templates": {
@@ -701,7 +820,25 @@
         "cardsPerSet": 9,
         "packEveryNOrders": 8,
         "paidPacks": false,
-        "duplicates": "turn into stars for a star chest with listed contents"
+        "duplicates": "turn into stars for a star chest with listed contents",
+        "setReward": {
+          "gems": 5,
+          "energy": 50
+        },
+        "completeReward": {
+          "gems": 50,
+          "decor": "album_frame"
+        },
+        "starChest": {
+          "starCost": 30,
+          "contents": {
+            "gems": 10,
+            "energy": 100,
+            "coins": 500
+          }
+        },
+        "starsPerDuplicate": 1,
+        "proposed": "Proposed on 2026-10-31 where the specs gave no number (missing/02). Tune in playtests. Applies to setReward, completeReward, starChest and starsPerDuplicate. The cards themselves are story content, written with the story bible (missing/11)."
       },
       "pass": {
         "ar": "تذكرة الموسم",
@@ -709,7 +846,54 @@
         "tiers": 30,
         "pointsPerEnergySpent": 1,
         "pointsPerTier": 400,
-        "premiumUsd": 7.99
+        "premiumUsd": 7.99,
+        "rewards": {
+          "free": {
+            "cycle": [
+              {
+                "coins": 100
+              },
+              {
+                "energy": 40
+              },
+              {
+                "coins": 150
+              },
+              {
+                "energy": 60
+              },
+              {
+                "gems": 5
+              }
+            ]
+          },
+          "premium": {
+            "cycle": [
+              {
+                "gems": 10
+              },
+              {
+                "energy": 100
+              },
+              {
+                "coins": 300
+              },
+              {
+                "energy": 150
+              },
+              {
+                "gems": 15
+              }
+            ],
+            "itemsAtTiers": {
+              "10": "outfit",
+              "20": "decor",
+              "30": "decor_set"
+            }
+          },
+          "notes": "Each track repeats its 5-tier cycle over the 30 tiers; premium also gives an item at tiers 10, 20 and 30."
+        },
+        "proposed": "Proposed on 2026-10-31 where the specs gave no number (missing/02). Tune in playtests. Applies to rewards."
       },
       "miniBoard": {
         "ar": "سوق الجمعة",
@@ -718,7 +902,86 @@
         "boardRows": 6,
         "chainLevels": 8,
         "tokensPerOrder": 2,
-        "milestones": 10
+        "milestones": 10,
+        "chain": [
+          [
+            "حبّة زيتون",
+            "Olive"
+          ],
+          [
+            "حفنة زيتون",
+            "Handful of olives"
+          ],
+          [
+            "صحن زيتون",
+            "Plate of olives"
+          ],
+          [
+            "مرطبان زيتون",
+            "Jar of olives"
+          ],
+          [
+            "سلّة زيتون",
+            "Basket of olives"
+          ],
+          [
+            "تنكة زيت",
+            "Tin of olive oil"
+          ],
+          [
+            "بسطة زيتون",
+            "Olive stall"
+          ],
+          [
+            "معصرة صغيرة",
+            "Small olive press"
+          ]
+        ],
+        "milestoneTokens": [
+          10,
+          25,
+          45,
+          70,
+          100,
+          135,
+          175,
+          220,
+          270,
+          330
+        ],
+        "milestoneRewards": [
+          {
+            "coins": 200
+          },
+          {
+            "energy": 50
+          },
+          {
+            "gems": 5
+          },
+          {
+            "coins": 400
+          },
+          {
+            "energy": 100
+          },
+          {
+            "gems": 10
+          },
+          {
+            "coins": 800
+          },
+          {
+            "energy": 150
+          },
+          {
+            "gems": 20
+          },
+          {
+            "decor": "friday_market_stall"
+          }
+        ],
+        "proposed": "Proposed on 2026-10-31 where the specs gave no number (missing/02). Tune in playtests. Applies to chain, milestoneTokens and milestoneRewards. The item names are drafts in neutral Arabic."
       },
       "frenzy": {
         "ar": "ويكند الضعف",
@@ -791,7 +1054,6 @@
     ]
   },
   "social": {
-    "unlockPlayerLevel": 10,
     "features": [
       "send 5 energy gifts per day",
       "visit a friend's café",
@@ -805,10 +1067,16 @@
       "rotationStepDegrees": 90,
       "decorPiecesSeason1": 60,
       "styles": [
-        "old_levantine",
-        "modern_ammani",
-        "gulf_majlis"
+        "old",
+        "modern",
+        "gulf"
       ],
+      "timeOfDayStartHours": {
+        "morning": 6,
+        "afternoon": 12,
+        "evening": 17,
+        "night": 20
+      },
       "styleSetBonusAt": 3,
       "cosinessPerPiece": [
         1,
@@ -824,7 +1092,17 @@
         90,
         150,
         230
-      ]
+      ],
+      "tipBonusPerCosinessPoint": 0.005,
+      "tipBonusMax": 0.5,
+      "decorPriceCoinsByTier": [
+        50,
+        150,
+        400,
+        900,
+        2000
+      ],
+      "proposed": "Proposed on 2026-10-31 where the specs gave no number (missing/02). Tune in playtests. Applies to afternoon's start hour, tip bonus and decor price tiers."
     },
     "walkIns": {
       "tipCoins": [
@@ -919,7 +1197,93 @@
         "tune",
         "choose",
         "reassemble"
-      ]
+      ],
+      "byChapter": {
+        "1": "pour",
+        "2": "rhythm",
+        "3": "find",
+        "4": "restore",
+        "5": "find",
+        "6": "trace",
+        "7": "tune",
+        "8": "choose",
+        "9": "reassemble",
+        "10": "pour"
+      },
+      "skipRetryGems": 10,
+      "rhythm": {
+        "beatsPerMinute": 84,
+        "perfectWindowMs": 90,
+        "goodWindowMs": 180,
+        "beats": 40,
+        "starsAtAccuracy": [
+          0.5,
+          0.75,
+          0.9
+        ]
+      },
+      "find": {
+        "objects": 8,
+        "seconds": 90,
+        "hintAfterSeconds": 20,
+        "starsAtSecondsLeft": [
+          1,
+          30,
+          50
+        ]
+      },
+      "restore": {
+        "pieces": 12,
+        "snapDistance": 0.06,
+        "seconds": 120,
+        "starsAtSecondsLeft": [
+          1,
+          40,
+          70
+        ]
+      },
+      "trace": {
+        "pathPoints": 60,
+        "toleranceCm": 0.4,
+        "starsAtAccuracy": [
+          0.5,
+          0.75,
+          0.9
+        ]
+      },
+      "tune": {
+        "dialRange": [
+          88.0,
+          108.0
+        ],
+        "targetWidth": 0.4,
+        "hintWidth": 2.0,
+        "seconds": 60,
+        "starsAtSecondsLeft": [
+          1,
+          20,
+          40
+        ]
+      },
+      "choose": {
+        "choices": 6,
+        "secondsPerChoice": 8,
+        "starsAtGoodChoices": [
+          2,
+          4,
+          6
+        ]
+      },
+      "reassemble": {
+        "strips": 7,
+        "seconds": 90,
+        "starsAtSecondsLeft": [
+          1,
+          30,
+          55
+        ]
+      },
+      "proposed": "Proposed on 2026-10-31 where the specs gave no number (missing/02). Tune in playtests. Applies to byChapter's chapters 5 and 10, skipRetryGems, and every type except pour."
     },
     "wardrobe": {
       "season1Pieces": 40,
@@ -937,7 +1301,15 @@
         "coins": 15,
         "events_pass": 6,
         "premium_sets": 4
-      }
+      },
+      "priceCoinsByTier": [
+        100,
+        250,
+        500,
+        900,
+        1500
+      ],
+      "proposed": "Proposed on 2026-10-31 where the specs gave no number (missing/02). Tune in playtests. Applies to priceCoinsByTier."
     },
     "hosting": {
       "perWeek": 2,
@@ -945,10 +1317,15 @@
       "itemsNeeded": 30,
       "maxHelpers": 3,
       "helperFriendship": 10,
-      "presetMessages": 12
+      "presetMessages": 12,
+      "rewards": {
+        "hostGems": 15,
+        "helperGems": 5,
+        "soloBotRewardShare": 0.5
+      },
+      "proposed": "Proposed on 2026-10-31 where the specs gave no number (missing/02). Tune in playtests. Applies to rewards."
     },
     "sittiWall": {
-      "unlockPlayerLevel": 10,
       "maxChars": 140,
       "moderation": [
         "automatic",

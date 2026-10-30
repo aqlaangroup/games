@@ -27,7 +27,7 @@ Their numbers live in `balance.json` under `levelB`. They are starting values to
 | Decor in season 1 | 60 pieces: 20 earned from tasks, 25 bought with coins, 10 from events, 5 premium sets |
 | Styles | Old Levantine, Modern Ammani, Gulf majlis. Matching 3+ pieces of a style gives a cosy bonus. |
 | Cosiness score | Sum of placed pieces (1–5 each) plus style bonuses. Higher scores bring more walk-in customers (+1 table, up to 6) and more tips. |
-| Time of day | Morning, afternoon, evening and night follow the phone's clock. Each has its own light, music and regulars. |
+| Time of day | Morning, afternoon, evening and night follow the phone's clock (start hours in `balance.json` `levelB.cafe.timeOfDayStartHours`). Each has its own light, music and regulars. |
 | Weather | Sunny most days; rain and fog in winter, from the date. Purely for mood. |
 
 ## 3. Customers
@@ -75,7 +75,7 @@ Their numbers live in `balance.json` under `levelB`. They are starting values to
 
 ## 5. Playable memories
 
-One memory per chapter, so 10 in season 1. Each lasts 3–5 minutes and uses one of 8 reusable game types:
+One memory per chapter, so 10 in season 1. Each lasts 3–5 minutes and uses one of 8 reusable game types. Chapter 5 reuses Find in a new 1974 room, and chapter 10 closes with Pour: Salma makes the two cups Teta's letter asked for (`balance.json` `levelB.memories.byChapter`).
 
 | Type | How you play | First used |
 |---|---|---|

@@ -9,7 +9,7 @@ using UnityEngine.Rendering.Universal;
 
 namespace Gahwit.Cafe
 {
-    public enum TimeOfDay { Morning, Evening, Night }
+    public enum TimeOfDay { Morning, Afternoon, Evening, Night } // SYSTEMS_B.md section 2
 
     // The café room built from simple shapes, ported from cafe-3d/index.html, until the 3D art arrives.
     // Each chapter 1 task changes one part of the room; Apply() shows the room for the tasks finished so far.
@@ -27,6 +27,7 @@ namespace Gahwit.Cafe
         static readonly Dictionary<TimeOfDay, TimePreset> Presets = new Dictionary<TimeOfDay, TimePreset>
         {
             [TimeOfDay.Morning] = new TimePreset { Background = Hex("#F3E4E4"), Sky = Hex("#D7E4F2"), Sun = Hex("#FFE9D6"), SunIntensity = 1.3f, SunFrom = new Vector3(6, 9, 6), Ambient = 1f, Warm = 0f, Bulbs = 0.6f },
+            [TimeOfDay.Afternoon] = new TimePreset { Background = Hex("#F4E2DA"), Sky = Hex("#E3E6EE"), Sun = Hex("#FFE2C2"), SunIntensity = 1.25f, SunFrom = new Vector3(2, 10, 6), Ambient = 0.95f, Warm = 0.5f, Bulbs = 0.8f },
             [TimeOfDay.Evening] = new TimePreset { Background = Hex("#F1D9CF"), Sky = Hex("#F6C7A6"), Sun = Hex("#FFC48E"), SunIntensity = 1.0f, SunFrom = new Vector3(-7, 4.5f, 5), Ambient = 0.8f, Warm = 1.5f, Bulbs = 2f },
             [TimeOfDay.Night] = new TimePreset { Background = Hex("#2B2540"), Sky = Hex("#2E3560"), Sun = Hex("#9FB0E8"), SunIntensity = 0.25f, SunFrom = new Vector3(-4, 8, 3), Ambient = 0.45f, Warm = 3f, Bulbs = 4f }
         };
@@ -48,8 +49,14 @@ namespace Gahwit.Cafe
         TimePreset time;
         bool lightsOn;
 
-        public static TimeOfDay TimeFromClock(DateTime local) =>
-            local.Hour >= 6 && local.Hour < 17 ? TimeOfDay.Morning : local.Hour >= 17 && local.Hour < 20 ? TimeOfDay.Evening : TimeOfDay.Night;
+        // startHours: balance.json levelB.cafe.timeOfDayStartHours.
+        public static TimeOfDay TimeFromClock(DateTime local, IReadOnlyDictionary<string, int> startHours)
+        {
+            int hour = local.Hour;
+            if (hour >= startHours["night"] || hour < startHours["morning"]) return TimeOfDay.Night;
+            if (hour >= startHours["evening"]) return TimeOfDay.Evening;
+            return hour >= startHours["afternoon"] ? TimeOfDay.Afternoon : TimeOfDay.Morning;
+        }
 
         public void Build(Light sunLight, Camera camera)
         {

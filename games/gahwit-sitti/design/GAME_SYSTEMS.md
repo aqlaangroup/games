@@ -1,4 +1,4 @@
-# Qahwet Sitti: game systems (season 1)
+# Gahwit Sitti: game systems (season 1)
 
 This is the full system behind the game, ready for a Unity team to build.
 
@@ -98,16 +98,7 @@ This is the main small gem spend. It's never a random paid item, because the pla
 
 - **XP to the next level:** 60 + 30L + 2L², where L is the current level. For example, 92 XP from level 1 to 2, 560 XP from level 10 to 11, and 1,460 XP from level 20 to 21.
 - **Each level-up gives:** +50 energy and 5 + ⌊L/2⌋ gems.
-- **Features unlock by level:**
-
-| Level | What unlocks |
-|---|---|
-| 3 | Starter pack offer |
-| 4 | 4th order slot |
-| 8 | Storage tutorial |
-| 10 | Friends and gifting |
-| 12 | 5th order slot |
-| 15 | Events show their full calendar |
+- **Features unlock by level:** see `balance.json` `unlocks`, the one schedule (merged with COMPLETE_SPEC.md section 2 on 2026-10-31).
 
 ## 9. Café tasks and story
 
@@ -173,7 +164,7 @@ How the four player types compare:
 | Currency | Earned from | Spent on |
 |---|---|---|
 | Coins (soft) | Orders, selling, events | Café tasks, decor |
-| Gems (hard) | Purchases, level-ups, chapters, daily tasks, login, races | Energy, bubbles, storage, premium decor |
+| Gems (hard) | Purchases, level-ups, chapters, daily tasks, login, hosting | Energy, bubbles, storage, premium decor |
 | Event tokens | Orders during an event | That event's board only; never sold for money |
 
 ## 12. Shop
@@ -202,7 +193,7 @@ Five templates, reused with new art and story each time:
 
 | Template | How it works | Numbers |
 |---|---|---|
-| Coffee race (سباق القهوة) | 5 players race to serve 30 orders | 48 hours, twice a week; top 3 win gems and energy |
+| Hosting (عزومة) | Friends fill one big order of 30 items together (SYSTEMS_B.md section 7; it replaced the coffee race) | 48 hours, twice a week |
 | Memory album (ألبوم الذكريات) | Collect cards of Teta's old photos | 40 days, 9 sets × 9 cards, a pack every 8 orders, **packs never sold**; duplicates become stars for a chest with listed contents |
 | Season pass (تذكرة الموسم) | Points from energy spent | 28 days, 30 tiers × 400 points; free and premium tracks |
 | Mini board (سوق الجمعة) | A small 5 × 6 board with its own 8-level chain | 4 days; 2 tokens per order; 10 milestone rewards |
@@ -210,8 +201,8 @@ Five templates, reused with new art and story each time:
 
 **Weekly calendar**
 - **Always on:** pass, album, daily tasks, daily login.
-- **Monday–Wednesday:** race.
-- **Thursday–Sunday:** mini board and race.
+- **Monday–Wednesday:** hosting.
+- **Thursday–Sunday:** mini board and hosting.
 - **Friday–Saturday:** double weekend.
 
 That's about 20 events a month, which matches Gossip Harbor's early calendar.
@@ -221,7 +212,7 @@ That's about 20 events a month, which matches Gossip Harbor's early calendar.
 | Event | Based on | Length | Special feature |
 |---|---|---|---|
 | Ramadan Nights | Mini board | 30 days | A story scene unlocks each night after iftar |
-| Eid Ma'amoul | Race | 5 days | Gifting bundles |
+| Eid Ma'amoul | Hosting | 5 days | Gifting bundles |
 | Wedding season | Mini board | 14 days | |
 | Winter sahlab | Mini board | 10 days | |
 
@@ -282,7 +273,7 @@ These feed the soft-launch gates in `PLAN.md`:
 3. Tasks, café view and story for chapters 1–2.
 4. Save and analytics.
 5. Store and rewarded ads.
-6. One race and one mini-board event.
+6. One hosting and one mini-board event.
 
 ## 17. What to tune after the soft launch
 

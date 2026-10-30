@@ -1,4 +1,4 @@
-"""Pacing simulator for Qahwet Sitti season 1.
+"""Pacing simulator for Gahwit Sitti season 1.
 
 Reads ../balance.json and plays 35 days for several player types.
 It answers: when does each chapter finish, what player level is reached,

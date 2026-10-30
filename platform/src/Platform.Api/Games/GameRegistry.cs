@@ -61,6 +61,7 @@ public class GameRegistry(PlatformDb db, IConfiguration config, IHostEnvironment
             {
                 "non-consumable" => ProductType.NonConsumable,
                 "subscription" => ProductType.Subscription,
+                "non-renewing" => ProductType.NonRenewing, // a season pass: Apple has no 28-day auto-renewing period
                 _ => ProductType.Consumable,
             };
             product.OncePerPlayer = p.TryGetProperty("oncePerPlayer", out var once) && once.GetBoolean();

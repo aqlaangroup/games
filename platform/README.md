@@ -89,7 +89,7 @@ Every table has a `GameId`, except `Games` (it is the game) and `AdminUsers` (st
 | SaveFlag | an upload that looked impossible |
 | WalletBalance | one paid currency of one player, never below zero, changed only on the server |
 | WalletEntry | every wallet change: amount, source (purchase or admin), reason, who |
-| Product | sku, type (consumable, non-consumable, subscription), what it grants |
+| Product | sku, type (consumable, non-consumable, subscription, non-renewing for a fixed-length pass), what it grants |
 | Purchase | store, store transaction id (unique), sku, price, currency, status (verified, refunded) |
 | SupportTicket | a Help form message, with game version, device and language |
 | ConfigVersion | a published copy of the game's `balance.json`, with version and date |

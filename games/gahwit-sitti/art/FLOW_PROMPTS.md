@@ -1,4 +1,4 @@
-# Qahwet Sitti: art and animation prompt pack (Google Flow)
+# Gahwit Sitti: art and animation prompt pack (Google Flow)
 
 Use this in Google Flow: Nano Banana for images, Veo for video. Make the images first, then use them as **ingredients** (references) for every video, so the characters look the same in every shot.
 

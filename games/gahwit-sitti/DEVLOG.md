@@ -2,6 +2,54 @@
 
 Decisions and known gaps. Newest first. Read this at the start of each session (`/CLAUDE.md`).
 
+## 2026-10-31: spec conflicts settled, missing numbers added (missing/02)
+
+Each decision fixed the file that lost. Overturn any of them by changing `balance.json` and the spec together.
+
+**Rule used:** `balance.json` wins on numbers and `game.json` on products and the name. The level B docs (SYSTEMS_B.md) win over older text in GAME_SYSTEMS.md.
+
+**Decisions**
+- **Storage:** 6 slots (`board.inventorySlots`), opening at level 2. Fixed COMPLETE_SPEC.md and the save schema example.
+- **One unlock schedule:** `balance.json` `unlocks`. It merges COMPLETE_SPEC.md section 2 and GAME_SYSTEMS.md section 8:
+  - The Sitti wall opens at level 10, not 14.
+  - Level 8 opens mini board events. The old "storage tutorial at 8" goes, because storage opens at 2.
+  - Level 15 opens the full event calendar.
+  - Hosting opens at level 12; friends at 10.
+  - The duplicate `social.unlockPlayerLevel` and `sittiWall.unlockPlayerLevel` keys are gone.
+- **Times of day:** four (SYSTEMS_B.md), starting at 6, 12, 17 and 20 (`levelB.cafe.timeOfDayStartHours`). The afternoon hour and the afternoon look are new. `CafeRoom.TimeFromClock` reads the hours, with tests.
+- **Memories:** chapter 5 reuses Find in a new room. Chapter 10 ends with Pour: Salma makes the two cups Teta's letter asks for. Ring 2's memory list was fixed to match (BUILD_GUIDE.md).
+- **Decor count:** 25 at alpha (PLAN.md) and 30 at soft launch (BUILD_GUIDE.md) are two stages, not a conflict.
+- **Products:** `game.json` is the only product list, because the platform grants from it. `balance.json` keeps only display data keyed by SKU (`store.productDisplay`). Every price and content matched before the old list was removed.
+- **Season pass:** a **non-renewing** product, because Apple has no 28-day auto-renewing period. The platform runs the 28 days. Added `ProductType.NonRenewing` on the platform.
+- **Style ids:** `old`, `modern` and `gulf`, as saves and code already use.
+- **Races:** replaced by hosting everywhere (SYSTEMS_B.md section 7). `screens/Race` is removed, and the events hub shows hosting.
+- **Notifications:** written in Salma's café voice (Amman dialect). CLAUDE.md's neutral Arabic is for menus.
+- **Name:** "Gahwit Sitti" in docs, art and screens. Research notes keep their original titles.
+- **Ink folder:** `Content/Resources/Story/` (fixed in CLAUDE.md), so the game can load the stories at runtime.
+
+**Numbers moved into `balance.json`**
+- `unlocks` (with `noShopOrAdsBeforeLevel` 3).
+- `tutorial`: 3 easy orders after the tutorial.
+- `saves`: 2 s local, 60 s cloud.
+- `notifications`: 2 a day, quiet 23:00–08:00, away 3 days, 6 hours before an event ends.
+- `ui`: large text 1.2×, smallest text 12 pt, touch targets 44 pt, panel slide 0.35 s, kitchen hint thresholds.
+- `board.freeSpaceOfferAfterHoursAway`: 4.
+- `orders.twoItemOrderFromLevel`: 5, which used to live inside a key's name.
+- The code now reads the save timings, time-of-day hours, two-line order level and kitchen hints from the file.
+- Account deletion (30 days) stays a platform setting (`Accounts:DeletionGraceDays`).
+
+**Proposed numbers** (the specs gave none; each block says `proposed`, to tune in playtests)
+- Tip bonus from cosiness: 0.5% per point, up to +50%.
+- Decor price tiers: 50 to 2,000 coins. Wardrobe price tiers: 100 to 1,500 coins.
+- 10 gems to skip a memory retry, plus starting numbers for the 7 other memory types.
+- Hosting rewards: host 15 gems, helpers 5, and solo play with bots pays half.
+- Season pass: a 5-tier reward cycle per track, with premium items at tiers 10, 20 and 30.
+- Album: set, completion and star-chest rewards.
+- Mini board: an olive chain of 8 items (draft names) and 10 milestones.
+- Daily tasks: 12 tasks.
+
+**Pacing:** `sim/simulate.py` results are unchanged. None of the new numbers feeds chapter pacing until customers' tips exist (missing/08).
+
 ## 2026-10-31: Boot and Café scenes, package cleanup, audio drafts (missing/01)
 
 - **Two scenes** replace `SampleScene` (`unity/README.md`):

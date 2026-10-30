@@ -17,7 +17,7 @@
       { "i": 9, "gen": "gen_coffee", "genLevel": 2 }
     ],
     "storage": [ { "chain": "tea", "level": 4 }, null ],
-    "storageSlots": 2
+    "storageSlots": 6
   },
   "orders": [ { "id": "o_1029", "items": [ { "chain": "coffee", "level": 4 } ], "coins": 42, "xp": 26, "character": "abu_fadi" } ],
   "story": { "chapter": 3, "task": 2, "choices": { "c2_groom": "ask_who" }, "scenesSeen": ["intro", "sign", "chairs"], "lettersFound": ["letter_1"] },
