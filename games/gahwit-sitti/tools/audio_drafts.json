@@ -1,0 +1,181 @@
+{
+  "_note": "DRAFT music and sound effects made with ElevenLabs (sound effects API and Eleven Music, instrumental). Placeholders until the audio freelancers deliver (design/COMPLETE_SPEC.md section 7, BUILD_GUIDE.md section 1). Regenerate with tools/audio_drafts.py. Paths are relative to games/gahwit-sitti. Voice lines are in tools/voice_drafts.json.",
+  "cues": [
+    {
+      "id": "ui_tap",
+      "kind": "sfx",
+      "output": "unity/Assets/Audio/Sfx/Drafts/ui_tap.mp3",
+      "seconds": 0.5,
+      "prompt": "Soft warm wooden UI tap, a single gentle click, cozy mobile game button, no reverb"
+    },
+    {
+      "id": "ui_panel_open",
+      "kind": "sfx",
+      "output": "unity/Assets/Audio/Sfx/Drafts/ui_panel_open.mp3",
+      "seconds": 0.8,
+      "prompt": "Soft airy whoosh with a tiny glass chime, a frosted panel sliding open in a cozy mobile game"
+    },
+    {
+      "id": "ui_panel_close",
+      "kind": "sfx",
+      "output": "unity/Assets/Audio/Sfx/Drafts/ui_panel_close.mp3",
+      "seconds": 0.6,
+      "prompt": "Short soft reverse whoosh, a frosted panel sliding closed, gentle and quiet"
+    },
+    {
+      "id": "ui_coin",
+      "kind": "sfx",
+      "output": "unity/Assets/Audio/Sfx/Drafts/ui_coin.mp3",
+      "seconds": 0.8,
+      "prompt": "A few small brass coins clinking into a ceramic dish, bright and cheerful, short"
+    },
+    {
+      "id": "ui_gem",
+      "kind": "sfx",
+      "output": "unity/Assets/Audio/Sfx/Drafts/ui_gem.mp3",
+      "seconds": 1.0,
+      "prompt": "Sparkling crystal chime, a precious gem collected, magical and light"
+    },
+    {
+      "id": "ui_level_up",
+      "kind": "sfx",
+      "output": "unity/Assets/Audio/Sfx/Drafts/ui_level_up.mp3",
+      "seconds": 2.0,
+      "prompt": "Warm celebratory level up jingle, rising oud pluck flourish with soft bells and a light shimmer"
+    },
+    {
+      "id": "ui_error",
+      "kind": "sfx",
+      "output": "unity/Assets/Audio/Sfx/Drafts/ui_error.mp3",
+      "seconds": 0.5,
+      "prompt": "Soft low muted wooden knock, gentle 'not now' feedback, never harsh"
+    },
+    {
+      "id": "gen_tap_coffee",
+      "kind": "sfx",
+      "output": "unity/Assets/Audio/Sfx/Drafts/gen_tap_coffee.mp3",
+      "seconds": 0.6,
+      "prompt": "Shaking an old metal tin once, a few roasted coffee beans rattling out onto wood"
+    },
+    {
+      "id": "gen_tap_sweets",
+      "kind": "sfx",
+      "output": "unity/Assets/Audio/Sfx/Drafts/gen_tap_sweets.mp3",
+      "seconds": 0.6,
+      "prompt": "Soft thump of a small cloth sack of semolina set down, a light puff of flour"
+    },
+    {
+      "id": "merge",
+      "kind": "sfx",
+      "output": "unity/Assets/Audio/Sfx/Drafts/merge.mp3",
+      "seconds": 0.6,
+      "prompt": "Soft magical pop with a light sparkle, two objects merging into one, cozy mobile game"
+    },
+    {
+      "id": "merge_top",
+      "kind": "sfx",
+      "output": "unity/Assets/Audio/Sfx/Drafts/merge_top.mp3",
+      "seconds": 1.5,
+      "prompt": "Bright magical sparkle burst with small bells, completing the best item, joyful achievement"
+    },
+    {
+      "id": "sell",
+      "kind": "sfx",
+      "output": "unity/Assets/Audio/Sfx/Drafts/sell.mp3",
+      "seconds": 0.7,
+      "prompt": "Coins sliding across a wooden counter into a hand, short"
+    },
+    {
+      "id": "bubble_pop",
+      "kind": "sfx",
+      "output": "unity/Assets/Audio/Sfx/Drafts/bubble_pop.mp3",
+      "seconds": 0.5,
+      "prompt": "A soap bubble popping, light and airy, tiny sparkle"
+    },
+    {
+      "id": "order_served",
+      "kind": "sfx",
+      "output": "unity/Assets/Audio/Sfx/Drafts/order_served.mp3",
+      "seconds": 1.0,
+      "prompt": "A small porcelain coffee cup set gently on its saucer, then a soft happy chime"
+    },
+    {
+      "id": "door_bell",
+      "kind": "sfx",
+      "output": "unity/Assets/Audio/Sfx/Drafts/door_bell.mp3",
+      "seconds": 1.5,
+      "prompt": "Small brass bell above an old café door jingling as the door opens"
+    },
+    {
+      "id": "decor_place",
+      "kind": "sfx",
+      "output": "unity/Assets/Audio/Sfx/Drafts/decor_place.mp3",
+      "seconds": 0.7,
+      "prompt": "A wooden chair set down on a tiled floor, soft thud and a light bounce"
+    },
+    {
+      "id": "pour",
+      "kind": "sfx",
+      "loop": true,
+      "output": "unity/Assets/Audio/Sfx/Drafts/pour.mp3",
+      "seconds": 2.5,
+      "prompt": "Pouring hot Arabic coffee from a brass dallah into a small porcelain cup, steady gentle stream"
+    },
+    {
+      "id": "letter_unfold",
+      "kind": "sfx",
+      "output": "unity/Assets/Audio/Sfx/Drafts/letter_unfold.mp3",
+      "seconds": 1.5,
+      "prompt": "Old dry paper letter slowly unfolded, soft crinkle"
+    },
+    {
+      "id": "drawer_open",
+      "kind": "sfx",
+      "output": "unity/Assets/Audio/Sfx/Drafts/drawer_open.mp3",
+      "seconds": 1.2,
+      "prompt": "Old wooden counter drawer sliding open with a soft creak"
+    },
+    {
+      "id": "page_turn",
+      "kind": "sfx",
+      "output": "unity/Assets/Audio/Sfx/Drafts/page_turn.mp3",
+      "seconds": 0.8,
+      "prompt": "Turning one page of an old handwritten notebook"
+    },
+    {
+      "id": "music_main_theme",
+      "kind": "music",
+      "output": "unity/Assets/Audio/Music/Drafts/music_main_theme.mp3",
+      "seconds": 60,
+      "prompt": "Original warm main theme for a cozy story game set in an old Amman café. Maqam Hijaz melody on solo oud, joined by soft strings and a gentle frame drum. Nostalgic, tender, hopeful. Instrumental, about 80 bpm."
+    },
+    {
+      "id": "music_cafe_morning",
+      "kind": "music",
+      "output": "unity/Assets/Audio/Music/Drafts/music_cafe_morning.mp3",
+      "seconds": 60,
+      "prompt": "Light airy morning café background music. Gentle oud and qanun, soft hand percussion, sunny and relaxed Levantine feel. Instrumental, loopable, unobtrusive, about 90 bpm."
+    },
+    {
+      "id": "music_cafe_evening",
+      "kind": "music",
+      "output": "unity/Assets/Audio/Music/Drafts/music_cafe_evening.mp3",
+      "seconds": 60,
+      "prompt": "Warm evening café background music. Oud and cello in a slow Arabic mode, soft riq, golden-hour intimacy. Instrumental, loopable, unobtrusive, about 75 bpm."
+    },
+    {
+      "id": "music_cafe_night",
+      "kind": "music",
+      "output": "unity/Assets/Audio/Music/Drafts/music_cafe_night.mp3",
+      "seconds": 60,
+      "prompt": "Soft night café background music. Quiet solo piano with a hint of Maqam Hijaz, sparse and calm, late-night rain mood. Instrumental, loopable, about 65 bpm."
+    },
+    {
+      "id": "music_memory",
+      "kind": "music",
+      "output": "unity/Assets/Audio/Music/Drafts/music_memory.mp3",
+      "seconds": 45,
+      "prompt": "Delicate music box melody in Maqam Hijaz, a tender 1970s memory, slightly faded and nostalgic, with a soft warm pad underneath. Instrumental."
+    }
+  ]
+}
