@@ -15,6 +15,8 @@ games/                     one folder per game
     research/              market research notes and report
     BUILD_GUIDE.md         how to build it with Claude Code and Unity, with the task backlog
     unity/                 the Unity project (to come)
+  wingwright/              aircraft engineering game (working title, PC first)
+    CONCEPT.md
 unity-shared/              shared Unity package (com.aqlaan.cozykit) for systems every game reuses
 platform/                  ONE .NET application for every game
   src/Platform.Domain      shared data model
