@@ -1,0 +1,23 @@
+{
+    "name": "Gahwit.UI",
+    "rootNamespace": "Gahwit.UI",
+    "references": [
+        "Gahwit.Core",
+        "Gahwit.Merge",
+        "Gahwit.Story",
+        "Gahwit.Cafe",
+        "Unity.TextMeshPro",
+        "RTLTMPro",
+        "UnityEngine.UI",
+        "Unity.InputSystem"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

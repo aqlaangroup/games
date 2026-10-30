@@ -1,0 +1,20 @@
+{
+    "name": "Gahwit.Boot",
+    "rootNamespace": "Gahwit.Boot",
+    "references": [
+        "Gahwit.Core",
+        "Gahwit.Merge",
+        "Gahwit.Story",
+        "Gahwit.Cafe",
+        "Gahwit.UI"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

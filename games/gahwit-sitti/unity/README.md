@@ -1,6 +1,12 @@
 # Gahwit Sitti: Unity project
 
-The Unity project will live in this folder. Create it with **Unity 6 LTS** using the **Universal 3D (URP)** template, then follow this structure.
+This folder is the Unity project, made with **Unity 6.3 LTS (6000.3.27f1)** from the **Universal 3D (URP)** template. Follow this structure.
+
+## Getting started
+
+- Install the Editor with phone build support: `unity install 6000.3.27f1 -m android -m ios`.
+- Install **git-lfs** before you clone. Art, audio, video and fonts in this folder are stored in Git LFS (see `.gitattributes`).
+- The project includes `com.unity.pipeline`, so the Unity CLI and Unity's Claude Code plugin can drive an open Editor (`unity status`).
 
 ## Packages
 

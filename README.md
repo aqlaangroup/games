@@ -14,7 +14,8 @@ games/                     one folder per game
     screens/               screen designs
     research/              market research notes and report
     BUILD_GUIDE.md         how to build it with Claude Code and Unity, with the task backlog
-    unity/                 the Unity project (to come)
+    DEVLOG.md              decisions and known gaps, newest first
+    unity/                 the Unity project (Unity 6.3 LTS, URP); chapter 1 is playable
   wingwright/              plane upgrade game with real engineering (working title, mobile, free to play)
     CONCEPT.md
 unity-shared/              shared Unity package (com.aqlaan.cozykit) for systems every game reuses

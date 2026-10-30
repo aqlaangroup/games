@@ -1,0 +1,41 @@
+{
+  "introKnot": "intro",
+  "startingBoard": [
+    { "chain": "coffee", "level": 1, "col": 2, "row": 6 },
+    { "chain": "coffee", "level": 1, "col": 4, "row": 6 },
+    { "chain": "coffee", "level": 1, "col": 2, "row": 5 },
+    { "chain": "coffee", "level": 1, "col": 4, "row": 5 }
+  ],
+  "firstOrder": { "customer": "abufadi", "chain": "coffee", "level": 2, "count": 1 },
+  "characters": {
+    "salma": { "color": "#B84A60" },
+    "teta": { "color": "#8A5F00" },
+    "abufadi": { "color": "#1D6C67", "placesOrders": true, "fromChapter": 1 },
+    "samira": { "color": "#7E2F43", "placesOrders": true, "fromChapter": 1 },
+    "karim": { "color": "#7A4A2A", "placesOrders": true, "fromChapter": 1 },
+    "lana": { "color": "#4C6B2E", "placesOrders": true, "fromChapter": 3 },
+    "sys": { "color": "#6E5E55" }
+  },
+  "walkIns": ["customer_f", "customer_m", "neighbour", "student"],
+  "chainColors": {
+    "coffee": ["#A9B98A", "#5B3520"],
+    "sweets": ["#F1DFB6", "#D97E2A"],
+    "tea": ["#B9D1A0", "#8C3A1E"],
+    "saudi": ["#F2D9A0", "#9C6A12"],
+    "dairy": ["#F7F0E2", "#C98E5A"]
+  },
+  "chapters": [
+    {
+      "n": 1,
+      "story": "Story/chapter1",
+      "tasks": [
+        { "id": "sign", "knot": "sign" },
+        { "id": "floor", "knot": "floor" },
+        { "id": "chairs", "knot": "chairs" },
+        { "id": "dallahs", "knot": "dallahs" },
+        { "id": "lights", "knot": "lights" },
+        { "id": "counter", "knot": "counter" }
+      ]
+    }
+  ]
+}

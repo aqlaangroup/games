@@ -1,0 +1,21 @@
+{
+    "name": "Gahwit.Cafe",
+    "rootNamespace": "Gahwit.Cafe",
+    "references": [
+        "Gahwit.Core",
+        "Unity.TextMeshPro",
+        "RTLTMPro",
+        "Unity.RenderPipelines.Core.Runtime",
+        "Unity.RenderPipelines.Universal.Runtime",
+        "Unity.InputSystem"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,16 @@
+{
+    "name": "Gahwit.Merge",
+    "rootNamespace": "Gahwit.Merge",
+    "references": [
+        "Gahwit.Core"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

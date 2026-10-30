@@ -1,6 +1,18 @@
 {
   "version": 1,
   "notes": "Single source of truth for Qahwet Sitti season 1 balance. Unity loads this (or a remote-config copy). All numbers are starting values to tune with soft-launch data.",
+  "formulas": {
+    "notes": "Machine-readable versions of the prose formulas below. Unity reads these; keep both in step, and update sim/simulate.py if they change.",
+    "itemUnits": { "base": 2, "comment": "a level-L item is worth base^(L-1) units" },
+    "sellCoinsPerLevel": 1,
+    "orderSizeUnits": { "base": 6, "perLevel": 1.6 },
+    "orderMaxItemsPerLine": 3,
+    "orderLevelPick": { "topLevelChance": 0.5, "spread": 2, "comment": "half the lines ask for the level cap; the rest pick evenly from up to 'spread' levels below it" },
+    "orderMinCoins": 3,
+    "xpToNext": { "base": 60, "perLevel": 30, "perLevelSquared": 2 },
+    "levelUpGems": { "base": 5, "levelDivisor": 2 },
+    "taskXp": { "base": 10, "perChapter": 2 }
+  },
   "board": {
     "cols": 7,
     "rows": 9,
