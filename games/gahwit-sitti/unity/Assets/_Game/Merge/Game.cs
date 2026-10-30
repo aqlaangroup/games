@@ -5,12 +5,13 @@ using Gahwit.Core;
 
 namespace Gahwit.Merge
 {
-    public enum TapResult { Spawned, NoEnergy, BoardFull }
+    public enum TapResult { Spawned, NoEnergy, BoardFull, NotAGenerator }
 
     public enum MoveResult { None, Moved, Swapped, Merged }
 
     // The rules of the merge kitchen, orders, player levels and café tasks (GAME_SYSTEMS.md sections 1–9).
     // Plain C# with no Unity objects; the views call it and listen to its events.
+    // Times are trusted milliseconds from TimeService, never the phone clock.
     public sealed class Game
     {
         // The "FromLevel5" in balance.json's orders.twoItemOrderChanceFromLevel5.
@@ -40,17 +41,22 @@ namespace Gahwit.Merge
             FillOrders();
         }
 
-        public static GameState NewState(BalanceConfig config, ChapterContent content, ulong seed, long nowUnix)
+        public static GameState NewState(BalanceConfig config, ChapterContent content, ulong seed, long nowMs)
         {
             var state = new GameState
             {
                 Energy = config.Energy.StartingEnergy,
-                EnergyStamp = nowUnix,
+                EnergyStampMs = nowMs,
                 Rng = seed == 0 ? 1 : seed,
                 Board = new Item[config.Board.Cols * config.Board.Rows]
             };
             foreach (var start in content.StartingBoard)
-                state.Board[start.Row * config.Board.Cols + start.Col] = new Item(start.Chain, start.Level);
+            {
+                int cell = start.Row * config.Board.Cols + start.Col;
+                state.Board[cell] = start.Generator != null
+                    ? new Item(config.GeneratorDef(start.Generator).Chain, start.Level, start.Generator)
+                    : new Item(start.Chain, start.Level);
+            }
             return state;
         }
 
@@ -59,57 +65,60 @@ namespace Gahwit.Merge
         public int CellCount => Cols * Rows;
         public int EnergyCap => Config.Energy.Cap;
         public int XpToNext => Config.XpToNext(State.Level);
-        public IReadOnlyList<Generator> Generators => State.Generators;
         public IReadOnlyList<Order> Orders => State.Orders;
+        long RegenMs => Config.Energy.RegenSeconds * 1000L;
 
         public Item ItemAt(int cell) => State.Board[cell];
         public int MaxLevel(string chain) => Config.MaxItemLevel(chain);
         public string ItemName(string chain, int level) => Config.Chains[chain].Items[level - 1][0];
+        public string GeneratorName(string id) => Config.GeneratorDef(id).Ar;
         public int EmptyCells => State.Board.Count(item => item == null);
+
+        IEnumerable<Item> AllPieces => State.Board.Where(i => i != null).Concat(State.Storage);
 
         // ---------- Energy ----------
 
-        public void Tick(long nowUnix)
+        public void Tick(long nowMs)
         {
             if (State.Energy >= EnergyCap)
             {
-                State.EnergyStamp = nowUnix;
+                State.EnergyStampMs = nowMs;
                 return;
             }
-            int regen = Config.Energy.RegenSeconds;
-            long gained = (nowUnix - State.EnergyStamp) / regen;
+            long gained = (nowMs - State.EnergyStampMs) / RegenMs;
             if (gained <= 0) return;
             State.Energy = (int)Math.Min(EnergyCap, State.Energy + gained);
-            State.EnergyStamp += gained * regen;
-            if (State.Energy >= EnergyCap) State.EnergyStamp = nowUnix;
+            State.EnergyStampMs += gained * RegenMs;
+            if (State.Energy >= EnergyCap) State.EnergyStampMs = nowMs;
             Changed?.Invoke();
         }
 
-        public int SecondsToNextEnergy(long nowUnix) =>
-            State.Energy >= EnergyCap ? 0 : (int)Math.Max(0, Config.Energy.RegenSeconds - (nowUnix - State.EnergyStamp));
+        public int SecondsToNextEnergy(long nowMs) =>
+            State.Energy >= EnergyCap ? 0 : (int)Math.Max(0, (RegenMs - (nowMs - State.EnergyStampMs) + 999) / 1000);
 
-        void SpendEnergy(int amount, long nowUnix)
+        void SpendEnergy(int amount, long nowMs)
         {
             // Refill starts counting the moment energy drops below the cap.
-            if (State.Energy >= EnergyCap && State.Energy - amount < EnergyCap) State.EnergyStamp = nowUnix;
+            if (State.Energy >= EnergyCap && State.Energy - amount < EnergyCap) State.EnergyStampMs = nowMs;
             State.Energy -= amount;
         }
 
         // ---------- Generators ----------
 
-        public TapResult TapGenerator(int index, long nowUnix, out int cell)
+        public TapResult TapGenerator(int cell, long nowMs, out int spawnedAt)
         {
-            cell = -1;
-            var generator = State.Generators[index];
+            spawnedAt = -1;
+            var generator = State.Board[cell];
+            if (generator == null || !generator.IsGenerator) return TapResult.NotAGenerator;
             int cost = Config.Generators.TapEnergyCost;
             if (State.Energy < cost) return TapResult.NoEnergy;
-            cell = NearestEmptyCell();
-            if (cell < 0) return TapResult.BoardFull;
+            spawnedAt = NearestEmptyCell(cell);
+            if (spawnedAt < 0) return TapResult.BoardFull;
 
-            SpendEnergy(cost, nowUnix);
+            SpendEnergy(cost, nowMs);
             int level = Math.Min(RollGeneratorOutput(generator.Level), MaxLevel(generator.Chain));
-            State.Board[cell] = new Item(generator.Chain, level);
-            ItemSpawned?.Invoke(cell);
+            State.Board[spawnedAt] = new Item(generator.Chain, level);
+            ItemSpawned?.Invoke(spawnedAt);
             Changed?.Invoke();
             return TapResult.Spawned;
         }
@@ -128,16 +137,46 @@ namespace Gahwit.Merge
             return level;
         }
 
-        // The empty cell closest to the bottom middle of the board, next to the generators.
-        public int NearestEmptyCell()
+        bool GeneratorCanLevelUp(int level) => Config.Generators.LevelOutput.ContainsKey((level + 1).ToString());
+
+        // A generator unlocked by the current chapter appears on the board (or in storage if the board is full).
+        void UnlockGenerators()
+        {
+            foreach (var def in Config.Generators.List)
+            {
+                if (def.UnlockChapter > State.Chapter || AllPieces.Any(p => p.Generator == def.Id)) continue;
+                Place(new Item(def.Chain, 1, def.Id));
+            }
+        }
+
+        void Place(Item piece)
+        {
+            int cell = NearestEmptyCell(CellCount - 1 - Cols / 2);
+            if (cell >= 0) State.Board[cell] = piece;
+            else State.Storage.Add(piece);
+        }
+
+        // Pieces waiting in storage come back as soon as there is room.
+        void Settle()
+        {
+            while (State.Storage.Count > 0)
+            {
+                int cell = NearestEmptyCell(CellCount - 1 - Cols / 2);
+                if (cell < 0) return;
+                State.Board[cell] = State.Storage[0];
+                State.Storage.RemoveAt(0);
+            }
+        }
+
+        public int NearestEmptyCell(int near)
         {
             int best = -1;
             float bestDistance = float.MaxValue;
-            float centreX = (Cols - 1) / 2f, bottomY = Rows - 1;
+            float nx = near % Cols, ny = near / Cols;
             for (int i = 0; i < CellCount; i++)
             {
                 if (State.Board[i] != null) continue;
-                float dx = i % Cols - centreX, dy = i / Cols - bottomY;
+                float dx = i % Cols - nx, dy = i / Cols - ny;
                 float distance = dx * dx + dy * dy;
                 if (distance < bestDistance)
                 {
@@ -148,29 +187,13 @@ namespace Gahwit.Merge
             return best;
         }
 
-        void UnlockGenerators()
-        {
-            foreach (var def in Config.Generators.List)
-            {
-                if (def.UnlockChapter > State.Chapter || State.Generators.Any(g => g.Id == def.Id)) continue;
-                State.Generators.Add(new Generator { Id = def.Id, Chain = def.Chain, Level = 1 });
-            }
-        }
-
-        // A chapter's generator copy is merged straight into the matching generator.
-        void UpgradeGenerator(string id)
-        {
-            var generator = State.Generators.Find(g => g.Id == id);
-            if (generator == null) return;
-            if (Config.Generators.LevelOutput.ContainsKey((generator.Level + 1).ToString())) generator.Level++;
-        }
-
         // ---------- Board ----------
 
         public bool CanMerge(int a, int b)
         {
             var x = State.Board[a];
-            return a != b && x != null && x.SameAs(State.Board[b]) && x.Level < MaxLevel(x.Chain);
+            if (a == b || x == null || !x.SameAs(State.Board[b])) return false;
+            return x.IsGenerator ? GeneratorCanLevelUp(x.Level) : x.Level < MaxLevel(x.Chain);
         }
 
         public MoveResult Move(int from, int to)
@@ -189,8 +212,9 @@ namespace Gahwit.Merge
 
             if (CanMerge(from, to))
             {
-                State.Board[to] = new Item(moving.Chain, moving.Level + 1);
+                State.Board[to] = new Item(moving.Chain, moving.Level + 1, moving.Generator);
                 State.Board[from] = null;
+                Settle();
                 ItemsMerged?.Invoke(to);
                 Changed?.Invoke();
                 return MoveResult.Merged;
@@ -202,15 +226,18 @@ namespace Gahwit.Merge
             return MoveResult.Swapped;
         }
 
+        public bool CanSell(Item item) => item != null && !item.IsGenerator;
+
         public int SellValue(Item item) => item.Level * Config.Formulas.SellCoinsPerLevel;
 
         public int Sell(int cell)
         {
             var item = State.Board[cell];
-            if (item == null) return 0;
+            if (!CanSell(item)) return 0;
             int coins = SellValue(item);
             State.Board[cell] = null;
             State.Coins += coins;
+            Settle();
             Changed?.Invoke();
             return coins;
         }
@@ -222,7 +249,8 @@ namespace Gahwit.Merge
         public bool CanServe(Order order) => order.Lines.All(line => CountOnBoard(line.Chain, line.Level) >= line.Count);
 
         public bool IsWanted(Item item) =>
-            item != null && State.Orders.Any(o => o.Lines.Any(line => line.Chain == item.Chain && line.Level == item.Level));
+            item != null && !item.IsGenerator &&
+            State.Orders.Any(o => o.Lines.Any(line => line.Chain == item.Chain && line.Level == item.Level));
 
         public bool Serve(int orderId)
         {
@@ -243,6 +271,7 @@ namespace Gahwit.Merge
             State.Orders.Remove(order);
             State.OrdersServed++;
             State.Coins += order.Coins;
+            Settle();
             OrderServed?.Invoke(order);
             AddXp(order.Xp);
             FillOrders();
@@ -265,7 +294,8 @@ namespace Gahwit.Merge
 
         Order NewOrder()
         {
-            var pool = State.Generators.Select(g => g.Chain).Distinct().ToList();
+            // Fairness (GAME_SYSTEMS.md section 6): orders only use chains whose generator the player has.
+            var pool = AllPieces.Where(p => p.IsGenerator).Select(p => p.Chain).Distinct().OrderBy(c => c).ToList();
             float size = Config.OrderSizeUnits(State.Level);
             bool twoLines = State.Level >= TwoLineOrdersFromLevel && pool.Count > 1 &&
                             rng.NextDouble() < Config.Orders.TwoItemOrderChanceFromLevel5;
@@ -284,7 +314,7 @@ namespace Gahwit.Merge
                 .Select(kv => kv.Key).OrderBy(id => id).ToList();
             if (named.Count > 0 && rng.NextDouble() < Config.Orders.CharacterOrderChance)
                 return MakeOrder(named[rng.Range(0, named.Count)], true, lines);
-            return MakeOrder(Content.WalkIns[rng.Range(0, Content.WalkIns.Count)], false, lines);
+            return MakeOrder(null, false, lines);
         }
 
         OrderLine MakeLine(string chain, float targetUnits)
@@ -297,13 +327,15 @@ namespace Gahwit.Merge
             return new OrderLine { Chain = chain, Level = level, Count = count };
         }
 
-        Order MakeOrder(string customer, bool isCharacter, List<OrderLine> lines)
+        // Walk-ins have no character; their shown name is picked from the order id, so it needs no save field.
+        public Order MakeOrder(string character, bool isCharacter, List<OrderLine> lines, int id = 0)
         {
             int units = lines.Sum(line => line.Count * Config.ItemUnits(line.Level));
+            if (id == 0) id = State.NextOrderId++;
             return new Order
             {
-                Id = State.NextOrderId++,
-                Customer = customer,
+                Id = id,
+                Customer = isCharacter ? character : Content.WalkIns[id % Content.WalkIns.Count],
                 IsCharacter = isCharacter,
                 Lines = lines,
                 Units = units,
@@ -344,13 +376,25 @@ namespace Gahwit.Merge
 
         public bool CanAffordTask => CurrentTask != null && State.Coins >= CurrentTaskCost;
 
-        public TaskDef CompleteTask()
+        // Every task finished so far, worked out from the chapter and task position.
+        public List<string> CompletedTaskIds()
+        {
+            var done = new List<string>();
+            foreach (var chapter in Content.Chapters)
+            {
+                if (chapter.N < State.Chapter) done.AddRange(chapter.Tasks.Select(t => t.Id));
+                else if (chapter.N == State.Chapter) done.AddRange(chapter.Tasks.Take(State.TaskIndex).Select(t => t.Id));
+            }
+            return done;
+        }
+
+        public TaskDef CompleteTask(string style = null)
         {
             var task = CurrentTask;
             if (task == null || State.Coins < CurrentTaskCost) return null;
 
             State.Coins -= CurrentTaskCost;
-            State.CompletedTasks.Add(task.Id);
+            if (style != null) State.TaskStyles[task.Id] = style;
             State.TaskIndex++;
             AddXp(Config.TaskXp(State.Chapter));
             TaskCompleted?.Invoke(task);
@@ -359,12 +403,14 @@ namespace Gahwit.Merge
             return task;
         }
 
-        // The chapter's gem reward is granted by the platform, like every gem.
+        // The chapter's gem reward is granted by the platform, like every gem. Its generator copy lands on the board
+        // to be merged with the matching generator.
         void FinishChapter()
         {
             var chapter = Config.Chapter(State.Chapter);
             State.Energy += chapter.Reward.Energy;
-            UpgradeGenerator(chapter.Reward.GeneratorCopy);
+            var def = Config.GeneratorDef(chapter.Reward.GeneratorCopy);
+            if (def != null) Place(new Item(def.Chain, 1, def.Id));
             int finished = State.Chapter;
             State.Chapter++;
             State.TaskIndex = 0;

@@ -2,15 +2,15 @@ using System.Collections.Generic;
 
 namespace Gahwit.Merge
 {
-    // Everything a save holds. Plain data so it serialises straight to JSON.
-    // No gems: the platform's wallet owns them (CLAUDE.md, save_schema.json).
+    // The runtime game state. The save system maps it to and from design/save_schema.json.
+    // No gems: the platform's wallet owns them (CLAUDE.md).
     public sealed class GameState
     {
-        public int Version = 1;
         public Item[] Board;
-        public List<Generator> Generators = new List<Generator>();
+        public List<Item> Storage = new List<Item>();
+        public int StorageSlots;
         public int Energy;
-        public long EnergyStamp; // unix seconds the next refill counts from
+        public long EnergyStampMs; // trusted time (TimeService) the next refill counts from
         public int Coins;
         public int Xp; // progress inside the current level
         public int Level = 1;
@@ -19,34 +19,37 @@ namespace Gahwit.Merge
         public int OrdersServed;
         public int Chapter = 1;
         public int TaskIndex;
-        public List<string> CompletedTasks = new List<string>();
-        public bool IntroSeen;
+        public Dictionary<string, string> TaskStyles = new Dictionary<string, string>();
+        public Dictionary<string, string> Choices = new Dictionary<string, string>();
+        public List<string> ScenesSeen = new List<string>();
+        public List<string> LettersFound = new List<string>();
+        public int TutorialStep;
+        public bool TutorialDone;
         public ulong Rng;
     }
 
+    // A board piece: an item of a chain, or a generator when Generator is set (then Level is the generator's level).
     public sealed class Item
     {
         public string Chain;
-        public int Level; // 1-based
+        public int Level;
+        public string Generator;
 
         public Item() { }
 
-        public Item(string chain, int level)
+        public Item(string chain, int level, string generator = null)
         {
             Chain = chain;
             Level = level;
+            Generator = generator;
         }
 
-        public bool Is(string chain, int level) => Chain == chain && Level == level;
+        public bool IsGenerator => Generator != null;
 
-        public bool SameAs(Item other) => other != null && other.Is(Chain, Level);
-    }
+        public bool Is(string chain, int level) => Generator == null && Chain == chain && Level == level;
 
-    public sealed class Generator
-    {
-        public string Id;
-        public string Chain;
-        public int Level = 1;
+        public bool SameAs(Item other) =>
+            other != null && other.Generator == Generator && other.Chain == Chain && other.Level == Level;
     }
 
     public sealed class Order

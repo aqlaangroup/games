@@ -1,3 +1,4 @@
+using Gahwit.Core;
 using Gahwit.Merge;
 using RTLTMPro;
 using TMPro;
@@ -30,6 +31,11 @@ namespace Gahwit.UI
             int space = name.IndexOf(' ');
             return space > 0 ? name.Substring(0, space) : name;
         }
+
+        // Generators use their chain's deepest colour and show their name instead of a number.
+        public Color GeneratorTint(string chain) => Tint(chain, game.MaxLevel(chain));
+
+        public string GeneratorName(string id) => game.GeneratorName(id);
     }
 
     public sealed class ItemTile
@@ -51,7 +57,10 @@ namespace Gahwit.UI
 
             level = UiKit.Text(Root, "Level", "", levelSize, Color.white, TextAlignmentOptions.Center);
             level.fontStyle = FontStyles.Bold;
-            level.rectTransform.Stretch(0, 0, 0, nameSize > 0 ? nameSize * 1.2f : 0);
+            level.enableAutoSizing = true;
+            level.fontSizeMax = levelSize;
+            level.fontSizeMin = levelSize * 0.35f;
+            level.rectTransform.Stretch(4, 4, 0, nameSize > 0 ? nameSize * 1.2f : 0);
 
             if (nameSize <= 0) return;
             name = UiKit.Text(Root, "Name", "", nameSize, Color.white, TextAlignmentOptions.Center);
@@ -65,13 +74,13 @@ namespace Gahwit.UI
         public void Show(Item item, ItemLook look)
         {
             Root.gameObject.SetActive(true);
-            var color = look.Tint(item.Chain, item.Level);
+            var color = item.IsGenerator ? look.GeneratorTint(item.Chain) : look.Tint(item.Chain, item.Level);
             body.color = color;
             var text = Palette.TextOn(color);
-            level.text = item.Level.ToString();
+            level.text = item.IsGenerator ? look.GeneratorName(item.Generator) : item.Level.ToString();
             level.color = text;
             if (name == null) return;
-            name.text = look.ShortName(item.Chain, item.Level);
+            name.text = item.IsGenerator ? Loc.T("gen.level", item.Level) : look.ShortName(item.Chain, item.Level);
             name.color = text;
         }
 

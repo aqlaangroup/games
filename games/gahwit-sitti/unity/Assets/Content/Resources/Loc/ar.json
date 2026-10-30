@@ -5,7 +5,9 @@
   "tab.kitchen": "المطبخ",
   "tab.cafe": "المقهى",
 
-  "kitchen.hint.start": "اضغطي على «علبة ستّي» ليظهر حبّ القهوة",
+  "kitchen.hint.start": "اضغطي على «علبة ستّي» في اللوحة ليظهر حبّ القهوة",
+  "kitchen.generator": "{0} · المستوى {1}",
+  "kitchen.generatorHint": "اضغطي عليها لتعطيكِ {0} مقابل {1} طاقة، وادمجي اثنتين متشابهتين لتصبح أقوى",
   "kitchen.hint.merge": "اسحبي قطعتين متشابهتين فوق بعض لدمجهما",
   "kitchen.hint.full": "اللوحة شبه ممتلئة: قدّمي الطلبات أو بيعي ما لا تحتاجينه",
   "kitchen.hint.lowEnergy": "الطاقة تنفد، وتعود وحدها مع الوقت",
@@ -41,7 +43,7 @@
 
   "char.salma": "سلمى",
   "char.teta": "رسالة ستّي",
-  "char.abufadi": "أبو فادي",
+  "char.abu_fadi": "أبو فادي",
   "char.samira": "خالتو سميرة",
   "char.karim": "كريم",
   "char.lana": "لانا",

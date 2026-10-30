@@ -10,6 +10,7 @@ namespace Gahwit.UI
     {
         Game game;
         ItemLook look;
+        Action<int> tapGenerator;
         RectTransform grid, dragLayer;
         CellView[] cells;
         ItemTile ghost;
@@ -18,11 +19,12 @@ namespace Gahwit.UI
         public int Selected => selected;
         public event Action SelectionChanged;
 
-        public void Init(Game game, ItemLook look, RectTransform dragLayer)
+        public void Init(Game game, ItemLook look, RectTransform dragLayer, Action<int> tapGenerator)
         {
             this.game = game;
             this.look = look;
             this.dragLayer = dragLayer;
+            this.tapGenerator = tapGenerator;
             grid = UiKit.Rect(transform, "Grid").Pin(new Vector2(0.5f, 0.5f), Vector2.zero, Vector2.zero);
             cells = new CellView[game.CellCount];
             for (int i = 0; i < cells.Length; i++) cells[i] = CellView.Create(grid, i, this);
@@ -77,11 +79,17 @@ namespace Gahwit.UI
             SelectionChanged?.Invoke();
         }
 
-        // Tap an item to select it, then tap an empty square or a matching item to move or merge it there.
+        // Tap an item to select it, then tap an empty square or a matching piece to move or merge it there.
+        // Tapping a generator always makes an item; generators move and merge by dragging.
         public void Click(int cell)
         {
             var target = game.ItemAt(cell);
-            if (selected < 0) selected = target != null ? cell : -1;
+            if (target != null && target.IsGenerator && (selected < 0 || selected == cell || !game.CanMerge(selected, cell)))
+            {
+                selected = cell;
+                tapGenerator(cell);
+            }
+            else if (selected < 0) selected = target != null ? cell : -1;
             else if (selected == cell) selected = -1;
             else if (target == null || game.CanMerge(selected, cell))
             {

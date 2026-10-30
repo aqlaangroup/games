@@ -17,6 +17,7 @@ namespace Gahwit.UI
         Game game;
         StoryPlayer player;
         Action onDone;
+        Action<string> onChoice;
         RTLTextMeshPro speaker, line, glosses;
         RectTransform choices;
         Button next;
@@ -52,10 +53,11 @@ namespace Gahwit.UI
 
         public bool IsOpen => gameObject.activeSelf;
 
-        public void Play(StoryPlayer story, string knot, Action done)
+        public void Play(StoryPlayer story, string knot, Action done, Action<string> choiceMade = null)
         {
             player = story;
             onDone = done;
+            onChoice = choiceMade;
             gameObject.SetActive(true);
             player.Play(knot);
             Advance();
@@ -100,7 +102,8 @@ namespace Gahwit.UI
 
         void Choose(int index)
         {
-            player.Choose(index);
+            string id = player.Choose(index);
+            onChoice?.Invoke(id);
             Advance();
         }
 

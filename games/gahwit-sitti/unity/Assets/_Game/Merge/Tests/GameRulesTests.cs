@@ -7,7 +7,7 @@ namespace Gahwit.Merge.Tests
     // Rules checked against the real balance.json and chapter content, so a data change that breaks a rule fails here.
     public sealed class GameRulesTests
     {
-        const long Now = 1_000_000;
+        const long Now = 1_000_000_000;
 
         BalanceConfig config;
         ChapterContent content;
@@ -19,18 +19,16 @@ namespace Gahwit.Merge.Tests
             content = ChapterContent.Load();
         }
 
-        Game NewGame(ulong seed = 42)
-        {
-            var state = Game.NewState(config, content, seed, Now);
-            return new Game(config, content, state);
-        }
+        Game NewGame(ulong seed = 42) => new Game(config, content, Game.NewState(config, content, seed, Now));
 
-        static int FirstWith(Game game, string chain, int level)
+        static int Find(Game game, System.Func<Item, bool> match)
         {
             for (int i = 0; i < game.CellCount; i++)
-                if (game.ItemAt(i) != null && game.ItemAt(i).Is(chain, level)) return i;
+                if (game.ItemAt(i) != null && match(game.ItemAt(i))) return i;
             return -1;
         }
+
+        static int Generator(Game game, string id) => Find(game, p => p.Generator == id);
 
         [Test]
         public void XpToNextMatchesTheDesignExamples()
@@ -42,12 +40,14 @@ namespace Gahwit.Merge.Tests
         }
 
         [Test]
-        public void NewGameHasTwoGeneratorsAndTheFirstOrderFromAbuFadi()
+        public void ANewGameStartsWithFourGreenBeansBothGeneratorsAndAbuFadisOrder()
         {
             var game = NewGame();
-            CollectionAssert.AreEquivalent(new[] { "coffee", "sweets" }, game.Generators.Select(g => g.Chain));
+            Assert.AreEqual(4, game.CountOnBoard("coffee", 1)); // COMPLETE_SPEC.md section 1, step 4
+            Assert.GreaterOrEqual(Generator(game, "gen_coffee"), 0);
+            Assert.GreaterOrEqual(Generator(game, "gen_sweets"), 0);
             Assert.AreEqual(config.OrderSlots(1), game.Orders.Count);
-            Assert.AreEqual("abufadi", game.Orders[0].Customer);
+            Assert.AreEqual("abu_fadi", game.Orders[0].Customer);
             Assert.AreEqual(config.Energy.StartingEnergy, game.State.Energy);
         }
 
@@ -55,11 +55,11 @@ namespace Gahwit.Merge.Tests
         public void TwoIdenticalItemsMergeIntoTheNextLevel()
         {
             var game = NewGame();
-            int a = FirstWith(game, "coffee", 1);
+            int a = Find(game, p => p.Is("coffee", 1));
             game.State.Board[a] = null;
-            int b = FirstWith(game, "coffee", 1);
-
+            int b = Find(game, p => p.Is("coffee", 1));
             game.State.Board[0] = new Item("coffee", 1);
+
             Assert.AreEqual(MoveResult.Merged, game.Move(0, b));
             Assert.IsNull(game.ItemAt(0));
             Assert.IsTrue(game.ItemAt(b).Is("coffee", 2));
@@ -81,36 +81,59 @@ namespace Gahwit.Merge.Tests
         }
 
         [Test]
-        public void TappingAGeneratorCostsEnergyAndPlacesAnItem()
+        public void TappingAGeneratorCostsEnergyAndPlacesAnItemNextToIt()
         {
             var game = NewGame();
+            int generator = Generator(game, "gen_coffee");
             int empty = game.EmptyCells;
-            Assert.AreEqual(TapResult.Spawned, game.TapGenerator(0, Now, out int cell));
+            Assert.AreEqual(TapResult.Spawned, game.TapGenerator(generator, Now, out int cell));
             Assert.AreEqual(config.Energy.StartingEnergy - config.Generators.TapEnergyCost, game.State.Energy);
             Assert.AreEqual(empty - 1, game.EmptyCells);
-            Assert.AreEqual(game.Generators[0].Chain, game.ItemAt(cell).Chain);
+            Assert.AreEqual("coffee", game.ItemAt(cell).Chain);
+            Assert.IsFalse(game.ItemAt(cell).IsGenerator);
+            Assert.LessOrEqual(System.Math.Abs(cell % game.Cols - generator % game.Cols), 1);
         }
 
         [Test]
-        public void TappingWithNoEnergyOrAFullBoardDoesNothing()
+        public void TappingWithNoEnergyOrAFullBoardOrANonGeneratorDoesNothing()
         {
             var game = NewGame();
+            int generator = Generator(game, "gen_coffee");
+            Assert.AreEqual(TapResult.NotAGenerator, game.TapGenerator(Find(game, p => p.Is("coffee", 1)), Now, out _));
+
             game.State.Energy = 0;
-            Assert.AreEqual(TapResult.NoEnergy, game.TapGenerator(0, Now, out _));
+            Assert.AreEqual(TapResult.NoEnergy, game.TapGenerator(generator, Now, out _));
 
             game.State.Energy = 10;
-            for (int i = 0; i < game.CellCount; i++) game.State.Board[i] = new Item("sweets", 1);
-            Assert.AreEqual(TapResult.BoardFull, game.TapGenerator(0, Now, out _));
+            for (int i = 0; i < game.CellCount; i++)
+                if (game.ItemAt(i) == null) game.State.Board[i] = new Item("sweets", 1);
+            Assert.AreEqual(TapResult.BoardFull, game.TapGenerator(generator, Now, out _));
             Assert.AreEqual(10, game.State.Energy);
+        }
+
+        [Test]
+        public void TwoGeneratorsOfTheSameLevelMergeAndGeneratorsCannotBeSold()
+        {
+            var game = NewGame();
+            int generator = Generator(game, "gen_coffee");
+            game.State.Board[0] = new Item("coffee", 1, "gen_coffee");
+            Assert.AreEqual(0, game.Sell(0));
+            Assert.AreEqual(MoveResult.Merged, game.Move(0, generator));
+            Assert.AreEqual(2, game.ItemAt(generator).Level);
+            Assert.IsTrue(game.ItemAt(generator).IsGenerator);
+
+            game.State.Board[0] = new Item("sweets", 1, "gen_sweets");
+            Assert.IsFalse(game.CanMerge(0, generator)); // a different generator
         }
 
         [Test]
         public void EnergyRefillsOneEveryRegenIntervalUpToTheCap()
         {
             var game = NewGame();
-            game.TapGenerator(0, Now, out _);
-            game.TapGenerator(0, Now, out _);
-            int regen = config.Energy.RegenSeconds;
+            int generator = Generator(game, "gen_coffee");
+            game.TapGenerator(generator, Now, out _);
+            game.TapGenerator(generator, Now, out _);
+            long regen = config.Energy.RegenSeconds * 1000L;
 
             game.Tick(Now + regen - 1);
             Assert.AreEqual(config.Energy.Cap - 2, game.State.Energy);
@@ -118,6 +141,20 @@ namespace Gahwit.Merge.Tests
             Assert.AreEqual(config.Energy.Cap - 1, game.State.Energy);
             game.Tick(Now + regen * 50);
             Assert.AreEqual(config.Energy.Cap, game.State.Energy);
+        }
+
+        [Test]
+        public void ChangingThePhoneClockDoesNotAddEnergy()
+        {
+            var phone = new FakeClock { UtcNowMs = Now, UptimeMs = 1_000 };
+            var time = new TimeService(phone, null);
+            var game = new Game(config, content, Game.NewState(config, content, 1, time.NowMs));
+            game.TapGenerator(Generator(game, "gen_coffee"), time.NowMs, out _);
+            int energy = game.State.Energy;
+
+            phone.UtcNowMs += 24L * 60 * 60 * 1000; // a day ahead on the phone's clock only
+            game.Tick(time.NowMs);
+            Assert.AreEqual(energy, game.State.Energy);
         }
 
         [Test]
@@ -149,25 +186,23 @@ namespace Gahwit.Merge.Tests
                         Assert.LessOrEqual(line.Level, config.MaxOrderItemLevel(game.State.Level));
                         Assert.That(line.Count, Is.InRange(1, config.Formulas.OrderMaxItemsPerLine));
                     }
-                    int units = order.Lines.Sum(l => l.Count * config.ItemUnits(l.Level));
-                    Assert.AreEqual(units, order.Units);
+                    Assert.AreEqual(order.Lines.Sum(l => l.Count * config.ItemUnits(l.Level)), order.Units);
                     Assert.GreaterOrEqual(order.Coins, config.Formulas.OrderMinCoins);
                 }
                 var first = game.Orders[0];
                 foreach (var line in first.Lines)
-                    for (int n = 0; n < line.Count; n++) game.State.Board[game.NearestEmptyCell()] = new Item(line.Chain, line.Level);
+                    for (int n = 0; n < line.Count; n++) game.State.Board[game.NearestEmptyCell(0)] = new Item(line.Chain, line.Level);
                 Assert.IsTrue(game.Serve(first.Id));
             }
         }
 
         [Test]
-        public void FinishingAllChapterOneTasksPaysTheChapterReward()
+        public void FinishingChapterOnePaysEnergyAndPutsAGeneratorCopyOnTheBoard()
         {
             var game = NewGame();
             var chapter = config.Chapter(1);
             game.State.Coins = chapter.TaskCosts.Sum();
             int energyBefore = game.State.Energy;
-            int coffeeLevel = game.Generators.First(g => g.Id == chapter.Reward.GeneratorCopy).Level;
             int finished = 0;
             game.ChapterCompleted += n => finished = n;
 
@@ -177,18 +212,28 @@ namespace Gahwit.Merge.Tests
             Assert.AreEqual(2, game.State.Chapter);
             Assert.AreEqual(0, game.State.Coins);
             Assert.GreaterOrEqual(game.State.Energy, energyBefore + chapter.Reward.Energy);
-            Assert.AreEqual(coffeeLevel + 1, game.Generators.First(g => g.Id == chapter.Reward.GeneratorCopy).Level);
-            Assert.AreEqual(6, game.State.CompletedTasks.Count);
+            Assert.AreEqual(2, game.State.Board.Count(p => p != null && p.Generator == chapter.Reward.GeneratorCopy));
+            CollectionAssert.AreEqual(content.ForChapter(1).Tasks.Select(t => t.Id), game.CompletedTaskIds());
         }
 
         [Test]
-        public void ATaskCannotBeBoughtWithoutEnoughCoins()
+        public void ATaskCannotBeBoughtWithoutEnoughCoinsAndRemembersItsStyle()
         {
             var game = NewGame();
             game.State.Coins = game.CurrentTaskCost - 1;
             Assert.IsFalse(game.CanAffordTask);
             Assert.IsNull(game.CompleteTask());
             Assert.AreEqual(0, game.State.TaskIndex);
+
+            game.State.Coins += 1;
+            var task = game.CompleteTask("modern");
+            Assert.AreEqual("modern", game.State.TaskStyles[task.Id]);
+        }
+
+        sealed class FakeClock : IDeviceClock
+        {
+            public long UtcNowMs { get; set; }
+            public long UptimeMs { get; set; }
         }
     }
 }

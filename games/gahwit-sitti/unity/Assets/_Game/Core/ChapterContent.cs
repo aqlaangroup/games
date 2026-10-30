@@ -31,6 +31,7 @@ namespace Gahwit.Core
     public sealed class StartingItem
     {
         public string Chain;
+        public string Generator; // set for a generator piece
         public int Level;
         public int Col;
         public int Row;

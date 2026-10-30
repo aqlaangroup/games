@@ -4,6 +4,7 @@
     "references": [
         "Gahwit.Core",
         "Gahwit.Merge",
+        "Gahwit.Save",
         "Gahwit.Story",
         "Gahwit.Cafe",
         "Gahwit.UI"

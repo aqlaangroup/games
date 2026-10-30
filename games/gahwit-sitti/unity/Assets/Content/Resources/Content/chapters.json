@@ -1,16 +1,18 @@
 {
   "introKnot": "intro",
   "startingBoard": [
+    { "generator": "gen_coffee", "level": 1, "col": 2, "row": 8 },
+    { "generator": "gen_sweets", "level": 1, "col": 4, "row": 8 },
     { "chain": "coffee", "level": 1, "col": 2, "row": 6 },
     { "chain": "coffee", "level": 1, "col": 4, "row": 6 },
     { "chain": "coffee", "level": 1, "col": 2, "row": 5 },
     { "chain": "coffee", "level": 1, "col": 4, "row": 5 }
   ],
-  "firstOrder": { "customer": "abufadi", "chain": "coffee", "level": 2, "count": 1 },
+  "firstOrder": { "customer": "abu_fadi", "chain": "coffee", "level": 2, "count": 1 },
   "characters": {
     "salma": { "color": "#B84A60" },
     "teta": { "color": "#8A5F00" },
-    "abufadi": { "color": "#1D6C67", "placesOrders": true, "fromChapter": 1 },
+    "abu_fadi": { "color": "#1D6C67", "placesOrders": true, "fromChapter": 1 },
     "samira": { "color": "#7E2F43", "placesOrders": true, "fromChapter": 1 },
     "karim": { "color": "#7A4A2A", "placesOrders": true, "fromChapter": 1 },
     "lana": { "color": "#4C6B2E", "placesOrders": true, "fromChapter": 3 },

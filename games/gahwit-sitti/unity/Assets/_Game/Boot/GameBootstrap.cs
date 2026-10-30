@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Gahwit.Cafe;
 using Gahwit.Core;
 using Gahwit.Merge;
+using Gahwit.Save;
 using Gahwit.Story;
 using Gahwit.UI;
 using UnityEngine;
@@ -12,18 +13,17 @@ namespace Gahwit.Boot
     // Starts the game: loads config, content and the save, builds the café and the interface, plays story scenes and saves.
     public sealed class GameBootstrap : MonoBehaviour
     {
-        public const string SaveSlot = "gahwit-sitti";
-        const float SaveEverySeconds = 2f;
+        const float SaveEverySeconds = 2f; // COMPLETE_SPEC.md section 9
 
         readonly Dictionary<string, StoryPlayer> stories = new Dictionary<string, StoryPlayer>();
         readonly Queue<Action> afterScene = new Queue<Action>();
+        TimeService time;
+        SaveService saves;
         Game game;
         GameUi ui;
         CafeRoom cafe;
         bool dirty;
         float nextSave, nextTick;
-
-        static long Now() => DateTimeOffset.UtcNow.ToUnixTimeSeconds();
 
         void Awake()
         {
@@ -31,17 +31,21 @@ namespace Gahwit.Boot
             Loc.Load("ar");
             var config = BalanceConfig.Load();
             var content = ChapterContent.Load();
-            var state = SaveStore.Load<GameState>(SaveSlot) ?? Game.NewState(config, content, (ulong)DateTime.UtcNow.Ticks, Now());
+
+            saves = new SaveService(config, content);
+            var state = saves.Load(out var clock);
+            time = new TimeService(new DeviceClock(), clock);
+            if (state == null) state = Game.NewState(config, content, (ulong)DateTime.UtcNow.Ticks, time.NowMs);
             game = new Game(config, content, state);
-            game.Tick(Now());
+            game.Tick(time.NowMs);
 
             var camera = Camera.main;
             cafe = new GameObject("Cafe").AddComponent<CafeRoom>();
             cafe.Build(FindSun(), camera);
             cafe.SetTimeOfDay(CafeRoom.TimeFromClock(DateTime.Now));
-            cafe.Apply(state.CompletedTasks);
+            cafe.Apply(game.CompletedTaskIds());
             var cafeCamera = camera.gameObject.AddComponent<CafeCamera>();
-            ui = GameUi.Create(game, cafeCamera, Now);
+            ui = GameUi.Create(game, cafeCamera, () => time.NowMs);
 
             game.Changed += () => dirty = true;
             game.OrderServed += order => ui.Toast.Show(Loc.T("toast.served", order.Coins, order.Xp));
@@ -52,17 +56,14 @@ namespace Gahwit.Boot
 
         void Start()
         {
-            if (!game.State.IntroSeen) PlayScene(game.State.Chapter, game.Content.IntroKnot, () =>
-            {
-                game.State.IntroSeen = true;
-                dirty = true;
-            });
+            string intro = game.Content.IntroKnot;
+            if (!game.State.ScenesSeen.Contains(intro)) PlayScene(game.State.Chapter, intro);
         }
 
         void OnTaskCompleted(TaskDef task)
         {
             // Fires before a finished chapter moves on, so State.Chapter is still the task's chapter.
-            cafe.Apply(game.State.CompletedTasks);
+            cafe.Apply(game.CompletedTaskIds());
             ui.ShowCafe();
             PlayScene(game.State.Chapter, task.Knot);
         }
@@ -74,19 +75,22 @@ namespace Gahwit.Boot
             afterScene.Enqueue(() => ui.Toast.Show(Loc.T("toast.chapterDone", chapter, reward.Energy, generator)));
         }
 
-        void PlayScene(int chapter, string knot, Action done = null)
+        void PlayScene(int chapter, string knot)
         {
             var story = StoryFor(chapter);
-            if (story == null)
-            {
-                done?.Invoke();
-                return;
-            }
-            ui.Dialogue.Play(story, knot, () =>
-            {
-                done?.Invoke();
-                while (afterScene.Count > 0) afterScene.Dequeue()();
-            });
+            if (story == null) return;
+            ui.Dialogue.Play(story, knot,
+                () =>
+                {
+                    if (!game.State.ScenesSeen.Contains(knot)) game.State.ScenesSeen.Add(knot);
+                    dirty = true;
+                    while (afterScene.Count > 0) afterScene.Dequeue()();
+                },
+                choice =>
+                {
+                    game.State.Choices[knot] = choice;
+                    dirty = true;
+                });
         }
 
         StoryPlayer StoryFor(int chapter)
@@ -111,7 +115,7 @@ namespace Gahwit.Boot
             if (Time.unscaledTime >= nextTick)
             {
                 nextTick = Time.unscaledTime + 1f;
-                game.Tick(Now());
+                game.Tick(time.NowMs);
             }
             if (dirty && Time.unscaledTime >= nextSave) Save();
         }
@@ -120,7 +124,7 @@ namespace Gahwit.Boot
         {
             dirty = false;
             nextSave = Time.unscaledTime + SaveEverySeconds;
-            SaveStore.Save(SaveSlot, game.State);
+            saves.Save(game.State, time);
         }
 
         void OnApplicationPause(bool paused)

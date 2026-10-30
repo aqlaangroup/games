@@ -1,35 +1,24 @@
-using System;
 using System.IO;
-using Newtonsoft.Json;
 using UnityEngine;
 
 namespace Gahwit.Core
 {
-    // Local JSON saves in persistentDataPath. Cloud save comes later through the platform API.
+    // Local save files in persistentDataPath. Writes go to a temporary file first, so a crash can't leave half a save.
     public static class SaveStore
     {
         static string PathFor(string slot) => Path.Combine(Application.persistentDataPath, slot + ".json");
 
-        public static T Load<T>(string slot) where T : class
+        public static string LoadText(string slot)
         {
             string path = PathFor(slot);
-            if (!File.Exists(path)) return null;
-            try
-            {
-                return JsonConvert.DeserializeObject<T>(File.ReadAllText(path));
-            }
-            catch (Exception e)
-            {
-                Debug.LogWarning($"[Save] Could not read {path}: {e.Message}");
-                return null;
-            }
+            return File.Exists(path) ? File.ReadAllText(path) : null;
         }
 
-        public static void Save<T>(string slot, T data)
+        public static void SaveText(string slot, string text)
         {
             string path = PathFor(slot);
             string temp = path + ".tmp";
-            File.WriteAllText(temp, JsonConvert.SerializeObject(data));
+            File.WriteAllText(temp, text);
             if (File.Exists(path)) File.Replace(temp, path, null);
             else File.Move(temp, path);
         }

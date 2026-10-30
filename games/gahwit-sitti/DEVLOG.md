@@ -2,6 +2,18 @@
 
 Decisions and known gaps. Newest first. Read this at the start of each session (`/CLAUDE.md`).
 
+## 2026-10-30: time service, save schema, generators on the board (backlog 3, 4, 6)
+
+- **Time service** (`Core/TimeService.cs`): trusted time is server time (when the platform gives it) moved forward by the phone's uptime counter, which keeps counting while the phone sleeps. On Android that counter is `elapsedRealtime`, on iOS `CLOCK_MONOTONIC` (`Plugins/iOS/GahwitUptime.mm`). Changing the phone clock adds no energy (tested). After a restart the uptime counter starts again, so time falls back to the phone clock but never goes backwards. The platform's sanity check covers the rest (COMPLETE_SPEC.md section 11).
+- **Saves follow `design/save_schema.json`** (`_Game/Save`). Sections the game doesn't use yet are kept as they are. Migration step 0 → 1 upgrades the first playable's save, and loading this Editor's real save worked.
+- **Schema v1 changed before release.** No real saves existed yet, so the version stays at 1:
+  - `player.energyStampUptimeMs` became `energyStampMs` (trusted time), because uptime restarts with the phone.
+  - New fields: `clock` (the time service's anchor), `player.ordersServed` and `rng` (the seeded random state, for replaying bugs).
+- **Generators are pieces on the board** (GAME_SYSTEMS.md section 4, save schema). Tap one for an item; merge two of the same level to upgrade it; they can't be sold. A chapter's generator copy now lands on the board to merge. Pieces that don't fit wait in `board.storage` and come back when there's room. The storage screen itself isn't built.
+- **Ids follow the schema:** `abu_fadi`. Walk-in orders save no name; the shown name comes from the order id.
+- **Story choices** are saved by the choice's first Ink tag (`* [text] #ask`), under `story.choices[knot]`. Scenes seen are saved too.
+- **Tests:** 22 EditMode tests (Core 5, Merge 13, Save 4).
+
 ## 2026-10-30: Unity project and first playable
 
 **Set up**
@@ -29,8 +41,8 @@ Decisions and known gaps. Newest first. Read this at the start of each session (
 
 **Known gaps against the spec (next sessions, BUILD_GUIDE ring 1 order)**
 - Text uses a JSON table (`Resources/Loc/ar.json`), not Unity Localization string tables (CLAUDE.md). Move it in backlog item 5.
-- The save shape is not `save_schema.json` yet, and has no `schemaVersion` or migrations (backlog 3).
-- Energy uses the phone clock. It needs the time service, server time plus uptime (backlog 4).
+- ~~The save shape is not `save_schema.json` yet (backlog 3).~~ Done, see the entry above.
+- ~~Energy uses the phone clock (backlog 4).~~ Done, see the entry above.
 - There is one scene. Boot and Café scenes and a service locator are backlog 1.
 - The camera is a small orbit script, not Cinemachine (backlog 11).
 - Not built yet: decor placement and cosiness, walking customers and Abu Fadi as a regular, the pour memory, the letter, wardrobe, the 11-step tutorial, storage, bubbles, audio, analytics.

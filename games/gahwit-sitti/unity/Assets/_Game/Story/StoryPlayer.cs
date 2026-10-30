@@ -11,7 +11,8 @@ namespace Gahwit.Story
     }
 
     // Plays one knot of a compiled Ink story line by line.
-    // The speaker is the line's first tag ("text #abufadi"); [[word:meaning]] marks a tap-to-explain word.
+    // The speaker is the line's first tag ("text #abu_fadi"); [[word:meaning]] marks a tap-to-explain word.
+    // A choice's first tag is its id ("* [text] #ask"), which the save records under story.choices.
     public sealed class StoryPlayer
     {
         static readonly Regex GlossPattern = new Regex(@"\[\[([^:\]]+):([^\]]+)\]\]");
@@ -46,7 +47,13 @@ namespace Gahwit.Story
             }
         }
 
-        public void Choose(int index) => story.ChooseChoiceIndex(index);
+        // Returns the chosen option's id, or its position when the choice has no tag.
+        public string Choose(int index)
+        {
+            var choice = story.currentChoices[index];
+            story.ChooseChoiceIndex(index);
+            return choice.tags != null && choice.tags.Count > 0 ? choice.tags[0].Trim() : index.ToString();
+        }
 
         public bool TryNext(out StoryLine line)
         {
