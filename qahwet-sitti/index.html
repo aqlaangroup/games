@@ -1,0 +1,692 @@
+<title>Qahwet Sitti</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rakkas&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: one phone-width column; top bar, a view (board / café / story), bottom tabs. Single warm look by design. */
+:root {
+  color-scheme: light;
+  --bg: #FAF6F1;
+  --panel: #FFFFFF;
+  --ink: #2A1D17;
+  --muted: #6E5E55;
+  --line: #E6DCD2;
+  --tile: #F1E9DF;
+  --teal: #1D6C67;
+  --teal-dk: #14504C;
+  --teal-soft: #DCEDEA;
+  --gold: #C98E10;
+  --gold-dk: #8A5F00;
+  --gold-soft: #F6E8C6;
+  --rose: #B84A60;
+  --plum: #7E2F43;
+  --olive: #4C6B2E;
+  --f-display: "Rakkas", Georgia, serif;
+  --f-body: "IBM Plex Sans Arabic", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; -webkit-tap-highlight-color: transparent; }
+button { font: inherit; color: inherit; }
+button:focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; }
+.app { height: 100%; max-width: 480px; margin: 0 auto; display: flex; flex-direction: column; background: var(--bg); position: relative; overflow: hidden;
+  padding-left: max(0px, env(safe-area-inset-left, 0px)); padding-right: max(0px, env(safe-area-inset-right, 0px)); }
+
+/* Top bar */
+.top { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px max(12px, env(safe-area-inset-right, 0px)) 8px max(12px, env(safe-area-inset-left, 0px)); }
+.me { display: flex; align-items: center; gap: 8px; }
+.avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--rose); color: #fff; font-family: var(--f-display); font-size: 20px; display: grid; place-items: center; }
+.lvl { font-size: 12px; font-weight: 700; }
+.xpbar { width: 64px; height: 6px; border-radius: 3px; background: var(--line); margin-top: 3px; overflow: hidden; }
+.xpbar i { display: block; height: 100%; background: var(--teal); width: 0; transition: width .3s; }
+.pills { display: flex; gap: 6px; }
+.pill { display: flex; align-items: center; gap: 4px; background: var(--panel); border: 1px solid var(--line); border-radius: 999px; padding: 3px 9px 3px 7px; font-weight: 700; font-size: 14px; font-variant-numeric: tabular-nums; }
+.pill small { font-weight: 500; font-size: 11px; color: var(--muted); }
+
+/* Views */
+.view { flex: 1; min-height: 0; overflow-y: auto; padding: 0 max(10px, env(safe-area-inset-right, 0px)) 12px max(10px, env(safe-area-inset-left, 0px)); }
+.view[hidden] { display: none !important; }
+
+/* Orders */
+.orders { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-bottom: 8px; }
+.order { background: var(--panel); border: 2px solid var(--line); border-radius: 12px; padding: 6px; display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 0; }
+.order.ready { border-color: var(--teal); }
+.order .who { display: flex; align-items: center; gap: 5px; width: 100%; font-size: 12px; font-weight: 600; }
+.order .who span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dot { width: 20px; height: 20px; border-radius: 50%; color: #fff; font-size: 11px; font-weight: 700; display: grid; place-items: center; flex-shrink: 0; }
+.order .want { width: 44px; height: 44px; border-radius: 10px; background: var(--gold-soft); display: grid; place-items: center; }
+.order .want svg { width: 34px; height: 34px; }
+.order .name { font-size: 11px; color: var(--muted); text-align: center; line-height: 1.3; min-height: 2.6em; }
+.serve { width: 100%; min-height: 34px; border: 0; border-radius: 8px; background: var(--teal); color: #fff; font-weight: 700; font-size: 13px; cursor: pointer; }
+.serve:disabled { background: var(--tile); color: var(--muted); cursor: default; }
+
+/* Board */
+.board { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; padding: 6px; background: var(--tile); border-radius: 14px; }
+.cell { aspect-ratio: 1; border: 0; border-radius: 9px; background: var(--panel); position: relative; display: grid; place-items: center; padding: 0; cursor: pointer; }
+.cell.empty { background: #F7F1EA; }
+.cell svg { width: 78%; height: 78%; pointer-events: none; }
+.cell .lv { position: absolute; left: 3px; bottom: 1px; font-size: 9px; font-weight: 700; color: var(--muted); }
+.cell.sel { box-shadow: inset 0 0 0 3px var(--gold); }
+.cell.match { box-shadow: inset 0 0 0 2px var(--teal); }
+.cell.want::after { content: ""; position: absolute; top: 3px; right: 3px; width: 8px; height: 8px; border-radius: 50%; background: var(--teal); }
+.cell.pop svg { animation: pop .3s ease-out; }
+@keyframes pop { 0% { transform: scale(.5); } 70% { transform: scale(1.15); } 100% { transform: scale(1); } }
+
+.gens { display: flex; gap: 8px; margin-top: 8px; }
+.gen { flex: 1; min-height: 56px; border: 2px solid var(--gold); background: var(--gold-soft); border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: 700; font-size: 13px; cursor: pointer; padding: 4px 6px; }
+.gen svg { width: 30px; height: 30px; flex-shrink: 0; }
+.gen:disabled { opacity: .45; cursor: default; }
+.info { margin-top: 8px; display: flex; align-items: center; gap: 8px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; min-height: 52px; }
+.info .txt { flex: 1; min-width: 0; font-size: 13px; color: var(--muted); }
+.info .txt b { color: var(--ink); display: block; font-size: 14px; }
+.btn { min-height: 40px; border: 0; border-radius: 10px; background: var(--teal); color: #fff; font-weight: 700; padding: 0 14px; cursor: pointer; }
+.btn.ghost { background: var(--teal-soft); color: var(--teal-dk); }
+.btn.gold { background: var(--gold); color: #fff; }
+.btn:disabled { opacity: .45; cursor: default; }
+
+/* Café */
+.scene { height: 250px; border-radius: 16px; position: relative; overflow: hidden; background: #EDE0D0; margin-bottom: 10px; }
+.scene .floor { position: absolute; left: 0; right: 0; bottom: 0; height: 84px; background-color: #F1E9DF;
+  background-image: radial-gradient(circle at 0 0, var(--teal) 8px, transparent 9px), radial-gradient(circle at 28px 28px, var(--teal) 8px, transparent 9px), radial-gradient(circle at 14px 14px, var(--gold) 4px, transparent 5px); background-size: 28px 28px; }
+.scene .win { position: absolute; top: 46px; width: 74px; height: 100px; background: #BFD9D5; border: 6px solid var(--teal); border-radius: 37px 37px 0 0; }
+.scene .sign { position: absolute; top: 10px; left: 50%; transform: translateX(-50%) rotate(-7deg); font-family: var(--f-display); font-size: 19px; padding: 2px 14px; border-radius: 4px; background: #B7A898; color: #6E5E55; white-space: nowrap; transition: all .4s; }
+.scene .sign.fixed { transform: translateX(-50%); }
+.scene .shelf { position: absolute; top: 74px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; align-items: flex-end; padding-bottom: 4px; border-bottom: 5px solid var(--gold-dk); }
+.scene .shelf svg { width: 28px; height: 32px; }
+.scene .counter { position: absolute; bottom: 52px; right: 16px; width: 150px; height: 64px; background: #7A4A2A; border-radius: 6px 6px 0 0; border-top: 10px solid var(--ink); }
+.scene .tea { position: absolute; bottom: 60px; right: 178px; width: 54px; height: 54px; border-radius: 10px; background: var(--teal-soft); border: 3px solid var(--teal); display: grid; place-items: center; }
+.scene .tea svg { width: 34px; height: 34px; }
+.scene .chairs { position: absolute; bottom: 22px; left: 16px; display: flex; gap: 14px; }
+.scene .chair { width: 34px; height: 46px; border-radius: 8px 8px 2px 2px; }
+.scene .pile { position: absolute; bottom: 26px; left: 18px; width: 60px; height: 70px; background: repeating-linear-gradient(170deg, #8C6A55 0 8px, #A88B76 8px 14px); border-radius: 4px; transform: rotate(-4deg); }
+.scene .lights { position: absolute; top: 0; left: 0; right: 0; height: 30px; display: flex; justify-content: space-around; align-items: flex-end; }
+.scene .lights i { width: 9px; height: 9px; border-radius: 50%; background: #F6D88A; box-shadow: 0 0 10px #F6D88A; }
+.scene .dust { position: absolute; inset: 0; background: rgba(110, 94, 85, .18); pointer-events: none; transition: opacity .6s; }
+.scene .badge { position: absolute; bottom: 8px; left: 8px; background: rgba(255,255,255,.92); border-radius: 999px; padding: 3px 10px; font-size: 12px; font-weight: 700; color: var(--teal-dk); }
+
+.tasks { display: flex; flex-direction: column; gap: 8px; }
+.task { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; display: flex; align-items: center; gap: 10px; }
+.task.done { opacity: .6; }
+.task.cur { border: 2px solid var(--gold); }
+.task .t { flex: 1; min-width: 0; }
+.task .t b { display: block; }
+.task .t small { color: var(--muted); }
+.task .chk { width: 26px; height: 26px; border-radius: 50%; background: var(--teal); display: grid; place-items: center; flex-shrink: 0; }
+.task .lock { width: 26px; height: 26px; border-radius: 50%; background: var(--tile); flex-shrink: 0; }
+.styles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 8px; }
+.style { border: 3px solid var(--line); border-radius: 12px; background: var(--bg); padding: 6px; cursor: pointer; display: flex; flex-direction: column; gap: 5px; align-items: stretch; font-size: 12px; font-weight: 700; }
+.style.on { border-color: var(--gold); }
+.style .sw { height: 40px; border-radius: 8px; display: grid; place-items: center; font-family: var(--f-display); font-size: 13px; }
+
+/* Story journal */
+.chap { font-family: var(--f-display); font-size: 24px; margin: 6px 2px 2px; }
+.journal { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+.entry { text-align: right; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 8px; width: 100%; }
+.entry.locked { cursor: default; color: var(--muted); background: var(--tile); }
+.cast { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 10px; }
+.person { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 8px; text-align: center; font-size: 12px; }
+.person .face { width: 40px; height: 40px; border-radius: 50%; margin: 0 auto 4px; color: #fff; font-family: var(--f-display); font-size: 20px; display: grid; place-items: center; }
+.person b { display: block; font-size: 13px; }
+
+/* Tabs */
+.tabs { display: flex; justify-content: space-around; border-top: 1px solid var(--line); background: var(--panel); padding: 6px max(6px, env(safe-area-inset-right, 0px)) max(8px, env(safe-area-inset-bottom, 0px)) max(6px, env(safe-area-inset-left, 0px)); }
+.tab { border: 0; background: none; min-width: 72px; min-height: 48px; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 12px; font-weight: 600; color: var(--muted); cursor: pointer; position: relative; }
+.tab.on { color: var(--teal); font-weight: 700; }
+.tab svg { width: 24px; height: 24px; }
+.tab .note { position: absolute; top: 2px; right: 18px; width: 9px; height: 9px; border-radius: 50%; background: var(--rose); }
+
+/* Dialogue overlay */
+.dlg { position: absolute; inset: 0; background: rgba(42,29,23,.55); display: flex; flex-direction: column; justify-content: flex-end; z-index: 20; }
+.dlg[hidden] { display: none !important; }
+.dlg .stage { flex: 1; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 0; }
+.dlg .figure { width: 150px; display: flex; flex-direction: column; align-items: center; }
+.dlg .head { width: 92px; height: 104px; border-radius: 46px 46px 32px 32px; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 6px; }
+.dlg .head i { width: 58px; height: 66px; border-radius: 29px 29px 25px 25px; background: #E8C3A0; }
+.dlg .head.bare { border-radius: 50%; width: 70px; height: 76px; padding: 0; align-items: center; }
+.dlg .head.bare i { width: 70px; height: 76px; border-radius: 34px 34px 30px 30px; }
+.dlg .body { width: 140px; height: 150px; border-radius: 70px 70px 0 0; margin-top: -8px; }
+.dlg .box { background: var(--panel); margin: 0 10px max(14px, env(safe-area-inset-bottom, 0px)); border-radius: 18px; padding: 26px 16px 14px; position: relative; min-height: 150px; }
+.dlg .spk { position: absolute; top: -16px; right: 16px; color: #fff; font-family: var(--f-display); font-size: 18px; padding: 2px 14px; border-radius: 9px; }
+.dlg .line { font-size: 18px; line-height: 1.75; font-weight: 500; min-height: 3.4em; }
+.dlg .line.sys { font-size: 15px; color: var(--muted); font-style: italic; }
+.dlg .line.letter { font-family: var(--f-display); font-size: 20px; color: var(--gold-dk); }
+.dlg .gl { border: 0; background: var(--gold-soft); border-bottom: 2px dotted var(--gold-dk); border-radius: 4px; padding: 0 3px; cursor: help; font: inherit; }
+.dlg .gloss { margin-top: 8px; background: var(--teal-soft); border-radius: 8px; padding: 6px 10px; font-size: 13px; }
+.dlg .gloss[hidden] { display: none !important; }
+.dlg .row { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; gap: 8px; }
+.dlg .choices { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+.dlg .choice { min-height: 48px; text-align: right; border: 2px solid var(--teal); border-radius: 12px; background: var(--panel); padding: 8px 12px; font-weight: 600; cursor: pointer; }
+.hintk { font-size: 12px; color: var(--muted); }
+
+.toast { position: absolute; top: 64px; left: 50%; transform: translateX(-50%); background: var(--ink); color: #fff; padding: 8px 16px; border-radius: 999px; font-size: 13px; font-weight: 600; z-index: 30; white-space: nowrap; max-width: 92%; overflow: hidden; text-overflow: ellipsis; transition: opacity .3s; }
+.toast[hidden] { display: none !important; }
+.proto { font-size: 11px; color: var(--muted); text-align: center; margin-top: 10px; }
+@media (prefers-reduced-motion: reduce) { .cell.pop svg { animation: none; } .xpbar i, .scene .sign, .scene .dust { transition: none; } }
+</style>
+
+<div class="app" dir="rtl" lang="ar" id="app">
+  <header class="top">
+    <div class="me">
+      <div class="avatar" aria-hidden="true">س</div>
+      <div><div class="lvl" id="lvl">المستوى 1</div><div class="xpbar"><i id="xp"></i></div></div>
+    </div>
+    <div class="pills">
+      <div class="pill" title="الطاقة"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 L4 14 h7 l-1 8 9-12 h-7z" fill="#C98E10"/></svg><span id="energy">50</span><small id="etimer"></small></div>
+      <div class="pill" title="العملات"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="#C98E10"/><circle cx="12" cy="12" r="5" fill="none" stroke="#8A5F00" stroke-width="2"/></svg><span id="coins">0</span></div>
+    </div>
+  </header>
+
+  <main class="view" id="v-board">
+    <div class="orders" id="orders"></div>
+    <div class="board" id="board" aria-label="لوحة الدمج"></div>
+    <div class="gens" id="gens"></div>
+    <div class="info" id="info"></div>
+    <p class="proto">نسخة تجريبية للعبة · الطاقة بترجع كل 20 ثانية للتجربة</p>
+  </main>
+
+  <main class="view" id="v-cafe" hidden>
+    <div class="scene" id="scene"></div>
+    <div class="tasks" id="tasks"></div>
+  </main>
+
+  <main class="view" id="v-story" hidden>
+    <div class="chap">الفصل الأول · رجعة سلمى</div>
+    <div class="hintk">اضغطي على أي مشهد شفتيه عشان تعيديه.</div>
+    <div class="journal" id="journal"></div>
+    <div class="chap" style="font-size:20px;margin-top:16px">الشخصيات</div>
+    <div class="cast" id="cast"></div>
+  </main>
+
+  <nav class="tabs" aria-label="القوائم">
+    <button class="tab on" data-v="board" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>اللوحة</button>
+    <button class="tab" data-v="cafe" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 10 L12 3 L21 10 V21 H3z"/><path d="M9 21 V14 H15 V21"/></svg>القهوة<i class="note" id="cafe-note" hidden></i></button>
+    <button class="tab" data-v="story" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 5 h16 v11 h-9 l-5 4 v-4 h-2z"/></svg>القصة</button>
+  </nav>
+
+  <div class="dlg" id="dlg" hidden>
+    <div class="stage"><div class="figure" id="fig"></div></div>
+    <div class="box">
+      <div class="spk" id="spk"></div>
+      <div class="line" id="line"></div>
+      <div class="gloss" id="gloss" hidden></div>
+      <div class="choices" id="choices"></div>
+      <div class="row" id="row"><span class="hintk">اضغطي على الكلمات المظللة لمعناها</span><button class="btn" id="next" type="button">التالي</button></div>
+    </div>
+  </div>
+  <div class="toast" id="toast" hidden></div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var COLS = 7, ROWS = 8, N = COLS * ROWS;
+  var EMAX = 50, EREGEN = 20000;
+
+  var CHAINS = {
+    c: { name: "قهوة", gen: "علبة ستّي", items: ["حبّ أخضر", "حبّ محمّص", "قهوة بالهيل", "دلّة", "فنجان قهوة"] },
+    s: { name: "حلو", gen: "كيس السميد", items: ["سميد", "عجينة", "معمول", "صينية معمول", "كنافة"] },
+    t: { name: "شاي", gen: "صندوق الشاي", items: ["ورق نعنع", "إبريق شاي", "كاسة شاي", "صينية شاي"] }
+  };
+
+  var ICON = {
+    c0: '<ellipse cx="12" cy="12" rx="6" ry="8.5" transform="rotate(25 12 12)" fill="#8FA36B"/><path d="M9 6 Q13 12 15 18" stroke="#F1E9DF" stroke-width="1.6" fill="none"/>',
+    c1: '<ellipse cx="12" cy="12" rx="6" ry="8.5" transform="rotate(25 12 12)" fill="#6B3F22"/><path d="M9 6 Q13 12 15 18" stroke="#F1E9DF" stroke-width="1.6" fill="none"/>',
+    c2: '<path d="M4 15 h16 l-2 5 h-12z" fill="#7A4A2A"/><path d="M6 15 Q12 7 18 15z" fill="#A9774E"/><circle cx="17" cy="7" r="2" fill="#1D6C67"/>',
+    c3: '<path d="M8 21 h8 l-1-8 q-0.5-4 -3-4 q-2.5 0 -3 4z" fill="#C98E10"/><path d="M15 12 l6-5" stroke="#C98E10" stroke-width="2" stroke-linecap="round"/><path d="M9 9 h6 l-1-3 h-4z" fill="#8A5F00"/><circle cx="12" cy="4.5" r="1.5" fill="#8A5F00"/>',
+    c4: '<path d="M6 9 h12 l-2 8 h-8z" fill="#FFFFFF" stroke="#1D6C67" stroke-width="1.8"/><path d="M7 11 h10" stroke="#7A4A2A" stroke-width="2"/><path d="M4 20 h16" stroke="#1D6C67" stroke-width="2" stroke-linecap="round"/>',
+    s0: '<path d="M5 20 q-1-8 4-12 h6 q5 4 4 12z" fill="#E9D3A6"/><path d="M9 8 l-1-3 h8 l-1 3" fill="#D4B77E"/><circle cx="10" cy="15" r="1" fill="#A9774E"/><circle cx="14" cy="13" r="1" fill="#A9774E"/>',
+    s1: '<path d="M3 12 h18 q-1 8 -9 8 q-8 0 -9 -8z" fill="#1D6C67"/><ellipse cx="12" cy="11" rx="7" ry="3.5" fill="#F3E3C3"/>',
+    s2: '<circle cx="12" cy="13" r="8" fill="#E9C27A"/><circle cx="12" cy="13" r="4.5" fill="none" stroke="#B88A3E" stroke-width="1.4"/><circle cx="12" cy="13" r="1.5" fill="#B88A3E"/>',
+    s3: '<ellipse cx="12" cy="16" rx="10" ry="4.5" fill="#C98E10"/><circle cx="8" cy="13" r="3.2" fill="#E9C27A"/><circle cx="16" cy="13" r="3.2" fill="#E9C27A"/><circle cx="12" cy="11" r="3.2" fill="#E9C27A"/>',
+    s4: '<ellipse cx="12" cy="15" rx="10" ry="5" fill="#8A5F00"/><ellipse cx="12" cy="13.5" rx="8.5" ry="4" fill="#E58A2B"/><circle cx="9" cy="13" r="1" fill="#5C8A3A"/><circle cx="13" cy="12.5" r="1" fill="#5C8A3A"/><circle cx="15" cy="14.5" r="1" fill="#5C8A3A"/>',
+    t0: '<path d="M12 21 C4 16 4 8 12 3 C20 8 20 16 12 21z" fill="#5C8A3A"/><path d="M12 5 V20" stroke="#DCEDEA" stroke-width="1.4"/>',
+    t1: '<path d="M6 20 h11 q1-7 -5.5-9 q-6.5 2 -5.5 9z" fill="#1D6C67"/><path d="M16.5 14 l4-3" stroke="#1D6C67" stroke-width="2" stroke-linecap="round"/><path d="M5.5 15 q-3 0 -2 3" stroke="#1D6C67" stroke-width="1.8" fill="none"/><circle cx="11.5" cy="9.5" r="1.6" fill="#14504C"/>',
+    t2: '<path d="M8 5 h8 l-1.5 15 h-5z" fill="#F6E8C6" stroke="#C98E10" stroke-width="1.4"/><path d="M8.6 10 h6.8 l-1 10 h-4.8z" fill="#B85A2A"/><path d="M13 4 q2 -2 3 0" stroke="#5C8A3A" stroke-width="1.6" fill="none"/>',
+    t3: '<ellipse cx="12" cy="18" rx="10" ry="3.5" fill="#C98E10"/><path d="M5 9 h4 l-.7 8 h-2.6z" fill="#B85A2A"/><path d="M10 8 h4 l-.7 9 h-2.6z" fill="#B85A2A"/><path d="M15 9 h4 l-.7 8 h-2.6z" fill="#B85A2A"/>',
+    gc: '<rect x="6" y="7" width="12" height="14" rx="2" fill="#1D6C67"/><rect x="5" y="4" width="14" height="4" rx="1.5" fill="#14504C"/><path d="M9 13 h6" stroke="#F6D88A" stroke-width="2"/>',
+    gs: '<path d="M6 21 q-2-9 3-13 l-1-3 h8 l-1 3 q5 4 3 13z" fill="#D4B77E"/><path d="M9 8 h6" stroke="#8A5F00" stroke-width="1.6"/><path d="M10 15 h4" stroke="#B84A60" stroke-width="2"/>',
+    gt: '<rect x="4" y="8" width="16" height="12" rx="2" fill="#5C8A3A"/><path d="M4 12 h16" stroke="#DCEDEA" stroke-width="1.4"/><path d="M12 3 C9 5 9 8 12 8 C15 8 15 5 12 3z" fill="#5C8A3A"/>'
+  };
+  function svg(key) { return '<svg viewBox="0 0 24 24" aria-hidden="true">' + ICON[key] + '</svg>'; }
+
+  var PEOPLE = {
+    salma: { n: "سلمى", c: "#B84A60", hijab: false, body: "#1D6C67" },
+    teta: { n: "رسالة ستّي", c: "#8A5F00", letter: true },
+    abufadi: { n: "أبو فادي", c: "#1D6C67", hijab: false, body: "#6E5E55", hair: "#D8CBBE" },
+    samira: { n: "خالتو سميرة", c: "#7E2F43", hijab: true, body: "#7E2F43" },
+    lana: { n: "لانا", c: "#4C6B2E", hijab: true, body: "#2A1D17" },
+    karim: { n: "كريم", c: "#7A4A2A", hijab: false, body: "#8A5F00", hair: "#2A1D17" },
+    sys: { n: "", c: "#6E5E55" }
+  };
+  var CAST = [
+    ["salma", "من عمّان", "رجعت من دبي عشان قهوة ستّها."],
+    ["lana", "من الرياض", "بنت خالتها. ورثت نص القهوة."],
+    ["samira", "الخالة", "بتعرف أخبار كل الحارة."],
+    ["abufadi", "الزبون الأقدم", "طاولته نفسها من 30 سنة."],
+    ["karim", "النجّار", "بيرمّم خشب القهوة."],
+    ["teta", "أم خليل", "حاضرة بدفتر وصفاتها."]
+  ];
+
+  // Lines may hold [[word|meaning]] for the tap-to-explain glossary.
+  var SCENES = {
+    intro: { title: "قهوة ستّي", lines: [
+      { p: "salma", t: "هاي هي… قهوة ستّي. الآرمة مايلة، والكراسي مكوّمة [[هون|هنا]] بالزاوية." },
+      { p: "teta", t: "«يا سلمى يا روحي، القهوة مش حيطان، القهوة ناس. افتحيها، والناس بترجع.»" },
+      { p: "abufadi", t: "أهلين يا بنت خليل! والله إنك نسخة عن ستّك. بتعمليلي فنجان؟ من زمان ما شربت قهوة [[على أصولها|بالطريقة الصحيحة]]." },
+      { p: "sys", t: "اضغطي على «علبة ستّي» عشان يطلع حبّ قهوة. اضغطي على حبّتين متشابهتين عشان تدمجيهم." }
+    ] },
+    sign: { title: "الآرمة رجعت", lines: [
+      { p: "abufadi", t: "شوفي الآرمة! كأنها رجعت سنة 74. ستّك كانت تقعد [[هون|هنا]] كل صبح وتسقي الحبق." },
+      { p: "salma", t: "عمّو أبو فادي، احكيلي عنها. أنا كنت بعيدة كتير." },
+      { p: "abufadi", t: "كانت تقول: الفنجان الأول للضيف، والتاني للحكي، والتالت للمحبة. تعالي كل يوم، وأنا بحكيلك." }
+    ] },
+    chairs: { title: "خالتو وصلت", lines: [
+      { p: "samira", t: "سلمى حبيبتي! سمعت إنك فتحتي. [[منيح|جيد]]، [[منيح|جيد]]… بس الأهم، في عريس ابن ناس بدّه يتعرّف عليكِ." },
+      { p: "salma", choice: [
+        { t: "«خالتو، القهوة أول. بعدين منحكي.»", reply: [{ p: "samira", t: "ماشي، ماشي. بس أنا بعزمه على فنجان، وإنتِ اعمليه. ما خسرنا شي." }] },
+        { t: "«طيب… مين هو؟»", reply: [{ p: "samira", t: "مهندس، وأمه صاحبتي من أيام المدرسة. بجيبه الجمعة، والبسي الفستان الأزرق!" }] }
+      ] },
+      { p: "salma", t: "يا رب صبّرني. خلّينا نرتّب الكراسي أول." }
+    ] },
+    tea: { title: "لانا من الرياض", lines: [
+      { p: "lana", t: "السلام عليكم. أنا لانا، بنت خالتك نوال، من الرياض." },
+      { p: "salma", t: "لانا؟! آخر مرة شفتك كان عمرنا عشر سنين!" },
+      { p: "lana", t: "إيه. ستّنا الله يرحمها كتبت لي نص القهوة بوصيتها." },
+      { p: "salma", t: "[[نص|نصف]]؟!" },
+      { p: "lana", t: "لا تخافين، ما جيت أخرّب شي. جيت أشوف [[وش|ماذا (باللهجة النجدية)]] تسوين. وجبت معي شاي على أصوله." },
+      { p: "sys", t: "انفتح «صندوق الشاي»! سلسلة جديدة على اللوحة." }
+    ] },
+    dallah: { title: "دلال ستّي", lines: [
+      { p: "karim", t: "ستّك كانت تلمّع هالدلال كل جمعة. أنا كنت أقعد أتفرّج عليها وأنا صغير." },
+      { p: "salma", t: "يعني إنت كنت تعرفها منيح؟" },
+      { p: "karim", t: "هي اللي علّمتني أمسك المنشار. وهلّق جاي أرجّعلها الجميل." }
+    ] },
+    kitchen: { title: "معمول ولّا قهوة سعودية؟", lines: [
+      { p: "lana", t: "طيب، أعترف. معمولك [[زين|جيد / حلو (خليجي)]]. بس القهوة السعودية بالهيل والزعفران أطيب." },
+      { p: "salma", choice: [
+        { t: "«ليش نختار؟ منعمل الثنتين!»", reply: [{ p: "lana", t: "اتفقنا. منيو جديد: قهوة عمّانية وقهوة سعودية، وكل وحدة معها معمول." }] },
+        { t: "«بالقهوة هاي، القهوة عمّانية!»", reply: [{ p: "lana", t: "هههه، طيب. بس الزبونة الجاية من الخليج، أنا اللي بسوّي قهوتها." }] }
+      ] }
+    ] },
+    roof: { title: "السطح", lines: [
+      { p: "salma", t: "شوفي يا لانا… عمّان كلها من هون. ستّي كانت تطلع هون كل مغرب." },
+      { p: "lana", t: "يمكن ستّنا كانت تبينا نكون مع بعض. مو بس نتقاسم قهوة." },
+      { p: "salma", t: "يعني… شركاء؟" },
+      { p: "lana", t: "شركاء. بس الآرمة الجاية أنا اللي أختارها." },
+      { p: "teta", t: "في آخر دفتر الوصفات، صفحة مقطوعة: «كنافة أم خليل»… مين أخدها؟" },
+      { p: "sys", t: "نهاية الفصل الأول. الفصل الثاني: الصفحة الناقصة." }
+    ] }
+  };
+
+  var STYLES = {
+    old: { n: "شامي قديم", bg: "#2A1D17", fg: "#F6D88A" },
+    modern: { n: "عمّاني حديث", bg: "#FFFFFF", fg: "#1D6C67" },
+    gulf: { n: "مجلس خليجي", bg: "#7E2F43", fg: "#F6E8C6" }
+  };
+  var TASKS = [
+    { id: "sign", t: "صلّحي الآرمة", d: "الكل بيشوفها من الشارع", cost: 20, style: true, scene: "sign" },
+    { id: "chairs", t: "رتّبي الكراسي", d: "مكوّمة بالزاوية من شهور", cost: 40, style: true, scene: "chairs" },
+    { id: "tea", t: "زاوية الشاي", d: "بتفتح سلسلة الشاي", cost: 60, scene: "tea" },
+    { id: "dallah", t: "لمّعي دلال ستّي", d: "الدلال النحاس على الرف", cost: 90, scene: "dallah" },
+    { id: "kitchen", t: "جهّزي المطبخ", d: "الفرن والرفوف", cost: 120, scene: "kitchen" },
+    { id: "roof", t: "افتحي السطح", d: "أضواء وقعدة مغرب", cost: 160, style: true, scene: "roof" }
+  ];
+  var CUSTOMERS = [
+    ["abufadi", "أبو فادي"], ["samira", "خالتو سميرة"], ["karim", "كريم"], ["lana", "لانا"],
+    ["", "أم رامي"], ["", "طالبة جامعة"], ["", "جارة الطابق التاني"]
+  ];
+  var LEVELS = [0, 40, 110, 210, 340, 500, 700];
+
+  var st, sel = -1, popAt = -1, pendingStyle = "old", view = "board";
+  var $ = function (id) { return document.getElementById(id); };
+
+  function fresh() {
+    var b = new Array(N).fill(null);
+    [[22, "c", 0], [23, "c", 0], [29, "s", 0], [30, "s", 0], [24, "c", 1]].forEach(function (p) { b[p[0]] = { c: p[1], l: p[2] }; });
+    return { v: 1, board: b, energy: EMAX, eTs: Date.now(), coins: 0, xp: 0, orders: [], task: 0, styles: {}, seen: [], gens: ["c", "s"], ordersServed: 0 };
+  }
+  function load() {
+    try { var s = JSON.parse(localStorage.getItem("qahwet-sitti-v1")); if (s && s.v === 1 && s.board && s.board.length === N) return s; } catch (e) {}
+    return null;
+  }
+  function save() { try { localStorage.setItem("qahwet-sitti-v1", JSON.stringify(st)); } catch (e) {} }
+
+  function level() { var l = 1; for (var i = 1; i < LEVELS.length; i++) if (st.xp >= LEVELS[i]) l = i + 1; return l; }
+  function maxOrderLevel() { var l = level(); return l <= 1 ? 1 : l === 2 ? 2 : l <= 4 ? 3 : 4; }
+
+  function tickEnergy() {
+    var now = Date.now();
+    if (st.energy >= EMAX) { st.eTs = now; return; }
+    var gained = Math.floor((now - st.eTs) / EREGEN);
+    if (gained > 0) { st.energy = Math.min(EMAX, st.energy + gained); st.eTs += gained * EREGEN; if (st.energy >= EMAX) st.eTs = now; }
+  }
+
+  function newOrder() {
+    var chains = st.gens.slice(), tries = 0, o;
+    do {
+      var c = chains[Math.floor(Math.random() * chains.length)];
+      var top = Math.min(maxOrderLevel(), CHAINS[c].items.length - 1);
+      var l = 1 + Math.floor(Math.random() * top);
+      var cu = CUSTOMERS[Math.floor(Math.random() * CUSTOMERS.length)];
+      o = { c: c, l: l, p: cu[0], who: cu[1], coins: 5 * Math.pow(2, l) + Math.floor(Math.random() * 4), xp: 6 * (l + 1) };
+      tries++;
+    } while (tries < 10 && st.orders.some(function (x) { return x.c === o.c && x.l === o.l; }));
+    return o;
+  }
+  function fillOrders() {
+    while (st.orders.length < 3) st.orders.push(newOrder());
+    if (st.ordersServed === 0 && !st.orders.some(function (o) { return o.c === "c" && o.l === 1; })) {
+      st.orders[0] = { c: "c", l: 1, p: "abufadi", who: "أبو فادي", coins: 12, xp: 12 };
+    }
+  }
+
+  function findItem(c, l) { for (var i = 0; i < N; i++) { var it = st.board[i]; if (it && it.c === c && it.l === l) return i; } return -1; }
+  function emptyCount() { return st.board.filter(function (x) { return !x; }).length; }
+
+  /* ---------- Rendering ---------- */
+  function renderTop() {
+    tickEnergy();
+    var l = level(), lo = LEVELS[l - 1], hi = LEVELS[l] || LEVELS[LEVELS.length - 1] + 300;
+    $("lvl").textContent = "المستوى " + l;
+    $("xp").style.width = Math.min(100, Math.round((st.xp - lo) / (hi - lo) * 100)) + "%";
+    $("energy").textContent = st.energy;
+    $("coins").textContent = st.coins;
+    if (st.energy < EMAX) { var s = Math.ceil((EREGEN - (Date.now() - st.eTs)) / 1000); $("etimer").textContent = "+1 بعد " + Math.max(0, s) + "ث"; }
+    else $("etimer").textContent = "";
+    var t = TASKS[st.task];
+    $("cafe-note").hidden = !(t && st.coins >= t.cost);
+  }
+
+  function renderOrders() {
+    var el = $("orders"); el.innerHTML = "";
+    st.orders.forEach(function (o, i) {
+      var have = findItem(o.c, o.l) >= 0;
+      var d = document.createElement("div"); d.className = "order" + (have ? " ready" : "");
+      var col = o.p ? PEOPLE[o.p].c : "#6E5E55";
+      d.innerHTML = '<div class="who"><i class="dot" style="background:' + col + '">' + o.who.charAt(0) + '</i><span></span></div><div class="want">' + svg(o.c + o.l) + '</div><div class="name"></div>';
+      d.querySelector(".who span").textContent = o.who;
+      d.querySelector(".name").textContent = CHAINS[o.c].items[o.l] + " · " + o.coins + " عملة";
+      var b = document.createElement("button"); b.type = "button"; b.className = "serve"; b.textContent = have ? "قدّمي" : "مش جاهز";
+      b.disabled = !have; b.addEventListener("click", function () { serve(i); });
+      d.appendChild(b); el.appendChild(d);
+    });
+  }
+
+  function renderBoard() {
+    var el = $("board"); el.innerHTML = "";
+    var s = sel >= 0 ? st.board[sel] : null;
+    var wanted = {}; st.orders.forEach(function (o) { wanted[o.c + o.l] = true; });
+    st.board.forEach(function (it, i) {
+      var b = document.createElement("button"); b.type = "button";
+      var cls = "cell";
+      if (!it) { cls += " empty"; b.setAttribute("aria-label", "مربع فاضي"); }
+      else {
+        b.innerHTML = svg(it.c + it.l) + '<span class="lv">' + (it.l + 1) + "</span>";
+        b.setAttribute("aria-label", CHAINS[it.c].items[it.l] + "، مستوى " + (it.l + 1));
+        if (wanted[it.c + it.l]) cls += " want";
+        if (s && i !== sel && it.c === s.c && it.l === s.l && it.l < CHAINS[it.c].items.length - 1) cls += " match";
+      }
+      if (i === sel) cls += " sel";
+      if (i === popAt) cls += " pop";
+      b.className = cls;
+      b.addEventListener("click", function () { tap(i); });
+      el.appendChild(b);
+    });
+    popAt = -1;
+
+    var g = $("gens"); g.innerHTML = "";
+    st.gens.forEach(function (c) {
+      var b = document.createElement("button"); b.type = "button"; b.className = "gen";
+      b.innerHTML = svg("g" + c) + "<span></span>";
+      b.querySelector("span").textContent = CHAINS[c].gen;
+      b.disabled = st.energy <= 0;
+      b.addEventListener("click", function () { spawn(c); });
+      g.appendChild(b);
+    });
+    renderInfo();
+  }
+
+  function renderInfo() {
+    var el = $("info"); el.innerHTML = "";
+    var txt = document.createElement("div"); txt.className = "txt";
+    var it = sel >= 0 ? st.board[sel] : null;
+    if (it) {
+      var ch = CHAINS[it.c], last = it.l >= ch.items.length - 1;
+      txt.innerHTML = "<b></b><span></span>";
+      txt.querySelector("b").textContent = ch.items[it.l] + " · مستوى " + (it.l + 1);
+      txt.querySelector("span").textContent = last ? "هاي أعلى قطعة بالسلسلة." : "ادمجيها مع قطعة متلها ← " + ch.items[it.l + 1];
+      el.appendChild(txt);
+      var sell = document.createElement("button"); sell.type = "button"; sell.className = "btn ghost"; sell.textContent = "بيعي (+" + (it.l + 1) + ")";
+      sell.addEventListener("click", function () { st.coins += it.l + 1; st.board[sel] = null; sel = -1; toast("انباعت. +" + (it.l + 1) + " عملة"); refresh(); });
+      el.appendChild(sell);
+    } else if (st.energy < 5) {
+      txt.innerHTML = "<b>الطاقة قربت تخلص</b><span>بترجع لحالها، أو شوفي إعلان قصير.</span>";
+      el.appendChild(txt);
+      var ad = document.createElement("button"); ad.type = "button"; ad.className = "btn gold"; ad.textContent = "إعلان (+15)";
+      ad.addEventListener("click", function () { st.energy = Math.min(EMAX, st.energy + 15); toast("+15 طاقة (إعلان تجريبي)"); refresh(); });
+      el.appendChild(ad);
+    } else {
+      var free = emptyCount();
+      txt.innerHTML = "<b></b><span></span>";
+      txt.querySelector("b").textContent = free < 8 ? "اللوحة قربت تتعبّى" : "اضغطي على قطعة، وبعدين على قطعة متلها";
+      txt.querySelector("span").textContent = free < 8 ? "بيعي قطع ما بتلزمك، أو قدّمي طلبات." : "النقطة الخضرا يعني في زبون طالبها.";
+      el.appendChild(txt);
+    }
+  }
+
+  function renderCafe() {
+    var done = function (id) { return TASKS.findIndex(function (t) { return t.id === id; }) < st.task; };
+    var sc = $("scene"); sc.innerHTML = "";
+    var html = '<div class="floor"></div><div class="win" style="right:24px"></div><div class="win" style="left:24px"></div>';
+    var ss = STYLES[st.styles.sign || "old"];
+    html += '<div class="sign' + (done("sign") ? ' fixed" style="background:' + ss.bg + ";color:" + ss.fg + ";border:2px solid " + ss.fg : "") + '">قهوة ستّي</div>';
+    if (done("dallah")) html += '<div class="shelf">' + svg("c3") + svg("c3") + svg("c3") + "</div>";
+    if (done("kitchen")) html += '<div class="counter"></div>';
+    if (done("tea")) html += '<div class="tea">' + svg("t1") + "</div>";
+    if (done("chairs")) {
+      var cs = STYLES[st.styles.chairs || "old"];
+      html += '<div class="chairs"><div class="chair" style="background:' + cs.bg + ";border:3px solid " + cs.fg + '"></div><div class="chair" style="background:' + cs.bg + ";border:3px solid " + cs.fg + '"></div><div class="chair" style="background:' + cs.bg + ";border:3px solid " + cs.fg + '"></div></div>';
+    } else html += '<div class="pile"></div>';
+    if (done("roof")) html += '<div class="lights"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>';
+    html += '<div class="dust" style="opacity:' + Math.max(0, 1 - st.task / TASKS.length) + '"></div>';
+    html += '<div class="badge">صالة القهوة · ' + Math.round(st.task / TASKS.length * 100) + "%</div>";
+    sc.innerHTML = html;
+
+    var el = $("tasks"); el.innerHTML = "";
+    TASKS.forEach(function (t, i) {
+      var d = document.createElement("div");
+      d.className = "task" + (i < st.task ? " done" : i === st.task ? " cur" : "");
+      var mark = i < st.task ? '<div class="chk"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" aria-hidden="true"><path d="M5 12 l5 5 9-10"/></svg></div>' : '<div class="lock"></div>';
+      d.innerHTML = mark + '<div class="t"><b></b><small></small></div>';
+      d.querySelector("b").textContent = t.t;
+      d.querySelector("small").textContent = i <= st.task ? t.d + " · " + t.cost + " عملة" : "بتنفتح بعدين";
+      if (i === st.task) {
+        var b = document.createElement("button"); b.type = "button"; b.className = "btn";
+        b.textContent = st.coins >= t.cost ? "رمّمي" : "بدّك " + (t.cost - st.coins);
+        b.disabled = st.coins < t.cost;
+        b.addEventListener("click", function () { restore(); });
+        d.appendChild(b);
+      }
+      el.appendChild(d);
+      if (i === st.task && t.style) {
+        var wrap = document.createElement("div"); wrap.className = "styles";
+        Object.keys(STYLES).forEach(function (k) {
+          var s = STYLES[k], sb = document.createElement("button"); sb.type = "button";
+          sb.className = "style" + (pendingStyle === k ? " on" : "");
+          sb.setAttribute("aria-pressed", pendingStyle === k ? "true" : "false");
+          sb.innerHTML = '<div class="sw" style="background:' + s.bg + ";color:" + s.fg + '">قهوة ستّي</div><span></span>';
+          sb.querySelector("span").textContent = s.n;
+          sb.addEventListener("click", function () { pendingStyle = k; renderCafe(); });
+          wrap.appendChild(sb);
+        });
+        el.appendChild(wrap);
+      }
+    });
+    if (st.task >= TASKS.length) {
+      var end = document.createElement("div"); end.className = "task cur";
+      end.innerHTML = '<div class="t"><b>خلص الفصل الأول</b><small>الفصل الثاني بيكمّل بالنسخة الكاملة. كمّلي اللعب على اللوحة.</small></div>';
+      el.appendChild(end);
+    }
+  }
+
+  function renderStory() {
+    var el = $("journal"); el.innerHTML = "";
+    var order = ["intro"].concat(TASKS.map(function (t) { return t.scene; }));
+    order.forEach(function (id) {
+      var seen = st.seen.indexOf(id) >= 0;
+      var b = document.createElement("button"); b.type = "button"; b.className = "entry" + (seen ? "" : " locked");
+      b.innerHTML = "<span></span><small></small>";
+      b.querySelector("span").textContent = seen ? SCENES[id].title : "مشهد مقفول";
+      b.querySelector("small").textContent = seen ? "شوفي ↺" : "";
+      if (seen) b.addEventListener("click", function () { play(id); });
+      else b.disabled = true;
+      el.appendChild(b);
+    });
+    var c = $("cast"); c.innerHTML = "";
+    CAST.forEach(function (row) {
+      var p = PEOPLE[row[0]], d = document.createElement("div"); d.className = "person";
+      d.innerHTML = '<div class="face" style="background:' + p.c + '">' + (row[0] === "teta" ? "ستّي" : p.n.charAt(0)).slice(0, 4) + '</div><b></b><small></small>';
+      d.querySelector("b").textContent = row[0] === "teta" ? "ستّي أم خليل" : p.n;
+      d.querySelector("small").textContent = row[1] + " · " + row[2];
+      if (row[0] === "teta") d.querySelector(".face").style.fontSize = "14px";
+      c.appendChild(d);
+    });
+  }
+
+  function refresh() {
+    renderTop();
+    if (view === "board") { renderOrders(); renderBoard(); }
+    if (view === "cafe") renderCafe();
+    if (view === "story") renderStory();
+    save();
+  }
+
+  /* ---------- Actions ---------- */
+  function tap(i) {
+    var it = st.board[i];
+    if (sel < 0) { if (it) sel = i; }
+    else if (sel === i) sel = -1;
+    else {
+      var a = st.board[sel];
+      if (!it) { st.board[i] = a; st.board[sel] = null; sel = -1; }
+      else if (it.c === a.c && it.l === a.l) {
+        if (it.l >= CHAINS[it.c].items.length - 1) { toast("هاي أعلى قطعة بالسلسلة"); sel = i; }
+        else { st.board[i] = { c: it.c, l: it.l + 1 }; st.board[sel] = null; sel = -1; popAt = i; st.xp += 1; }
+      } else sel = i;
+    }
+    refresh();
+  }
+
+  function spawn(c) {
+    tickEnergy();
+    if (st.energy <= 0) { toast("خلصت الطاقة"); return; }
+    var empties = []; st.board.forEach(function (x, i) { if (!x) empties.push(i); });
+    if (!empties.length) { toast("اللوحة مليانة. بيعي أو قدّمي طلبات"); return; }
+    if (st.energy === EMAX) st.eTs = Date.now();
+    st.energy--;
+    var at = empties[Math.floor(Math.random() * Math.min(empties.length, 6))];
+    st.board[at] = { c: c, l: 0 }; popAt = at; sel = -1;
+    refresh();
+  }
+
+  function serve(i) {
+    var o = st.orders[i], at = findItem(o.c, o.l);
+    if (at < 0) return;
+    var before = level();
+    st.board[at] = null; st.coins += o.coins; st.xp += o.xp; st.ordersServed++;
+    st.orders.splice(i, 1); fillOrders();
+    sel = -1;
+    toast(o.who + ": يسلمو إيديكِ! +" + o.coins);
+    if (level() > before) { st.energy = Math.min(EMAX, st.energy + 20); setTimeout(function () { toast("مستوى جديد! +20 طاقة"); }, 1300); }
+    refresh();
+  }
+
+  function restore() {
+    var t = TASKS[st.task]; if (!t || st.coins < t.cost) return;
+    st.coins -= t.cost;
+    if (t.style) st.styles[t.id] = pendingStyle;
+    if (t.id === "tea" && st.gens.indexOf("t") < 0) st.gens.push("t");
+    st.task++; pendingStyle = "old";
+    refresh();
+    play(t.scene);
+  }
+
+  /* ---------- Dialogue ---------- */
+  var q = [], onEnd = null;
+  function play(id, cb) {
+    q = SCENES[id].lines.slice(); onEnd = cb || null;
+    if (st.seen.indexOf(id) < 0) { st.seen.push(id); save(); }
+    $("dlg").hidden = false; step();
+  }
+  function figure(p) {
+    var f = $("fig"); f.innerHTML = "";
+    if (!p || p.letter || !p.body) return;
+    var head = document.createElement("div");
+    head.className = "head" + (p.hijab ? "" : " bare");
+    head.style.background = p.hijab ? p.c : "transparent";
+    var face = document.createElement("i");
+    if (!p.hijab && p.hair) face.style.boxShadow = "inset 0 10px 0 " + p.hair;
+    if (!p.hijab && !p.hair) face.style.boxShadow = "inset 0 14px 0 #3A2418";
+    head.appendChild(face);
+    var body = document.createElement("div"); body.className = "body"; body.style.background = p.body;
+    f.appendChild(head); f.appendChild(body);
+  }
+  function setLine(el, text) {
+    el.innerHTML = "";
+    var re = /\[\[([^|\]]+)\|([^\]]+)\]\]/g, last = 0, m;
+    while ((m = re.exec(text))) {
+      if (m.index > last) el.appendChild(document.createTextNode(text.slice(last, m.index)));
+      var b = document.createElement("button"); b.type = "button"; b.className = "gl"; b.textContent = m[1];
+      (function (w, meaning) { b.addEventListener("click", function (e) { e.stopPropagation(); var g = $("gloss"); g.hidden = false; g.textContent = "«" + w + "» يعني: " + meaning; }); })(m[1], m[2]);
+      el.appendChild(b); last = re.lastIndex;
+    }
+    if (last < text.length) el.appendChild(document.createTextNode(text.slice(last)));
+  }
+  function step() {
+    var ln = q.shift();
+    $("gloss").hidden = true; $("choices").innerHTML = "";
+    if (!ln) { $("dlg").hidden = true; var cb = onEnd; onEnd = null; refresh(); if (cb) cb(); return; }
+    var p = PEOPLE[ln.p];
+    var spk = $("spk"); spk.textContent = p.n; spk.style.background = p.c; spk.hidden = !p.n;
+    figure(p);
+    var line = $("line");
+    line.className = "line" + (ln.p === "sys" ? " sys" : p.letter ? " letter" : "");
+    if (ln.choice) {
+      line.textContent = "شو بتردّ سلمى؟";
+      $("row").hidden = true;
+      ln.choice.forEach(function (ch) {
+        var b = document.createElement("button"); b.type = "button"; b.className = "choice"; b.textContent = ch.t;
+        b.addEventListener("click", function () { q = ch.reply.concat(q); $("row").hidden = false; step(); });
+        $("choices").appendChild(b);
+      });
+    } else { setLine(line, ln.t); $("row").hidden = false; }
+    $("next").textContent = q.length ? "التالي" : "تمام";
+  }
+  $("next").addEventListener("click", step);
+
+  /* ---------- Misc ---------- */
+  var tt;
+  function toast(msg) { var t = $("toast"); t.textContent = msg; t.hidden = false; clearTimeout(tt); tt = setTimeout(function () { t.hidden = true; }, 1800); }
+
+  Array.prototype.forEach.call(document.querySelectorAll(".tab"), function (b) {
+    b.addEventListener("click", function () {
+      view = b.getAttribute("data-v"); sel = -1;
+      Array.prototype.forEach.call(document.querySelectorAll(".tab"), function (x) { x.classList.toggle("on", x === b); });
+      ["board", "cafe", "story"].forEach(function (v) { $("v-" + v).hidden = v !== view; });
+      refresh();
+    });
+  });
+
+  var hot = window.claude && window.claude.hot;
+  st = (hot && hot.data && hot.data.board) ? hot.data : (load() || fresh());
+  if (hot && hot.snapshot) hot.snapshot(function () { return st; });
+  fillOrders();
+  refresh();
+  setInterval(function () {
+    var e = st.energy; renderTop();
+    if (st.energy !== e) { save(); if (view === "board") renderBoard(); }
+  }, 1000);
+  if (st.seen.indexOf("intro") < 0) play("intro");
+})();
+</script>
