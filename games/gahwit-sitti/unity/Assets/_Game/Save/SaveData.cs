@@ -8,13 +8,14 @@ namespace Gahwit.Save
     // so a save written by a newer build loses nothing here.
     public sealed class SaveData
     {
-        public const int CurrentSchema = 1;
+        public const int CurrentSchema = 2;
 
         public int SchemaVersion = CurrentSchema;
         public long SaveVersion;
         public string SavedAt;
         public string Rng;
         public ClockSave Clock = new ClockSave();
+        public AccountSave Account = new AccountSave();
         public TutorialSave Tutorial = new TutorialSave();
         public PlayerSave Player = new PlayerSave();
         public BoardSave Board = new BoardSave();
@@ -36,6 +37,13 @@ namespace Gahwit.Save
         public long UptimeMs;
         public long LastSeenMs;
         public bool FromServer;
+    }
+
+    // From the age gate (COMPLETE_SPEC.md section 14). Null birthYear means the gate hasn't been answered.
+    public sealed class AccountSave
+    {
+        public int? BirthYear;
+        public bool ParentConsent;
     }
 
     public sealed class TutorialSave
@@ -120,7 +128,9 @@ namespace Gahwit.Save
         public bool Sound = true;
         public bool Music = true;
         public bool Haptics = true;
+        public bool Notifications = true;
         public bool Glossary = true;
+        public bool Voice; // full dialogue voice; off means only the main characters speak (screens/Settings)
         public bool LargeText;
         public string Quality = "auto";
         public bool ReducedMotion;

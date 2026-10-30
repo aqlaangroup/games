@@ -3,20 +3,31 @@ using UnityEngine;
 
 namespace Gahwit.UI
 {
-    // Small sprites drawn in code (rounded panel, circle, energy bolt, gem) until the UI art arrives.
+    // Small sprites drawn in code (rounded panel, circle, energy bolt, gem, gear) until the UI art arrives.
     public static class UiSprites
     {
         public const float RoundedRadius = 48f;
         const int Size = 128;
 
-        static Sprite rounded, circle, bolt, gem;
+        static Sprite rounded, circle, bolt, gem, gear;
 
         public static Sprite Rounded => rounded != null ? rounded : rounded = Make("Rounded", RoundedAlpha, new Vector4(RoundedRadius, RoundedRadius, RoundedRadius, RoundedRadius));
         public static Sprite Circle => circle != null ? circle : circle = Make("Circle", CircleAlpha, Vector4.zero);
         public static Sprite Bolt => bolt != null ? bolt : bolt = Polygon("Bolt", new[] { V(0.58f, 0.02f), V(0.16f, 0.56f), V(0.46f, 0.56f), V(0.36f, 0.98f), V(0.86f, 0.40f), V(0.55f, 0.40f), V(0.68f, 0.02f) });
         public static Sprite Gem => gem != null ? gem : gem = Polygon("Gem", new[] { V(0.5f, 0.04f), V(0.94f, 0.38f), V(0.5f, 0.96f), V(0.06f, 0.38f) });
+        public static Sprite Gear => gear != null ? gear : gear = Make("Gear", GearAlpha, Vector4.zero);
 
         static Vector2 V(float x, float yFromTop) => new Vector2(x, yFromTop);
+
+        // A ring with eight teeth.
+        static float GearAlpha(int px, int py)
+        {
+            var d = new Vector2(px + 0.5f - Size / 2f, py + 0.5f - Size / 2f) / Size;
+            float r = d.magnitude, angle = Mathf.Atan2(d.y, d.x) * 8f / (2f * Mathf.PI);
+            bool tooth = Mathf.Abs(angle - Mathf.Round(angle)) < 0.22f;
+            float outer = tooth ? 0.47f : 0.37f;
+            return Mathf.Clamp01((outer - r) * Size + 0.5f) * Mathf.Clamp01((r - 0.16f) * Size + 0.5f);
+        }
 
         static float RoundedAlpha(int px, int py)
         {

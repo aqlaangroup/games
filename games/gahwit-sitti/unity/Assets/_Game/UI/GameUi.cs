@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace Gahwit.UI
 {
-    // The whole interface, built in code: HUD, kitchen and café screens, tabs, dialogue and toasts.
+    // The whole interface, built in code: HUD, kitchen and café screens, tabs, dialogue, the account screens and toasts.
     public sealed class GameUi : MonoBehaviour
     {
         Game game;
@@ -26,8 +26,11 @@ namespace Gahwit.UI
         public DialogueView Dialogue { get; private set; }
         public MemoryView Memory { get; private set; }
         public LetterView Letter { get; private set; }
+        public SettingsView Settings { get; private set; }
+        public CloudChoiceView CloudChoice { get; private set; }
+        public AgeGateView AgeGate { get; private set; }
 
-        public static GameUi Create(Game game, CafeCamera cafeCamera, CafeRoom room, Func<long> now, Action openDrawer)
+        public static GameUi Create(Game game, CafeCamera cafeCamera, CafeRoom room, Func<long> now, Action openDrawer, IAccountUi account)
         {
             EnsureEventSystem();
             var go = new GameObject("GameUI", typeof(RectTransform)) { layer = 5 };
@@ -41,7 +44,7 @@ namespace Gahwit.UI
             go.AddComponent<GraphicRaycaster>();
 
             var ui = go.AddComponent<GameUi>();
-            ui.Build(game, cafeCamera, room, now, openDrawer);
+            ui.Build(game, cafeCamera, room, now, openDrawer, account);
             return ui;
         }
 
@@ -51,7 +54,7 @@ namespace Gahwit.UI
             new GameObject("EventSystem", typeof(EventSystem), typeof(InputSystemUIInputModule));
         }
 
-        void Build(Game game, CafeCamera cafeCamera, CafeRoom room, Func<long> now, Action openDrawer)
+        void Build(Game game, CafeCamera cafeCamera, CafeRoom room, Func<long> now, Action openDrawer, IAccountUi account)
         {
             this.game = game;
             this.cafeCamera = cafeCamera;
@@ -81,6 +84,19 @@ namespace Gahwit.UI
             Letter.Init();
             Toast = UiKit.Rect(root, "Toast").Pin(new Vector2(0.5f, 1), new Vector2(0, -136), new Vector2(920, 84)).gameObject.AddComponent<Toast>();
             Toast.Init();
+
+            var help = UiKit.Rect(root, "Help").Stretch().gameObject.AddComponent<HelpView>();
+            help.Init(account, Toast);
+            var confirm = UiKit.Rect(root, "Confirm").Stretch().gameObject.AddComponent<ConfirmView>();
+            confirm.Init();
+            Settings = UiKit.Rect(root, "Settings").Stretch().gameObject.AddComponent<SettingsView>();
+            Settings.Init(game, account, Toast, help, confirm);
+            Settings.transform.SetSiblingIndex(help.transform.GetSiblingIndex());
+            CloudChoice = UiKit.Rect(root, "CloudChoice").Stretch().gameObject.AddComponent<CloudChoiceView>();
+            CloudChoice.Init();
+            AgeGate = UiKit.Rect(root, "AgeGate").Stretch().gameObject.AddComponent<AgeGateView>();
+            AgeGate.Init(account);
+            Toast.transform.SetAsLastSibling();
 
             kitchen.Init(game, look, this, now, dragLayer);
             cafe.Init(game, this, cafeCamera, room, openDrawer);

@@ -5,6 +5,7 @@
         "Gahwit.Core",
         "Gahwit.Memories",
         "Gahwit.Merge",
+        "Gahwit.Platform",
         "Gahwit.Save",
         "Gahwit.Story",
         "Gahwit.Cafe",

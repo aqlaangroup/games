@@ -104,7 +104,7 @@ namespace Gahwit.Save.Tests
         }
 
         [Test]
-        public void TheFirstPlayablesSaveMigratesToVersionOne()
+        public void TheFirstPlayablesSaveMigratesToTheCurrentVersion()
         {
             // A save written by the first playable on 2026-10-30, before the save schema was followed.
             const string old = @"{
@@ -136,6 +136,30 @@ namespace Gahwit.Save.Tests
             Assert.AreEqual(2, state.Orders[0].Lines[0].Count);
             Assert.AreEqual(8, state.NextOrderId);
             Assert.AreEqual(12345UL, state.Rng);
+        }
+
+        [Test]
+        public void AVersionOneSaveGetsTheAccountSectionAndKeepsEverythingElse()
+        {
+            var time = new TimeService(new FakeClock(), null);
+            var v1 = JObject.Parse(WriteJson(PlayedState(), time));
+            v1["schemaVersion"] = 1;
+            v1.Remove("account");
+            var settings = (JObject)v1["settings"];
+            settings.Remove("notifications");
+            settings.Remove("voice");
+            settings["music"] = false;
+
+            var state = SaveService.FromJson(v1.ToString(), config, content, out var data, out _);
+
+            Assert.AreEqual(2, data.SchemaVersion);
+            Assert.IsNull(data.Account.BirthYear, "the age gate shows again");
+            Assert.IsFalse(data.Account.ParentConsent);
+            Assert.IsTrue(data.Settings.Notifications);
+            Assert.IsFalse(data.Settings.Voice);
+            Assert.IsFalse(data.Settings.Music, "existing settings are kept");
+            Assert.AreEqual("old", state.TaskStyles["sign"]);
+            Assert.AreEqual(3, state.MemoryStars["m1_pour"]);
         }
 
         [Test]

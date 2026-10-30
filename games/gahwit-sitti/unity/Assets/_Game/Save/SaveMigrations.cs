@@ -12,7 +12,8 @@ namespace Gahwit.Save
     {
         static readonly Dictionary<int, Func<JObject, BalanceConfig, JObject>> Steps = new Dictionary<int, Func<JObject, BalanceConfig, JObject>>
         {
-            [0] = FromFirstPlayable
+            [0] = FromFirstPlayable,
+            [1] = AddAccount
         };
 
         public static JObject Upgrade(JObject raw, BalanceConfig config)
@@ -33,7 +34,7 @@ namespace Gahwit.Save
         static JObject FromFirstPlayable(JObject old, BalanceConfig config)
         {
             int cols = config.Board.Cols, rows = config.Board.Rows;
-            var data = new SaveData();
+            var data = new SaveData { SchemaVersion = 1 }; // later steps run after this one
             data.Board.Cols = cols;
             data.Board.Rows = rows;
 
@@ -96,6 +97,19 @@ namespace Gahwit.Save
             data.Rng = (old.Value<ulong?>("Rng") ?? 0).ToString(CultureInfo.InvariantCulture);
 
             return JObject.FromObject(data, SaveCodec.Serializer);
+        }
+
+        // Version 2 (2026-10-31) adds the age gate's answer and the notification and voice switches. A save from
+        // before has no birth year, so the age gate shows once on the next launch.
+        static JObject AddAccount(JObject save, BalanceConfig config)
+        {
+            if (!(save["account"] is JObject)) save["account"] = new JObject { ["parentConsent"] = false };
+            var settings = save["settings"] as JObject ?? new JObject();
+            if (settings["notifications"] == null) settings["notifications"] = true;
+            if (settings["voice"] == null) settings["voice"] = false;
+            save["settings"] = settings;
+            save["schemaVersion"] = 2;
+            return save;
         }
 
         static string Rename(string character) => character == "abufadi" ? "abu_fadi" : character;

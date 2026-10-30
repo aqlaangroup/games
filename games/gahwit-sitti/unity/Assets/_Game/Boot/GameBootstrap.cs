@@ -5,17 +5,21 @@ using Gahwit.Cafe;
 using Gahwit.Core;
 using Gahwit.Memories;
 using Gahwit.Merge;
+using Gahwit.Platform;
 using Gahwit.Save;
 using Gahwit.Story;
 using Gahwit.UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Gahwit.Boot
 {
-    // Starts the game: loads config, content and the save, builds the café and the interface, plays story scenes and saves.
+    // Starts the game: loads config, content and the save, builds the café and the interface, plays story scenes,
+    // saves on the phone and keeps the cloud save up to date.
     public sealed class GameBootstrap : MonoBehaviour
     {
-        const float SaveEverySeconds = 2f; // COMPLETE_SPEC.md section 9
+        const float SaveEverySeconds = 2f;   // COMPLETE_SPEC.md section 9
+        const float SyncEverySeconds = 60f;  // same section: sent to the platform every 60 seconds
 
         readonly Dictionary<string, StoryPlayer> stories = new Dictionary<string, StoryPlayer>();
         readonly Queue<Action> afterScene = new Queue<Action>();
@@ -24,18 +28,19 @@ namespace Gahwit.Boot
         Game game;
         GameUi ui;
         CafeRoom cafe;
-        bool dirty;
-        float nextSave, nextTick;
+        AccountService account;
+        bool dirty, reloading;
+        float nextSave, nextTick, nextSync;
 
         void Awake()
         {
             Application.targetFrameRate = 60;
-            Loc.Load("ar");
             var config = BalanceConfig.Load();
             var content = ChapterContent.Load();
 
             saves = new SaveService(config, content);
             var state = saves.Load(out var clock);
+            Loc.Load(saves.Data.Settings.Language);
             time = new TimeService(new DeviceClock(), clock);
             if (state == null) state = Game.NewState(config, content, (ulong)DateTime.UtcNow.Ticks, time.NowMs);
             game = new Game(config, content, state);
@@ -47,7 +52,14 @@ namespace Gahwit.Boot
             cafe.SetTimeOfDay(CafeRoom.TimeFromClock(DateTime.Now));
             cafe.Apply(game.CompletedTaskIds(), game.State.TaskStyles, game.Content.Styles);
             var cafeCamera = camera.gameObject.AddComponent<CafeCamera>();
-            ui = GameUi.Create(game, cafeCamera, cafe, () => time.NowMs, OpenDrawer);
+
+            var platform = PlatformConfig.Load();
+            var client = new PlatformClient(new UnityPlatformHttp(), new DeviceSecrets(), platform.ActiveBaseUrl, platform.Slug,
+                SystemInfo.deviceModel, Application.version, () => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
+            account = new AccountService(client, platform, saves, time, game, Save, Reload, ReloadFresh);
+            ui = GameUi.Create(game, cafeCamera, cafe, () => time.NowMs, OpenDrawer, account);
+            account.Ui = ui;
+            ui.Dialogue.ShowGlosses = saves.Data.Settings.Glossary;
 
             game.Changed += () => dirty = true;
             game.OrderServed += order => ui.Toast.Show(Loc.T("toast.served", order.Coins, order.Xp));
@@ -57,6 +69,18 @@ namespace Gahwit.Boot
         }
 
         void Start()
+        {
+            nextSync = Time.unscaledTime + SyncEverySeconds;
+            Run(account.Start);
+            if (account.NeedsAgeGate) ui.AgeGate.Show(account.Language, (language, birthYear) =>
+            {
+                account.SetAge(language, birthYear);
+                if (!reloading) PlayIntro();
+            });
+            else PlayIntro();
+        }
+
+        void PlayIntro()
         {
             string intro = game.Content.IntroKnot;
             if (!game.State.ScenesSeen.Contains(intro)) PlayScene(StoryFor(game.State.Chapter), intro, ResumeMemories);
@@ -196,10 +220,16 @@ namespace Gahwit.Boot
                 game.Tick(time.NowMs);
             }
             if (dirty && Time.unscaledTime >= nextSave) Save();
+            if (Time.unscaledTime >= nextSync)
+            {
+                nextSync = Time.unscaledTime + SyncEverySeconds;
+                Run(() => account.Sync(false));
+            }
         }
 
         void Save()
         {
+            if (reloading) return;
             dirty = false;
             nextSave = Time.unscaledTime + SaveEverySeconds;
             saves.Save(game.State, time);
@@ -207,7 +237,32 @@ namespace Gahwit.Boot
 
         void OnApplicationPause(bool paused)
         {
-            if (paused) Save();
+            if (!paused) return;
+            Save();
+            Run(() => account.Sync(false)); // also sent when the app goes to the background
+        }
+
+        // Starts the scene again: after a cloud save replaced this one, or a new language was chosen.
+        void Reload(string saveText)
+        {
+            if (saveText != null) SaveStore.SaveText(SaveService.Slot, saveText);
+            else Save();
+            reloading = true;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
+        // After the account was deleted: nothing of it stays on this phone.
+        void ReloadFresh()
+        {
+            reloading = true;
+            SaveStore.Delete(SaveService.Slot);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
+        static async void Run(Func<System.Threading.Tasks.Task> work)
+        {
+            try { await work(); }
+            catch (Exception e) { Debug.LogException(e); }
         }
 
         void OnApplicationQuit() => Save();

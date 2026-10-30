@@ -1,0 +1,24 @@
+# Repo-wide rules. Each project has its own .gitignore too:
+# games/*/unity/.gitignore for Unity, platform/.gitignore for .NET.
+
+# macOS
+.DS_Store
+
+# Claude Code: agent worktrees and personal settings
+.claude/worktrees/
+.claude/settings.local.json
+
+# Editors
+.vs/
+.idea/
+.vscode/
+
+# Secrets and signing keys. Never commit these (see CLAUDE.md).
+.env
+.env.*
+*.p8
+*.p12
+*.pem
+*.keystore
+*.jks
+*.mobileprovision

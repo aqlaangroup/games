@@ -23,6 +23,8 @@ namespace Gahwit.UI
         Button next;
         bool waitingForChoice;
 
+        public bool ShowGlosses { get; set; } = true; // the tap-to-explain setting
+
         public void Init(Game game)
         {
             this.game = game;
@@ -114,7 +116,7 @@ namespace Gahwit.UI
             speaker.color = game.Content.Characters.TryGetValue(storyLine.Speaker, out var character) ? Palette.Hex(character.Color) : Palette.Rose;
             line.text = storyLine.Text;
             line.color = narrator ? Palette.InkSoft : Palette.Ink;
-            glosses.text = string.Join("   ", storyLine.Glosses.Select(g => $"{g.Key}: {g.Value}"));
+            glosses.text = ShowGlosses ? string.Join("   ", storyLine.Glosses.Select(g => $"{g.Key}: {g.Value}")) : "";
         }
     }
 }

@@ -35,6 +35,10 @@ namespace Gahwit.UI
             UiKit.Text(transform, "Hint", Loc.T("cafe.hintOrbit"), 24, Palette.InkSoft, TextAlignmentOptions.Center)
                 .rectTransform.Top(16, 36);
 
+            var settings = UiKit.Button(transform, "Settings", "", Palette.Card, Palette.Ink, 24, () => ui.Settings.Show(), 60);
+            ((RectTransform)settings.transform).Pin(new Vector2(0, 1), new Vector2(20, -12), new Vector2(124, 124));
+            UiKit.Icon(settings.transform, "Gear", UiSprites.Gear, Palette.InkSoft, 76).rectTransform.Pin(new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(76, 76));
+
             var card = UiKit.Panel(transform, "TaskCard", Palette.Card, 40);
             card.rectTransform.Bottom(16, 412, 24, 24);
             chapter = UiKit.Text(card.transform, "Chapter", "", 28, Palette.InkSoft);
