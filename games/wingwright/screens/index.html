@@ -1,0 +1,326 @@
+<title>Wingwright Mobile Screens</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: a light sky page; phone mockups in a responsive grid, each with a short caption. Bright, single light look by design. */
+:root {
+  color-scheme: light;
+  --page: #EEF5FA;
+  --ink: #1B2A41;
+  --muted: #5B6B80;
+  --sky: #BFE6FF;
+  --sky-deep: #7CC4F2;
+  --orange: #FF8A3D;
+  --yellow: #FFD24A;
+  --mint: #2FB989;
+  --red: #F0545A;
+  --card: #FFFFFF;
+  --f-display: "Baloo 2", "Arial Rounded MT Bold", system-ui, sans-serif;
+  --f-body: "Nunito Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-num: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+* { box-sizing: border-box; }
+body { background: var(--page); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.55; }
+.wrap { max-width: 1220px; margin: 0 auto; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--f-display); margin: 0; line-height: 1.05; text-wrap: balance; }
+p { margin: 0; }
+header { padding-block: 44px 24px; display: grid; gap: 12px; }
+header h1 { font-size: clamp(44px, 7vw, 74px); font-weight: 800; letter-spacing: -.01em; }
+header h1 span { color: var(--orange); }
+header p { color: var(--muted); font-size: 18px; max-width: 62ch; }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.tags span { font-size: 13px; font-weight: 700; padding: 5px 12px; border-radius: 999px; background: var(--card); box-shadow: 0 2px 8px rgba(27,42,65,.06); }
+
+.grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px 22px; padding-block: 16px 40px; }
+.item { display: grid; gap: 10px; align-content: start; min-width: 0; }
+.phone { width: 100%; max-width: 300px; aspect-ratio: 390 / 844; position: relative; border-radius: 34px; overflow: hidden; background: #000; box-shadow: 0 0 0 8px #1B2A41, 0 18px 40px rgba(27,42,65,.25); margin: 8px auto 6px; }
+.scr { position: absolute; left: 0; top: 0; width: 390px; height: 844px; transform-origin: top left; overflow: hidden; font-family: var(--f-body); color: var(--ink); }
+.item h3 { font-size: 22px; }
+.item h3 small { font-family: var(--f-num); font-size: 11px; color: var(--orange); margin-right: 6px; }
+.item p { font-size: 14px; color: var(--muted); }
+
+/* In-game UI kit (inside 390 × 844) */
+.top { position: absolute; top: 0; left: 0; right: 0; padding: 18px 16px 0; display: flex; justify-content: space-between; align-items: center; gap: 8px; z-index: 3; }
+.cur { display: flex; gap: 6px; }
+.pill { display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 12px 0 6px; border-radius: 999px; background: rgba(255,255,255,.92); font-weight: 800; font-size: 15px; font-family: var(--f-num); box-shadow: 0 2px 8px rgba(27,42,65,.12); }
+.pill i { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-style: normal; }
+.coin { background: var(--yellow); box-shadow: inset 0 0 0 3px #E8B416; }
+.gem { background: #7DD3FC; transform: rotate(45deg) scale(.78); border-radius: 5px !important; }
+.round { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,.92); display: grid; place-items: center; box-shadow: 0 2px 8px rgba(27,42,65,.12); }
+.round svg { width: 20px; height: 20px; }
+.cta { display: flex; align-items: center; justify-content: center; height: 64px; border-radius: 22px; background: var(--orange); color: #fff; font-family: var(--f-display); font-size: 30px; font-weight: 800; box-shadow: 0 6px 0 #D9671E, 0 12px 24px rgba(255,138,61,.35); letter-spacing: .02em; }
+.cta.sm { height: 52px; font-size: 22px; border-radius: 18px; }
+.cta.alt { background: var(--mint); box-shadow: 0 6px 0 #1E8E67; }
+.cta.ghost { background: #fff; color: var(--ink); box-shadow: 0 4px 0 #D6E2EC; }
+.card { background: #fff; border-radius: 22px; box-shadow: 0 6px 18px rgba(27,42,65,.08); }
+.lbl { font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.num { font-family: var(--f-num); font-weight: 700; }
+.navb { position: absolute; left: 0; right: 0; bottom: 0; height: 84px; background: #fff; display: grid; grid-template-columns: repeat(5, 1fr); padding: 8px 6px 20px; box-shadow: 0 -4px 14px rgba(27,42,65,.06); }
+.navb div { display: grid; justify-items: center; gap: 2px; font-size: 11px; font-weight: 800; color: #8A99AD; }
+.navb div.on { color: var(--orange); }
+.navb svg { width: 26px; height: 26px; }
+.bar { height: 12px; border-radius: 6px; background: #E3ECF3; overflow: hidden; }
+.bar i { display: block; height: 100%; border-radius: 6px; }
+
+@media (max-width: 1060px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 780px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 460px) { .grid { grid-template-columns: 1fr; } }
+footer { padding-block: 20px 44px; color: var(--muted); font-size: 13px; }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Wing<span>wright</span></h1>
+    <p>Mobile screens for the free-to-play version. Fly as far as you can, upgrade one part, fly further. Every upgrade follows real engineering, and the chief engineer explains each flight in one line.</p>
+    <div class="tags"><span>iOS and Android</span><span>Free to play</span><span>1–3 min flights</span><span>Working title</span></div>
+  </header>
+
+  <div class="grid">
+
+    <!-- 1 Hangar -->
+    <div class="item">
+      <div class="phone"><div class="scr" style="background:linear-gradient(#BFE6FF 0 60%, #D9F0D2 60%)">
+        <div class="top"><div class="cur"><span class="pill"><i class="coin"></i>1,240</span><span class="pill"><i class="gem"></i>35</span></div><span class="round"><svg viewBox="0 0 24 24" fill="none" stroke="#1B2A41" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg></span></div>
+        <div style="position:absolute;top:84px;left:20px;right:20px" class="card">
+          <div style="padding:14px 16px;display:grid;gap:8px">
+            <div style="display:flex;justify-content:space-between;align-items:baseline"><span class="lbl">Next city</span><span class="num" style="font-size:13px;color:var(--muted)">best 38.2 / 50 km</span></div>
+            <div style="font-family:var(--f-display);font-size:26px;font-weight:800">Amman → Dead Sea</div>
+            <div class="bar"><i style="width:76%;background:var(--orange)"></i></div>
+          </div>
+        </div>
+        <div class="plane" data-scale="1.6" style="position:absolute;top:300px;left:30px;width:330px"></div>
+        <div style="position:absolute;top:480px;left:0;right:0;text-align:center"><div style="font-family:var(--f-display);font-size:28px;font-weight:800">Wooden Trainer</div><div class="num" style="font-size:13px;color:var(--muted)">612 kg · 60 kW · AR 6.2</div></div>
+        <div style="position:absolute;top:560px;left:20px;right:20px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+          <div class="card" style="padding:10px;text-align:center"><div class="lbl" style="font-size:10px">Range</div><div class="num" style="font-size:18px">41 km</div></div>
+          <div class="card" style="padding:10px;text-align:center"><div class="lbl" style="font-size:10px">Glide</div><div class="num" style="font-size:18px">9:1</div></div>
+          <div class="card" style="padding:10px;text-align:center"><div class="lbl" style="font-size:10px">Runway</div><div class="num" style="font-size:18px">240 m</div></div>
+        </div>
+        <div style="position:absolute;left:20px;right:20px;bottom:110px"><div class="cta">FLY</div></div>
+        <div class="navb"><div class="on"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 11 12 4l9 7v9h-6v-6H9v6H3z"/></svg>Hangar</div><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 4l6 6-9 9H5v-6z"/></svg>Upgrade</div><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></svg>Map</div><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/></svg>Daily</div><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8h14l-1 12H6z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg>Shop</div></div>
+      </div></div>
+      <h3><small>01</small>Hangar</h3>
+      <p>Home screen. Your plane, its key numbers and how close you are to the next city. One big button: fly.</p>
+    </div>
+
+    <!-- 2 Flight -->
+    <div class="item">
+      <div class="phone"><div class="scr" style="background:linear-gradient(#7CC4F2, #CDEBFF 70%)">
+        <svg viewBox="0 0 390 844" width="390" height="844" style="position:absolute;inset:0" aria-hidden="true">
+          <g fill="#fff" opacity=".9"><ellipse cx="70" cy="200" rx="50" ry="16"/><ellipse cx="100" cy="190" rx="34" ry="18"/><ellipse cx="300" cy="320" rx="60" ry="18"/><ellipse cx="330" cy="306" rx="34" ry="18"/></g>
+          <path d="M0 700 L60 670 L120 690 L190 640 L260 680 L330 650 L390 676 V844 H0z" fill="#A8D49A"/>
+          <path d="M0 740 Q120 720 240 742 T390 730 V844 H0z" fill="#8CC07E"/>
+          <path d="M40 480 Q150 470 200 430" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="8 8" opacity=".8"/>
+        </svg>
+        <div class="plane" data-scale="1" style="position:absolute;top:360px;left:150px;width:200px;transform:rotate(-6deg)"></div>
+        <div class="top"><span class="pill" style="padding:0 14px"><span class="num" style="font-size:18px">31.4 km</span></span><span class="pill" style="padding:0 12px;font-size:13px">best 38.2</span></div>
+        <div style="position:absolute;top:70px;left:16px;right:16px;display:grid;gap:6px">
+          <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:800;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.25)"><span>FUEL</span><span class="num">22%</span></div>
+          <div class="bar" style="background:rgba(255,255,255,.5)"><i style="width:22%;background:var(--yellow)"></i></div>
+        </div>
+        <div class="card" style="position:absolute;left:16px;top:130px;width:120px;padding:10px 12px;display:grid;gap:4px">
+          <div class="lbl" style="font-size:10px">Speed</div><div class="num" style="font-size:24px">164<span style="font-size:12px"> km/h</span></div>
+          <div style="position:relative;height:10px;border-radius:5px;background:#E3ECF3"><span style="position:absolute;left:46%;width:18%;top:0;bottom:0;background:var(--mint);border-radius:5px"></span><span style="position:absolute;left:52%;top:-3px;width:3px;height:16px;background:var(--ink);border-radius:2px"></span></div>
+          <div style="font-size:10px;font-weight:800;color:var(--mint)">BEST RANGE</div>
+        </div>
+        <div class="card" style="position:absolute;right:16px;top:130px;width:96px;padding:10px 12px;display:grid;gap:4px">
+          <div class="lbl" style="font-size:10px">Alt</div><div class="num" style="font-size:22px">910 m</div>
+          <div class="lbl" style="font-size:10px">Wing</div><div class="bar" style="height:8px"><i style="width:38%;background:var(--mint)"></i></div>
+        </div>
+        <div style="position:absolute;left:0;right:0;bottom:54px;text-align:center;color:#1B2A41;font-weight:800">
+          <div style="display:inline-flex;gap:8px;align-items:center;background:rgba(255,255,255,.88);padding:10px 18px;border-radius:999px;box-shadow:0 4px 12px rgba(27,42,65,.12)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1B2A41" stroke-width="2.2" stroke-linecap="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg>Hold to climb · release to level</div>
+        </div>
+      </div></div>
+      <h3><small>02</small>Flight</h3>
+      <p>Side view. Hold to climb, release to level off. The green band shows the real best-range speed. Pull too hard and the wing gauge turns red.</p>
+    </div>
+
+    <!-- 3 Results -->
+    <div class="item">
+      <div class="phone"><div class="scr" style="background:#FFF6EC">
+        <div style="position:absolute;top:60px;left:0;right:0;text-align:center;display:grid;gap:4px">
+          <div style="display:inline-block;margin:0 auto;background:var(--orange);color:#fff;font-weight:800;font-size:13px;padding:4px 12px;border-radius:999px">NEW BEST</div>
+          <div class="num" style="font-size:72px;line-height:1">38.2</div><div style="font-weight:800;color:var(--muted)">kilometres</div>
+        </div>
+        <svg viewBox="0 0 350 70" style="position:absolute;top:240px;left:20px;width:350px" aria-hidden="true">
+          <path d="M10 50 h330" stroke="#E3D6C6" stroke-width="4" stroke-linecap="round"/>
+          <path d="M10 50 h252" stroke="#FF8A3D" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="10" cy="50" r="7" fill="#1B2A41"/><circle cx="340" cy="50" r="7" fill="#fff" stroke="#1B2A41" stroke-width="3"/>
+          <text x="10" y="26" font-family="Nunito Sans" font-weight="800" font-size="12" fill="#5B6B80">AMMAN</text><text x="340" y="26" text-anchor="end" font-family="Nunito Sans" font-weight="800" font-size="12" fill="#5B6B80">DEAD SEA</text>
+          <path d="M262 50 l-8 -16 h16z" fill="#FF8A3D"/>
+        </svg>
+        <div class="card" style="position:absolute;top:330px;left:20px;right:20px;padding:16px;display:flex;align-items:center;justify-content:space-between">
+          <div><div class="lbl">Earned</div><div class="num" style="font-size:30px">+240</div></div>
+          <div class="cta sm alt" style="width:170px;font-size:18px;height:48px">▶ Double it</div>
+        </div>
+        <div class="card" style="position:absolute;top:440px;left:20px;right:20px;padding:16px;display:flex;gap:12px;align-items:flex-start;border:2px solid #FFE1C6">
+          <div style="width:52px;height:52px;border-radius:50%;background:#FFE7CF;flex-shrink:0;display:grid;place-items:center"><svg viewBox="0 0 40 40" width="40" height="40" aria-hidden="true"><circle cx="20" cy="17" r="9" fill="#E9C2A6"/><path d="M11 14 Q20 2 29 14z" fill="#FFD24A"/><path d="M8 40 Q8 28 20 28 Q32 28 32 40z" fill="#3B82C4"/><circle cx="17" cy="17" r="1.3" fill="#1B2A41"/><circle cx="23" cy="17" r="1.3" fill="#1B2A41"/></svg></div>
+          <div style="display:grid;gap:6px"><div style="font-weight:800">Chief engineer Rami</div><div style="font-size:15px;line-height:1.45">You ran out of fuel at 34 km. A bigger tank adds range, but the weight needs more runway.</div><div style="font-weight:800;color:var(--orange);font-size:14px">See why →</div></div>
+        </div>
+        <div style="position:absolute;left:20px;right:20px;bottom:44px;display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="cta sm ghost">Upgrade</div><div class="cta sm">Fly again</div></div>
+      </div></div>
+      <h3><small>03</small>Results</h3>
+      <p>Distance on the real route, coins with an optional ad to double them, and one line from the chief engineer on why the flight ended where it did.</p>
+    </div>
+
+    <!-- 4 Why -->
+    <div class="item">
+      <div class="phone"><div class="scr" style="background:#F4F8FB">
+        <div class="top"><span class="round"><svg viewBox="0 0 24 24" fill="none" stroke="#1B2A41" stroke-width="2.2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></span><span style="font-family:var(--f-display);font-size:22px;font-weight:800">Why it stopped</span><span style="width:40px"></span></div>
+        <div class="card" style="position:absolute;top:80px;left:16px;right:16px;padding:16px;display:grid;gap:10px">
+          <div class="lbl">Where your drag came from</div>
+          <div style="display:flex;height:22px;border-radius:8px;overflow:hidden"><span style="width:30%;background:#3B82C4"></span><span style="width:28%;background:var(--orange)"></span><span style="width:22%;background:#7CC4F2"></span><span style="width:20%;background:#B7C6D6"></span></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:13px;font-weight:700">
+            <span><b style="color:#3B82C4">■</b> Wing 30%</span><span><b style="color:var(--orange)">■</b> Landing gear 28%</span><span><b style="color:#7CC4F2">■</b> Body 22%</span><span><b style="color:#B7C6D6">■</b> Induced 20%</span>
+          </div>
+          <div style="background:#FFF1E4;border-radius:14px;padding:10px 12px;font-size:14px;font-weight:700">Retractable gear would cut about a quarter of your drag.</div>
+        </div>
+        <div class="card" style="position:absolute;top:340px;left:16px;right:16px;padding:16px;display:grid;gap:10px">
+          <div class="lbl">The real formula, simply</div>
+          <div style="font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:22px;text-align:center">Range ≈ <span style="color:#3B82C4">efficiency</span> × <span style="color:var(--mint)">L/D</span> × ln(<span style="color:var(--orange)">full ÷ empty</span>)</div>
+          <div style="display:grid;gap:6px;font-size:14px">
+            <div style="display:flex;justify-content:space-between"><span style="color:#3B82C4;font-weight:700">Engine + propeller efficiency</span><span class="num">0.72</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:var(--mint);font-weight:700">Lift ÷ drag (L/D)</span><span class="num">8.1</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:var(--orange);font-weight:700">Weight full ÷ weight empty</span><span class="num">1.04</span></div>
+          </div>
+          <div style="font-size:13px;color:var(--muted)">Better L/D or more fuel both fly further. Fuel adds weight, so it has limits.</div>
+        </div>
+        <div style="position:absolute;left:16px;right:16px;bottom:44px"><div class="cta sm">Upgrade landing gear</div></div>
+      </div></div>
+      <h3><small>04</small>See why</h3>
+      <p>Tap the engineer's note to see the drag breakdown and the real range formula in plain words. This is the hook for curious players and engineers.</p>
+    </div>
+
+    <!-- 5 Upgrades -->
+    <div class="item">
+      <div class="phone"><div class="scr" style="background:#F4F8FB">
+        <div class="top"><span style="font-family:var(--f-display);font-size:26px;font-weight:800">Upgrade</span><div class="cur"><span class="pill"><i class="coin"></i>1,480</span></div></div>
+        <div style="position:absolute;top:70px;left:16px;right:16px;display:grid;gap:10px">
+          <div class="card" style="padding:12px 14px;display:grid;gap:8px;border:2px solid var(--orange)">
+            <div style="display:flex;justify-content:space-between;align-items:center"><div style="font-weight:800;font-size:17px">Landing gear</div><span class="num" style="font-size:12px;color:var(--muted)">LV 1 → 2</span></div>
+            <div style="font-size:13px;color:var(--muted)">Fixed → retractable</div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;font-size:12px;font-weight:800"><span style="background:#DDF5EC;color:#137A56;padding:3px 8px;border-radius:999px">▲ Range +24%</span><span style="background:#FDE3E4;color:#B5333A;padding:3px 8px;border-radius:999px">▼ Weight +14 kg</span></div>
+            <div class="cta sm" style="height:44px;font-size:18px"><span class="num">900</span>&nbsp;coins</div>
+          </div>
+          <div class="card" style="padding:12px 14px;display:grid;gap:6px">
+            <div style="display:flex;justify-content:space-between"><div style="font-weight:800;font-size:16px">Fuel tank</div><span class="num" style="font-size:12px;color:var(--muted)">LV 3</span></div>
+            <div style="display:flex;gap:6px;font-size:12px;font-weight:800"><span style="background:#DDF5EC;color:#137A56;padding:3px 8px;border-radius:999px">▲ Range +12%</span><span style="background:#FDE3E4;color:#B5333A;padding:3px 8px;border-radius:999px">▼ Runway +20 m</span></div>
+          </div>
+          <div class="card" style="padding:12px 14px;display:grid;gap:6px">
+            <div style="display:flex;justify-content:space-between"><div style="font-weight:800;font-size:16px">Wing span</div><span class="num" style="font-size:12px;color:var(--muted)">LV 2</span></div>
+            <div style="display:flex;gap:6px;font-size:12px;font-weight:800"><span style="background:#DDF5EC;color:#137A56;padding:3px 8px;border-radius:999px">▲ Glide +10%</span><span style="background:#FDE3E4;color:#B5333A;padding:3px 8px;border-radius:999px">▼ Weight +9 kg</span></div>
+          </div>
+          <div class="card" style="padding:12px 14px;display:grid;gap:6px">
+            <div style="display:flex;justify-content:space-between"><div style="font-weight:800;font-size:16px">Engine</div><span class="num" style="font-size:12px;color:var(--muted)">LV 2</span></div>
+            <div style="display:flex;gap:6px;font-size:12px;font-weight:800"><span style="background:#DDF5EC;color:#137A56;padding:3px 8px;border-radius:999px">▲ Speed +8%</span><span style="background:#FDE3E4;color:#B5333A;padding:3px 8px;border-radius:999px">▼ Fuel burn +6%</span></div>
+          </div>
+          <div class="card" style="padding:12px 14px;display:grid;gap:6px;opacity:.6">
+            <div style="display:flex;justify-content:space-between"><div style="font-weight:800;font-size:16px">Body material</div><span class="num" style="font-size:12px;color:var(--muted)">Wood</span></div>
+            <div style="font-size:12px;font-weight:800;color:var(--muted)">Aluminium unlocks at Karak</div>
+          </div>
+        </div>
+        <div class="navb"><div><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 11 12 4l9 7v9h-6v-6H9v6H3z"/></svg>Hangar</div><div class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 4l6 6-9 9H5v-6z"/></svg>Upgrade</div><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2z"/></svg>Map</div><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/></svg>Daily</div><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8h14l-1 12H6z"/></svg>Shop</div></div>
+      </div></div>
+      <h3><small>05</small>Upgrade</h3>
+      <p>Each part shows what it improves and what it costs elsewhere. The suggested upgrade comes from the last flight's engineer's note.</p>
+    </div>
+
+    <!-- 6 Map -->
+    <div class="item">
+      <div class="phone"><div class="scr" style="background:#E9DCC4">
+        <svg viewBox="0 0 390 844" width="390" height="844" style="position:absolute;inset:0" aria-hidden="true">
+          <path d="M0 0 H130 Q150 200 120 400 Q100 600 140 844 H0z" fill="#9FD3E8"/>
+          <path d="M126 330 Q140 380 128 440 Q122 470 134 500" fill="none" stroke="#7CC4F2" stroke-width="10" stroke-linecap="round"/>
+          <path d="M0 790 Q60 770 120 800 V844 H0z" fill="#9FD3E8"/>
+          <path d="M240 160 Q200 300 170 420 Q160 520 190 610 Q150 700 110 790" fill="none" stroke="#1B2A41" stroke-width="4" stroke-dasharray="2 10" stroke-linecap="round"/>
+          <path d="M240 160 Q200 300 170 420" fill="none" stroke="#FF8A3D" stroke-width="6" stroke-linecap="round"/>
+        </svg>
+        <div class="top"><span style="font-family:var(--f-display);font-size:26px;font-weight:800">Route 1 · Jordan</span><span class="pill" style="padding:0 12px;font-size:13px">2 / 5</span></div>
+        <div style="position:absolute;top:140px;left:214px;display:grid;justify-items:center"><span style="width:52px;height:52px;border-radius:50%;background:var(--mint);border:4px solid #fff;display:grid;place-items:center;color:#fff;font-weight:800">✓</span><span class="card" style="padding:4px 10px;font-weight:800;font-size:13px;margin-top:6px">Amman</span></div>
+        <div style="position:absolute;top:395px;left:144px;display:grid;justify-items:center"><span style="width:56px;height:56px;border-radius:50%;background:var(--orange);border:4px solid #fff;box-shadow:0 0 0 8px rgba(255,138,61,.25)"></span><span class="card" style="padding:4px 10px;font-weight:800;font-size:13px;margin-top:6px">Dead Sea · ~50 km</span></div>
+        <div style="position:absolute;top:585px;left:166px;display:grid;justify-items:center;opacity:.75"><span style="width:44px;height:44px;border-radius:50%;background:#fff;border:4px solid #B7C6D6"></span><span class="card" style="padding:4px 10px;font-weight:800;font-size:12px;margin-top:6px">Karak · aluminium</span></div>
+        <div style="position:absolute;top:740px;left:84px;display:grid;justify-items:center;opacity:.75"><span style="width:44px;height:44px;border-radius:50%;background:#fff;border:4px solid #B7C6D6"></span><span class="card" style="padding:4px 10px;font-weight:800;font-size:12px;margin-top:6px">Aqaba · bush plane</span></div>
+      </div></div>
+      <h3><small>06</small>Route map</h3>
+      <p>Real cities with real distances. Each city unlocks something: a new material, part or plane. Distances here are approximate and will be checked against real maps.</p>
+    </div>
+
+    <!-- 7 Daily -->
+    <div class="item">
+      <div class="phone"><div class="scr" style="background:#1B2A41;color:#fff">
+        <div class="top"><span style="font-family:var(--f-display);font-size:26px;font-weight:800;color:#fff">Daily challenge</span><span class="pill" style="padding:0 12px;font-size:13px;color:var(--ink)">14:22 left</span></div>
+        <div style="position:absolute;top:80px;left:16px;right:16px;border-radius:22px;background:#26395A;padding:16px;display:grid;gap:8px">
+          <div class="lbl" style="color:#9FB3CC">Today's rule</div>
+          <div style="font-family:var(--f-display);font-size:26px;font-weight:800;line-height:1.1">Furthest flight with only 20 kg of fuel</div>
+          <div style="font-size:14px;color:#C9D6E6">Same plane for everyone. Fly at the best-range speed.</div>
+          <div class="cta sm" style="margin-top:6px">Fly the challenge</div>
+        </div>
+        <div style="position:absolute;top:340px;left:16px;right:16px;display:grid;gap:8px">
+          <div class="lbl" style="color:#9FB3CC">Leaderboard · friends</div>
+          <div style="display:flex;justify-content:space-between;background:#26395A;border-radius:14px;padding:12px 14px;font-weight:800"><span>1 · Lina</span><span class="num">112.6 km</span></div>
+          <div style="display:flex;justify-content:space-between;background:#26395A;border-radius:14px;padding:12px 14px;font-weight:800"><span>2 · Omar</span><span class="num">108.9 km</span></div>
+          <div style="display:flex;justify-content:space-between;background:var(--orange);border-radius:14px;padding:12px 14px;font-weight:800"><span>3 · You</span><span class="num">104.2 km</span></div>
+          <div style="display:flex;justify-content:space-between;background:#26395A;border-radius:14px;padding:12px 14px;font-weight:800"><span>4 · Sam</span><span class="num">97.0 km</span></div>
+          <div style="font-size:12px;color:#9FB3CC;margin-top:4px">Top 10% today win 20 gems. Scores are replayed on the server.</div>
+        </div>
+      </div></div>
+      <h3><small>07</small>Daily challenge</h3>
+      <p>One plane and one rule for everyone each day, with friends and global leaderboards. Flying skill and engineering knowledge both matter.</p>
+    </div>
+
+    <!-- 8 Shop -->
+    <div class="item">
+      <div class="phone"><div class="scr" style="background:#F4F8FB">
+        <div class="top"><span style="font-family:var(--f-display);font-size:26px;font-weight:800">Shop</span><div class="cur"><span class="pill"><i class="gem"></i>35</span></div></div>
+        <div style="position:absolute;top:72px;left:16px;right:16px;border-radius:22px;background:var(--orange);color:#fff;padding:16px;display:grid;gap:6px">
+          <div style="font-size:12px;font-weight:800;letter-spacing:.08em">ONE TIME</div>
+          <div style="font-family:var(--f-display);font-size:28px;font-weight:800">Starter pack</div>
+          <div style="font-size:14px;font-weight:700">3,000 coins · 80 gems · sky-blue paint · engine level +1</div>
+          <div style="background:#fff;color:var(--ink);border-radius:14px;height:44px;display:grid;place-items:center;font-weight:800;margin-top:6px">[price]</div>
+        </div>
+        <div style="position:absolute;top:290px;left:16px;right:16px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div class="card" style="padding:14px;display:grid;gap:6px"><div style="font-weight:800">Hangar pass</div><div style="font-size:12px;color:var(--muted)">Daily gems, exclusive paint, no between-flight ads</div><div class="cta sm alt" style="height:40px;font-size:15px">[price] / month</div></div>
+          <div class="card" style="padding:14px;display:grid;gap:6px"><div style="font-weight:800">Remove ads</div><div style="font-size:12px;color:var(--muted)">Rewarded ads stay optional</div><div class="cta sm ghost" style="height:40px;font-size:15px">[price]</div></div>
+          <div class="card" style="padding:14px;display:grid;gap:6px"><div style="font-weight:800">Paint: Desert Sunset</div><div class="plane" data-scale=".55" style="width:150px;height:44px"></div><div class="cta sm ghost" style="height:40px;font-size:15px">120 gems</div></div>
+          <div class="card" style="padding:14px;display:grid;gap:6px"><div style="font-weight:800">Coin bag</div><div style="font-size:12px;color:var(--muted)">5,000 coins</div><div class="cta sm ghost" style="height:40px;font-size:15px">[price]</div></div>
+        </div>
+        <div style="position:absolute;left:16px;right:16px;bottom:110px;font-size:12px;color:var(--muted);text-align:center">No random boxes. Every upgrade can be earned by flying.</div>
+        <div class="navb"><div><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 11 12 4l9 7v9h-6v-6H9v6H3z"/></svg>Hangar</div><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 4l6 6-9 9H5v-6z"/></svg>Upgrade</div><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2z"/></svg>Map</div><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/></svg>Daily</div><div class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8h14l-1 12H6z"/></svg>Shop</div></div>
+      </div></div>
+      <h3><small>08</small>Shop</h3>
+      <p>Fair free-to-play: a one-time starter pack, a monthly pass, remove ads, paint and coins. Prices come from store tiers later.</p>
+    </div>
+
+  </div>
+  <footer>Wingwright (working title) · mobile concept screens. Numbers belong to one example: the Wooden Trainer on route 1.</footer>
+</div>
+
+<script>
+(function () {
+  // One side-view trainer drawing, reused in every screen that shows the plane.
+  var PLANE = '<svg viewBox="0 0 200 80" width="100%" aria-hidden="true">' +
+    '<ellipse cx="100" cy="74" rx="70" ry="5" fill="rgba(27,42,65,.12)"/>' +
+    '<path d="M22 40 Q24 30 40 30 L150 32 Q170 33 176 40 Q170 48 150 49 L40 50 Q24 50 22 40z" fill="#FFFFFF" stroke="#1B2A41" stroke-width="2.5"/>' +
+    '<path d="M150 32 Q168 34 176 40" fill="none" stroke="#FF8A3D" stroke-width="5"/>' +
+    '<path d="M40 31 L28 10 L44 10 L60 31z" fill="#FF8A3D" stroke="#1B2A41" stroke-width="2.5"/>' +
+    '<path d="M70 41 L120 41 L118 47 L74 47z" fill="#7CC4F2" stroke="#1B2A41" stroke-width="2.5"/>' +
+    '<path d="M118 32 Q124 24 136 25 L142 32z" fill="#BFE6FF" stroke="#1B2A41" stroke-width="2.5"/>' +
+    '<rect x="176" y="22" width="5" height="36" rx="2.5" fill="#1B2A41" opacity=".75"/>' +
+    '<path d="M96 50 L92 64 M132 49 L134 64" stroke="#1B2A41" stroke-width="3"/>' +
+    '<circle cx="92" cy="66" r="5" fill="#1B2A41"/><circle cx="134" cy="66" r="5" fill="#1B2A41"/>' +
+    '</svg>';
+  var ps = document.querySelectorAll(".plane");
+  for (var i = 0; i < ps.length; i++) ps[i].innerHTML = PLANE;
+
+  function fit() {
+    var phones = document.querySelectorAll(".phone");
+    for (var j = 0; j < phones.length; j++) {
+      var s = phones[j].querySelector(".scr");
+      if (s) s.style.transform = "scale(" + (phones[j].clientWidth / 390) + ")";
+    }
+  }
+  window.addEventListener("resize", fit);
+  fit();
+})();
+</script>
