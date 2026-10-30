@@ -8,6 +8,13 @@ namespace Gahwit.Core
         public static long Gems { get; private set; }
         public static event Action Changed;
 
+        [UnityEngine.RuntimeInitializeOnLoadMethod(UnityEngine.RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void ForgetLastRun()
+        {
+            Gems = 0;
+            Changed = null;
+        }
+
         public static void ApplyPlatformBalance(long gems)
         {
             if (gems == Gems) return;

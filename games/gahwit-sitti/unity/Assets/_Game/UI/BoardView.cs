@@ -17,6 +17,7 @@ namespace Gahwit.UI
         int selected = -1, dragFrom = -1;
 
         public int Selected => selected;
+        public RectTransform CellRect(int cell) => (RectTransform)cells[cell].transform;
         public event Action SelectionChanged;
 
         public void Init(Game game, ItemLook look, RectTransform dragLayer, Action<int> tapGenerator)

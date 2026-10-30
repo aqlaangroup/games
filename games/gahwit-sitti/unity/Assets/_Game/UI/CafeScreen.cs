@@ -21,6 +21,8 @@ namespace Gahwit.UI
         RectTransform styleRow;
         string styleTask, chosenStyle;
 
+        public RectTransform RestoreButton => restore != null && restore.gameObject.activeInHierarchy ? (RectTransform)restore.transform : null;
+
         public void Init(Game game, GameUi ui, CafeCamera cafeCamera, CafeRoom room, System.Action openDrawer)
         {
             this.game = game;

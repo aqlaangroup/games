@@ -25,9 +25,15 @@ namespace Gahwit.UI
             row.childForceExpandHeight = true;
         }
 
+        readonly System.Collections.Generic.Dictionary<int, RectTransform> serveButtons = new System.Collections.Generic.Dictionary<int, RectTransform>();
+
+        // The serve button of one order, for the tutorial's pointer.
+        public RectTransform ServeButton(int orderId) => serveButtons.TryGetValue(orderId, out var button) ? button : null;
+
         public void Refresh()
         {
             UiKit.Clear(transform);
+            serveButtons.Clear();
             foreach (var order in game.Orders) Card(order);
         }
 
@@ -65,6 +71,7 @@ namespace Gahwit.UI
                 ready ? Palette.SageDark : Palette.Muted, ready ? Color.white : Palette.InkSoft, 26, () => serve(order), 22);
             button.interactable = ready;
             ((RectTransform)button.transform).Bottom(10, 56, 14, 14);
+            serveButtons[order.Id] = (RectTransform)button.transform;
         }
     }
 }

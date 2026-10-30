@@ -672,6 +672,34 @@ MonoBehaviour:
     m_Localized: Haptics
     m_Metadata:
       m_Items: []
+  - m_Id: 98767746359296
+    m_Localized: Step {0} of {1}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98767750553600
+    m_Localized: Drag a coffee bean onto one just like it to merge them.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98767750553601
+    m_Localized: Tap Teta's tin for a new bean. Each tap uses energy.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98767750553602
+    m_Localized: Abu Fadi's cup is ready. Serve it to him.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98767750553603
+    m_Localized: 'Earn coins from orders to fix the sign: {0} of {1}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98767750553604
+    m_Localized: You have enough. Choose the sign's style, then restore it.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98767750553605
+    m_Localized: Skip
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -24,8 +24,9 @@ namespace Gahwit.Merge
         public List<string> ScenesSeen = new List<string>();
         public List<string> LettersFound = new List<string>();
         public Dictionary<string, int> MemoryStars = new Dictionary<string, int>(); // best stars per memory
-        public int TutorialStep;
+        public int TutorialStep;   // the last finished step of COMPLETE_SPEC.md section 1
         public bool TutorialDone;
+        public int EasyOrdersLeft; // free play starts with a few easy orders
         public ulong Rng;
     }
 

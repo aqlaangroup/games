@@ -28,7 +28,7 @@ namespace Gahwit.Save
             into.SavedAt = Iso(clock.LastSeenMs);
             into.Rng = state.Rng.ToString(CultureInfo.InvariantCulture);
             into.Clock = new ClockSave { TrustedMs = clock.TrustedMs, UptimeMs = clock.UptimeMs, LastSeenMs = clock.LastSeenMs, FromServer = clock.FromServer };
-            into.Tutorial = new TutorialSave { LastStep = state.TutorialStep, Done = state.TutorialDone };
+            into.Tutorial = new TutorialSave { LastStep = state.TutorialStep, Done = state.TutorialDone, EasyOrdersLeft = state.EasyOrdersLeft };
             into.Player = new PlayerSave
             {
                 Level = state.Level,
@@ -100,6 +100,7 @@ namespace Gahwit.Save
                 LettersFound = new List<string>(data.Story.LettersFound),
                 TutorialStep = data.Tutorial.LastStep,
                 TutorialDone = data.Tutorial.Done,
+                EasyOrdersLeft = data.Tutorial.EasyOrdersLeft,
                 Rng = ulong.TryParse(data.Rng, NumberStyles.Integer, CultureInfo.InvariantCulture, out var rng) ? rng : 0
             };
 

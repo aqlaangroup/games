@@ -9,6 +9,7 @@ using Gahwit.Merge;
 using Gahwit.Platform;
 using Gahwit.Save;
 using Gahwit.Story;
+using Gahwit.Tutorial;
 using Gahwit.UI;
 using UnityEngine;
 
@@ -27,6 +28,8 @@ namespace Gahwit.Boot
         CafeRoom cafe;
         AccountService account;
         AudioService audio;
+        TutorialFlow tutorial;
+        const string TutorialSeenKey = "gahwit.tutorial.finishedOnThisPhone";
         PlatformAnalytics analytics;
         float sessionStartedAt;
         string cafeMusic;
@@ -58,12 +61,22 @@ namespace Gahwit.Boot
             var cafeCamera = camera.gameObject.AddComponent<CafeCamera>();
 
             account = new AccountService(services.Platform, services.PlatformConfig, saves, time, game, Save, Reload, ReloadFresh);
-            ui = GameUi.Create(game, cafeCamera, cafe, () => time.NowMs, OpenDrawer, account);
+            tutorial = new TutorialFlow(game, TutorialContent.Load(), () => saves.Data.Account.BirthYear != null);
+            ui = GameUi.Create(game, cafeCamera, cafe, () => time.NowMs, OpenDrawer, account, tutorial,
+                PlayerPrefs.GetInt(TutorialSeenKey, 0) == 1);
             account.Ui = ui;
             ui.Dialogue.ShowGlosses = saves.Data.Settings.Glossary;
 
             analytics = services.Analytics;
             TrackGame();
+            tutorial.StepFinished += OnTutorialStep;
+            tutorial.Skipped += () =>
+            {
+                Track("tutorial_skipped", "afterStep", game.State.TutorialStep);
+                dirty = true;
+                ui.Refresh();
+            };
+            tutorial.Check();
             audio = services.Audio;
             ApplySoundSettings();
             account.SettingChanged += ApplySoundSettings;
@@ -86,6 +99,7 @@ namespace Gahwit.Boot
             if (account.NeedsAgeGate) ui.AgeGate.Show(account.Language, (language, birthYear) =>
             {
                 account.SetAge(language, birthYear);
+                tutorial.Check();
                 if (!reloading) PlayIntro();
             });
             else PlayIntro();
@@ -96,15 +110,44 @@ namespace Gahwit.Boot
             string intro = game.Content.IntroKnot;
             if (game.State.ScenesSeen.Contains(intro))
             {
-                ResumeMemories();
+                Arrival();
                 return;
             }
             audio.PlayMusic("music_main_theme");
             PlayScene(StoryFor(game.State.Chapter), intro, () =>
             {
                 audio.PlayMusic(cafeMusic);
+                Arrival();
+            });
+        }
+
+        // Tutorial step 3: the door bell, and Abu Fadi walks in with the first order. Then the kitchen opens.
+        void Arrival()
+        {
+            const string knot = "abu_fadi_arrives";
+            if (game.State.ScenesSeen.Contains(knot) || game.State.OrdersServed > 0)
+            {
+                ResumeMemories();
+                return;
+            }
+            audio.Play("door_bell");
+            PlayScene(StoryFor(game.State.Chapter), knot, () =>
+            {
+                ui.ShowKitchen();
                 ResumeMemories();
             });
+        }
+
+        void OnTutorialStep(TutorialStep step)
+        {
+            Track("tutorial_step", "step", step.N, "id", step.Id);
+            dirty = true;
+            if (tutorial.Done)
+            {
+                PlayerPrefs.SetInt(TutorialSeenKey, 1); // later accounts on this phone may skip it
+                PlayerPrefs.Save();
+            }
+            ui.Refresh();
         }
 
         // The events in GAME_SYSTEMS.md section 15 and missing/16 that the game has so far. Ads, the shop and live
@@ -310,6 +353,7 @@ namespace Gahwit.Boot
                 {
                     Track("scene_viewed", "scene", knot, "seconds", (int)(Time.realtimeSinceStartup - startedAt));
                     if (!game.State.ScenesSeen.Contains(knot)) game.State.ScenesSeen.Add(knot);
+                    tutorial.Check();
                     dirty = true;
                     while (afterScene.Count > 0) afterScene.Dequeue()();
                     then?.Invoke();

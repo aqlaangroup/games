@@ -1,0 +1,16 @@
+{
+  "$comment": "The 11 first-time steps (COMPLETE_SPEC.md section 1). 'until' says what finishes a step. Steps 4 to 8 are the hands-on ones: the banner counts them 1 to 5 (screens/Tutorial) and points at 'target' on 'screen'. Text keys are in the UI string table.",
+  "steps": [
+    { "n": 1, "id": "age_gate", "until": { "kind": "ageGate" } },
+    { "n": 2, "id": "intro", "until": { "kind": "scene", "knot": "intro" } },
+    { "n": 3, "id": "customer", "until": { "kind": "scene", "knot": "abu_fadi_arrives" } },
+    { "n": 4, "id": "merge", "until": { "kind": "merge" }, "target": "board.pair", "screen": "kitchen", "text": "tutorial.merge" },
+    { "n": 5, "id": "generator", "until": { "kind": "tap" }, "target": "board.generator", "screen": "kitchen", "text": "tutorial.generator" },
+    { "n": 6, "id": "serve", "until": { "kind": "serve" }, "target": "order.serve", "screen": "kitchen", "text": "tutorial.serve" },
+    { "n": 7, "id": "coins", "until": { "kind": "afford" }, "screen": "kitchen", "text": "tutorial.coins" },
+    { "n": 8, "id": "sign", "until": { "kind": "task", "task": "sign" }, "target": "cafe.restore", "screen": "cafe", "text": "tutorial.sign" },
+    { "n": 9, "id": "memory", "until": { "kind": "memory", "memory": "m1_pour" } },
+    { "n": 10, "id": "letter", "until": { "kind": "letter", "letter": "letter_1" } },
+    { "n": 11, "id": "free_play", "until": { "kind": "free" } }
+  ]
+}

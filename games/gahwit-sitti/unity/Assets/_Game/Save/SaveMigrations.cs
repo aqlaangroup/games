@@ -13,7 +13,8 @@ namespace Gahwit.Save
         static readonly Dictionary<int, Func<JObject, BalanceConfig, JObject>> Steps = new Dictionary<int, Func<JObject, BalanceConfig, JObject>>
         {
             [0] = FromFirstPlayable,
-            [1] = AddAccount
+            [1] = AddAccount,
+            [2] = AddEasyOrders
         };
 
         public static JObject Upgrade(JObject raw, BalanceConfig config)
@@ -109,6 +110,16 @@ namespace Gahwit.Save
             if (settings["voice"] == null) settings["voice"] = false;
             save["settings"] = settings;
             save["schemaVersion"] = 2;
+            return save;
+        }
+
+        // Version 3 (2026-10-31) counts the easy orders that start free play after the tutorial.
+        static JObject AddEasyOrders(JObject save, BalanceConfig config)
+        {
+            var tutorial = save["tutorial"] as JObject ?? new JObject();
+            if (tutorial["easyOrdersLeft"] == null) tutorial["easyOrdersLeft"] = 0;
+            save["tutorial"] = tutorial;
+            save["schemaVersion"] = 3;
             return save;
         }
 

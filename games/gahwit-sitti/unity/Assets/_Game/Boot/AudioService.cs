@@ -31,6 +31,9 @@ namespace Gahwit.Boot
 
         static AudioService shared;
 
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void ForgetLastRun() => shared = null;
+
         // One for the whole run: it outlives restarts through the Boot scene, so music doesn't stop and start.
         public static AudioService Shared => shared != null ? shared : shared = Create();
 

@@ -8,7 +8,7 @@ namespace Gahwit.Save
     // so a save written by a newer build loses nothing here.
     public sealed class SaveData
     {
-        public const int CurrentSchema = 2;
+        public const int CurrentSchema = 3;
 
         public int SchemaVersion = CurrentSchema;
         public long SaveVersion;
@@ -50,6 +50,7 @@ namespace Gahwit.Save
     {
         public int LastStep;
         public bool Done;
+        public int EasyOrdersLeft;
     }
 
     public sealed class PlayerSave

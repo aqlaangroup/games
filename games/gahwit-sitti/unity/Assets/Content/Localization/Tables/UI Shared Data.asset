@@ -659,6 +659,34 @@ MonoBehaviour:
     m_Key: settings.haptics
     m_Metadata:
       m_Items: []
+  - m_Id: 98767746359296
+    m_Key: tutorial.stepOf
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98767750553600
+    m_Key: tutorial.merge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98767750553601
+    m_Key: tutorial.generator
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98767750553602
+    m_Key: tutorial.serve
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98767750553603
+    m_Key: tutorial.coins
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98767750553604
+    m_Key: tutorial.sign
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98767750553605
+    m_Key: tutorial.skip
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

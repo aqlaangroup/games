@@ -14,6 +14,10 @@ namespace Gahwit.Boot
     {
         public static Services Current { get; private set; }
 
+        // The Editor can enter Play mode without reloading code, which keeps statics from the last run.
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void ForgetLastRun() => Current = null;
+
         public BalanceConfig Config { get; private set; }
         public ChapterContent Content { get; private set; }
         public SaveService Saves { get; private set; }

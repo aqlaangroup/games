@@ -16,6 +16,9 @@ namespace Gahwit.UI
         Func<long> now;
         OrdersView orders;
         BoardView board;
+
+        public BoardView Board => board;
+        public OrdersView Orders => orders;
         RTLTextMeshPro info;
         Button sell;
 

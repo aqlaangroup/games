@@ -6,9 +6,12 @@
 === intro ===
 هاي هي… قهوة ستّي. الآرمة مايلة، والكراسي مكوّمة [[هون:هنا]] بالزاوية. #salma
 «يا سلمى يا روحي، القهوة مش حيطان، القهوة ناس. افتحيها، والناس بترجع.» #teta
+-> END
+
+// Tutorial step 3: the door bell rings and Abu Fadi walks in with the first order. The kitchen's instructions are
+// UI text now (tutorial.* keys), not story lines.
+=== abu_fadi_arrives ===
 أهلين يا بنت خليل! والله إنك نسخة عن ستّك. بتعمليلي فنجان؟ من زمان ما شربت قهوة [[على أصولها:بالطريقة الصحيحة]]. #abu_fadi
-// [draft] this tutorial line
-في المطبخ، اضغطي على «علبة ستّي» ليظهر حبّ القهوة، ثم اسحبي حبّتين متشابهتين فوق بعض لدمجهما. #sys
 -> END
 
 === sign ===

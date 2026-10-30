@@ -294,6 +294,7 @@ namespace Gahwit.Merge
         {
             // Fairness (GAME_SYSTEMS.md section 6): orders only use chains whose generator the player has.
             var pool = AllPieces.Where(p => p.IsGenerator).Select(p => p.Chain).Distinct().OrderBy(c => c).ToList();
+            if (State.EasyOrdersLeft > 0 && pool.Count > 0) return EasyOrder(pool);
             float size = Config.OrderSizeUnits(State.Level);
             bool twoLines = State.Level >= Config.Orders.TwoItemOrderFromLevel && pool.Count > 1 &&
                             rng.NextDouble() < Config.Orders.TwoItemOrderChance;
@@ -312,6 +313,22 @@ namespace Gahwit.Merge
                 .Select(kv => kv.Key).OrderBy(id => id).ToList();
             if (named.Count > 0 && rng.NextDouble() < Config.Orders.CharacterOrderChance)
                 return MakeOrder(named[rng.Range(0, named.Count)], true, lines);
+            return MakeOrder(null, false, lines);
+        }
+
+        // Right after the tutorial (COMPLETE_SPEC.md section 1, step 11): one low-level item.
+        Order EasyOrder(List<string> pool)
+        {
+            State.EasyOrdersLeft--;
+            var easy = Config.Tutorial.EasyOrder;
+            var lines = new List<OrderLine>();
+            for (int n = 0; n < easy.Lines && pool.Count > 0; n++)
+            {
+                string chain = pool[rng.Range(0, pool.Count)];
+                pool.Remove(chain);
+                int level = Math.Min(easy.MaxItemLevel, Math.Min(Config.MaxOrderItemLevel(State.Level), MaxLevel(chain)));
+                lines.Add(new OrderLine { Chain = chain, Level = rng.Range(1, level + 1), Count = 1 });
+            }
             return MakeOrder(null, false, lines);
         }
 

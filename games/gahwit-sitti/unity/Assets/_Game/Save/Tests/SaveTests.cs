@@ -152,7 +152,7 @@ namespace Gahwit.Save.Tests
 
             var state = SaveService.FromJson(v1.ToString(), config, content, out var data, out _);
 
-            Assert.AreEqual(2, data.SchemaVersion);
+            Assert.AreEqual(SaveData.CurrentSchema, data.SchemaVersion);
             Assert.IsNull(data.Account.BirthYear, "the age gate shows again");
             Assert.IsFalse(data.Account.ParentConsent);
             Assert.IsTrue(data.Settings.Notifications);
@@ -160,6 +160,24 @@ namespace Gahwit.Save.Tests
             Assert.IsFalse(data.Settings.Music, "existing settings are kept");
             Assert.AreEqual("old", state.TaskStyles["sign"]);
             Assert.AreEqual(3, state.MemoryStars["m1_pour"]);
+        }
+
+        [Test]
+        public void AVersionTwoSaveStartsWithNoEasyOrdersLeft()
+        {
+            var time = new TimeService(new FakeClock(), null);
+            var state = PlayedState();
+            state.EasyOrdersLeft = 2;
+            var v2 = JObject.Parse(WriteJson(state, time));
+            Assert.AreEqual(2, (int)v2["tutorial"]["easyOrdersLeft"], "written by the current version");
+            v2["schemaVersion"] = 2;
+            ((JObject)v2["tutorial"]).Remove("easyOrdersLeft");
+
+            var loaded = SaveService.FromJson(v2.ToString(), config, content, out var data, out _);
+
+            Assert.AreEqual(3, data.SchemaVersion);
+            Assert.AreEqual(0, loaded.EasyOrdersLeft);
+            Assert.AreEqual(state.TutorialStep, loaded.TutorialStep);
         }
 
         [Test]

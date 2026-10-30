@@ -2,6 +2,39 @@
 
 Decisions and known gaps. Newest first. Read this at the start of each session (`/CLAUDE.md`).
 
+## 2026-10-31: the first-time tutorial (missing/06)
+
+- **Steps as data:** the 11 steps from COMPLETE_SPEC.md section 1 are in `Content/Resources/Content/tutorial.json`. Each has an `until` (what finishes it), and the hands-on ones have a target, a screen and a text key.
+- **`TutorialFlow`** (`_Game/Tutorial`, plain C#, 4 tests):
+  - Each step finishes when the game's state shows it, so closing the app resumes at the same step.
+  - Steps 4–8 are the hands-on ones; the banner counts them 1 to 5, as in `screens/Tutorial`.
+  - Every step logs `tutorial_step`.
+- **`TutorialView`:** a banner with "step N of 5" and the instruction, a ring on what to touch, and a finger that shows the drag or the tap.
+  - It never blocks input, so a player can't get stuck behind it.
+  - On the wrong screen it points at the tab that leads to the right one.
+  - It waits under scenes and panels.
+- **What each step does:**
+  1. The age gate.
+  2. The intro.
+  3. The door bell, then Abu Fadi's arrival, now its own Ink knot (`abu_fadi_arrives`). Then the kitchen opens.
+  4. Merge two beans.
+  5. Tap Teta's tin. The energy counter appears only from this step.
+  6. Serve Abu Fadi.
+  7. Earn coins for the sign, with a coin count.
+  8. Restore the sign and choose its style.
+  9. The pour memory.
+  10. The letter.
+  11. Free play, with 3 easy orders (one item, level 2 at most; `balance.json` `tutorial`).
+- **The `#sys` instruction line** left `chapter1.ink`. Instructions are neutral-Arabic UI text now (`tutorial.*`).
+- **Decision, "skippable after the first time":** once this phone has finished the tutorial, later accounts on it (after deleting an account, say) get a Skip button. Skipping stops the guidance; the story still plays.
+- **Save schema v3:** `tutorial.easyOrdersLeft`, with a migration and a test.
+- **Checked in the Editor:** as a brand-new player, the pointer and banner showed on the merge, and after a restart on the tin, pointing at the kitchen tab from the café.
+- **Gaps, each waiting on another item:**
+  - Abu Fadi doesn't walk in yet (missing/08).
+  - The 15-second intro clip doesn't exist (missing/13).
+  - Serving is still a button on the order card, not a drag to the customer (missing/08).
+  - Coins don't fly to the counter (missing/15).
+
 ## 2026-10-31: game events and tester numbers on our own platform (missing/16)
 
 - **Choice:** events go to our platform first, so the ring 1 tester gate needs no third-party account. `IAnalytics` (Core) lets Firebase or GameAnalytics sit behind the same calls later, for crash dumps and push.

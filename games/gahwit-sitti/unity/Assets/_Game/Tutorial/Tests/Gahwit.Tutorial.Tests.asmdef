@@ -1,0 +1,27 @@
+{
+    "name": "Gahwit.Tutorial.Tests",
+    "rootNamespace": "Gahwit.Tutorial.Tests",
+    "references": [
+        "Gahwit.Core",
+        "Gahwit.Merge",
+        "Gahwit.Tutorial",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll",
+        "Newtonsoft.Json.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

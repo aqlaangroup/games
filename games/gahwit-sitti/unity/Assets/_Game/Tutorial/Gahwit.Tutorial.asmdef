@@ -1,0 +1,17 @@
+{
+    "name": "Gahwit.Tutorial",
+    "rootNamespace": "Gahwit.Tutorial",
+    "references": [
+        "Gahwit.Core",
+        "Gahwit.Merge"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

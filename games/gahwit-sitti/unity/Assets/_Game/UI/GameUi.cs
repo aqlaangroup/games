@@ -2,6 +2,7 @@ using System;
 using Gahwit.Cafe;
 using Gahwit.Core;
 using Gahwit.Merge;
+using Gahwit.Tutorial;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.UI;
@@ -30,8 +31,16 @@ namespace Gahwit.UI
         public CloudChoiceView CloudChoice { get; private set; }
         public AgeGateView AgeGate { get; private set; }
         public UpdateRequiredView UpdateRequired { get; private set; }
+        public TutorialView Tutorial { get; private set; }
+        HelpView help;
+        ConfirmView confirm;
 
-        public static GameUi Create(Game game, CafeCamera cafeCamera, CafeRoom room, Func<long> now, Action openDrawer, IAccountUi account)
+        // A panel over the game: the tutorial waits under it.
+        public bool ModalOpen => Settings.IsOpen || help.gameObject.activeSelf || confirm.gameObject.activeSelf || CloudChoice.IsOpen
+                                 || AgeGate.IsOpen || UpdateRequired.gameObject.activeSelf || Letter.IsOpen || Memory.IsPlaying;
+
+        public static GameUi Create(Game game, CafeCamera cafeCamera, CafeRoom room, Func<long> now, Action openDrawer, IAccountUi account,
+            TutorialFlow tutorial, bool canSkipTutorial)
         {
             EnsureEventSystem();
             var go = new GameObject("GameUI", typeof(RectTransform)) { layer = 5 };
@@ -45,7 +54,7 @@ namespace Gahwit.UI
             go.AddComponent<GraphicRaycaster>();
 
             var ui = go.AddComponent<GameUi>();
-            ui.Build(game, cafeCamera, room, now, openDrawer, account);
+            ui.Build(game, cafeCamera, room, now, openDrawer, account, tutorial, canSkipTutorial);
             return ui;
         }
 
@@ -55,7 +64,8 @@ namespace Gahwit.UI
             new GameObject("EventSystem", typeof(EventSystem), typeof(InputSystemUIInputModule));
         }
 
-        void Build(Game game, CafeCamera cafeCamera, CafeRoom room, Func<long> now, Action openDrawer, IAccountUi account)
+        void Build(Game game, CafeCamera cafeCamera, CafeRoom room, Func<long> now, Action openDrawer, IAccountUi account,
+            TutorialFlow tutorial, bool canSkipTutorial)
         {
             this.game = game;
             this.cafeCamera = cafeCamera;
@@ -86,9 +96,11 @@ namespace Gahwit.UI
             Toast = UiKit.Rect(root, "Toast").Pin(new Vector2(0.5f, 1), new Vector2(0, -136), new Vector2(920, 84)).gameObject.AddComponent<Toast>();
             Toast.Init();
 
-            var help = UiKit.Rect(root, "Help").Stretch().gameObject.AddComponent<HelpView>();
+            Tutorial = UiKit.Rect(root, "Tutorial").Stretch().gameObject.AddComponent<TutorialView>();
+            Tutorial.Init(tutorial, this, game, canSkipTutorial);
+            help = UiKit.Rect(root, "Help").Stretch().gameObject.AddComponent<HelpView>();
             help.Init(account, Toast);
-            var confirm = UiKit.Rect(root, "Confirm").Stretch().gameObject.AddComponent<ConfirmView>();
+            confirm = UiKit.Rect(root, "Confirm").Stretch().gameObject.AddComponent<ConfirmView>();
             confirm.Init();
             Settings = UiKit.Rect(root, "Settings").Stretch().gameObject.AddComponent<SettingsView>();
             Settings.Init(game, account, Toast, help, confirm);
@@ -150,8 +162,40 @@ namespace Gahwit.UI
             tab.Label().color = active ? Color.white : Palette.Ink;
         }
 
+        // What the tutorial's pointer shows for a step: one target, or two for a drag (from, to). On the wrong screen
+        // it points at the tab that leads to the right one.
+        public (RectTransform from, RectTransform to) TutorialTarget(TutorialStep step)
+        {
+            if (step.Screen == "kitchen" && cafeShown) return (null, (RectTransform)kitchenTab.transform);
+            if (step.Screen == "cafe" && !cafeShown) return (null, (RectTransform)cafeTab.transform);
+            var board = game.State.Board;
+            switch (step.Target)
+            {
+                case "board.pair":
+                    for (int a = 0; a < board.Length; a++)
+                    {
+                        if (board[a] == null || board[a].IsGenerator) continue;
+                        for (int b = a + 1; b < board.Length; b++)
+                            if (board[a].SameAs(board[b])) return (kitchen.Board.CellRect(a), kitchen.Board.CellRect(b));
+                    }
+                    return (null, null);
+                case "board.generator":
+                    int generator = Array.FindIndex(board, i => i != null && i.IsGenerator);
+                    return (null, generator >= 0 ? kitchen.Board.CellRect(generator) : null);
+                case "order.serve":
+                    foreach (var order in game.Orders)
+                        if (game.CanServe(order)) return (null, kitchen.Orders.ServeButton(order.Id));
+                    return (null, null);
+                case "cafe.restore":
+                    return (null, cafe.RestoreButton);
+                default:
+                    return (null, null);
+            }
+        }
+
         public void Refresh()
         {
+            hud.ShowEnergy(game.State.TutorialDone || game.State.TutorialStep >= 4);
             hud.Refresh();
             if (cafeShown) cafe.Refresh();
             else kitchen.Refresh();

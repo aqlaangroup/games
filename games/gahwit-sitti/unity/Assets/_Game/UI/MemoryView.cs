@@ -69,6 +69,8 @@ namespace Gahwit.UI
             sheet.SetActive(false);
         }
 
+        public bool IsPlaying => pour != null && !pour.Finished;
+
         public void ShowBanner(bool show) => banner.SetActive(show);
 
         public void PlayPour(PourGame game, Action<int> done)

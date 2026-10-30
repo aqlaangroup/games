@@ -44,6 +44,9 @@ namespace Gahwit.Core.Tests
             var content = ChapterContent.Load();
             foreach (var id in content.Characters.Keys.Where(id => id != "sys"))
                 Assert.IsTrue(keys.Contains("char." + id), $"char.{id}");
+            var tutorial = Newtonsoft.Json.Linq.JObject.Parse(Resources.Load<TextAsset>("Content/tutorial").text);
+            foreach (var step in tutorial["steps"])
+                if (step["text"] != null) Assert.IsTrue(keys.Contains((string)step["text"]), $"tutorial step {step["n"]}: {step["text"]}");
             foreach (var id in content.WalkIns)
                 Assert.IsTrue(keys.Contains("walkin." + id), $"walkin.{id}");
             foreach (var task in content.Chapters.SelectMany(c => c.Tasks))

@@ -15,6 +15,7 @@ namespace Gahwit.UI
         Func<long> now;
         RTLTextMeshPro level, energy, timer, coins, gems;
         Image xpFill;
+        GameObject energyPill;
         float nextTimerUpdate;
 
         public void Init(Game game, Func<long> now)
@@ -35,11 +36,12 @@ namespace Gahwit.UI
             track.rectTransform.Pin(new Vector2(1, 0.5f), new Vector2(-96, 0), new Vector2(134, 20));
             xpFill = UiKit.Panel(track.transform, "Fill", Palette.RoseSoft, 10);
 
-            var energyPill = Pill("Energy", 270);
-            Badge(energyPill, UiSprites.Bolt, Palette.SageDark);
-            energy = Value(energyPill, 34);
+            var energyRect = Pill("Energy", 270);
+            energyPill = energyRect.gameObject;
+            Badge(energyRect, UiSprites.Bolt, Palette.SageDark);
+            energy = Value(energyRect, 34);
             energy.rectTransform.Stretch(14, 76, 2, 30);
-            timer = UiKit.Text(energyPill, "Timer", "", 20, Palette.InkSoft, TextAlignmentOptions.Center);
+            timer = UiKit.Text(energyRect, "Timer", "", 20, Palette.InkSoft, TextAlignmentOptions.Center);
             timer.rectTransform.Stretch(14, 76, 50, 2);
 
             var coinPill = Pill("Coins", 200);
@@ -69,6 +71,12 @@ namespace Gahwit.UI
             text.fontStyle = FontStyles.Bold;
             text.rectTransform.Stretch(14, 76, 4, 4);
             return text;
+        }
+
+        // The energy bar appears when the tutorial first teaches generators (COMPLETE_SPEC.md section 1, step 5).
+        public void ShowEnergy(bool show)
+        {
+            if (energyPill.activeSelf != show) energyPill.SetActive(show);
         }
 
         public void Refresh()

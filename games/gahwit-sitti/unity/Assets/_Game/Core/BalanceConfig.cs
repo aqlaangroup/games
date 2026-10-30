@@ -19,6 +19,7 @@ namespace Gahwit.Core
         public OrdersConfig Orders;
         public List<ChapterConfig> Chapters;
         public PlayerLevelsConfig PlayerLevels;
+        public TutorialConfig Tutorial;
         public SavesConfig Saves;
         public UiConfig Ui;
         public LevelBConfig LevelB;
@@ -171,6 +172,18 @@ namespace Gahwit.Core
     public sealed class PlayerLevelRewards
     {
         public int Energy; // gems come from Formulas.LevelUpGems
+    }
+
+    public sealed class TutorialConfig
+    {
+        public int EasyOrdersAfter;
+        public EasyOrderConfig EasyOrder;
+    }
+
+    public sealed class EasyOrderConfig
+    {
+        public int Lines;
+        public int MaxItemLevel;
     }
 
     public sealed class SavesConfig

@@ -8,6 +8,7 @@
         "Gahwit.Platform",
         "Gahwit.Save",
         "Gahwit.Story",
+        "Gahwit.Tutorial",
         "Gahwit.Cafe",
         "Gahwit.UI"
     ],
