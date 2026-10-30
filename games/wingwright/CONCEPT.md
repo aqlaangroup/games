@@ -145,6 +145,9 @@ Each material has:
 
 ## Platform and business
 
+**Decided:** Steam on PC, paid as a one-time purchase.
+
+
 | Question | Recommendation | Why |
 |---|---|---|
 | Platform | **PC first (Steam)**, Mac later; tablets maybe later | Engineers want mouse, keyboard, large screens and deep panels; the simulation needs a PC's power |

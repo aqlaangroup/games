@@ -1,0 +1,608 @@
+<title>Wingwright Storyboard</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: drafting paper page. A 3×3 storyboard of line drawings, then full PC screen mockups scaled to fit, each with a caption. Page is light paper; the game UI inside the frames is deliberately dark like engineering software. */
+:root {
+  color-scheme: light;
+  --paper: #EDF1F4;
+  --ink: #14202E;
+  --muted: #5A6B7E;
+  --blue: #1E4E8C;
+  --amber: #D98A1C;
+  --rule: #C9D3DD;
+  --card: #F8FAFB;
+  /* game UI */
+  --ui-bg: #0E1826; --ui-panel: #15233A; --ui-line: #26395A; --ui-text: #DCE6F2; --ui-muted: #8094AE;
+  --ui-cyan: #7CC8F2; --ui-amber: #F2B33D; --ui-green: #5FD39A; --ui-red: #F2766B;
+  --f-head: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --f-body: "Barlow", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+* { box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.55;
+  background-image: linear-gradient(var(--rule) 1px, transparent 1px), linear-gradient(90deg, var(--rule) 1px, transparent 1px); background-size: 32px 32px; background-position: -1px -1px; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--f-head); margin: 0; letter-spacing: .01em; text-wrap: balance; }
+p { margin: 0; }
+.mono { font-family: var(--f-mono); font-size: .86em; }
+
+header.hero { padding-block: 48px 28px; display: grid; gap: 12px; }
+.tb { display: inline-grid; grid-template-columns: auto auto auto; border: 1.5px solid var(--ink); background: var(--card); font-family: var(--f-mono); font-size: 12px; width: max-content; max-width: 100%; }
+.tb span { padding: 6px 10px; border-left: 1.5px solid var(--ink); white-space: nowrap; }
+.tb span:first-child { border-left: 0; }
+.hero h1 { font-size: clamp(44px, 7vw, 78px); line-height: .95; font-weight: 700; text-transform: uppercase; }
+.hero h1 b { color: var(--blue); }
+.hero p { max-width: 64ch; color: var(--muted); font-size: 18px; }
+.decided { display: flex; flex-wrap: wrap; gap: 8px; }
+.decided span { font-size: 13px; font-weight: 600; padding: 4px 10px; border: 1.5px solid var(--blue); color: var(--blue); background: var(--card); }
+
+section { padding-block: 36px; }
+.sec-head { display: grid; gap: 6px; margin-bottom: 20px; }
+.sec-head h2 { font-size: clamp(30px, 4vw, 42px); text-transform: uppercase; }
+.sec-head p { color: var(--muted); max-width: 70ch; }
+
+/* Storyboard */
+.board { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; counter-reset: p; }
+.panel { background: var(--card); border: 1.5px solid var(--ink); display: grid; grid-template-rows: auto auto; min-width: 0; counter-increment: p; }
+.panel svg { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; border-bottom: 1.5px solid var(--ink); background: #F3F6F8; }
+.panel .cap { padding: 12px 14px 14px; display: grid; gap: 4px; }
+.panel .cap h3 { font-size: 20px; text-transform: uppercase; display: flex; gap: 8px; align-items: baseline; }
+.panel .cap h3::before { content: counter(p, decimal-leading-zero); font-family: var(--f-mono); font-size: 12px; color: var(--amber); }
+.panel .cap p { font-size: 14px; color: var(--muted); }
+.panel .cap .shot { font-family: var(--f-mono); font-size: 11px; color: var(--blue); }
+.panel.fail { border-color: #B6402F; }
+.panel.fail .cap h3::before { color: #B6402F; }
+
+/* Screens */
+.screens { display: grid; gap: 34px; }
+.shot-wrap { display: grid; gap: 10px; }
+.shot-wrap .lbl { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: baseline; }
+.shot-wrap h3 { font-size: 26px; text-transform: uppercase; }
+.shot-wrap .lbl span { font-family: var(--f-mono); font-size: 12px; color: var(--muted); }
+.shot-wrap > p { color: var(--muted); max-width: 80ch; font-size: 15px; }
+.frame { width: 100%; aspect-ratio: 16 / 10; position: relative; overflow: hidden; border: 1.5px solid var(--ink); box-shadow: 8px 8px 0 rgba(20,32,46,.12); background: var(--ui-bg); }
+.screen { position: absolute; top: 0; left: 0; width: 1280px; height: 800px; transform-origin: top left; background: var(--ui-bg); color: var(--ui-text); font-family: var(--f-body); font-size: 14px; display: grid; grid-template-rows: 44px 1fr; }
+
+/* Game UI kit */
+.bar { display: flex; align-items: center; gap: 18px; padding: 0 16px; background: #0A1320; border-bottom: 1px solid var(--ui-line); font-size: 13px; }
+.bar .logo { font-family: var(--f-head); font-size: 20px; font-weight: 700; letter-spacing: .06em; color: var(--ui-text); }
+.bar .tab { color: var(--ui-muted); padding: 12px 2px; border-bottom: 2px solid transparent; }
+.bar .tab.on { color: var(--ui-text); border-color: var(--ui-amber); }
+.bar .sp { flex: 1; }
+.bar .kv { font-family: var(--f-mono); font-size: 12px; color: var(--ui-muted); }
+.bar .kv b { color: var(--ui-text); font-weight: 600; }
+.body { display: grid; gap: 1px; background: var(--ui-line); min-height: 0; }
+.pn { background: var(--ui-panel); padding: 14px 16px; min-width: 0; min-height: 0; overflow: hidden; position: relative; }
+.pn.dk { background: var(--ui-bg); }
+.pt { font-family: var(--f-head); font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--ui-muted); margin-bottom: 10px; display: flex; justify-content: space-between; }
+.row { display: flex; justify-content: space-between; gap: 10px; padding: 6px 0; border-bottom: 1px solid rgba(38,57,90,.7); font-size: 13px; }
+.row span:last-child { font-family: var(--f-mono); color: var(--ui-text); }
+.row span:first-child { color: var(--ui-muted); }
+.ok { color: var(--ui-green) !important; } .warn { color: var(--ui-amber) !important; } .bad { color: var(--ui-red) !important; } .cy { color: var(--ui-cyan) !important; }
+.chipx { display: inline-block; font-family: var(--f-mono); font-size: 11px; padding: 2px 7px; border: 1px solid currentColor; border-radius: 3px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; height: 34px; padding: 0 14px; border-radius: 4px; background: var(--ui-amber); color: #1A1305; font-weight: 700; font-size: 13px; }
+.btn.ghost { background: transparent; color: var(--ui-text); border: 1px solid var(--ui-line); }
+.slider { margin: 8px 0 12px; }
+.slider .l { display: flex; justify-content: space-between; font-size: 12px; color: var(--ui-muted); }
+.slider .l b { font-family: var(--f-mono); color: var(--ui-text); font-weight: 600; }
+.slider .t { height: 4px; background: var(--ui-line); border-radius: 2px; margin-top: 6px; position: relative; }
+.slider .t i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--ui-cyan); border-radius: 2px; }
+.slider .t u { position: absolute; top: -5px; width: 14px; height: 14px; border-radius: 50%; background: var(--ui-text); transform: translateX(-50%); }
+.big { font-family: var(--f-head); font-size: 34px; font-weight: 600; line-height: 1; }
+.small { font-size: 12px; color: var(--ui-muted); }
+.gauge { display: grid; gap: 4px; padding: 10px; border: 1px solid var(--ui-line); border-radius: 4px; background: var(--ui-bg); }
+.eq { font-family: "Cambria Math", "STIX Two Math", Georgia, serif; font-size: 26px; color: var(--ui-text); }
+
+/* Engineering notebook in-world */
+.note-paper { background: #F4F1E8; color: #1C2733; }
+
+@media (max-width: 860px) { .board { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .board { grid-template-columns: 1fr; } .tb { grid-template-columns: 1fr; } .tb span { border-left: 0; border-top: 1.5px solid var(--ink); } .tb span:first-child { border-top: 0; } }
+footer { padding-block: 30px 48px; color: var(--muted); font-size: 13px; border-top: 1.5px solid var(--ink); margin-top: 20px; }
+</style>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="tb"><span>DWG WW-000</span><span>SHEET 1 OF 1</span><span>REV A · CONCEPT</span></div>
+    <h1>Wing<b>wright</b></h1>
+    <p>Storyboard and key screens for an aircraft engineering game. Design an airframe from real materials, tune its engine, then prove it in flight test. Every number comes from real aerospace equations.</p>
+    <div class="decided"><span>Steam · PC</span><span>Paid, one-time purchase</span><span>Early Access</span><span>Unity 6</span><span>Working title</span></div>
+  </header>
+
+  <section>
+    <div class="sec-head"><h2>Storyboard</h2><p>The first hour, in nine moments. The example programme is the starting one: a 4-seat utility aircraft for short rough airstrips.</p></div>
+    <div class="board">
+
+      <div class="panel">
+        <svg viewBox="0 0 320 200" aria-hidden="true"><g fill="none" stroke="#14202E" stroke-width="1.6">
+          <rect x="70" y="24" width="180" height="152" fill="#FFFFFF"/>
+          <path d="M86 46 h90 M86 60 h120 M86 86 h148 M86 100 h148 M86 114 h148 M86 128 h148 M86 142 h100"/>
+          <rect x="196" y="36" width="40" height="22" stroke="#D98A1C"/></g>
+          <text x="216" y="51" font-family="JetBrains Mono" font-size="8" fill="#D98A1C" text-anchor="middle">RFP-01</text>
+          <text x="86" y="160" font-family="JetBrains Mono" font-size="8" fill="#1E4E8C">4 pax · 900 km · 300 m strip</text>
+        </svg>
+        <div class="cap"><h3>The brief arrives</h3><p>A charter company in the mountains needs a 4-seat aircraft that lands on a 300 m gravel strip and flies 900 km.</p><span class="shot">Screen: Request for proposal</span></div>
+      </div>
+
+      <div class="panel">
+        <svg viewBox="0 0 320 200" aria-hidden="true"><g fill="none" stroke="#14202E" stroke-width="1.6">
+          <path d="M160 40 v120"/><path d="M60 92 L160 84 L260 92 L260 112 L160 116 L60 112 Z" fill="#FFFFFF"/>
+          <path d="M140 150 h40 l-6 10 h-28z" fill="#FFFFFF"/></g>
+          <g stroke="#1E4E8C" stroke-width="1" fill="none"><path d="M60 128 h200 M60 124 v8 M260 124 v8"/><path d="M272 92 v20 M268 92 h8 M268 112 h8"/></g>
+          <text x="160" y="142" font-family="JetBrains Mono" font-size="8" fill="#1E4E8C" text-anchor="middle">b = 11.2 m</text>
+          <text x="280" y="104" font-family="JetBrains Mono" font-size="8" fill="#1E4E8C">c = 1.5 m</text>
+          <text x="20" y="30" font-family="JetBrains Mono" font-size="8" fill="#D98A1C">AR 7.5 · NACA 2412</text>
+        </svg>
+        <div class="cap"><h3>Sketch the wing</h3><p>Drag the span and chord. Aspect ratio, wing area and lift slope update as you pull.</p><span class="shot">Screen: Airframe designer</span></div>
+      </div>
+
+      <div class="panel">
+        <svg viewBox="0 0 320 200" aria-hidden="true"><g fill="none" stroke="#14202E" stroke-width="1.4">
+          <path d="M40 170 h250 M40 170 V30"/></g>
+          <path d="M40 170 L90 70 Q110 50 160 46 L200 44" fill="none" stroke="#1E4E8C" stroke-width="2"/>
+          <path d="M40 170 L80 100 Q100 85 150 80 L190 78" fill="none" stroke="#D98A1C" stroke-width="2"/>
+          <path d="M40 170 L120 40" fill="none" stroke="#14202E" stroke-width="2" stroke-dasharray="4 3"/>
+          <text x="204" y="46" font-family="JetBrains Mono" font-size="8" fill="#1E4E8C">7075-T6</text>
+          <text x="194" y="80" font-family="JetBrains Mono" font-size="8" fill="#D98A1C">2024-T3</text>
+          <text x="124" y="36" font-family="JetBrains Mono" font-size="8" fill="#14202E">CFRP</text>
+          <text x="236" y="186" font-family="JetBrains Mono" font-size="8" fill="#5A6B7E">strain →</text>
+          <text x="8" y="40" font-family="JetBrains Mono" font-size="8" fill="#5A6B7E">σ</text>
+        </svg>
+        <div class="cap"><h3>Pick the metal</h3><p>Compare stress–strain curves, density and cost. Carbon is light and stiff, but costly and hard to repair in the bush.</p><span class="shot">Screen: Materials lab</span></div>
+      </div>
+
+      <div class="panel">
+        <svg viewBox="0 0 320 200" aria-hidden="true"><g fill="none" stroke="#14202E" stroke-width="1.4"><path d="M30 160 h260 M30 160 V40"/></g>
+          <path d="M30 50 Q120 60 200 120 T290 160" fill="rgba(30,78,140,.12)" stroke="#1E4E8C" stroke-width="2"/>
+          <path d="M30 70 h260" stroke="#2E9E62" stroke-width="1.4" stroke-dasharray="5 4"/>
+          <text x="200" y="64" font-family="JetBrains Mono" font-size="8" fill="#2E9E62">allowable σ</text>
+          <text x="36" y="182" font-family="JetBrains Mono" font-size="8" fill="#5A6B7E">root → tip</text>
+          <text x="110" y="100" font-family="JetBrains Mono" font-size="8" fill="#1E4E8C">bending stress at 5.7 g</text>
+        </svg>
+        <div class="cap"><h3>Size the spar</h3><p>The spar's bending stress at ultimate load is drawn along the wing. Add thickness where it crosses the line.</p><span class="shot">Screen: Airframe designer · structure</span></div>
+      </div>
+
+      <div class="panel">
+        <svg viewBox="0 0 320 200" aria-hidden="true"><g fill="none" stroke="#14202E" stroke-width="1.6">
+          <rect x="70" y="70" width="110" height="60" rx="6" fill="#FFFFFF"/><path d="M180 100 h30"/><ellipse cx="226" cy="100" rx="8" ry="58" fill="#FFFFFF"/>
+          <path d="M90 70 v-14 M110 70 v-14 M130 70 v-14 M150 70 v-14"/></g>
+          <text x="125" y="104" font-family="JetBrains Mono" font-size="9" fill="#1E4E8C" text-anchor="middle">134 kW</text>
+          <text x="40" y="186" font-family="JetBrains Mono" font-size="8" fill="#D98A1C">power falls with altitude: σ-ratio model</text>
+        </svg>
+        <div class="cap"><h3>Bench the engine</h3><p>Pick a 134 kW piston engine and a propeller. See power and fuel flow change with altitude and rpm.</p><span class="shot">Screen: Engine bench</span></div>
+      </div>
+
+      <div class="panel">
+        <svg viewBox="0 0 320 200" aria-hidden="true">
+          <g font-family="JetBrains Mono" font-size="9">
+          <rect x="24" y="30" width="128" height="62" fill="#FFFFFF" stroke="#14202E" stroke-width="1.4"/><text x="34" y="50" fill="#5A6B7E">RANGE</text><text x="34" y="78" fill="#2E9E62" font-size="18">940 km</text>
+          <rect x="168" y="30" width="128" height="62" fill="#FFFFFF" stroke="#14202E" stroke-width="1.4"/><text x="178" y="50" fill="#5A6B7E">TAKE-OFF</text><text x="178" y="78" fill="#2E9E62" font-size="18">282 m</text>
+          <rect x="24" y="108" width="128" height="62" fill="#FFFFFF" stroke="#14202E" stroke-width="1.4"/><text x="34" y="128" fill="#5A6B7E">STALL</text><text x="34" y="156" fill="#14202E" font-size="18">90 km/h</text>
+          <rect x="168" y="108" width="128" height="62" fill="#FFFFFF" stroke="#14202E" stroke-width="1.4"/><text x="178" y="128" fill="#5A6B7E">STATIC MARGIN</text><text x="178" y="156" fill="#D98A1C" font-size="18">4 %</text></g>
+        </svg>
+        <div class="cap"><h3>Check the numbers</h3><p>Range and take-off meet the brief. Static margin is low, so the aircraft will be twitchy. Open the notebook to see why.</p><span class="shot">Screen: Engineering notebook</span></div>
+      </div>
+
+      <div class="panel">
+        <svg viewBox="0 0 320 200" aria-hidden="true">
+          <path d="M0 160 Q80 150 160 156 T320 150 V200 H0z" fill="#E4EAEF"/>
+          <path d="M20 150 h110" stroke="#5A6B7E" stroke-width="3" stroke-dasharray="10 6"/>
+          <g transform="translate(176 92) rotate(-12)"><path d="M-40 0 h70 l14 -4 l4 4 l-14 6 h-74z" fill="#FFFFFF" stroke="#14202E" stroke-width="1.4"/><path d="M-6 -2 l-12 -22 h10 l16 22z" fill="#FFFFFF" stroke="#14202E" stroke-width="1.4"/><path d="M-36 -2 l-6 -14 h7 l8 14z" fill="#FFFFFF" stroke="#14202E" stroke-width="1.4"/></g>
+          <path d="M120 150 Q150 130 176 96" fill="none" stroke="#1E4E8C" stroke-width="1.2" stroke-dasharray="3 3"/>
+          <text x="210" y="40" font-family="JetBrains Mono" font-size="8" fill="#1E4E8C">ALT 120 m · IAS 118 km/h</text>
+        </svg>
+        <div class="cap"><h3>First flight</h3><p>Fly the prototype off the gravel strip in 3D. The flight model uses the same numbers as the design screen.</p><span class="shot">Screen: Flight test</span></div>
+      </div>
+
+      <div class="panel fail">
+        <svg viewBox="0 0 320 200" aria-hidden="true">
+          <path d="M40 120 h240" stroke="#14202E" stroke-width="1.4" stroke-dasharray="4 4"/>
+          <path d="M40 120 Q160 100 236 70" fill="none" stroke="#14202E" stroke-width="3"/>
+          <path d="M236 70 l18 -12" stroke="#B6402F" stroke-width="3"/>
+          <circle cx="236" cy="70" r="10" fill="none" stroke="#B6402F" stroke-width="2"/>
+          <text x="40" y="160" font-family="JetBrains Mono" font-size="8.5" fill="#B6402F">Spar cap yielded at 2.9 g · 62 % span</text>
+          <text x="40" y="174" font-family="JetBrains Mono" font-size="8.5" fill="#B6402F">7075-T6 · 18 mm · σ = 512 MPa > 503 MPa</text>
+        </svg>
+        <div class="cap"><h3>When it breaks</h3><p>A lighter spar fails the structural test. The game shows exactly where, at what load and why.</p><span class="shot">Screen: Test results</span></div>
+      </div>
+
+      <div class="panel">
+        <svg viewBox="0 0 320 200" aria-hidden="true"><g font-family="JetBrains Mono" font-size="9">
+          <rect x="60" y="22" width="200" height="156" fill="#FFFFFF" stroke="#14202E" stroke-width="1.4"/>
+          <text x="76" y="44" fill="#14202E">TEST CAMPAIGN · WW-1</text>
+          <text x="76" y="66" fill="#2E9E62">✓ Structural 1.5 × limit</text>
+          <text x="76" y="84" fill="#2E9E62">✓ Stall and spin</text>
+          <text x="76" y="102" fill="#2E9E62">✓ Take-off 282 m</text>
+          <text x="76" y="120" fill="#2E9E62">✓ Range 940 km</text>
+          <rect x="76" y="136" width="120" height="26" fill="none" stroke="#D98A1C" stroke-width="1.6"/><text x="86" y="153" fill="#D98A1C">CONTRACT WON</text></g>
+        </svg>
+        <div class="cap"><h3>The verdict</h3><p>All test cards pass. The customer orders 12 aircraft, and the company can research the next materials.</p><span class="shot">Screen: Hangar</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>Key screens</h2><p>Desktop layouts at 1280 × 800. The numbers belong to one example design, the WW-1 Ridgeback, built for RFP-01.</p></div>
+    <div class="screens">
+
+      <!-- Hangar -->
+      <div class="shot-wrap">
+        <div class="lbl"><h3>Hangar</h3><span>Home screen</span></div>
+        <div class="frame"><div class="screen">
+          <div class="bar"><span class="logo">WINGWRIGHT</span><span class="tab on">Hangar</span><span class="tab">Programmes</span><span class="tab">Research</span><span class="tab">Market</span><span class="sp"></span><span class="kv">Funds <b>$1.84M</b></span><span class="kv">Engineers <b>6</b></span><span class="kv">Year <b>1979</b></span></div>
+          <div class="body" style="grid-template-columns: 1.6fr 1fr;">
+            <div class="pn dk" style="padding:0">
+              <svg viewBox="0 0 760 756" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                <rect width="760" height="756" fill="#0E1826"/>
+                <path d="M0 520 L760 520" stroke="#26395A"/><path d="M80 520 L380 160 L680 520" fill="#122035" stroke="#26395A"/>
+                
+                <g transform="translate(380 430)"><path d="M-170 0 h300 l40 -10 l12 10 l-40 14 h-312z" fill="#DCE6F2"/><path d="M-30 -4 l-60 -86 h34 l72 86z" fill="#B9C7D8"/><path d="M-30 6 l-60 70 h34 l72 -70z" fill="#B9C7D8"/><path d="M-160 -4 l-24 -46 h20 l30 46z" fill="#B9C7D8"/><circle cx="172" cy="2" r="4" fill="#F2B33D"/></g>
+                <text x="40" y="60" fill="#8094AE" font-family="Barlow Condensed" font-size="14" letter-spacing="2">PROTOTYPE ON THE FLOOR</text>
+                <text x="40" y="96" fill="#DCE6F2" font-family="Barlow Condensed" font-size="40" font-weight="700">WW-1 RIDGEBACK</text>
+                <text x="40" y="124" fill="#8094AE" font-family="JetBrains Mono" font-size="13">4-seat utility · MTOW 1,250 kg · 134 kW piston</text>
+                <text x="40" y="600" fill="#5FD39A" font-family="JetBrains Mono" font-size="13">● Test campaign 4 of 6 passed</text>
+              </svg>
+            </div>
+            <div class="pn" style="display:grid;grid-template-rows:auto auto 1fr auto;gap:14px">
+              <div><div class="pt">Active programme</div><div class="big">RFP-01</div><div class="small">Mountain charter · bid closes in 41 days</div></div>
+              <div><div class="pt">Requirements</div>
+                <div class="row"><span>Payload</span><span>4 pax + 80 kg</span></div>
+                <div class="row"><span>Range</span><span class="ok">940 / 900 km</span></div>
+                <div class="row"><span>Take-off, gravel</span><span class="ok">282 / 300 m</span></div>
+                <div class="row"><span>Unit cost</span><span class="warn">$212K / $200K</span></div>
+              </div>
+              <div><div class="pt">Research</div>
+                <div class="row"><span>Bonded aluminium structure</span><span class="cy">62%</span></div>
+                <div class="row"><span>Constant-speed propeller</span><span>queued</span></div>
+              </div>
+              <div style="display:flex;gap:8px"><span class="btn">Continue design</span><span class="btn ghost">Flight test</span></div>
+            </div>
+          </div>
+        </div></div>
+        <p>Your current prototype in the hangar, the programme's requirement status and research in progress. Unit cost is over the customer's limit, which is the next problem to solve.</p>
+      </div>
+
+      <!-- RFP -->
+      <div class="shot-wrap">
+        <div class="lbl"><h3>Request for proposal</h3><span>The brief</span></div>
+        <div class="frame"><div class="screen">
+          <div class="bar"><span class="logo">WINGWRIGHT</span><span class="tab">Hangar</span><span class="tab on">Programmes</span><span class="tab">Research</span><span class="tab">Market</span><span class="sp"></span><span class="kv">Funds <b>$1.84M</b></span></div>
+          <div class="body" style="grid-template-columns: 1.2fr 1fr;">
+            <div class="pn" style="display:grid;gap:14px;align-content:start">
+              <div class="pt">RFP-01 · Ridge Air Charter <span class="chipx warn">41 days</span></div>
+              <div style="font-family:var(--f-head);font-size:34px;font-weight:700;line-height:1.05">Utility aircraft for short, rough mountain strips</div>
+              <p style="color:var(--ui-muted);max-width:56ch">We fly tourists and supplies between valley towns. Our strips are gravel, 300 m long, at 1,400 m elevation. We need four seats, a cargo door and a range that reaches the coast without refuelling.</p>
+              <div><div class="pt">Must meet</div>
+                <div class="row"><span>Seats</span><span>4 + pilot luggage</span></div>
+                <div class="row"><span>Take-off to 15 m, gravel, 1,400 m, ISA +15</span><span>≤ 300 m</span></div>
+                <div class="row"><span>Range with 45 min reserve</span><span>≥ 900 km</span></div>
+                <div class="row"><span>Stall speed, landing flaps</span><span>≤ 95 km/h</span></div>
+                <div class="row"><span>Positive static stability</span><span>required</span></div>
+              </div>
+            </div>
+            <div class="pn" style="display:grid;gap:14px;align-content:start">
+              <div class="pt">How bids are scored</div>
+              <div class="slider"><div class="l"><span>Unit cost (≤ $200K)</span><b>35%</b></div><div class="t"><i style="width:35%"></i></div></div>
+              <div class="slider"><div class="l"><span>Operating cost per seat-km</span><b>25%</b></div><div class="t"><i style="width:25%"></i></div></div>
+              <div class="slider"><div class="l"><span>Field performance margin</span><b>20%</b></div><div class="t"><i style="width:20%"></i></div></div>
+              <div class="slider"><div class="l"><span>Delivery date</span><b>10%</b></div><div class="t"><i style="width:10%"></i></div></div>
+              <div class="slider"><div class="l"><span>Maintainability in the field</span><b>10%</b></div><div class="t"><i style="width:10%"></i></div></div>
+              <div class="pt" style="margin-top:6px">Competing bids</div>
+              <div class="row"><span>Halden Aero</span><span>registered</span></div>
+              <div class="row"><span>Corvel Works</span><span>registered</span></div>
+              <div style="display:flex;gap:8px;margin-top:6px"><span class="btn">Start programme</span><span class="btn ghost">Decline</span></div>
+            </div>
+          </div>
+        </div></div>
+        <p>Requirements are written the way a real customer writes them, with conditions such as gravel, airfield elevation and a hot day. The scoring weights tell you what to trade.</p>
+      </div>
+
+      <!-- Designer -->
+      <div class="shot-wrap">
+        <div class="lbl"><h3>Airframe designer</h3><span>Core screen</span></div>
+        <div class="frame"><div class="screen">
+          <div class="bar"><span class="logo">WINGWRIGHT</span><span class="tab">Hangar</span><span class="tab on">Design · WW-1</span><span class="tab">Engine</span><span class="tab">Materials</span><span class="tab">Test</span><span class="sp"></span><span class="kv">Units <b>SI</b></span><span class="kv">Rev <b>C</b></span></div>
+          <div class="body" style="grid-template-columns: 220px 1fr 300px; grid-template-rows: 1fr 150px;">
+            <div class="pn" style="grid-row: span 2">
+              <div class="pt">Parts</div>
+              <div class="row"><span class="cy">▸ Wing</span><span>high, strut</span></div>
+              <div class="row"><span>&nbsp;&nbsp;Spar</span><span>7075-T6</span></div>
+              <div class="row"><span>&nbsp;&nbsp;Ribs ×14</span><span>2024-T3</span></div>
+              <div class="row"><span>&nbsp;&nbsp;Skin</span><span>0.8 mm</span></div>
+              <div class="row"><span>&nbsp;&nbsp;Flaps</span><span>slotted 30°</span></div>
+              <div class="row"><span>Fuselage</span><span>7.6 m</span></div>
+              <div class="row"><span>Tail</span><span>conventional</span></div>
+              <div class="row"><span>Landing gear</span><span>taildragger</span></div>
+              <div class="row"><span>Engine</span><span>134 kW</span></div>
+              <div class="row"><span>Fuel</span><span>2 × 95 L</span></div>
+            </div>
+            <div class="pn dk" style="padding:0">
+              <svg viewBox="0 0 700 600" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+                <defs><pattern id="g" width="25" height="25" patternUnits="userSpaceOnUse"><path d="M25 0H0V25" fill="none" stroke="#16253D" stroke-width="1"/></pattern></defs>
+                <rect width="700" height="600" fill="url(#g)"/>
+                <g transform="translate(350 300)">
+                  <path d="M-300 -30 L300 -30 L300 24 L-300 24 Z" fill="#1C2E4A" stroke="#7CC8F2" stroke-width="1.6"/>
+                  <path d="M-300 -18 h600" stroke="#F2B33D" stroke-width="2" stroke-dasharray="6 4"/>
+                  <path d="M-16 -150 Q0 -170 16 -150 L22 250 Q0 262 -22 250 Z" fill="#22385A" stroke="#7CC8F2" stroke-width="1.6"/>
+                  <path d="M-110 220 h220 l-6 30 h-208 z" fill="#1C2E4A" stroke="#7CC8F2" stroke-width="1.6"/>
+                  <path d="M-200 -30 L-40 60 M200 -30 L40 60" stroke="#8094AE" stroke-width="2"/>
+                  <path d="M-300 40 h600 M-300 34 v12 M300 34 v12" stroke="#8094AE"/>
+                  <text x="0" y="62" fill="#8094AE" font-family="JetBrains Mono" font-size="13" text-anchor="middle">span 11.20 m</text>
+                  <circle cx="0" cy="-8" r="7" fill="none" stroke="#F2B33D" stroke-width="2"/><text x="12" y="-14" fill="#F2B33D" font-family="JetBrains Mono" font-size="11">CG</text>
+                  <circle cx="0" cy="4" r="5" fill="#5FD39A"/><text x="10" y="10" fill="#5FD39A" font-family="JetBrains Mono" font-size="11">NP</text>
+                </g>
+                <text x="16" y="24" fill="#8094AE" font-family="JetBrains Mono" font-size="12">TOP VIEW · drag handles to reshape</text>
+              </svg>
+            </div>
+            <div class="pn" style="grid-row: span 2">
+              <div class="pt">Wing</div>
+              <div class="slider"><div class="l"><span>Span</span><b>11.20 m</b></div><div class="t"><i style="width:56%"></i><u style="left:56%"></u></div></div>
+              <div class="slider"><div class="l"><span>Root chord</span><b>1.60 m</b></div><div class="t"><i style="width:48%"></i><u style="left:48%"></u></div></div>
+              <div class="slider"><div class="l"><span>Taper ratio</span><b>0.88</b></div><div class="t"><i style="width:80%"></i><u style="left:80%"></u></div></div>
+              <div class="slider"><div class="l"><span>Sweep (¼ chord)</span><b>0.0°</b></div><div class="t"><i style="width:0%"></i><u style="left:0%"></u></div></div>
+              <div class="slider"><div class="l"><span>Dihedral</span><b>1.5°</b></div><div class="t"><i style="width:30%"></i><u style="left:30%"></u></div></div>
+              <div class="row"><span>Airfoil</span><span>NACA 2412</span></div>
+              <div class="row"><span>Area S</span><span>16.8 m²</span></div>
+              <div class="row"><span>Aspect ratio</span><span>7.47</span></div>
+              <div class="row"><span>Oswald e</span><span>0.79</span></div>
+              <div class="row"><span>CL max (flaps)</span><span>1.90</span></div>
+              <div class="row"><span>Spar margin at 5.7 g</span><span class="ok">+12%</span></div>
+            </div>
+            <div class="pn" style="display:grid;grid-template-columns:repeat(6,1fr);gap:10px">
+              <div class="gauge"><span class="small">Empty mass</span><span class="big" style="font-size:23px">742 kg</span></div>
+              <div class="gauge"><span class="small">Range</span><span class="big ok" style="font-size:23px">940 km</span></div>
+              <div class="gauge"><span class="small">Take-off</span><span class="big ok" style="font-size:23px">282 m</span></div>
+              <div class="gauge"><span class="small">Stall</span><span class="big ok" style="font-size:23px;white-space:nowrap">90 km/h</span></div>
+              <div class="gauge"><span class="small">Static margin</span><span class="big warn" style="font-size:23px">4%</span></div>
+              <div class="gauge"><span class="small">Unit cost</span><span class="big warn" style="font-size:23px">$212K</span></div>
+            </div>
+          </div>
+        </div></div>
+        <p>The 3D model in the middle, parts on the left, the selected part's controls on the right and live results along the bottom. Every result changes as you drag. CG is the centre of gravity and NP the neutral point.</p>
+      </div>
+
+      <!-- Materials -->
+      <div class="shot-wrap">
+        <div class="lbl"><h3>Materials lab</h3><span>Create a composite</span></div>
+        <div class="frame"><div class="screen">
+          <div class="bar"><span class="logo">WINGWRIGHT</span><span class="tab">Design · WW-1</span><span class="tab">Engine</span><span class="tab on">Materials</span><span class="tab">Test</span><span class="sp"></span><span class="kv">Lab level <b>2</b></span></div>
+          <div class="body" style="grid-template-columns: 260px 1fr 330px;">
+            <div class="pn">
+              <div class="pt">Library</div>
+              <div class="row"><span>Aluminium 2024-T3</span><span>2.78</span></div>
+              <div class="row"><span>Aluminium 7075-T6</span><span>2.81</span></div>
+              <div class="row"><span>Steel 4130</span><span>7.85</span></div>
+              <div class="row"><span>Titanium Ti-6Al-4V</span><span>4.43</span></div>
+              <div class="row"><span>Sitka spruce</span><span>0.45</span></div>
+              <div class="row"><span>E-glass / epoxy</span><span>1.90</span></div>
+              <div class="row"><span class="cy">▸ Carbon / epoxy (new)</span><span class="cy">1.55</span></div>
+              <p class="small" style="margin-top:10px">Density in g/cm³. Values are typical handbook figures.</p>
+            </div>
+            <div class="pn dk">
+              <div class="pt">Layup · [0 / ±45 / 90]s · 8 plies</div>
+              <svg viewBox="0 0 560 300" width="100%" aria-hidden="true">
+                <g font-family="JetBrains Mono" font-size="12" fill="#8094AE">
+                  <rect x="20" y="20" width="420" height="28" fill="#22385A" stroke="#7CC8F2"/><text x="456" y="39">0°</text>
+                  <rect x="20" y="52" width="420" height="28" fill="#1C2E4A" stroke="#7CC8F2"/><text x="456" y="71">+45°</text>
+                  <rect x="20" y="84" width="420" height="28" fill="#1C2E4A" stroke="#7CC8F2"/><text x="456" y="103">−45°</text>
+                  <rect x="20" y="116" width="420" height="28" fill="#16253D" stroke="#7CC8F2"/><text x="456" y="135">90°</text>
+                  <rect x="20" y="148" width="420" height="28" fill="#16253D" stroke="#7CC8F2"/><text x="456" y="167">90°</text>
+                  <rect x="20" y="180" width="420" height="28" fill="#1C2E4A" stroke="#7CC8F2"/><text x="456" y="199">−45°</text>
+                  <rect x="20" y="212" width="420" height="28" fill="#1C2E4A" stroke="#7CC8F2"/><text x="456" y="231">+45°</text>
+                  <rect x="20" y="244" width="420" height="28" fill="#22385A" stroke="#7CC8F2"/><text x="456" y="263">0°</text>
+                </g>
+                <g stroke="#7CC8F2" stroke-width="1" opacity=".55"><path d="M40 34 h380"/><path d="M40 76 l30 -20 M90 76 l30 -20 M140 76 l30 -20"/><path d="M40 88 l30 20 M90 88 l30 20 M140 88 l30 20"/><path d="M60 120 v20 M110 120 v20 M160 120 v20"/></g>
+              </svg>
+              <div style="display:flex;gap:16px;margin-top:6px">
+                <div class="slider" style="flex:1"><div class="l"><span>Fibre volume fraction</span><b>0.60</b></div><div class="t"><i style="width:60%"></i><u style="left:60%"></u></div></div>
+                <div class="slider" style="flex:1"><div class="l"><span>Ply thickness</span><b>0.125 mm</b></div><div class="t"><i style="width:30%"></i><u style="left:30%"></u></div></div>
+              </div>
+            </div>
+            <div class="pn">
+              <div class="pt">Laminate properties</div>
+              <div class="row"><span>E (in-plane, quasi-iso)</span><span>≈ 54 GPa</span></div>
+              <div class="row"><span>Density</span><span>1.55 g/cm³</span></div>
+              <div class="row"><span>Specific stiffness E/ρ</span><span class="ok">35 vs 25 (Al)</span></div>
+              <div class="row"><span>First-ply failure</span><span>≈ 480 MPa</span></div>
+              <div class="row"><span>Cost</span><span class="warn">$68 / kg</span></div>
+              <div class="row"><span>Field repair</span><span class="bad">hard</span></div>
+              <div class="row"><span>Cure time</span><span>8 h autoclave</span></div>
+              <p class="small" style="margin-top:12px">Rule of mixtures for each ply, then a simplified laminate model. Open the notebook to see the steps.</p>
+              <div style="margin-top:12px;display:flex;gap:8px"><span class="btn">Save material</span><span class="btn ghost">Notebook</span></div>
+            </div>
+          </div>
+        </div></div>
+        <p>Players build a composite ply by ply and see its stiffness, strength, weight and cost. The trade-off against aluminium is explicit: lighter and stiffer, but costly and hard to repair at a gravel strip.</p>
+      </div>
+
+      <!-- Engine -->
+      <div class="shot-wrap">
+        <div class="lbl"><h3>Engine bench</h3><span>Turbofan, later in the campaign</span></div>
+        <div class="frame"><div class="screen">
+          <div class="bar"><span class="logo">WINGWRIGHT</span><span class="tab">Design</span><span class="tab on">Engine · TF-1</span><span class="tab">Materials</span><span class="tab">Test</span><span class="sp"></span><span class="kv">Tech tier <b>3</b></span></div>
+          <div class="body" style="grid-template-columns: 1fr 320px; grid-template-rows: 1fr 230px;">
+            <div class="pn dk">
+              <div class="pt">Cycle · stations 0 → 9</div>
+              <svg viewBox="0 0 860 320" width="100%" aria-hidden="true">
+                <g fill="none" stroke="#7CC8F2" stroke-width="2">
+                  <path d="M60 60 Q100 40 160 50 L700 90 L800 120 L800 200 L700 230 L160 270 Q100 280 60 260 Z" fill="#15233A"/>
+                  <path d="M160 50 v220"/><path d="M300 110 h300 v100 h-300 z" fill="#1C2E4A"/>
+                </g>
+                <rect x="380" y="130" width="100" height="60" fill="#F2B33D" opacity=".85"/>
+                <g font-family="JetBrains Mono" font-size="12" fill="#8094AE">
+                  <text x="120" y="300">fan</text><text x="310" y="104">HPC</text><text x="392" y="164" fill="#1A1305">burner</text><text x="510" y="104">HPT</text><text x="580" y="104">LPT</text><text x="720" y="300">nozzle</text>
+                  <text x="60" y="30">2</text><text x="300" y="30">3</text><text x="390" y="30">4</text><text x="520" y="30">5</text><text x="780" y="30">9</text>
+                </g>
+              </svg>
+            </div>
+            <div class="pn" style="grid-row: span 2">
+              <div class="pt">Design point · 10,700 m, M 0.78</div>
+              <div class="slider"><div class="l"><span>Bypass ratio</span><b>5.2</b></div><div class="t"><i style="width:52%"></i><u style="left:52%"></u></div></div>
+              <div class="slider"><div class="l"><span>Overall pressure ratio</span><b>28</b></div><div class="t"><i style="width:56%"></i><u style="left:56%"></u></div></div>
+              <div class="slider"><div class="l"><span>Fan pressure ratio</span><b>1.65</b></div><div class="t"><i style="width:45%"></i><u style="left:45%"></u></div></div>
+              <div class="slider"><div class="l"><span>Turbine entry temp.</span><b>1,550 K</b></div><div class="t"><i style="width:70%"></i><u style="left:70%"></u></div></div>
+              <div class="pt" style="margin-top:8px">Results</div>
+              <div class="row"><span>Take-off thrust</span><span>24.1 kN</span></div>
+              <div class="row"><span>Cruise TSFC</span><span class="ok">15.8 g/(kN·s)</span></div>
+              <div class="row"><span>Dry mass</span><span>540 kg</span></div>
+              <div class="row"><span>Hot-section life</span><span class="warn">6,000 cycles</span></div>
+              <div class="row"><span>Unit cost</span><span>$1.9M</span></div>
+              <p class="small" style="margin-top:10px">Simplified Brayton cycle with component efficiencies. Higher temperature needs better blade materials from research.</p>
+            </div>
+            <div class="pn">
+              <div class="pt">Temperature–entropy diagram</div>
+              <svg viewBox="0 0 860 170" width="100%" aria-hidden="true">
+                <path d="M40 150 h790 M40 150 V10" stroke="#26395A"/>
+                <path d="M80 140 Q200 120 300 70 L560 18 Q700 60 760 120 L80 140" fill="rgba(124,200,242,.12)" stroke="#7CC8F2" stroke-width="2"/>
+                <g font-family="JetBrains Mono" font-size="11" fill="#8094AE"><text x="70" y="160">2</text><text x="296" y="64">3</text><text x="560" y="14">4</text><text x="760" y="134">9</text><text x="800" y="166">s</text><text x="20" y="18">T</text></g>
+              </svg>
+            </div>
+          </div>
+        </div></div>
+        <p>Engines are designed, not just picked. Each slider changes thrust, fuel burn, weight, life and cost through a real engine cycle. The bush plane starts on a piston engine; this turbofan comes later in the campaign.</p>
+      </div>
+
+      <!-- Notebook -->
+      <div class="shot-wrap">
+        <div class="lbl"><h3>Engineering notebook</h3><span>Any number, opened</span></div>
+        <div class="frame"><div class="screen">
+          <div class="bar"><span class="logo">WINGWRIGHT</span><span class="tab on">Notebook · Range</span><span class="sp"></span><span class="kv">Export <b>CSV</b></span></div>
+          <div class="body" style="grid-template-columns: 1fr 380px;">
+            <div class="pn note-paper" style="padding:36px 44px;display:grid;gap:18px;align-content:start">
+              <div style="font-family:var(--f-head);font-size:30px;font-weight:700">Range, Breguet equation (propeller aircraft)</div>
+              <div class="eq" style="color:#1C2733">R = (η<sub>p</sub> / c) · (L / D) · ln(W<sub>0</sub> / W<sub>1</sub>)</div>
+              <div style="font-family:var(--f-mono);font-size:15px;line-height:2;color:#1C2733">
+                η<sub>p</sub> = 0.80 &nbsp;&nbsp;propeller efficiency at cruise<br>
+                c = 0.30 kg/kWh = 8.18 × 10<sup>−7</sup> m<sup>−1</sup> &nbsp;&nbsp;specific fuel consumption<br>
+                L/D = 10.0 &nbsp;&nbsp;at cruise C<sub>L</sub> = 0.42<br>
+                W<sub>0</sub> / W<sub>1</sub> = 1,250 / 1,100 kg &nbsp;&nbsp;start / end of cruise<br>
+                R = 0.80 / 8.18×10<sup>−7</sup> × 10.0 × ln(1.136) = <b>1,250 km</b> still air<br>
+                − climb, descent and 45 min reserve = <b style="color:#1E7A4A">940 km mission range</b>
+              </div>
+              <div style="font-size:14px;color:#4A5868;max-width:70ch">Why it matters: a 10% better L/D adds about 125 km. The biggest lever on this aircraft is the strut drag. Click any input to jump to the part that drives it.</div>
+            </div>
+            <div class="pn">
+              <div class="pt">Drag build-up at cruise</div>
+              <div class="row"><span>Wing (skin friction + form)</span><span>31%</span></div>
+              <div class="row"><span>Fuselage</span><span>24%</span></div>
+              <div class="row"><span class="warn">Wing struts</span><span class="warn">11%</span></div>
+              <div class="row"><span>Tail</span><span>8%</span></div>
+              <div class="row"><span>Landing gear (fixed)</span><span>14%</span></div>
+              <div class="row"><span>Induced</span><span>12%</span></div>
+              <svg viewBox="0 0 340 140" width="100%" style="margin-top:14px" aria-hidden="true">
+                <g><rect x="0" y="10" width="105" height="18" fill="#7CC8F2"/><rect x="105" y="10" width="82" height="18" fill="#5E9CC4"/><rect x="187" y="10" width="37" height="18" fill="#F2B33D"/><rect x="224" y="10" width="27" height="18" fill="#3E6E96"/><rect x="251" y="10" width="48" height="18" fill="#2C5172"/><rect x="299" y="10" width="41" height="18" fill="#8094AE"/></g>
+                <text x="0" y="56" fill="#8094AE" font-family="JetBrains Mono" font-size="11">C_D0 = 0.031 · e = 0.79 · AR 7.47</text>
+              </svg>
+            </div>
+          </div>
+        </div></div>
+        <p>The notebook is the heart of the game for engineers. Any result opens to its equation, its inputs with units and the arithmetic. It also says which part of the design moves the number most.</p>
+      </div>
+
+      <!-- Flight test -->
+      <div class="shot-wrap">
+        <div class="lbl"><h3>Flight test</h3><span>3D, with telemetry</span></div>
+        <div class="frame"><div class="screen">
+          <div class="bar"><span class="logo">WINGWRIGHT</span><span class="tab on">Flight test · Card 4: Range</span><span class="sp"></span><span class="kv">Time ×<b>16</b></span><span class="kv">Autopilot <b>ON</b></span></div>
+          <div class="body" style="grid-template-columns: 1fr 340px; grid-template-rows: 1fr 200px;">
+            <div class="pn dk" style="padding:0">
+              <svg viewBox="0 0 900 540" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                <rect width="900" height="300" fill="#2A4A72"/><rect y="300" width="900" height="240" fill="#3A4A3A"/>
+                <path d="M0 300 L120 260 L240 290 L380 230 L520 280 L660 240 L780 270 L900 250 V300 H0z" fill="#4B5D52"/>
+                <g transform="translate(450 260) rotate(-2)"><path d="M-90 0 h150 l26 -6 l6 6 l-26 10 h-156z" fill="#E8EEF4"/><path d="M-20 -2 l-80 -16 h170 l-10 16z" fill="#D2DCE6"/><path d="M-84 -2 l-14 -26 h12 l18 26z" fill="#D2DCE6"/></g>
+                <g stroke="#5FD39A" stroke-width="2" fill="none"><path d="M410 120 h-40 M490 120 h40 M450 100 v-12"/><path d="M380 170 h140" stroke-dasharray="6 6"/></g>
+                <g font-family="JetBrains Mono" font-size="15" fill="#5FD39A"><text x="40" y="60">IAS 212 km/h</text><text x="40" y="84">ALT 2,400 m</text><text x="40" y="108">α 3.1°  n 1.00 g</text><text x="720" y="60">FUEL 112 kg</text><text x="720" y="84">DIST 618 km</text></g>
+              </svg>
+            </div>
+            <div class="pn" style="grid-row: span 2">
+              <div class="pt">Test card 4 · Range</div>
+              <div class="row"><span>Profile</span><span>climb · cruise · descent</span></div>
+              <div class="row"><span>Cruise power</span><span>65% · 2,450 rpm</span></div>
+              <div class="row"><span>Predicted range</span><span>940 km</span></div>
+              <div class="row"><span>Flown so far</span><span class="cy">618 km</span></div>
+              <div class="row"><span>Fuel at reserve line</span><span>34 kg</span></div>
+              <div class="row"><span>Tracking vs prediction</span><span class="ok">+1.8%</span></div>
+              <div class="pt" style="margin-top:10px">Campaign</div>
+              <div class="row"><span>1 · Structural 1.5 × limit</span><span class="ok">PASS</span></div>
+              <div class="row"><span>2 · Stall and spin</span><span class="ok">PASS</span></div>
+              <div class="row"><span>3 · Take-off, gravel</span><span class="ok">PASS</span></div>
+              <div class="row"><span>4 · Range</span><span class="cy">LIVE</span></div>
+              <div class="row"><span>5 · Climb and ceiling</span><span>—</span></div>
+              <div class="row"><span>6 · Crosswind landing</span><span>—</span></div>
+              <div style="margin-top:12px;display:flex;gap:8px"><span class="btn ghost">Take control</span><span class="btn ghost">Export CSV</span></div>
+            </div>
+            <div class="pn">
+              <div class="pt">Telemetry <span>altitude · fuel</span></div>
+              <svg viewBox="0 0 900 140" width="100%" aria-hidden="true">
+                <path d="M0 130 h900" stroke="#26395A"/><path d="M0 70 h900 M0 20 h900" stroke="#1C2E4A"/>
+                <path d="M0 130 L60 40 L620 34" fill="none" stroke="#7CC8F2" stroke-width="2"/>
+                <path d="M0 18 L620 92" fill="none" stroke="#F2B33D" stroke-width="2"/>
+                <path d="M620 92 L900 128" fill="none" stroke="#F2B33D" stroke-width="2" stroke-dasharray="5 5" opacity=".6"/>
+                <circle cx="620" cy="34" r="4" fill="#7CC8F2"/><circle cx="620" cy="92" r="4" fill="#F2B33D"/>
+              </svg>
+            </div>
+          </div>
+        </div></div>
+        <p>Every test card is flown in 3D with a heads-up display and live telemetry. Long tests run on autopilot with time acceleration, and the player can take control at any moment.</p>
+      </div>
+
+      <!-- Results -->
+      <div class="shot-wrap">
+        <div class="lbl"><h3>Test results</h3><span>Failure, explained</span></div>
+        <div class="frame"><div class="screen">
+          <div class="bar"><span class="logo">WINGWRIGHT</span><span class="tab on">Results · Rev B</span><span class="sp"></span><span class="kv">Campaign <b>3 / 6</b></span></div>
+          <div class="body" style="grid-template-columns: 1fr 400px;">
+            <div class="pn dk">
+              <div class="pt">Card 1 · Structural test <span class="chipx bad">FAIL</span></div>
+              <svg viewBox="0 0 820 420" width="100%" aria-hidden="true">
+                <path d="M40 300 h740" stroke="#26395A" stroke-dasharray="6 6"/>
+                <path d="M60 300 Q400 270 600 200" fill="none" stroke="#DCE6F2" stroke-width="10" stroke-linecap="round"/>
+                <path d="M600 200 L700 150" fill="none" stroke="#F2766B" stroke-width="10" stroke-linecap="round"/>
+                <circle cx="600" cy="200" r="26" fill="none" stroke="#F2766B" stroke-width="3"/>
+                <path d="M60 330 Q300 340 500 350 T760 360" fill="none" stroke="#7CC8F2" stroke-width="2"/>
+                <path d="M60 345 h700" stroke="#5FD39A" stroke-width="1.5" stroke-dasharray="6 4"/>
+                <g font-family="JetBrains Mono" font-size="13"><text x="620" y="190" fill="#F2766B">yield · 62% span</text><text x="62" y="398" fill="#8094AE">root</text><text x="720" y="398" fill="#8094AE">tip</text><text x="560" y="330" fill="#7CC8F2">stress along span</text></g>
+              </svg>
+            </div>
+            <div class="pn">
+              <div class="pt">What happened</div>
+              <p style="font-size:15px;line-height:1.6;margin-bottom:14px">The spar cap yielded at <b class="bad">2.9 g</b>, before the required ultimate load of <b>5.7 g</b> (3.8 g limit × 1.5).</p>
+              <div class="row"><span>Location</span><span>62% span, upper cap</span></div>
+              <div class="row"><span>Material</span><span>7075-T6</span></div>
+              <div class="row"><span>Cap thickness</span><span>18 mm</span></div>
+              <div class="row"><span>Stress at failure</span><span class="bad">512 MPa</span></div>
+              <div class="row"><span>Yield strength</span><span>503 MPa</span></div>
+              <div class="pt" style="margin-top:12px">Ways to fix it</div>
+              <div class="row"><span>Cap to 26 mm at 40–75% span</span><span>+6.1 kg</span></div>
+              <div class="row"><span>Move strut attach outboard 0.4 m</span><span>+1.2 kg</span></div>
+              <div class="row"><span>Switch cap to CFRP</span><span>−3.4 kg · +$9K</span></div>
+              <div style="margin-top:14px;display:flex;gap:8px"><span class="btn">Open in designer</span><span class="btn ghost">Notebook</span></div>
+            </div>
+          </div>
+        </div></div>
+        <p>Failure is the best teacher when it's specific. The result says where it failed, at what load and against which limit, then offers real fixes with their weight and cost.</p>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<div class="wrap"><footer>Wingwright (working title) · Steam, paid, Early Access · Concept screens only. Material values are typical handbook figures; performance numbers belong to one example design.</footer></div>
+
+<script>
+(function () {
+  function fit() {
+    var frames = document.querySelectorAll(".frame");
+    for (var i = 0; i < frames.length; i++) {
+      var f = frames[i], s = f.querySelector(".screen");
+      if (s) s.style.transform = "scale(" + (f.clientWidth / 1280) + ")";
+    }
+  }
+  window.addEventListener("resize", fit);
+  fit();
+})();
+</script>
