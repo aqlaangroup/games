@@ -136,6 +136,30 @@ namespace Gahwit.Platform
         static JObject Identity(string provider, string idToken, string nonce) =>
             new JObject { ["provider"] = provider, ["idToken"] = idToken, ["nonce"] = nonce };
 
+        // The oldest game version the platform still serves (game.json minGameVersion), or null.
+        public async Task<Reply<string>> MinVersion()
+        {
+            if (!Configured) return Reply<string>.Fail(Outcome.Offline);
+            var reply = await Send<JObject>("GET", "/version", null, null);
+            return reply.Ok ? Reply<string>.Of(reply.Value?.Value<string>("minVersion")) : Reply<string>.Fail(reply.Outcome, reply.Error);
+        }
+
+        public async Task<Reply<long>> Gems()
+        {
+            var reply = await Call<JObject>("GET", "/players/me/wallet", null);
+            return reply.Ok ? Reply<long>.Of(WalletGems(reply.Value)) : Reply<long>.Fail(reply.Outcome, reply.Error);
+        }
+
+        // "levelUp:7" or "chapter:2". Conflict "not_earned_yet" until the cloud save shows it.
+        public Task<Reply<JObject>> ClaimReward(string rewardId) =>
+            Call<JObject>("POST", "/players/me/rewards", new JObject { ["id"] = rewardId });
+
+        // Gems for an item; the reply's "grant" is applied only after this. A repeated requestId spends once.
+        public Task<Reply<JObject>> Spend(string item, string requestId) =>
+            Call<JObject>("POST", "/players/me/spend", new JObject { ["item"] = item, ["requestId"] = requestId });
+
+        public static long WalletGems(JObject reply) => reply?["wallet"]?["gems"]?.Value<long>() ?? 0;
+
         // Sends the player id automatically, with the game version and the phone (COMPLETE_SPEC.md section 16).
         public Task<Reply<JObject>> SendSupport(string message, string email, string language) =>
             Call<JObject>("POST", "/players/me/support", new JObject

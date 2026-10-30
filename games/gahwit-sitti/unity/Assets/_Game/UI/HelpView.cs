@@ -15,6 +15,7 @@ namespace Gahwit.UI
         Toast toast;
         TMP_InputField message, email;
         Button send;
+        GameObject offline;
 
         public void Init(IAccountUi account, Toast toast)
         {
@@ -33,6 +34,8 @@ namespace Gahwit.UI
 
             var contact = Sheet.Paragraph(column, Loc.T("help.contact"), 32, Palette.Rose);
             contact.fontStyle = FontStyles.Bold;
+            // A small line, only while the platform can't be reached (COMPLETE_SPEC.md section 10).
+            offline = Sheet.Paragraph(column, Loc.T("help.offlineBanner"), 24, Palette.InkSoft).gameObject;
             message = Sheet.Input(column, "Message", Loc.T("help.messageHint"), 260, true);
             email = Sheet.Input(column, "Email", Loc.T("help.emailHint"), 124, false);
             email.contentType = TMP_InputField.ContentType.EmailAddress;
@@ -45,6 +48,7 @@ namespace Gahwit.UI
 
         public void Show()
         {
+            offline.SetActive(account.Cloud == CloudStatus.Offline);
             transform.SetAsLastSibling();
             gameObject.SetActive(true);
         }

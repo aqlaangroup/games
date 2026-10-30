@@ -28,6 +28,11 @@
       "base": 5,
       "levelDivisor": 2
     },
+    "bubbleGems": {
+      "base": 5,
+      "fromLevel": 4,
+      "comment": "a bubble of level L costs base * 2^(L - fromLevel) gems (bubbles.gemCost)"
+    },
     "taskXp": {
       "base": 10,
       "perChapter": 2

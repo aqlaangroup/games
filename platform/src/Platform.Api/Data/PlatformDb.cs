@@ -16,6 +16,8 @@ public class PlatformDb(DbContextOptions<PlatformDb> options) : DbContext(option
     public DbSet<SaveFlag> SaveFlags => Set<SaveFlag>();
     public DbSet<WalletBalance> WalletBalances => Set<WalletBalance>();
     public DbSet<WalletEntry> WalletEntries => Set<WalletEntry>();
+    public DbSet<RewardClaim> RewardClaims => Set<RewardClaim>();
+    public DbSet<GemSpend> GemSpends => Set<GemSpend>();
     public DbSet<Product> Products => Set<Product>();
     public DbSet<Purchase> Purchases => Set<Purchase>();
     public DbSet<SupportTicket> SupportTickets => Set<SupportTicket>();
@@ -70,6 +72,15 @@ public class PlatformDb(DbContextOptions<PlatformDb> options) : DbContext(option
         });
 
         model.Entity<WalletEntry>(e => e.HasIndex(w => new { w.GameId, w.PlayerId }));
+
+        // Each reward grants once, and each spend request spends once.
+        model.Entity<RewardClaim>(e => e.HasIndex(r => new { r.PlayerId, r.RewardId }).IsUnique());
+        model.Entity<GemSpend>(e =>
+        {
+            e.HasIndex(s => new { s.PlayerId, s.RequestId }).IsUnique();
+            e.HasIndex(s => new { s.PlayerId, s.Item });
+            e.Property(s => s.GrantJson).HasColumnType("jsonb");
+        });
 
         model.Entity<Product>(e =>
         {

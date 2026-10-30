@@ -4,5 +4,6 @@
   "baseUrl": "[set after the platform is deployed]",
   "editorBaseUrl": "http://localhost:5080",
   "privacyUrl": "[set after the privacy page is live]",
-  "termsUrl": "[set after the terms page is live]"
+  "termsUrl": "[set after the terms page is live]",
+  "storeUrl": "[set after App Store Connect setup]"
 }

@@ -11,6 +11,7 @@ namespace Gahwit.Platform
         public string EditorBaseUrl;
         public string PrivacyUrl;
         public string TermsUrl;
+        public string StoreUrl; // where "update required" sends the player
 
         public string ActiveBaseUrl => Application.isEditor ? EditorBaseUrl : BaseUrl;
 

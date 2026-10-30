@@ -59,6 +59,9 @@ namespace Gahwit.Boot
             game.LeveledUp += level => ui.Toast.Show(Loc.T("toast.levelUp", level, config.PlayerLevels.Rewards.Energy));
             game.TaskCompleted += OnTaskCompleted;
             game.ChapterCompleted += OnChapterCompleted;
+            // A level-up or a finished chapter earns gems; upload soon so the platform can pay them.
+            game.LeveledUp += _ => SyncSoon();
+            game.ChapterCompleted += _ => SyncSoon();
             Debug.Log("[Boot] Café and interface built.");
 
             nextSync = Time.unscaledTime + game.Config.Saves.CloudEverySeconds; // COMPLETE_SPEC.md section 9
@@ -219,6 +222,8 @@ namespace Gahwit.Boot
                 Run(() => account.Sync(false));
             }
         }
+
+        void SyncSoon() => nextSync = Mathf.Min(nextSync, Time.unscaledTime + 3f);
 
         void Save()
         {

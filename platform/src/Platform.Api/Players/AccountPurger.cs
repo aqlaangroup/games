@@ -25,6 +25,8 @@ public sealed class AccountPurger(PlatformDb db, ILogger<AccountPurger> log)
             await db.SaveFlags.Where(x => x.PlayerId == id).ExecuteDeleteAsync(ct);
             await db.WalletBalances.Where(x => x.PlayerId == id).ExecuteDeleteAsync(ct);
             await db.WalletEntries.Where(x => x.PlayerId == id).ExecuteDeleteAsync(ct);
+            await db.RewardClaims.Where(x => x.PlayerId == id).ExecuteDeleteAsync(ct);
+            await db.GemSpends.Where(x => x.PlayerId == id).ExecuteDeleteAsync(ct);
             await db.Sessions.Where(x => x.PlayerId == id).ExecuteDeleteAsync(ct);
             await db.Identities.Where(x => x.PlayerId == id).ExecuteDeleteAsync(ct);
             await db.SupportTickets.Where(x => x.PlayerId == id).ExecuteDeleteAsync(ct);

@@ -89,6 +89,9 @@ games.MapGet("/time", (TimeProvider clock) =>
     return Results.Ok(new { now, nowMs = now.ToUnixTimeMilliseconds() });
 });
 
+// Older game versions show "update required" (COMPLETE_SPEC.md section 10; game.json minGameVersion).
+games.MapGet("/version", (HttpContext http) => Results.Ok(new { minVersion = http.Game().MinGameVersion }));
+
 games.MapGet("/config", async (HttpContext http, PlatformDb db, CancellationToken ct) =>
 {
     var gameId = http.Game().Id;
@@ -110,6 +113,7 @@ PlayerEndpoints.Map(games, me);
 PlayerEndpoints.MapSignOut(signedIn);
 SaveEndpoints.Map(me);
 SupportEndpoints.Map(me);
+RewardEndpoints.Map(me);
 PurchaseEndpoints.Map(signedIn);
 AdminEndpoints.MapGame(games);
 

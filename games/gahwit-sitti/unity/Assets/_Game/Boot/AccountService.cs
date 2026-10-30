@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Gahwit.Core;
@@ -12,11 +13,20 @@ using UnityEngine;
 
 namespace Gahwit.Boot
 {
-    // The player's account on the platform: guest sign-in at launch, server time, cloud save, linking Apple,
-    // support messages and account deletion. The game always works offline; the cloud catches up when it can.
+    // The player's account on the platform: guest sign-in at launch, server time, cloud save, gems (wallet and
+    // earned rewards), linking Apple, support messages and account deletion. The game always works offline; the
+    // cloud catches up when it can.
     public sealed class AccountService : IAccountUi
     {
         const string MarkSlot = "gahwit-sitti-sync";
+        const string ClaimsSlot = "gahwit-sitti-rewards";
+
+        // Rewards the platform has already paid for this account, so they aren't asked for again.
+        sealed class PaidRewards
+        {
+            public string PlayerId;
+            public HashSet<string> Ids = new HashSet<string>();
+        }
 
         readonly PlatformClient client;
         readonly PlatformConfig config;
@@ -27,6 +37,7 @@ namespace Gahwit.Boot
         readonly Action<string> restart; // reloads the game, from the given save text when not null
         readonly Action restartFresh;    // reloads the game with no save at all
         SyncMark mark;
+        PaidRewards paid;
         bool syncing, choosing;
         CloudStatus cloud = CloudStatus.NotSaved;
 
@@ -56,6 +67,11 @@ namespace Gahwit.Boot
         public AgeBand AgeBand => AgeRules.Band(saves.Data.Account.BirthYear, DateTimeOffset.FromUnixTimeMilliseconds(time.NowMs).UtcDateTime.Year);
         public bool NeedsAgeGate => saves.Data.Account.BirthYear == null;
 
+        // Under-13s and unknown ages get neither until a parent agrees (COMPLETE_SPEC.md section 14). Ads (missing/17)
+        // and social features (missing/20) must ask these before they show anything.
+        public bool PersonalisedAdsAllowed => AgeRules.PersonalisedAdsAllowed(AgeBand, saves.Data.Account.ParentConsent);
+        public bool SocialAllowed => AgeRules.SocialAllowed(AgeBand, saves.Data.Account.ParentConsent);
+
         // At launch: sign in (a guest the first time), take the server's time, then compare saves.
         public async Task Start()
         {
@@ -67,6 +83,14 @@ namespace Gahwit.Boot
             }
             var serverTime = await client.ServerTimeMs();
             if (serverTime.Ok) time.ApplyServerTime(serverTime.Value);
+            var minimum = await client.MinVersion();
+            if (minimum.Ok && VersionRules.IsOlder(Application.version, minimum.Value))
+            {
+                Ui?.UpdateRequired.Show(config.StoreUrl);
+                return;
+            }
+            var gems = await client.Gems();
+            if (gems.Ok) Wallet.ApplyPlatformBalance(gems.Value);
             await PushProfile();
             await Sync(true);
         }
@@ -136,6 +160,7 @@ namespace Gahwit.Boot
                     serverVersion = mark.ServerVersion > 0 ? mark.ServerVersion : (long?)null;
                 }
                 await Act(CloudSync.Decide(mark, local, IsFresh(game.State), serverVersion), server);
+                if (cloud == CloudStatus.Saved) await ClaimRewards();
             }
             finally
             {
@@ -183,6 +208,34 @@ namespace Gahwit.Boot
                 return;
             }
             SetCloud(put.Outcome == Outcome.Offline ? CloudStatus.Offline : CloudStatus.NotSaved);
+        }
+
+        // Asks for the gems of every level-up and finished chapter this save has earned; the platform pays each once.
+        // It runs after an upload, so the platform's copy of the save already shows them.
+        async Task ClaimRewards()
+        {
+            string playerId = client.Account?.PlayerId;
+            if (playerId == null) return;
+            if (paid == null || paid.PlayerId != playerId)
+            {
+                string saved = SaveStore.LoadText(ClaimsSlot);
+                paid = saved != null ? JsonConvert.DeserializeObject<PaidRewards>(saved) : null;
+                if (paid == null || paid.PlayerId != playerId) paid = new PaidRewards { PlayerId = playerId };
+            }
+            long gained = 0;
+            int before = paid.Ids.Count;
+            foreach (var id in EarnedRewards.All(game.State.Level, game.State.Chapter))
+            {
+                if (paid.Ids.Contains(id)) continue;
+                var reply = await client.ClaimReward(id);
+                if (reply.Outcome == Outcome.Conflict) continue; // not in the cloud save yet: after the next upload
+                if (!reply.Ok) break;                            // offline: next time
+                paid.Ids.Add(id);
+                gained += reply.Value["granted"]?["gems"]?.Value<long>() ?? 0;
+                Wallet.ApplyPlatformBalance(PlatformClient.WalletGems(reply.Value));
+            }
+            if (paid.Ids.Count != before) SaveStore.SaveText(ClaimsSlot, JsonConvert.SerializeObject(paid));
+            if (gained > 0) Ui?.Toast.Show(Loc.T("toast.gems", gained));
         }
 
         // Replaces this phone's save with the platform's and reloads the game from it.
@@ -289,6 +342,8 @@ namespace Gahwit.Boot
                 if (!reply.Ok) return Failure(reply.Outcome);
             }
             SaveStore.Delete(MarkSlot);
+            SaveStore.Delete(ClaimsSlot);
+            Wallet.ApplyPlatformBalance(0);
             restartFresh();
             return ActionResult.Done;
         }

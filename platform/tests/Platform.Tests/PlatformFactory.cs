@@ -59,6 +59,8 @@ public class PlatformFactory : WebApplicationFactory<Program>, IAsyncLifetime
             {
               "slug": "{{GameA}}",
               "name": { "ar": "أ", "en": "Test A" },
+              "balanceConfig": "balance.json",
+              "minGameVersion": "1.2.0",
               "stores": {
                 "apple": { "bundleId": "{{AppleAudienceA}}" },
                 "google": { "packageName": "com.aqlaan.testa", "signInClientIds": ["{{GoogleClientA}}", "[set later]"] }
@@ -67,6 +69,15 @@ public class PlatformFactory : WebApplicationFactory<Program>, IAsyncLifetime
                 { "sku": "gems.s", "type": "consumable", "grants": { "gems": 100 } },
                 { "sku": "decor", "type": "non-consumable", "grants": { "decorSet": "eid", "gems": 60 } }
               ]
+            }
+            """);
+        File.WriteAllText(Path.Combine(gamesDir, GameA, "balance.json"), """
+            {
+              "formulas": { "levelUpGems": { "base": 5, "levelDivisor": 2 }, "bubbleGems": { "base": 5, "fromLevel": 4 } },
+              "board": { "inventorySlotGemCosts": [30, 60] },
+              "energy": { "gemRefill": { "amount": 100, "gemCostsByPurchaseOfDay": [30, 45] } },
+              "chapters": [ { "n": 1, "taskCosts": [10, 20], "reward": { "gems": 20 } }, { "n": 2, "taskCosts": [30], "reward": { "gems": 25 } } ],
+              "levelB": { "memories": { "skipRetryGems": 10 } }
             }
             """);
         Write(GameB, $$"""

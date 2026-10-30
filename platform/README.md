@@ -89,6 +89,8 @@ Every table has a `GameId`, except `Games` (it is the game) and `AdminUsers` (st
 | SaveFlag | an upload that looked impossible |
 | WalletBalance | one paid currency of one player, never below zero, changed only on the server |
 | WalletEntry | every wallet change: amount, source (purchase or admin), reason, who |
+| RewardClaim | a reward the game earned (`levelUp:7`, `chapter:2`) and its gems; one per player and id |
+| GemSpend | gems spent on an item, with what the game gets; one per player and request id |
 | Product | sku, type (consumable, non-consumable, subscription, non-renewing for a fixed-length pass), what it grants |
 | Purchase | store, store transaction id (unique), sku, price, currency, status (verified, refunded) |
 | SupportTicket | a Help form message, with game version, device and language |
@@ -110,7 +112,8 @@ All JSON is camelCase. Errors look like `{ "error": "code" }`. Every game route 
 |---|---|
 | `GET /health` | Health check |
 | `GET /games/{slug}/time` | `{ now, nowMs }`: server time, so energy can't be cheated by changing the phone clock |
-| `GET /games/{slug}/config` | The active balance settings |
+| `GET /games/{slug}/config` | The active balance settings. A game's `balance.json` (game.json `balanceConfig`) is published as version 1 when none exists; in Development a changed file is published again |
+| `GET /games/{slug}/version` | `{ minVersion }` from game.json `minGameVersion`; older games show "update required" |
 | `GET /games/{slug}/events` | Live events running now |
 | `POST /games/{slug}/players/guest` | `{ device, gameVersion }` → a new guest's `AuthResponse` |
 | `POST /games/{slug}/players/sign-in` | `{ provider: "apple" \| "google", idToken, nonce? }` → `AuthResponse` for that identity's player (new or existing). `401 invalid_token`, `400 provider_not_configured`, `400 unknown_provider` |
@@ -130,6 +133,9 @@ All JSON is camelCase. Errors look like `{ "error": "code" }`. Every game route 
 | `POST /games/{slug}/players/sign-out` | `{ refreshToken }` → `204` |
 | `GET /games/{slug}/players/me/save` | `{ version, save, summary: { level, chapter }, updatedAt, device }`, or `204` with no save |
 | `PUT /games/{slug}/players/me/save` | `{ baseVersion, save, device, force? }` → `{ version }`. `409 conflict { server: { version, summary, updatedAt, device } }` |
+| `GET /games/{slug}/players/me/wallet` | `{ wallet: { gems } }` |
+| `POST /games/{slug}/players/me/rewards` | `{ id: "levelUp:7" \| "chapter:2" }` → `{ granted: { gems }, wallet }`, or `{ alreadyClaimed, wallet }`. Each id grants once. The latest cloud save must show it: `409 not_earned_yet` until the game uploads it. `400 unknown_reward` |
+| `POST /games/{slug}/players/me/spend` | `{ item, requestId }` → `{ item, gems, grant, wallet }`. Items: `energyRefill` (each refill today costs more), `storageSlot:N` (once), `bubble:L`, `memoryRetry:<memory>`. A repeated `requestId` returns `{ alreadySpent }` without spending again. `409 not_enough_gems`, `409 already_owned`, `400 unknown_item`. The game applies `grant` only after this reply |
 | `POST /games/{slug}/players/me/support` | `{ message, email?, gameVersion, device, language }` → `201 { ticketId }` |
 | `POST /games/{slug}/purchases/verify` | `{ store, sku, receipt }` → `{ granted, wallet }` or `{ alreadyGranted, wallet }` |
 

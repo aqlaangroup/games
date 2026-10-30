@@ -6,6 +6,7 @@
     "google": { "packageName": "com.aqlaan.gahwitsitti", "signInClientIds": ["[set after Google Cloud setup]"] }
   },
   "balanceConfig": "design/balance.json",
+  "minGameVersion": "0.1.0",
   "products": [
     { "sku": "gs.starter", "type": "consumable", "usdTier": 0.99, "oncePerPlayer": true, "grants": { "gems": 80, "energy": 200, "generatorCopy": "gen_coffee" } },
     { "sku": "gs.gems.s", "type": "consumable", "usdTier": 1.99, "grants": { "gems": 100 } },

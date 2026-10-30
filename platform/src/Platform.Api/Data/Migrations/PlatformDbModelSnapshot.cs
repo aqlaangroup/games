@@ -149,6 +149,9 @@ namespace Platform.Api.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text[]");
 
+                    b.Property<string>("MinGameVersion")
+                        .HasColumnType("text");
+
                     b.Property<string>("NameAr")
                         .IsRequired()
                         .HasColumnType("text");
@@ -167,6 +170,46 @@ namespace Platform.Api.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Games");
+                });
+
+            modelBuilder.Entity("Platform.Domain.GemSpend", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("GameId")
+                        .HasColumnType("uuid");
+
+                    b.Property<long>("Gems")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("GrantJson")
+                        .IsRequired()
+                        .HasColumnType("jsonb");
+
+                    b.Property<string>("Item")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("PlayerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("RequestId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlayerId", "Item");
+
+                    b.HasIndex("PlayerId", "RequestId")
+                        .IsUnique();
+
+                    b.ToTable("GemSpends");
                 });
 
             modelBuilder.Entity("Platform.Domain.LiveEvent", b =>
@@ -438,6 +481,36 @@ namespace Platform.Api.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Purchases");
+                });
+
+            modelBuilder.Entity("Platform.Domain.RewardClaim", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("ClaimedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("GameId")
+                        .HasColumnType("uuid");
+
+                    b.Property<long>("Gems")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid>("PlayerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("RewardId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlayerId", "RewardId")
+                        .IsUnique();
+
+                    b.ToTable("RewardClaims");
                 });
 
             modelBuilder.Entity("Platform.Domain.SaveFlag", b =>

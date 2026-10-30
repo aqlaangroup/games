@@ -29,6 +29,7 @@ namespace Gahwit.UI
         public SettingsView Settings { get; private set; }
         public CloudChoiceView CloudChoice { get; private set; }
         public AgeGateView AgeGate { get; private set; }
+        public UpdateRequiredView UpdateRequired { get; private set; }
 
         public static GameUi Create(Game game, CafeCamera cafeCamera, CafeRoom room, Func<long> now, Action openDrawer, IAccountUi account)
         {
@@ -96,18 +97,22 @@ namespace Gahwit.UI
             CloudChoice.Init();
             AgeGate = UiKit.Rect(root, "AgeGate").Stretch().gameObject.AddComponent<AgeGateView>();
             AgeGate.Init(account);
+            UpdateRequired = UiKit.Rect(root, "UpdateRequired").Stretch().gameObject.AddComponent<UpdateRequiredView>();
+            UpdateRequired.Init(Toast);
             Toast.transform.SetAsLastSibling();
 
             kitchen.Init(game, look, this, now, dragLayer);
             cafe.Init(game, this, cafeCamera, room, openDrawer);
 
             game.Changed += Refresh;
+            Wallet.Changed += Refresh;
             ShowCafe(); // the 3D café is the main screen (COMPLETE_SPEC.md section 12)
         }
 
         void OnDestroy()
         {
             if (game != null) game.Changed -= Refresh;
+            Wallet.Changed -= Refresh;
         }
 
         void BuildTabs(RectTransform tabs)

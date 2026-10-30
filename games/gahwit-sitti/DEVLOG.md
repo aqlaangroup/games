@@ -2,6 +2,38 @@
 
 Decisions and known gaps. Newest first. Read this at the start of each session (`/CLAUDE.md`).
 
+## 2026-10-31: gems earned and spent through the platform, update required (missing/03, 04)
+
+**Platform** (46 tests)
+- **`POST …/players/me/rewards`** with `levelUp:N` or `chapter:N`:
+  - The platform pays the gems from the published `balance.json`, once per player and id.
+  - The latest cloud save must show the reward, or the reply is `409 not_earned_yet`.
+- **`GET …/players/me/wallet`** returns the balance.
+- **`POST …/players/me/spend`** with an item and a request id:
+  - Items: an energy refill (each one costs more within a day, UTC), a storage slot (once each), a bubble, or a memory retry skip.
+  - A repeated request id spends only once.
+  - The game applies what it bought only after the reply.
+  - Premium decor prices wait for the decor catalogue (missing/07).
+- **`GET /games/{slug}/version`** returns `game.json` `minGameVersion` (now `0.1.0`).
+- **Published config:** a game's `balance.json` becomes config version 1 when nothing is published. In Development a changed file is published again.
+- **Bubble prices** were prose; they're now `formulas.bubbleGems` in `balance.json`.
+- The purge job also deletes reward claims and gem spends. Migration `RewardsAndSpending`.
+
+**Game**
+- **Gems** in the HUD come from the wallet at launch and after every reward.
+- **Rewards:** after each cloud upload, the game asks for every level-up and finished chapter it has earned (`EarnedRewards`, tested). Paid ids are kept in `gahwit-sitti-rewards.json`, so rewards earned offline are claimed later. A level-up or finished chapter syncs 3 seconds later.
+- **Checked end to end** in the Editor against the local platform: reaching level 3 and finishing chapter 1 paid 6 + 6 + 10 gems once.
+- **"Update required":** a screen the player can't close when the platform's minimum version is newer (`VersionRules`, tested). Its store address in `platform.json` is a placeholder.
+- **Offline:** Help shows "sending needs the internet" while the platform can't be reached.
+- **Age switches:** `AccountService.PersonalisedAdsAllowed` and `SocialAllowed` are false for under-13s and unknown ages until a parent agrees. Ads and social features must ask them when they're built.
+
+**Still needs you**
+- Hosting for the platform (HTTPS, managed PostgreSQL, a secret store), then `baseUrl` in `platform.json`.
+- Store keys for receipts and notifications.
+- Google sign-in client ids.
+- The App Store address.
+- How a parent agrees, which needs legal advice (missing/21).
+
 ## 2026-10-31: spec conflicts settled, missing numbers added (missing/02)
 
 Each decision fixed the file that lost. Overturn any of them by changing `balance.json` and the spec together.

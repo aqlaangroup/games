@@ -19,6 +19,32 @@ public class Game
     public string? GooglePackageName { get; set; }
     /// <summary>OAuth client ids a Google identity token may be issued for.</summary>
     public List<string> GoogleSignInClientIds { get; set; } = new();
+    /// <summary>From game.json minGameVersion. Older game versions show "update required".</summary>
+    public string? MinGameVersion { get; set; }
+}
+
+/// <summary>A reward the game earned, such as a level-up or a finished chapter. Each id grants once per player.</summary>
+public class RewardClaim
+{
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid GameId { get; set; }
+    public Guid PlayerId { get; set; }
+    public required string RewardId { get; set; }   // "levelUp:7", "chapter:2"
+    public long Gems { get; set; }
+    public DateTimeOffset ClaimedAt { get; set; } = DateTimeOffset.UtcNow;
+}
+
+/// <summary>Gems spent in the game. The phone's request id makes a repeated call spend only once.</summary>
+public class GemSpend
+{
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid GameId { get; set; }
+    public Guid PlayerId { get; set; }
+    public required string RequestId { get; set; }
+    public required string Item { get; set; }        // "energyRefill", "storageSlot:1", "bubble:5", "memoryRetry:m2_rhythm"
+    public long Gems { get; set; }
+    public required string GrantJson { get; set; }  // what the game applies, such as {"energy":100}
+    public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
 }
 
 /// <summary>One account per game. Starts as a guest; Apple or Google identities can be linked later.</summary>
@@ -108,7 +134,7 @@ public class WalletEntry
     public Guid PlayerId { get; set; }
     public required string Currency { get; set; }
     public long Amount { get; set; }
-    public required string Source { get; set; }   // "purchase" or "admin"
+    public required string Source { get; set; }   // "purchase", "admin", "reward" or "spend"
     public string? Reason { get; set; }
     public Guid? PurchaseId { get; set; }
     public Guid? AdminUserId { get; set; }

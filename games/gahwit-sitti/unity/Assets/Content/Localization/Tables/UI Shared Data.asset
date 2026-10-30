@@ -635,6 +635,26 @@ MonoBehaviour:
     m_Key: help.failed
     m_Metadata:
       m_Items: []
+  - m_Id: 93588800135168
+    m_Key: toast.gems
+    m_Metadata:
+      m_Items: []
+  - m_Id: 93588804329472
+    m_Key: update.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 93588804329473
+    m_Key: update.body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 93588804329474
+    m_Key: update.button
+    m_Metadata:
+      m_Items: []
+  - m_Id: 93588804329475
+    m_Key: help.offlineBanner
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

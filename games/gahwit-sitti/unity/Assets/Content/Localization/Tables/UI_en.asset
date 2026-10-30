@@ -647,6 +647,27 @@ MonoBehaviour:
     m_Localized: Sending didn't work. Please try again.
     m_Metadata:
       m_Items: []
+  - m_Id: 93588800135168
+    m_Localized: +{0} gems
+    m_Metadata:
+      m_Items: []
+  - m_Id: 93588804329472
+    m_Localized: Update the game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 93588804329473
+    m_Localized: This version is no longer supported. Update it from the store to
+      keep playing. Your progress is safe.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 93588804329474
+    m_Localized: Update
+    m_Metadata:
+      m_Items: []
+  - m_Id: 93588804329475
+    m_Localized: Sending messages needs the internet.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
