@@ -1,39 +1,55 @@
-# Qahwet Sitti (قهوة ستّي): concept v3
+# Gahwit Sitti (قهوة ستّي): concept
 
-**Pitch:** rebuild your grandmother's café today, and live her youth in 1974, until you understand why your family broke apart.
+**Level:** B, a premium cozy game.
+**Pitch:** rebuild your grandmother's café today, live her youth in 1974, and find out why your family broke apart.
 
-Feeling demo: `feel-demo/index.html`.
+Feeling demo: `feel-demo/index.html`. Production plan: `PLAN.md`. Systems: `design/GAME_SYSTEMS.md` (economy) and `design/SYSTEMS_B.md` (level B systems).
 
-## Why v3
+## What kind of game it is
 
-v2 was a known merge game with an Arab skin. It had systems but nothing to move and nothing to feel. v3 keeps the proven merge loop and adds the reasons to play.
+A cozy story game with a merge core. Merging is the short 2–5 minute activity that earns coins. Around it is a real world: a 3D café you build and decorate, neighbours with their own lives, memories you play with your hands, and a family mystery told like an Arab drama series.
 
-## Five pillars
+**Feels like:**
+- Gossip Harbor's money engine.
+- The emotional moments of *Florence* and *Unpacking*.
+- The decorating joy of *Animal Crossing*.
+- The wardrobe of *Love Nikki*.
 
-| Pillar | What the player gets | In the demo |
+All in an Amman café.
+
+## Pillars
+
+| Pillar | What the player does |
+|---|---|
+| **A living 3D café** | Turns and zooms a small 3D café with a finger. Places every chair, lamp and plant. Customers walk in, sit, chat and leave. Light follows the real time of day; rain on the window in winter. |
+| **Playable memories** | Every chapter opens a 1974 memory played with the hands: pouring, shaping ma'amoul to a rhythm, finding objects, restoring a torn photo, sewing a dress. Never the same twice. |
+| **The family mystery** | Salma's mother Rana and Lana's mother Nawal haven't spoken in 20 years. Teta split the café between their daughters on purpose and hid letters around it. Faris, who runs a coffee chain, wants the building. |
+| **A neighbourhood with lives** | 12 regulars with daily routines, friendship levels and their own small stories. |
+| **Self-expression** | Salma's modest-fashion wardrobe and the café's decor, shared as postcards on Snapchat, Instagram and WhatsApp. |
+| **Warm social play** | Friends visit your café and help with big orders such as weddings. No chat with strangers. |
+
+## Cast
+
+| Character | Who | Voice |
 |---|---|---|
-| **A living café** | Customers walk in, sit, wait and react. You drag the cup to them. Sound, haptics and the street change with the time of day. | Abu Fadi walks in, orders, sips, reacts; door bell, pouring, merge sounds, vibration |
-| **Two timelines** | Each restoration opens a playable memory of young Teta in the same café in 1974. Present and past reveal the family secret together. | The 1974 memory: young Teta serves young Fadi; you pour the coffee yourself |
-| **Built emotional moments** | Teta's recorded voice, her handwriting, old regulars at their old tables | The hidden letter and Teta's voice note |
-| **A family mystery with stakes** | Salma's and Lana's mothers (Rana and Nawal) haven't spoken in 20 years. Teta split the café on purpose. Faris wants to buy the building. | The letter ends on a smudged line about 2006; Lana's message ends the demo |
-| **Your own sitti** | A moderated wall where players pin their own grandmother's saying or recipe | Not in the demo yet |
+| Salma, 29 | Heroine. Came back from Dubai to Amman. | Urban Amman dialect |
+| Lana, 28 | Her cousin from Riyadh, co-owner and friend-rival | Najdi |
+| Teta Im Khalil | The grandmother, met in 1974 memories, letters and voice notes | Old Amman |
+| Rana and Nawal | The two mothers who stopped speaking | Amman, and Amman with Riyadh years in it |
+| Abu Fadi, 75 | The oldest regular; young Fadi in 1974 | Amman |
+| Khalto Samira | The aunt with a groom for everyone | Amman |
+| Karim | The carpenter who knew Teta | Amman |
+| Faris | Owner of a coffee chain who wants the building | Polished Amman business talk |
 
-## Also in v3
+## Not in the game
 
-- **Recipe discovery:** cross-chain recipes fill Teta's blank recipe pages and reveal clues.
-- **Regulars with their own stories:** about 12 neighbours whose small storylines move forward when you serve them.
-- **Hospitality instead of competition:** invite friends as guests to help with a big order; everyone is rewarded. This replaces races against strangers.
-- **Shareable café postcards** for Snapchat, Instagram and WhatsApp.
+- **Ramadan as a core idea.** The game works every month; Ramadan, Eid and winter are optional themed events.
+- **Races against strangers.** Replaced by cooperative hosting with friends.
+- **Paid random boxes, open chat, interstitial ads.**
 
-## Removed
+## Look
 
-- **Ramadan as a pillar.** The game must work every month. Ramadan, Eid and winter stay as optional themed versions of normal events.
-
-## Look and feel
-
-Soft, modern and feminine: blush, lilac, sage and cream, frosted-glass sheets, the phone's own system font (SF Arabic on iPhone), large rounded corners, gentle spring motion, and a music box in Maqam Hijaz for memories. No heavy display fonts and no pattern bands.
-
-## Still to update for v3
-
-- `design/balance.json` and `GAME_SYSTEMS.md`: memories, recipes, regulars, hospitality, and removing the race and Ramadan as core.
-- `screens/` and the screens canvas: restyle to the v3 look.
+- **Soft premium 3D animated-film style:** blush, lilac, sage and cream.
+- **Feminine and modern,** with Apple-style frosted interface panels and the phone's own Arabic font.
+- **1974 memories** use warm faded film colours.
+- **Full art direction:** `art/FLOW_PROMPTS.md`.
