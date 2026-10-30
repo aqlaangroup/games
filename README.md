@@ -13,7 +13,9 @@ games/                     one folder per game
     feel-demo/             3-minute feeling demo
     screens/               screen designs
     research/              market research notes and report
+    BUILD_GUIDE.md         how to build it with Claude Code and Unity, with the task backlog
     unity/                 the Unity project (to come)
+unity-shared/              shared Unity package (com.aqlaan.cozykit) for systems every game reuses
 platform/                  ONE .NET application for every game
   src/Platform.Domain      shared data model
   src/Platform.Api         player sign-in, saves, purchases, config, events
@@ -26,3 +28,5 @@ platform/                  ONE .NET application for every game
 - **Every record belongs to a game.** Each table has a `GameId`, and each API route starts with `/games/{gameSlug}`.
 - **Each game is self-contained.** Its own folder and its own Unity project. Shared code goes in `platform/` (server) or a shared Unity package later (client).
 - **Each game registers itself** through its `game.json`, so adding a new game needs no platform code change.
+
+Claude Code reads `CLAUDE.md` for the rules every session follows.

@@ -1,0 +1,35 @@
+{
+  "$comment": "Shape of one player's save for Gahwit Sitti. Stored on the phone and synced to the platform (PlayerSave.Json). Gems and purchases are NOT here: the platform's Wallet owns them.",
+  "schemaVersion": 1,
+  "saveVersion": 42,
+  "savedAt": "2026-10-30T15:00:00Z",
+  "tutorial": { "lastStep": 11, "done": true },
+  "player": { "level": 6, "xp": 210, "coins": 1340, "energy": 64, "energyStampUptimeMs": 123456789, "lastServerTime": "2026-10-30T14:58:00Z" },
+  "board": {
+    "cols": 7,
+    "rows": 9,
+    "cells": [
+      { "i": 0, "chain": "coffee", "level": 3 },
+      { "i": 5, "chain": "sweets", "level": 1 },
+      { "i": 9, "gen": "gen_coffee", "genLevel": 2 }
+    ],
+    "storage": [ { "chain": "tea", "level": 4 }, null ],
+    "storageSlots": 2
+  },
+  "orders": [ { "id": "o_1029", "items": [ { "chain": "coffee", "level": 4 } ], "coins": 42, "xp": 26, "character": "abu_fadi" } ],
+  "story": { "chapter": 3, "task": 2, "choices": { "c2_groom": "ask_who" }, "scenesSeen": ["intro", "sign", "chairs"], "lettersFound": ["letter_1"] },
+  "cafe": {
+    "space": "floor",
+    "placed": [ { "id": "decor_lamp_old", "x": 1.5, "z": -0.5, "rot": 90 } ],
+    "owned": ["decor_lamp_old", "decor_plant_modern"],
+    "taskStyles": { "sign": "old", "chairs": "modern" },
+    "cosiness": 34
+  },
+  "regulars": { "abu_fadi": { "points": 27, "level": 3, "storiesSeen": [3] }, "karim": { "points": 4, "level": 1, "storiesSeen": [] } },
+  "recipes": { "found": ["two_cities_coffee"], "wrongStreak": 0 },
+  "memories": { "m1_pour": { "stars": 3 }, "m2_rhythm": { "stars": 2 } },
+  "wardrobe": { "owned": ["top_blush_linen", "hijab_lilac"], "worn": { "top": "top_blush_linen", "bottom_or_dress": "pants_sage", "hijab_optional": null } },
+  "events": { "pass_2026_11": { "points": 4120, "claimedFree": [1, 2, 3], "claimedPremium": [] }, "album_2026_11": { "cards": ["a1", "a2", "a7"], "stars": 34 } },
+  "daily": { "loginDay": 3, "lastLoginDate": "2026-10-30", "tasks": [ { "id": "serve_10", "progress": 10, "claimed": false } ], "adsWatched": { "energy": 2, "doubleCoins": 1, "bubble": 0 } },
+  "settings": { "sound": true, "music": true, "haptics": true, "glossary": true, "largeText": false, "quality": "auto", "reducedMotion": false, "language": "ar" }
+}

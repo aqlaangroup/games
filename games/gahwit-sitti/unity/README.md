@@ -4,6 +4,9 @@ The Unity project will live in this folder. Create it with **Unity 6 LTS** using
 
 ## Packages
 
+Also add the shared package from `/unity-shared/` (see its README). Systems that other games could reuse move there once they work here.
+
+
 | Need | Package |
 |---|---|
 | Rendering | Universal Render Pipeline (mobile renderer settings) |
