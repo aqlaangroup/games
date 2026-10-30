@@ -5,6 +5,7 @@ using System.Linq;
 using Gahwit.Core;
 using Gahwit.Merge;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 
 namespace Gahwit.Save
@@ -71,6 +72,12 @@ namespace Gahwit.Save
                 LettersFound = new List<string>(state.LettersFound)
             };
             into.Cafe.TaskStyles = new Dictionary<string, string>(state.TaskStyles);
+            foreach (var memory in state.MemoryStars)
+            {
+                var entry = into.Memories[memory.Key] as JObject ?? new JObject();
+                entry["stars"] = memory.Value;
+                into.Memories[memory.Key] = entry;
+            }
         }
 
         public static GameState Read(SaveData data, BalanceConfig config, ChapterContent content)
@@ -95,6 +102,9 @@ namespace Gahwit.Save
                 TutorialDone = data.Tutorial.Done,
                 Rng = ulong.TryParse(data.Rng, NumberStyles.Integer, CultureInfo.InvariantCulture, out var rng) ? rng : 0
             };
+
+            foreach (var memory in data.Memories.Properties())
+                if (memory.Value is JObject entry && entry["stars"] != null) state.MemoryStars[memory.Name] = (int)entry["stars"];
 
             foreach (var cell in data.Board.Cells)
             {

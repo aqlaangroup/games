@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Gahwit.Cafe;
 using Gahwit.Core;
+using Gahwit.Memories;
 using Gahwit.Merge;
 using Gahwit.Save;
 using Gahwit.Story;
@@ -45,7 +47,7 @@ namespace Gahwit.Boot
             cafe.SetTimeOfDay(CafeRoom.TimeFromClock(DateTime.Now));
             cafe.Apply(game.CompletedTaskIds());
             var cafeCamera = camera.gameObject.AddComponent<CafeCamera>();
-            ui = GameUi.Create(game, cafeCamera, () => time.NowMs);
+            ui = GameUi.Create(game, cafeCamera, cafe, () => time.NowMs, OpenDrawer);
 
             game.Changed += () => dirty = true;
             game.OrderServed += order => ui.Toast.Show(Loc.T("toast.served", order.Coins, order.Xp));
@@ -57,7 +59,20 @@ namespace Gahwit.Boot
         void Start()
         {
             string intro = game.Content.IntroKnot;
-            if (!game.State.ScenesSeen.Contains(intro)) PlayScene(game.State.Chapter, intro);
+            if (!game.State.ScenesSeen.Contains(intro)) PlayScene(StoryFor(game.State.Chapter), intro, ResumeMemories);
+            else ResumeMemories();
+        }
+
+        // A memory cut short by closing the app plays again on the next launch.
+        void ResumeMemories()
+        {
+            var done = game.CompletedTaskIds();
+            foreach (var task in game.Content.Chapters.SelectMany(c => c.Tasks))
+            {
+                if (task.Memory == null || !done.Contains(task.Id) || game.State.MemoryStars.ContainsKey(task.Memory)) continue;
+                PlayMemory(task.Memory);
+                return;
+            }
         }
 
         void OnTaskCompleted(TaskDef task)
@@ -65,7 +80,63 @@ namespace Gahwit.Boot
             // Fires before a finished chapter moves on, so State.Chapter is still the task's chapter.
             cafe.Apply(game.CompletedTaskIds());
             ui.ShowCafe();
-            PlayScene(game.State.Chapter, task.Knot);
+            PlayScene(StoryFor(game.State.Chapter), task.Knot, () =>
+            {
+                if (task.Memory != null) PlayMemory(task.Memory);
+            });
+        }
+
+        // A playable 1974 memory (SYSTEMS_B.md section 5), then back to today.
+        void PlayMemory(string memoryId)
+        {
+            var def = game.Content.Memories[memoryId];
+            var config = game.Config.LevelB.Memories;
+            var story = Story(def.Story);
+            if (def.Type != "pour")
+            {
+                Debug.LogWarning($"[Memory] '{def.Type}' memories aren't built yet; skipping {memoryId}.");
+                return;
+            }
+
+            PlayScene(story, def.LeadKnot, () =>
+            {
+                // 1974: the café as Teta ran it, in faded film colours.
+                cafe.SetPast(true);
+                cafe.Apply(game.Content.Chapters.SelectMany(c => c.Tasks).Select(t => t.Id).ToList());
+                ui.Memory.ShowBanner(true);
+                // The easy assist (COMPLETE_SPEC.md section 5) needs its own settings field; off until then.
+                PlayScene(story, def.IntroKnot, () => ui.Memory.PlayPour(new PourGame(config, easyAssist: false), stars =>
+                {
+                    game.RecordMemory(memoryId, stars);
+                    ui.Toast.Show(Loc.T("memory.stars", stars, config.Stars[1]));
+                    PlayScene(story, stars >= config.Stars[1] ? def.PerfectKnot : def.OkKnot, () =>
+                        PlayScene(story, def.OutroKnot, () =>
+                        {
+                            cafe.SetPast(false);
+                            cafe.Apply(game.CompletedTaskIds());
+                            ui.Memory.ShowBanner(false);
+                            PlayScene(story, def.ReturnKnot, null);
+                        }));
+                }));
+            });
+        }
+
+        // The letter in the counter drawer, Teta's voice note, then the message that arrives (COMPLETE_SPEC.md section 1, step 10).
+        void OpenDrawer()
+        {
+            string letterId = game.LetterWaiting();
+            if (letterId == null || ui.Dialogue.IsOpen) return;
+            var def = game.Content.Letters[letterId];
+            var story = Story(def.Story);
+            var letter = story.ReadAll(def.Knot);
+            var voice = story.ReadAll(def.VoiceKnot)[0];
+            var message = story.ReadAll(def.NotifyKnot)[0];
+            ui.Letter.Play(letter, voice, message, Loc.T("char." + message.Speaker), () =>
+            {
+                foreach (var knot in new[] { def.Knot, def.VoiceKnot, def.NotifyKnot })
+                    if (!game.State.ScenesSeen.Contains(knot)) game.State.ScenesSeen.Add(knot);
+                game.FindLetter(letterId);
+            });
         }
 
         void OnChapterCompleted(int chapter)
@@ -75,16 +146,20 @@ namespace Gahwit.Boot
             afterScene.Enqueue(() => ui.Toast.Show(Loc.T("toast.chapterDone", chapter, reward.Energy, generator)));
         }
 
-        void PlayScene(int chapter, string knot)
+        void PlayScene(StoryPlayer story, string knot, Action then)
         {
-            var story = StoryFor(chapter);
-            if (story == null) return;
+            if (story == null)
+            {
+                then?.Invoke();
+                return;
+            }
             ui.Dialogue.Play(story, knot,
                 () =>
                 {
                     if (!game.State.ScenesSeen.Contains(knot)) game.State.ScenesSeen.Add(knot);
                     dirty = true;
                     while (afterScene.Count > 0) afterScene.Dequeue()();
+                    then?.Invoke();
                 },
                 choice =>
                 {
@@ -93,9 +168,10 @@ namespace Gahwit.Boot
                 });
         }
 
-        StoryPlayer StoryFor(int chapter)
+        StoryPlayer StoryFor(int chapter) => Story(game.Content.ForChapter(chapter)?.Story);
+
+        StoryPlayer Story(string path)
         {
-            var path = game.Content.ForChapter(chapter)?.Story;
             if (string.IsNullOrEmpty(path)) return null;
             if (!stories.TryGetValue(path, out var story)) stories[path] = story = StoryPlayer.FromResources(path);
             return story;

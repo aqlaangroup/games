@@ -2,6 +2,26 @@
 
 Decisions and known gaps. Newest first. Read this at the start of each session (`/CLAUDE.md`).
 
+## 2026-10-30: the pour memory and Teta's letter (backlog 17, 18)
+
+- **Memory framework.**
+  - A task can name a memory (`chapters.json`, `"memory": "m1_pour"` on the sign task, matching COMPLETE_SPEC.md section 1, step 9).
+  - A memory plays in order:
+    1. A lead-in scene today.
+    2. A fade to 1974: the café as Teta ran it, in faded film colours with grain (`CafeRoom.SetPast`).
+    3. An intro scene.
+    4. The memory game.
+    5. A scene chosen by the result.
+    6. An outro.
+    7. A scene back in today.
+  - Best stars are saved under `memories`. A memory cut short by closing the app plays again on the next launch.
+- **Pour game** (`_Game/Memories/PourGame.cs`, 5 tests): hold to fill the cup, then release inside the line for 3 stars, above it for 2, or after a spill for 1. Releasing too early asks for "a bit more"; it never fails. The numbers come from the feeling demo and live in `balance.json` `levelB.memories.pour`.
+- **The easy assist** that widens the line is built and tested but turned off. It needs a settings field (COMPLETE_SPEC.md section 5) and a settings screen.
+- **The letter:**
+  - After the memory, the counter's middle drawer glows and an "open the drawer" button floats over it.
+  - The letter fades in line by line, then Teta's voice note plays with word-by-word subtitles (there's no recording yet), then Lana's message arrives as a phone notification. The letter is saved under `story.lettersFound`.
+- **Text:** all memory and letter lines are in `chapter1.ink`, taken from `feel-demo/index.html`. New characters: `teta_young` (Um Khalil) and `fadi_young`.
+
 ## 2026-10-30: Unity Localization (backlog 5)
 
 - Player-facing text comes from the Unity Localization **"UI" string table** (`Assets/Content/Localization`), with Arabic and English locales. `Loc.T(key)` reads it; the old `Resources/Loc/ar.json` is gone.
@@ -54,5 +74,5 @@ Decisions and known gaps. Newest first. Read this at the start of each session (
 - ~~Energy uses the phone clock (backlog 4).~~ Done, see the entry above.
 - There is one scene. Boot and Café scenes and a service locator are backlog 1.
 - The camera is a small orbit script, not Cinemachine (backlog 11).
-- Not built yet: decor placement and cosiness, walking customers and Abu Fadi as a regular, the pour memory, the letter, wardrobe, the 11-step tutorial, storage, bubbles, audio, analytics.
+- Not built yet: decor placement and cosiness, walking customers and Abu Fadi as a regular, wardrobe, the 11-step tutorial with its hand pointer, the storage screen, bubbles, audio, analytics. ~~Pour memory and letter~~ are done (see above).
 - Dialogue other than the prototype lines is `[draft]` and needs the native writers.

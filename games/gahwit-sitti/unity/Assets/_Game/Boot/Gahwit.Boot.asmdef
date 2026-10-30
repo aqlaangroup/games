@@ -3,6 +3,7 @@
     "rootNamespace": "Gahwit.Boot",
     "references": [
         "Gahwit.Core",
+        "Gahwit.Memories",
         "Gahwit.Merge",
         "Gahwit.Save",
         "Gahwit.Story",

@@ -1,0 +1,16 @@
+{
+    "name": "Gahwit.Memories",
+    "rootNamespace": "Gahwit.Memories",
+    "references": [
+        "Gahwit.Core"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

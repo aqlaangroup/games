@@ -19,6 +19,7 @@ namespace Gahwit.Core
         public OrdersConfig Orders;
         public List<ChapterConfig> Chapters;
         public PlayerLevelsConfig PlayerLevels;
+        public LevelBConfig LevelB;
 
         public static BalanceConfig Parse(string json) => JsonConvert.DeserializeObject<BalanceConfig>(json);
 
@@ -167,5 +168,24 @@ namespace Gahwit.Core
     public sealed class PlayerLevelRewards
     {
         public int Energy; // gems come from Formulas.LevelUpGems
+    }
+
+    public sealed class LevelBConfig
+    {
+        public MemoriesConfig Memories;
+    }
+
+    public sealed class MemoriesConfig
+    {
+        public List<int> Stars; // [min, max]
+        public PourConfig Pour;
+    }
+
+    public sealed class PourConfig
+    {
+        public float FillPerSecond;
+        public float TargetLow;
+        public float TargetHigh;
+        public float EasyWiden;
     }
 }

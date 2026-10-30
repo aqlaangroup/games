@@ -12,13 +12,19 @@ namespace Gahwit.UI
     public sealed class CafeScreen : MonoBehaviour
     {
         Game game;
+        GameUi ui;
+        CafeRoom room;
+        Camera view;
         RTLTextMeshPro chapter, progress, title, description, need;
         Image progressFill;
-        Button restore, toKitchen;
+        Button restore, toKitchen, drawer;
 
-        public void Init(Game game, GameUi ui, CafeCamera cafeCamera)
+        public void Init(Game game, GameUi ui, CafeCamera cafeCamera, CafeRoom room, System.Action openDrawer)
         {
             this.game = game;
+            this.ui = ui;
+            this.room = room;
+            view = cafeCamera.GetComponent<Camera>();
 
             var pad = UiKit.Rect(transform, "OrbitPad").Stretch();
             pad.gameObject.AddComponent<Image>().color = Color.clear;
@@ -50,6 +56,28 @@ namespace Gahwit.UI
             ((RectTransform)restore.transform).Bottom(24, 84, 32, 32);
             toKitchen = UiKit.Button(card.transform, "ToKitchen", Loc.T("cafe.toKitchen"), Palette.SageDark, Color.white, 30, ui.ShowKitchen, 34);
             ((RectTransform)toKitchen.transform).Bottom(24, 84, 32, 32);
+
+            // Floats over the counter's drawer while a letter waits in it.
+            drawer = UiKit.Button(transform, "OpenDrawer", Loc.T("drawer.open"), Palette.Rose, Color.white, 30, () => openDrawer(), 40);
+            ((RectTransform)drawer.transform).Pin(new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(300, 88));
+            drawer.gameObject.SetActive(false);
+        }
+
+        void Update()
+        {
+            bool waiting = game.LetterWaiting() != null;
+            room.SetDrawerGlow(waiting);
+            // Hidden while a scene or the letter itself is on screen, so it can't open twice.
+            bool show = waiting && !ui.Dialogue.IsOpen && !ui.Letter.IsOpen;
+            drawer.gameObject.SetActive(show);
+            if (!show) return;
+
+            var rect = (RectTransform)transform;
+            var screen = RectTransformUtility.WorldToScreenPoint(view, room.DrawerPosition);
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(rect, screen, null, out var local);
+            var button = (RectTransform)drawer.transform;
+            button.anchoredPosition = local + new Vector2(0, 90);
+            button.localScale = Vector3.one * (1f + 0.04f * Mathf.Sin(Time.unscaledTime * 3f));
         }
 
         public void Refresh()

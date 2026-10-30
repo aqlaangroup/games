@@ -17,6 +17,8 @@ namespace Gahwit.Core
         public List<string> WalkIns;
         public Dictionary<string, List<string>> ChainColors; // [lowest level, top level]
         public List<ChapterTasks> Chapters;
+        public Dictionary<string, MemoryDef> Memories;
+        public Dictionary<string, LetterDef> Letters;
 
         public static ChapterContent Load()
         {
@@ -63,5 +65,28 @@ namespace Gahwit.Core
     {
         public string Id;
         public string Knot;
+        public string Memory; // a memory that plays after this task's scene, if any
+    }
+
+    // A playable 1974 memory (SYSTEMS_B.md section 5): scenes around one memory game.
+    public sealed class MemoryDef
+    {
+        public string Type;       // pour, rhythm, find, ...
+        public string Story;      // Resources path of the Ink story
+        public string LeadKnot;   // in the present, before the sepia transition
+        public string IntroKnot;  // in 1974, before the game
+        public string PerfectKnot;
+        public string OkKnot;
+        public string OutroKnot;  // in 1974, after the game
+        public string ReturnKnot; // back in the present
+        public string Letter;     // a letter the memory leads to, found in the counter drawer
+    }
+
+    public sealed class LetterDef
+    {
+        public string Story;
+        public string Knot;       // the letter's lines
+        public string VoiceKnot;  // Teta's voice note
+        public string NotifyKnot; // the message that arrives afterwards
     }
 }

@@ -403,6 +403,33 @@ namespace Gahwit.Merge
             return task;
         }
 
+        // ---------- Memories and letters ----------
+
+        // Keeps the best result; stars never block the story (SYSTEMS_B.md section 5).
+        public void RecordMemory(string memoryId, int stars)
+        {
+            if (!State.MemoryStars.TryGetValue(memoryId, out int best) || stars > best) State.MemoryStars[memoryId] = stars;
+            Changed?.Invoke();
+        }
+
+        // A letter is waiting in the counter drawer once its memory has been played and until it is read.
+        public string LetterWaiting()
+        {
+            if (Content.Memories == null) return null;
+            foreach (var memory in Content.Memories)
+            {
+                string letter = memory.Value.Letter;
+                if (letter != null && State.MemoryStars.ContainsKey(memory.Key) && !State.LettersFound.Contains(letter)) return letter;
+            }
+            return null;
+        }
+
+        public void FindLetter(string letterId)
+        {
+            if (!State.LettersFound.Contains(letterId)) State.LettersFound.Add(letterId);
+            Changed?.Invoke();
+        }
+
         // The chapter's gem reward is granted by the platform, like every gem. Its generator copy lands on the board
         // to be merged with the matching generator.
         void FinishChapter()

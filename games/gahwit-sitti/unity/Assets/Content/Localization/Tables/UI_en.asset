@@ -248,6 +248,70 @@ MonoBehaviour:
     m_Localized: Gahwit Sitti
     m_Metadata:
       m_Items: []
+  - m_Id: 2092902113280
+    m_Localized: "Memory \xB7 Amman 1974"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2092906307584
+    m_Localized: Pour the coffee
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2092906307585
+    m_Localized: Hold to pour
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2092906307586
+    m_Localized: "A little more\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2092906307587
+    m_Localized: Just right.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2092906307588
+    m_Localized: It spilled a little. That's fine.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2092906307589
+    m_Localized: '{0} of {1} stars'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2092906307590
+    m_Localized: Open the drawer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2092906307591
+    m_Localized: There's something else in the drawer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2092906307592
+    m_Localized: A voice note from Teta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2092906307593
+    m_Localized: Saved on her old phone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2092906307594
+    m_Localized: Play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2092906307595
+    m_Localized: Gahwit Sitti
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2092906307596
+    m_Localized: now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2092906307597
+    m_Localized: Um Khalil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2092906307598
+    m_Localized: Fadi
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

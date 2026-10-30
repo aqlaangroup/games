@@ -35,6 +35,15 @@ namespace Gahwit.Story
 
         public void Play(string knot) => story.ChoosePathString(knot);
 
+        // Every line of a knot without choices, for screens that show them all (the letter).
+        public List<StoryLine> ReadAll(string knot)
+        {
+            Play(knot);
+            var lines = new List<StoryLine>();
+            while (TryNext(out var line)) lines.Add(line);
+            return lines;
+        }
+
         public bool HasChoices => !story.canContinue && story.currentChoices.Count > 0;
 
         public List<string> Choices

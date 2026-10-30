@@ -45,6 +45,8 @@ namespace Gahwit.Save.Tests
             game.CompleteTask("old");
             game.State.Choices["dallahs"] = "ask";
             game.State.ScenesSeen.Add("intro");
+            game.RecordMemory("m1_pour", 3);
+            game.FindLetter("letter_1");
             return game.State;
         }
 
@@ -70,6 +72,8 @@ namespace Gahwit.Save.Tests
             Assert.AreEqual(state.TaskIndex, loaded.TaskIndex);
             Assert.AreEqual("old", loaded.TaskStyles["sign"]);
             Assert.AreEqual("ask", loaded.Choices["dallahs"]);
+            Assert.AreEqual(3, loaded.MemoryStars["m1_pour"]);
+            CollectionAssert.Contains(loaded.LettersFound, "letter_1");
             Assert.AreEqual(state.Rng, loaded.Rng);
             Assert.AreEqual(state.Orders.Count, loaded.Orders.Count);
             for (int n = 0; n < state.Orders.Count; n++)

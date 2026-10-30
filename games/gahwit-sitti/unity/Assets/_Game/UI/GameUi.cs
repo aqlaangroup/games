@@ -24,8 +24,10 @@ namespace Gahwit.UI
 
         public Toast Toast { get; private set; }
         public DialogueView Dialogue { get; private set; }
+        public MemoryView Memory { get; private set; }
+        public LetterView Letter { get; private set; }
 
-        public static GameUi Create(Game game, CafeCamera cafeCamera, Func<long> now)
+        public static GameUi Create(Game game, CafeCamera cafeCamera, CafeRoom room, Func<long> now, Action openDrawer)
         {
             EnsureEventSystem();
             var go = new GameObject("GameUI", typeof(RectTransform)) { layer = 5 };
@@ -39,7 +41,7 @@ namespace Gahwit.UI
             go.AddComponent<GraphicRaycaster>();
 
             var ui = go.AddComponent<GameUi>();
-            ui.Build(game, cafeCamera, now);
+            ui.Build(game, cafeCamera, room, now, openDrawer);
             return ui;
         }
 
@@ -49,7 +51,7 @@ namespace Gahwit.UI
             new GameObject("EventSystem", typeof(EventSystem), typeof(InputSystemUIInputModule));
         }
 
-        void Build(Game game, CafeCamera cafeCamera, Func<long> now)
+        void Build(Game game, CafeCamera cafeCamera, CafeRoom room, Func<long> now, Action openDrawer)
         {
             this.game = game;
             this.cafeCamera = cafeCamera;
@@ -71,13 +73,17 @@ namespace Gahwit.UI
             BuildTabs(UiKit.Rect(root, "Tabs").Bottom(0, 140));
 
             var dragLayer = UiKit.Rect(root, "DragLayer").Stretch();
+            Memory = UiKit.Rect(root, "Memory").Stretch().gameObject.AddComponent<MemoryView>();
+            Memory.Init();
             Dialogue = UiKit.Rect(root, "Dialogue").Stretch().gameObject.AddComponent<DialogueView>();
             Dialogue.Init(game);
+            Letter = UiKit.Rect(root, "Letter").Stretch().gameObject.AddComponent<LetterView>();
+            Letter.Init();
             Toast = UiKit.Rect(root, "Toast").Pin(new Vector2(0.5f, 1), new Vector2(0, -136), new Vector2(920, 84)).gameObject.AddComponent<Toast>();
             Toast.Init();
 
             kitchen.Init(game, look, this, now, dragLayer);
-            cafe.Init(game, this, cafeCamera);
+            cafe.Init(game, this, cafeCamera, room, openDrawer);
 
             game.Changed += Refresh;
             ShowCafe(); // the 3D café is the main screen (COMPLETE_SPEC.md section 12)

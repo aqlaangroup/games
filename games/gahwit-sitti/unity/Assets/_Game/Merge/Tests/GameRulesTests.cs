@@ -230,6 +230,22 @@ namespace Gahwit.Merge.Tests
             Assert.AreEqual("modern", game.State.TaskStyles[task.Id]);
         }
 
+        [Test]
+        public void TheLetterWaitsInTheDrawerAfterItsMemoryUntilItIsRead()
+        {
+            var game = NewGame();
+            Assert.AreEqual("m1_pour", content.ForChapter(1).Tasks[0].Memory); // the sign task leads to the pour memory
+            Assert.IsNull(game.LetterWaiting());
+
+            game.RecordMemory("m1_pour", 2);
+            game.RecordMemory("m1_pour", 1);
+            Assert.AreEqual(2, game.State.MemoryStars["m1_pour"]); // the best result is kept
+            Assert.AreEqual("letter_1", game.LetterWaiting());
+
+            game.FindLetter("letter_1");
+            Assert.IsNull(game.LetterWaiting());
+        }
+
         sealed class FakeClock : IDeviceClock
         {
             public long UtcNowMs { get; set; }

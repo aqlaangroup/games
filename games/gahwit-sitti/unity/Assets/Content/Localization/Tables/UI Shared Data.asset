@@ -243,6 +243,70 @@ MonoBehaviour:
     m_Key: cafe.sign
     m_Metadata:
       m_Items: []
+  - m_Id: 2092902113280
+    m_Key: memory.banner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2092906307584
+    m_Key: pour.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2092906307585
+    m_Key: pour.hold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2092906307586
+    m_Key: pour.more
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2092906307587
+    m_Key: pour.perfect
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2092906307588
+    m_Key: pour.over
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2092906307589
+    m_Key: memory.stars
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2092906307590
+    m_Key: drawer.open
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2092906307591
+    m_Key: letter.more
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2092906307592
+    m_Key: voice.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2092906307593
+    m_Key: voice.subtitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2092906307594
+    m_Key: voice.play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2092906307595
+    m_Key: notify.app
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2092906307596
+    m_Key: notify.now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2092906307597
+    m_Key: char.teta_young
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2092906307598
+    m_Key: char.fadi_young
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

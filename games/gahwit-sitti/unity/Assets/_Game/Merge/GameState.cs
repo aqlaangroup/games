@@ -23,6 +23,7 @@ namespace Gahwit.Merge
         public Dictionary<string, string> Choices = new Dictionary<string, string>();
         public List<string> ScenesSeen = new List<string>();
         public List<string> LettersFound = new List<string>();
+        public Dictionary<string, int> MemoryStars = new Dictionary<string, int>(); // best stars per memory
         public int TutorialStep;
         public bool TutorialDone;
         public ulong Rng;

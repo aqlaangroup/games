@@ -894,6 +894,13 @@
       "storyClueRecipes": 5
     },
     "memories": {
+      "pour": {
+        "comment": "From feel-demo: the cup fills at fillPerSecond (0..1 of the cup) while held. Releasing inside the target band is perfect (3 stars), above it 2 stars, a spill (full cup) 1 star, below it asks for more. easyWiden widens the band on each side when the easy assist is on.",
+        "fillPerSecond": 0.32,
+        "targetLow": 0.667,
+        "targetHigh": 0.803,
+        "easyWiden": 0.06
+      },
       "perChapter": 1,
       "minutes": [
         3,

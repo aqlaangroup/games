@@ -4,6 +4,7 @@
     "references": [
         "Gahwit.Core",
         "Gahwit.Merge",
+        "Gahwit.Memories",
         "Gahwit.Story",
         "Gahwit.Cafe",
         "Unity.TextMeshPro",

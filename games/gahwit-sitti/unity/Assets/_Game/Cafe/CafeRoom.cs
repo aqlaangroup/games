@@ -34,10 +34,15 @@ namespace Gahwit.Cafe
         readonly Dictionary<string, Material> materials = new Dictionary<string, Material>();
         readonly List<Light> lampLights = new List<Light>();
         readonly List<Renderer> shelfDallahs = new List<Renderer>();
-        Material litTemplate, floorMat, glassMat, bulbMat, brass, tarnished;
+        const float PastFadeSeconds = 1.2f;
+
+        Material litTemplate, floorMat, glassMat, bulbMat, brass, tarnished, drawerMat;
         Light sun, signLight, counterLight;
         Camera cam;
-        Transform plaque;
+        Transform plaque, drawer;
+        Volume pastVolume;
+        float pastTarget;
+        bool drawerGlowing;
         RTLTextMeshPro3D signText;
         GameObject chairPile, tables, lights, counterSet;
         TimePreset time;
@@ -93,6 +98,26 @@ namespace Gahwit.Cafe
         {
             time = Presets[timeOfDay];
             ApplyTime();
+        }
+
+        // 1974: warm faded film colours and grain (CONCEPT.md, Look), faded in and out.
+        public void SetPast(bool past) => pastTarget = past ? 1f : 0f;
+
+        // The counter's middle drawer glows while a letter waits in it.
+        public void SetDrawerGlow(bool glow)
+        {
+            drawerGlowing = glow;
+            if (!glow) drawerMat.SetColor("_EmissionColor", Color.black);
+        }
+
+        public Vector3 DrawerPosition => drawer.position + new Vector3(0, 0.1f, 0.1f);
+
+        void Update()
+        {
+            if (pastVolume != null && !Mathf.Approximately(pastVolume.weight, pastTarget))
+                pastVolume.weight = Mathf.MoveTowards(pastVolume.weight, pastTarget, Time.unscaledDeltaTime / PastFadeSeconds);
+            if (drawerGlowing)
+                drawerMat.SetColor("_EmissionColor", Hex("#E9A0AE") * (0.35f + 0.35f * Mathf.Sin(Time.unscaledTime * 3f)));
         }
 
         void ApplyTime()
@@ -188,9 +213,13 @@ namespace Gahwit.Cafe
             var counter = Group("Counter", transform, new Vector3(2.7f, 0, -2.9f));
             Box("Body", counter, new Vector3(3.6f, 1.1f, 1f), new Vector3(0, 0.55f, 0), Mat("#FFFFFF"));
             Box("Top", counter, new Vector3(3.8f, 0.1f, 1.15f), new Vector3(0, 1.15f, 0), Mat("#F2D3D6", 0.4f));
+            drawerMat = new Material(Mat("#FAF1F0")) { name = "Cafe drawer" };
+            drawerMat.EnableKeyword("_EMISSION");
+            drawerMat.SetColor("_EmissionColor", Color.black);
             foreach (float x in new[] { -1.1f, 0f, 1.1f })
             {
-                Box("Drawer", counter, new Vector3(0.9f, 0.45f, 0.04f), new Vector3(x, 0.6f, 0.51f), Mat("#FAF1F0"));
+                var front = Box("Drawer", counter, new Vector3(0.9f, 0.45f, 0.04f), new Vector3(x, 0.6f, 0.51f), x == 0f ? drawerMat : Mat("#FAF1F0"));
+                if (x == 0f) drawer = front.transform;
                 Box("Handle", counter, new Vector3(0.3f, 0.05f, 0.05f), new Vector3(x, 0.62f, 0.55f), brass);
             }
 
@@ -296,6 +325,23 @@ namespace Gahwit.Cafe
             volume.isGlobal = true;
             volume.priority = 10;
             volume.sharedProfile = profile;
+
+            var past = ScriptableObject.CreateInstance<VolumeProfile>();
+            var colour = past.Add<ColorAdjustments>();
+            colour.saturation.Override(-65f);
+            colour.colorFilter.Override(Hex("#F3D6AE"));
+            colour.contrast.Override(8f);
+            colour.postExposure.Override(0.15f);
+            var grain = past.Add<FilmGrain>();
+            grain.type.Override(FilmGrainLookup.Medium3);
+            grain.intensity.Override(0.45f);
+            past.Add<Vignette>().intensity.Override(0.38f);
+            pastVolume = new GameObject("PastPostProcessing").AddComponent<Volume>();
+            pastVolume.transform.SetParent(transform, false);
+            pastVolume.isGlobal = true;
+            pastVolume.priority = 20;
+            pastVolume.weight = 0;
+            pastVolume.sharedProfile = past;
         }
 
         // ---------- Shapes ----------
