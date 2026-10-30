@@ -1,180 +1,137 @@
-# Wingwright: concept (working title)
+# Wingwright: mobile concept (working title)
 
-**Pitch:** design real aircraft from real materials, build and upgrade their engines, then fly them through test campaigns to prove how far, how fast and how safely they go. Built on real aerospace engineering, so an aircraft engineer recognises every number.
+**Pitch:** fly your plane as far as it can go, then upgrade it with real engineering. Every flight teaches you why you landed where you did.
 
-**Working title only.** Check the name for trademarks and store availability before using it publicly.
-
-## Who it's for
-
-| Player | What they want |
+| | |
 |---|---|
-| **Aerospace engineers and students** (core) | Real equations, real units, real trade-offs. A game that respects what they know. |
-| Aviation enthusiasts and simmers | Flying something they designed themselves |
-| Engineering-minded gamers (players of building and sandbox games) | Deep creative building with consequences |
+| Platform | iOS and Android, portrait |
+| Business model | Free to play: rewarded ads and in-app purchases |
+| Engine | Unity, the same tools and shared platform as the café game |
+| Look | Clean, bright 3D, simple shapes, satisfying flight |
+| Session | 1–3 minutes per flight |
+| Goal of version 1 | **Find the market** with a small, cheap game before building anything deep |
 
-**Promise:** if it works in the game, the engineering reason is real. If it fails, the game shows exactly why: the stress, the drag, the fuel.
+The deep PC version is parked in `CONCEPT_PC_LATER.md`.
 
-## What makes it different
-
-Vehicle-building sandboxes already exist. This one is different in five ways:
-
-1. **Real engineering models, shown openly.** Every result can be opened in an "engineering notebook" that shows the equation, the inputs and the units. Examples: lift, drag build-up, Breguet range and spar bending stress.
-2. **Materials you create.** Alloys, composites and heat treatments with real property data, and layups you design ply by ply.
-3. **Engines as a design problem.** Choose the cycle (piston, turboprop, turbofan) and tune bypass ratio, pressure ratio and turbine temperature. Thrust, fuel burn, weight and cost follow.
-4. **Requirements, like real programmes.** Customers issue a request for proposal: payload, range, runway, cost. You design to it and must prove it in test.
-5. **Certification campaigns.** Structural load tests, stall tests, engine-out, flutter margin. Flight tests produce real telemetry you can export.
-
-## Core loop
+## The core loop
 
 ```
-Read a requirement (RFP)
-  → design the airframe: wing, fuselage, tail, structure, materials
-  → choose and tune the engine
-  → the analysis panel updates live: weight, drag, range, take-off distance, stability, cost
-  → build a prototype, then fly the test campaign in 3D
-  → telemetry and pass/fail per test, with the reason
-  → improve the design, research new materials and engine tech
-  → win the contract, sell aircraft, grow the company
+Launch → fly as far as you can → land (or run out of fuel)
+  → see the distance, the coins earned and an engineer's note on WHY
+  → upgrade one part: wing, engine, propeller, fuel tank, body material, landing gear
+  → fly again, further
+  → reach the next city on the route map → unlock the next aircraft
 ```
 
-## Systems
+This upgrade-and-fly-further loop is a proven mobile genre. What makes ours different is that **every upgrade follows real engineering**, and the game shows the trade-off in plain words.
 
-### 1. Materials lab
+## How a flight works
 
-**Starting materials**, with real-world property values from published handbooks:
-- metals: aluminium 2024-T3 and 7075-T6, titanium Ti-6Al-4V, steel 4130, and spruce
-- composites: glass and carbon fibre
+A real but simple model of a plane seen from the side:
 
-Each material has:
-- density, Young's modulus, yield and ultimate strength
-- fatigue limit, maximum service temperature
-- cost per kg and how easy it is to manufacture
-
-**Creating materials:**
-- **Alloys:** research composition and heat-treatment steps. Properties come from simplified real relationships, inside realistic limits.
-- **Composites:** fibre, resin, fibre volume fraction and ply angles (for example [0/±45/90]s). Stiffness comes from the rule of mixtures plus a simplified laminate model. Strength uses a first-ply-failure check.
-- **Trade-offs are real:** carbon is light and stiff but costly and slow to make; aluminium is cheap and easy to repair.
-
-### 2. Airframe designer (3D)
-
-**Wing**
-- Shape: span, root and tip chord, sweep, dihedral and twist.
-- Airfoil: chosen from a generated NACA 4- and 5-digit family, or custom coordinates.
-- Flaps and slats.
-- **Structure:** spar caps and webs, ribs and skins, each with a material and a thickness. Sizing checks:
-  - bending, shear and buckling at the limit load factor
-  - with the standard 1.5 ultimate factor
-
-**Other parts**
-- **Fuselage:** length, diameter, nose and tail shape, cabin layout (seats, cargo), and the pressure cabin. Skin is checked for hoop stress.
-- **Tail:** conventional, T-tail or V-tail, sized by tail volume coefficients. The game warns when they're outside normal ranges.
-- **Landing gear:** layout and position. Tip-back and turnover angles are checked.
-- **Weight:** structure from the sized parts, plus engines, systems (statistical estimates), payload and fuel. The centre of gravity is calculated for every loading case.
-
-### 3. Engines
-
-| Type | Inputs | Outputs |
-|---|---|---|
-| Piston + propeller | Displacement, compression ratio, rpm, propeller diameter and pitch | Power vs altitude, fuel flow, propeller efficiency |
-| Turboprop | Pressure ratio, turbine temperature, gearbox | Shaft power, fuel use, weight |
-| Turbofan | Bypass ratio, fan and overall pressure ratio, turbine entry temperature | Thrust vs speed and altitude, specific fuel consumption, weight, noise index |
-
-- **The model:** a simplified real Brayton cycle with component efficiencies.
-- **Upgrades:** new tech raises those efficiencies and the allowed turbine temperature, through materials such as single-crystal blades and thermal coatings.
-- **Real limits:** engines get heavier and costlier as they get better, and hot sections wear faster.
-
-### 4. Analysis (live while designing)
-
-**Aerodynamics**
-- Lift from finite-wing theory using aspect ratio and Oswald efficiency.
-- Drag built up part by part: skin friction by Reynolds number, form factors, interference, induced drag, and wave drag at high subsonic speed.
-
-**Performance**
-- Stall speed, take-off and landing distance, climb rate, ceiling, maximum speed.
-- **Range and endurance with the Breguet equations,** plus a mission profile: climb, cruise, descent and reserves.
-
-**Stability and loads**
-- **Stability:** neutral point, static margin, and simplified trim and control power checks.
-- **Loads:** V-n diagram, gust loads, and a spanwise wing bending moment chart.
-
-**Cost:** development, unit cost (from weight, materials and complexity), fuel cost per seat-km.
-
-### 5. Flight testing (3D)
-
-**The flight model:** a 6-degrees-of-freedom flight model driven by the same aerodynamic numbers as the analysis, so what you designed is what you fly. The pilot is the player, or autopilot for long range tests.
-
-**Test cards**
-
-| Test | Proves |
+| Force | Real formula (kept in code, shown simply in game) |
 |---|---|
-| Ground structural test | Wing holds 1.5 × limit load, and the bending shown is real |
-| Stall and spin | Stall speed and behaviour; warning margin |
-| Take-off and landing | Field length at maximum weight, hot day and high altitude |
-| Climb and ceiling | Climb rate and service ceiling |
-| Range flight | The real distance on the mission profile, with fuel left |
-| Engine-out | Climb with one engine failed (multi-engine aircraft) |
-| Flutter check | Speed margin from a simplified stiffness and mass check |
+| Lift | L = ½ ρ V² S C_L |
+| Drag | D = ½ ρ V² S (C_D0 + C_L² / (π e AR)) |
+| Thrust | From the engine's power and the propeller's efficiency |
+| Weight | Empty weight + fuel; gets lighter as fuel burns |
+| Fuel burn | From the engine's fuel consumption at the power used |
 
-**Data:**
-- **Telemetry** charts of speed, altitude, angle of attack, load factor, fuel and stresses, exportable as CSV.
-- **Failures:** shown honestly, for example "Spar cap yielded at 2.9 g, 62% span, 7075-T6 at 18 mm".
+**Phases of a flight**
+1. **Take-off run:** a longer runway is needed if the plane is heavy or the wing is small.
+2. **Climb:** the player holds to pitch up and releases to level off.
+3. **Cruise:** fly until the fuel runs out.
+4. **Glide:** a better wing glides further.
+5. **Landing:** a soft landing gives bonus coins; a hard one costs a repair.
 
-### 6. Campaign and company
+**Skill matters a little:** flying at the best speed for the plane goes further. A small green band on the speed indicator shows the best-range speed, which is real engineering presented as a target. Pulling too hard can overstress the wing: it bends, and past its limit it breaks.
 
-- **Story arc:** start as a small design office building trainers and crop sprayers, then grow to regional transports, business jets and finally a long-haul airliner.
-- **Customers:** airlines, air forces (training and transport only), cargo operators and air ambulance services. Each issues requests for proposal with scoring for performance, cost and delivery date.
-- **The business:**
-  - **Research tree:** materials, engines, aerodynamics (winglets, supercritical airfoils), manufacturing.
-  - **Money:** development budget, production cost and sales; loans and delays.
-  - **Competitors** bid for the same requests for proposal.
-- **Sandbox mode:** everything unlocked, no money limits.
-- **Challenge mode:** weekly global challenges, for example "maximum range with 500 kg of fuel", with leaderboards.
+## Upgrades with real trade-offs
 
-### 7. Community
+Each part has 5–10 levels. Better parts usually add weight or drag somewhere else, so players must think a little.
 
-- Share designs: the design file plus its verified test results. Others can download, fly and modify them.
-- Weekly challenge leaderboards. Results are recomputed on the server from the design file, so they can't be faked.
-- Mod support later: custom airfoils, materials and engine parts as data files.
+| Part | Improves | Costs you | Real idea taught |
+|---|---|---|---|
+| **Wing span** | Less induced drag, longer glide | More weight, more structure | Aspect ratio |
+| **Wing area** | Shorter take-off, slower stall | More drag at cruise | Wing loading |
+| **Airfoil** | Better lift-to-drag | Cost | Airfoil shape |
+| **Body material** (wood → aluminium → carbon) | Lighter and stronger | Expensive | Specific strength |
+| **Engine** (piston → turboprop → jet) | More thrust and speed | More fuel burn and weight | Power vs efficiency |
+| **Propeller** | Better efficiency at cruise | Weight | Propeller efficiency |
+| **Fuel tank** | More fuel, further range | Weight; needs a longer runway | The range equation |
+| **Landing gear** (fixed → retractable) | Much less drag | Weight, cost | Parasite drag |
+| **Winglets** (later) | Less induced drag | Cost | Wingtip vortices |
 
-## Realism rules
+### The engineer's note after every flight
 
-- **SI units by default,** with imperial as an option. The notebook always shows units.
-- **Models are simplified but valid.** Each is checked against known real aircraft in an automated test suite. Example: a Cessna 172-like design should predict range and stall speed within about ±10% of published figures. The tolerance is a target to confirm.
-- **No real brands or trademarked aircraft names.** Generic types only (for example "4-seat trainer").
-- **Military content stays non-combat:** trainers and transports. No weapons.
+A friendly character, the chief engineer, gives one short tip based on the real numbers of that flight:
+- "You ran out of fuel at 412 km. A bigger tank adds range, but the extra weight needs a longer runway."
+- "28% of your drag came from the landing gear. Retractable gear would save a lot."
+- "You flew too fast. Your best-range speed is 180 km/h."
 
-## Platform and business
+**Tap the note** to see the simple version of the real formula. This is the hook for engineers and curious players without scaring casual players.
 
-**Decided:** Steam on PC, paid as a one-time purchase.
+## Progression
 
+**The world map:** a route of real cities with real distances. The first route is in the Middle East; later routes cross continents.
 
-| Question | Recommendation | Why |
+| Stage | Aircraft | Example goal |
 |---|---|---|
-| Platform | **PC first (Steam)**, Mac later; tablets maybe later | Engineers want mouse, keyboard, large screens and deep panels; the simulation needs a PC's power |
-| Engine | **Unity 6, URP** | Same tools and skills as the café game; good 3D; Steam builds supported |
-| Model | **Premium game**, about $25–30, launched in **Early Access** | This audience pays once for depth and dislikes free-to-play mechanics |
-| Payments | **Steam** sells it and pays the company | The shared platform records ownership via the Steam API and hosts designs, leaderboards and challenges |
-| Later | Education licences for universities | Engineering schools are a natural second market |
+| 1 | Paper glider (tutorial) | Fly off the rooftop |
+| 2 | Wooden trainer | Amman → Dead Sea (about 50 km) |
+| 3 | Bush plane | Amman → Aqaba (about 330 km) |
+| 4 | Twin turboprop | Amman → Beirut → Cyprus |
+| 5 | Business jet | Across the Gulf |
+| 6 | Airliner | Europe |
+| 7 | Long-range record plane | Around the world |
 
-## Biggest risks
+Distances shown in the game must be checked against real maps when the routes are set.
 
-| Risk | What we do |
+- **Each new aircraft** starts weak, so the upgrade loop restarts with new parts and new engineering ideas.
+- **Special planes** are unlocked later: a solar plane (flies all day, slow), a seaplane, an aerobatic plane.
+
+## Daily and social
+
+- **Daily challenge:** a set plane and a set rule, for example "furthest flight with only 20 kg of fuel". Global and friends leaderboards. The server replays the plane's numbers so scores can't be faked.
+- **Hangar:** paint and decal your planes. This is self-expression and a source of purchases.
+- **Share:** a short replay clip of your record flight.
+
+## Free to play, done fairly
+
+| Source | What it is |
 |---|---|
-| Realism makes it boring | Every screen gives an instant result; the 3D test flight is the reward; tutorials teach one concept at a time |
-| Realism is wrong and engineers notice | The validation suite against real aircraft; a beta with aerospace engineers and students; published model notes |
-| Niche audience | Steam wishlists and an engineering community before building too much; a demo with one aircraft class |
-| Scope is huge | Start with one class: small propeller aircraft. Jets come in later Early Access updates |
-| Similar games exist | Lead with what's unique: real materials, engine cycles, requests for proposal and certification, all shown in the notebook |
+| Rewarded ads | Double coins after a flight; a free refuel boost; a free repair |
+| Starter pack | Coins + a paint job + one engine level, once |
+| Coin and gem packs | To upgrade faster |
+| Hangar pass (monthly) | Daily gems, exclusive paint, no forced ads |
+| Paint and decal packs | Cosmetic only |
+| Remove ads | One-time purchase that removes the optional between-flight ads |
 
-## First milestone (proposal)
+**Rules**
+- No paid random boxes.
+- Every upgrade can be earned by playing.
+- Between-flight ads appear at most once every 3 flights, never during the first session, and never for paying players.
 
-**"Bush Plane" slice:**
-- One request for proposal: a 4-seat utility aircraft for rough short airfields.
-- Wing, fuselage and tail designer.
-- 3 materials and the aluminium spar sizing check.
-- Piston engine with a propeller.
-- Live analysis panel.
-- 3 test cards: structural, take-off, range.
-- The 3D flight model and the notebook view.
+## Why this can find a market
 
-**Goal:** 20 aerospace engineers and students play it and say the numbers feel right and they want more.
+- **The genre is proven:** upgrade-and-fly-further games are simple to understand and easy to advertise. A short video of a plane flying further after each upgrade explains itself.
+- **The engineering angle:** the "why" notes, real formulas and real cities make it smarter than its rivals and attractive to students, parents and aviation fans.
+- **Cheap to build:** one scene, a side-view flight model, an upgrade screen and a map. A small team, or you with Claude Code, can build a first version in weeks, not months.
+
+## Find the market first: test plan
+
+| Step | What | Pass to continue | Rough cost |
+|---|---|---|---|
+| 1 | **Ad test before building:** 3 short videos (upgrade loop, engineering note, record flight) on TikTok and Meta in 3 regions (Middle East, US/UK, India or South-East Asia), pointing to a store page | Cheap clicks and installs compared with similar casual games; at least one video and region clearly ahead | $1.5–3K |
+| 2 | **Playable prototype:** flight model, 4 upgrades, 1 plane, 3 cities | Players fly 10+ times in the first session | Your time |
+| 3 | **Soft launch on Android** in the cheapest region that showed interest | Day-1 return 35%+, day-7 12%+, at least 5 rewarded ads per daily player | $2–5K of ads |
+| 4 | **Grow** in the best region; add iOS | Ad revenue + purchases pay back the cost of installs within about 90–180 days | From step 3 |
+
+These thresholds are typical casual-game targets, not research figures. We'll set the final ones before testing.
+
+## What's next
+
+1. A playable web prototype of one flight with four upgrades, to feel the loop in a day.
+2. The systems spec with the formulas, part stats and upgrade costs in a `balance.json`.
+3. Ad-test video prompts for Veo.
+4. The build guide for you + Claude Code + Unity.
