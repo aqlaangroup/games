@@ -6,18 +6,16 @@ using Gahwit.Cafe;
 using Gahwit.Core;
 using Gahwit.Memories;
 using Gahwit.Merge;
-using Gahwit.Platform;
 using Gahwit.Save;
 using Gahwit.Story;
 using Gahwit.UI;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Gahwit.Boot
 {
-    // Starts the game: loads config, content and the save, builds the café and the interface, plays story scenes,
-    // saves on the phone and keeps the cloud save up to date.
-    public sealed class GameBootstrap : MonoBehaviour
+    // The café scene: builds the 3D café and the interface from the shared services (Services, made by the Boot
+    // scene), plays story scenes, saves on the phone and keeps the cloud save up to date.
+    public sealed class CafeScene : MonoBehaviour
     {
         const float SaveEverySeconds = 2f;   // COMPLETE_SPEC.md section 9
         const float SyncEverySeconds = 60f;  // same section: sent to the platform every 60 seconds
@@ -33,20 +31,16 @@ namespace Gahwit.Boot
         bool dirty, reloading;
         float nextSave, nextTick, nextSync;
 
-        // Everything waits for the text tables, which load in the background: waiting for them in one blocking call
-        // hangs on the phone.
         IEnumerator Start()
         {
-            Application.targetFrameRate = 60;
-            var config = BalanceConfig.Load();
-            var content = ChapterContent.Load();
-
-            saves = new SaveService(config, content);
-            var state = saves.Load(out var clock);
-            Debug.Log("[Boot] Save loaded.");
-            yield return Loc.Load(saves.Data.Settings.Language);
-            Debug.Log("[Boot] Text loaded.");
-            time = new TimeService(new DeviceClock(), clock);
+            // Played straight from the Editor, the café makes the services itself.
+            if (Services.Current == null) yield return Services.Start();
+            var services = Services.Current;
+            var config = services.Config;
+            var content = services.Content;
+            saves = services.Saves;
+            time = services.Time;
+            var state = services.LoadedState;
             if (state == null) state = Game.NewState(config, content, (ulong)DateTime.UtcNow.Ticks, time.NowMs);
             game = new Game(config, content, state);
             game.Tick(time.NowMs);
@@ -58,10 +52,7 @@ namespace Gahwit.Boot
             cafe.Apply(game.CompletedTaskIds(), game.State.TaskStyles, game.Content.Styles);
             var cafeCamera = camera.gameObject.AddComponent<CafeCamera>();
 
-            var platform = PlatformConfig.Load();
-            var client = new PlatformClient(new UnityPlatformHttp(), new DeviceSecrets(), platform.ActiveBaseUrl, platform.Slug,
-                SystemInfo.deviceModel, Application.version, () => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
-            account = new AccountService(client, platform, saves, time, game, Save, Reload, ReloadFresh);
+            account = new AccountService(services.Platform, services.PlatformConfig, saves, time, game, Save, Reload, ReloadFresh);
             ui = GameUi.Create(game, cafeCamera, cafe, () => time.NowMs, OpenDrawer, account);
             account.Ui = ui;
             ui.Dialogue.ShowGlosses = saves.Data.Settings.Glossary;
@@ -247,13 +238,13 @@ namespace Gahwit.Boot
             Run(() => account.Sync(false)); // also sent when the app goes to the background
         }
 
-        // Starts the scene again: after a cloud save replaced this one, or a new language was chosen.
+        // Starts again from the Boot scene: after a cloud save replaced this one, or a new language was chosen.
         void Reload(string saveText)
         {
             if (saveText != null) SaveStore.SaveText(SaveService.Slot, saveText);
             else Save();
             reloading = true;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            BootScene.Restart();
         }
 
         // After the account was deleted: nothing of it stays on this phone.
@@ -261,7 +252,7 @@ namespace Gahwit.Boot
         {
             reloading = true;
             SaveStore.Delete(SaveService.Slot);
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            BootScene.Restart();
         }
 
         static async void Run(Func<System.Threading.Tasks.Task> work)

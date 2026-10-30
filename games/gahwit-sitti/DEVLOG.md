@@ -2,6 +2,23 @@
 
 Decisions and known gaps. Newest first. Read this at the start of each session (`/CLAUDE.md`).
 
+## 2026-10-31: Boot and Café scenes, package cleanup, audio drafts (missing/01)
+
+- **Two scenes** replace `SampleScene` (`unity/README.md`):
+  - `Boot` (`_Game/Boot/BootScene.cs`) loads config, content, the save, the text tables and the time service. It starts signing in, then opens `Cafe`. Signing in carries on in the background, so an offline start is just as fast.
+  - `Cafe` (`CafeScene.cs`, which was `GameBootstrap.cs`) builds the café and the interface.
+- **One composition root:** `Services.cs` holds what the scenes share.
+  - A new language, a cloud save or a deleted account restarts from `Boot` with everything loaded again (`BootScene.Restart`).
+  - Playing `Cafe` straight from the Editor still works: it makes the services itself.
+- **Removed:**
+  - Unused packages: Sentis (`com.unity.ai.inference`, which also pulled in App UI), Visual Scripting, Collab proxy and Multiplayer Center. Their scripting defines went with them.
+  - The URP template's `TutorialInfo` and `Readme.asset`.
+  - Kept: the AI Assistant (an Editor tool that ships nothing in the build), and Navigation for walking customers.
+- **`.claude/`:** `worktrees/` stays git-ignored, as does any `settings.local.json`. Shared Claude Code settings may be committed.
+- **Platform:** player accounts, cloud save, support and staff roles are documented in `platform/README.md` (commits `a4e9ac9`, `e487de7`, merged in `89ccf91`).
+- **Draft music and effects** made with ElevenLabs: 5 music tracks and 20 effects in `Assets/Audio/{Music,Sfx}/Drafts`. Remake them with `tools/audio_drafts.py`, listed in `tools/audio_drafts.json`. They're placeholders until the audio freelancers deliver (COMPLETE_SPEC.md section 7). Nothing plays them yet (missing/14).
+- `missing/` is the 2026-10-31 review of what the game still needs. Finished items are struck there and logged here.
+
 ## 2026-10-31: iPhone build, player accounts, settings, draft voice
 
 **iPhone build**
@@ -10,7 +27,7 @@ Decisions and known gaps. Newest first. Read this at the start of each session (
 - `IosPostBuild.cs` links AuthenticationServices and adds the Sign in with Apple capability.
 - Addressables (the text tables) now build with the player.
 - Two problems found on a real iPhone 14 Pro:
-  - **Text tables:** the blocking wait for them (`WaitForCompletion`) never finished on the phone. They now load in a coroutine before anything else is built (`Loc.Load`, `GameBootstrap.Start`).
+  - **Text tables:** the blocking wait for them (`WaitForCompletion`) never finished on the phone. They now load in a coroutine before anything else is built (`Loc.Load`, `Services.Start`).
   - **Café materials:** they were copied from the render pipeline's default material, which exists only in the Editor. They now come from `Resources/Materials/CafeLit.mat`; `CafeLitEmissive.mat` keeps the glow variant in builds.
 
 **Accounts (COMPLETE_SPEC.md sections 4, 9, 14, 16)**

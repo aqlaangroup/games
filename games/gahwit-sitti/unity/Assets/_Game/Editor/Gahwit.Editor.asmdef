@@ -3,6 +3,8 @@
     "rootNamespace": "Gahwit.EditorTools",
     "references": [
         "Gahwit.Core",
+        "Gahwit.Merge",
+        "Gahwit.Save",
         "Unity.Localization",
         "Unity.Localization.Editor"
     ],
