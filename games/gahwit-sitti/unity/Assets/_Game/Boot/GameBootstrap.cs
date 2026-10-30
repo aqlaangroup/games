@@ -45,7 +45,7 @@ namespace Gahwit.Boot
             cafe = new GameObject("Cafe").AddComponent<CafeRoom>();
             cafe.Build(FindSun(), camera);
             cafe.SetTimeOfDay(CafeRoom.TimeFromClock(DateTime.Now));
-            cafe.Apply(game.CompletedTaskIds());
+            cafe.Apply(game.CompletedTaskIds(), game.State.TaskStyles, game.Content.Styles);
             var cafeCamera = camera.gameObject.AddComponent<CafeCamera>();
             ui = GameUi.Create(game, cafeCamera, cafe, () => time.NowMs, OpenDrawer);
 
@@ -78,7 +78,7 @@ namespace Gahwit.Boot
         void OnTaskCompleted(TaskDef task)
         {
             // Fires before a finished chapter moves on, so State.Chapter is still the task's chapter.
-            cafe.Apply(game.CompletedTaskIds());
+            cafe.Apply(game.CompletedTaskIds(), game.State.TaskStyles, game.Content.Styles);
             ui.ShowCafe();
             PlayScene(StoryFor(game.State.Chapter), task.Knot, () =>
             {
@@ -102,7 +102,9 @@ namespace Gahwit.Boot
             {
                 // 1974: the café as Teta ran it, in faded film colours.
                 cafe.SetPast(true);
-                cafe.Apply(game.Content.Chapters.SelectMany(c => c.Tasks).Select(t => t.Id).ToList());
+                // Teta ran it in the old Levantine style.
+                cafe.Apply(game.Content.Chapters.SelectMany(c => c.Tasks).Select(t => t.Id).ToList(),
+                    new Dictionary<string, string> { ["sign"] = "old", ["chairs"] = "old" }, game.Content.Styles);
                 ui.Memory.ShowBanner(true);
                 // The easy assist (COMPLETE_SPEC.md section 5) needs its own settings field; off until then.
                 PlayScene(story, def.IntroKnot, () => ui.Memory.PlayPour(new PourGame(config, easyAssist: false), stars =>
@@ -113,7 +115,7 @@ namespace Gahwit.Boot
                         PlayScene(story, def.OutroKnot, () =>
                         {
                             cafe.SetPast(false);
-                            cafe.Apply(game.CompletedTaskIds());
+                            cafe.Apply(game.CompletedTaskIds(), game.State.TaskStyles, game.Content.Styles);
                             ui.Memory.ShowBanner(false);
                             PlayScene(story, def.ReturnKnot, null);
                         }));

@@ -36,7 +36,7 @@ namespace Gahwit.Cafe
         readonly List<Renderer> shelfDallahs = new List<Renderer>();
         const float PastFadeSeconds = 1.2f;
 
-        Material litTemplate, floorMat, glassMat, bulbMat, brass, tarnished, drawerMat;
+        Material litTemplate, floorMat, glassMat, bulbMat, brass, tarnished, drawerMat, signBoardMat, chairSeatMat, chairBackMat;
         Light sun, signLight, counterLight;
         Camera cam;
         Transform plaque, drawer;
@@ -70,12 +70,19 @@ namespace Gahwit.Cafe
 
         // ---------- Task states ----------
 
-        public void Apply(ICollection<string> done)
+        // Tasks with a style choice (sign, chairs) take their colours from the chosen style.
+        public void Apply(ICollection<string> done, IDictionary<string, string> taskStyles = null, IDictionary<string, StyleDef> styles = null)
         {
+            var signStyle = StyleFor("sign", taskStyles, styles);
             bool sign = done.Contains("sign");
             plaque.localRotation = Quaternion.Euler(0, 0, sign ? 0 : 9);
-            signText.color = sign ? Hex("#F6D9A0") : Hex("#8E8078");
+            signBoardMat.SetColor("_BaseColor", sign && signStyle != null ? Hex(signStyle.SignBoard) : Hex("#3A2731"));
+            signText.color = !sign ? Hex("#8E8078") : signStyle != null ? Hex(signStyle.SignText) : Hex("#F6D9A0");
             signLight.enabled = sign;
+
+            var chairStyle = StyleFor("chairs", taskStyles, styles);
+            chairSeatMat.SetColor("_BaseColor", Hex(chairStyle?.Wood ?? "#C99E83"));
+            chairBackMat.SetColor("_BaseColor", Hex(chairStyle?.Accent ?? "#C99E83"));
 
             floorMat.SetColor("_BaseColor", done.Contains("floor") ? Color.white : Hex("#A99C93"));
 
@@ -93,6 +100,9 @@ namespace Gahwit.Cafe
 
             ApplyTime();
         }
+
+        static StyleDef StyleFor(string task, IDictionary<string, string> taskStyles, IDictionary<string, StyleDef> styles) =>
+            taskStyles != null && styles != null && taskStyles.TryGetValue(task, out var id) && styles.TryGetValue(id, out var style) ? style : null;
 
         public void SetTimeOfDay(TimeOfDay timeOfDay)
         {
@@ -189,7 +199,8 @@ namespace Gahwit.Cafe
         void BuildSign()
         {
             plaque = Group("SignPlaque", transform, new Vector3(2.7f, 3.55f, -D / 2 + 0.08f));
-            Box("Board", plaque, new Vector3(2.4f, 0.75f, 0.06f), Vector3.zero, Mat("#3A2731", 0.3f));
+            signBoardMat = new Material(Mat("#3A2731", 0.3f)) { name = "Cafe sign board" };
+            Box("Board", plaque, new Vector3(2.4f, 0.75f, 0.06f), Vector3.zero, signBoardMat);
 
             var textObject = new GameObject("SignText", typeof(RectTransform));
             textObject.transform.SetParent(plaque, false);
@@ -241,6 +252,8 @@ namespace Gahwit.Cafe
             var white = Mat("#FFFFFF");
             var woodDark = Mat("#A57A62");
             var wood = Mat("#C99E83");
+            chairSeatMat = new Material(wood) { name = "Cafe chair seat" };
+            chairBackMat = new Material(wood) { name = "Cafe chair back" };
             foreach (var spot in new[] { new Vector2(-2.3f, 0.3f), new Vector2(0.9f, 1.9f), new Vector2(-0.7f, -1.6f) })
             {
                 var table = Group("Table", tables.transform, new Vector3(spot.x, 0, spot.y));
@@ -248,24 +261,24 @@ namespace Gahwit.Cafe
                 Cylinder("Leg", table, 0.06f, 0.76f, new Vector3(0, 0.39f, 0), woodDark);
                 Cylinder("Foot", table, 0.31f, 0.04f, new Vector3(0, 0.02f, 0), woodDark);
                 foreach (int side in new[] { -1, 1 })
-                    Chair(tables.transform, new Vector3(spot.x + side * 1.05f, 0, spot.y), side, wood, woodDark);
+                    Chair(tables.transform, new Vector3(spot.x + side * 1.05f, 0, spot.y), side, chairSeatMat, chairBackMat, woodDark);
             }
 
             // Before the "chairs" task: the chairs stacked in a corner.
             chairPile = Group("ChairPile", transform, new Vector3(-3.9f, 0, -2.8f)).gameObject;
             for (int i = 0; i < 4; i++)
             {
-                var chair = Chair(chairPile.transform, new Vector3(0.1f * i, 0.42f * i, 0.05f * i), i % 2 == 0 ? 1 : -1, wood, woodDark);
+                var chair = Chair(chairPile.transform, new Vector3(0.1f * i, 0.42f * i, 0.05f * i), i % 2 == 0 ? 1 : -1, wood, wood, woodDark);
                 chair.localRotation = Quaternion.Euler(i * 6f, i * 37f, i % 2 == 0 ? 8f : -6f);
             }
         }
 
-        Transform Chair(Transform parent, Vector3 position, int side, Material wood, Material woodDark)
+        Transform Chair(Transform parent, Vector3 position, int side, Material seat, Material back, Material legs)
         {
             var chair = Group("Chair", parent, position);
-            Cylinder("Seat", chair, 0.32f, 0.08f, new Vector3(0, 0.46f, 0), wood);
-            Cylinder("Leg", chair, 0.04f, 0.44f, new Vector3(0, 0.22f, 0), woodDark);
-            Box("Back", chair, new Vector3(0.06f, 0.55f, 0.5f), new Vector3(side * 0.3f, 0.78f, 0), wood);
+            Cylinder("Seat", chair, 0.32f, 0.08f, new Vector3(0, 0.46f, 0), seat);
+            Cylinder("Leg", chair, 0.04f, 0.44f, new Vector3(0, 0.22f, 0), legs);
+            Box("Back", chair, new Vector3(0.06f, 0.55f, 0.5f), new Vector3(side * 0.3f, 0.78f, 0), back);
             return chair;
         }
 

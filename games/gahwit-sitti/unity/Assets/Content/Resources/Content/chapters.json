@@ -117,7 +117,12 @@
         {
           "id": "sign",
           "knot": "sign",
-          "memory": "m1_pour"
+          "memory": "m1_pour",
+          "styles": [
+            "old",
+            "modern",
+            "gulf"
+          ]
         },
         {
           "id": "floor",
@@ -125,7 +130,12 @@
         },
         {
           "id": "chairs",
-          "knot": "chairs"
+          "knot": "chairs",
+          "styles": [
+            "old",
+            "modern",
+            "gulf"
+          ]
         },
         {
           "id": "dallahs",
@@ -161,6 +171,26 @@
       "knot": "letter_1",
       "voiceKnot": "voice_1",
       "notifyKnot": "lana_notify"
+    }
+  },
+  "styles": {
+    "old": {
+      "signBoard": "#2A1D17",
+      "signText": "#F6D88A",
+      "wood": "#A57A62",
+      "accent": "#E7B4BE"
+    },
+    "modern": {
+      "signBoard": "#FFFFFF",
+      "signText": "#1D6C67",
+      "wood": "#F2F2F0",
+      "accent": "#B9D1BE"
+    },
+    "gulf": {
+      "signBoard": "#7E2F43",
+      "signText": "#F6E8C6",
+      "wood": "#7E2F43",
+      "accent": "#E9C99B"
     }
   }
 }

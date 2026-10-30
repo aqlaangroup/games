@@ -307,6 +307,18 @@ MonoBehaviour:
     m_Key: char.fadi_young
     m_Metadata:
       m_Items: []
+  - m_Id: 3690399260672
+    m_Key: style.old
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3690403454976
+    m_Key: style.modern
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3690403454977
+    m_Key: style.gulf
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

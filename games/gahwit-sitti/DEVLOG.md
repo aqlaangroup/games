@@ -2,6 +2,13 @@
 
 Decisions and known gaps. Newest first. Read this at the start of each session (`/CLAUDE.md`).
 
+## 2026-10-30: task style choice (backlog 16)
+
+- The sign and chairs tasks offer three styles: Old Levantine, Modern Ammani and Gulf majlis (`chapters.json` `styles`, colours from the prototype and `cafe-3d`).
+- Each chip on the task card is painted like the result. The chosen one has a thick outline and bold text, so the choice doesn't rely on colour alone.
+- The choice is saved in `cafe.taskStyles`. It recolours the sign's board and lettering and the chairs' seats and backs. The 1974 memory always shows Teta's Old Levantine look.
+- Changing a style later for free (GAME_SYSTEMS.md section 9) needs the decor screen.
+
 ## 2026-10-30: the pour memory and Teta's letter (backlog 17, 18)
 
 - **Memory framework.**

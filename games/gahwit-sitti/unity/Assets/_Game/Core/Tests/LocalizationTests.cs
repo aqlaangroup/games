@@ -50,6 +50,11 @@ namespace Gahwit.Core.Tests
             {
                 Assert.IsTrue(keys.Contains($"task.{task.Id}.title"), $"task.{task.Id}.title");
                 Assert.IsTrue(keys.Contains($"task.{task.Id}.desc"), $"task.{task.Id}.desc");
+                foreach (var style in task.Styles ?? new System.Collections.Generic.List<string>())
+                {
+                    Assert.IsTrue(content.Styles.ContainsKey(style), $"task {task.Id} offers unknown style '{style}'");
+                    Assert.IsTrue(keys.Contains("style." + style), $"style.{style}");
+                }
             }
         }
     }

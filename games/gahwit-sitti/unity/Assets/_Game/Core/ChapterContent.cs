@@ -19,6 +19,7 @@ namespace Gahwit.Core
         public List<ChapterTasks> Chapters;
         public Dictionary<string, MemoryDef> Memories;
         public Dictionary<string, LetterDef> Letters;
+        public Dictionary<string, StyleDef> Styles; // old, modern, gulf (SYSTEMS_B.md section 2)
 
         public static ChapterContent Load()
         {
@@ -66,6 +67,15 @@ namespace Gahwit.Core
         public string Id;
         public string Knot;
         public string Memory; // a memory that plays after this task's scene, if any
+        public List<string> Styles; // style choices offered when restoring, if any
+    }
+
+    public sealed class StyleDef
+    {
+        public string SignBoard;
+        public string SignText;
+        public string Wood;
+        public string Accent;
     }
 
     // A playable 1974 memory (SYSTEMS_B.md section 5): scenes around one memory game.

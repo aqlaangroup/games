@@ -18,6 +18,8 @@ namespace Gahwit.UI
         RTLTextMeshPro chapter, progress, title, description, need;
         Image progressFill;
         Button restore, toKitchen, drawer;
+        RectTransform styleRow;
+        string styleTask, chosenStyle;
 
         public void Init(Game game, GameUi ui, CafeCamera cafeCamera, CafeRoom room, System.Action openDrawer)
         {
@@ -34,7 +36,7 @@ namespace Gahwit.UI
                 .rectTransform.Top(16, 36);
 
             var card = UiKit.Panel(transform, "TaskCard", Palette.Card, 40);
-            card.rectTransform.Bottom(16, 390, 24, 24);
+            card.rectTransform.Bottom(16, 412, 24, 24);
             chapter = UiKit.Text(card.transform, "Chapter", "", 28, Palette.InkSoft);
             chapter.rectTransform.Top(24, 40, 32, 32);
 
@@ -52,7 +54,11 @@ namespace Gahwit.UI
             need = UiKit.Text(card.transform, "Need", "", 26, Palette.Rose);
             need.rectTransform.Top(218, 40, 32, 32);
 
-            restore = UiKit.Button(card.transform, "Restore", "", Palette.Rose, Color.white, 32, () => game.CompleteTask(), 34);
+            styleRow = UiKit.Rect(card.transform, "Styles").Top(214, 66, 32, 32);
+            UiKit.Row(styleRow.gameObject, 16).childForceExpandWidth = true;
+
+            restore = UiKit.Button(card.transform, "Restore", "", Palette.Rose, Color.white, 32,
+                () => game.CompleteTask(game.CurrentTask?.Styles != null ? chosenStyle : null), 34);
             ((RectTransform)restore.transform).Bottom(24, 84, 32, 32);
             toKitchen = UiKit.Button(card.transform, "ToKitchen", Loc.T("cafe.toKitchen"), Palette.SageDark, Color.white, 30, ui.ShowKitchen, 34);
             ((RectTransform)toKitchen.transform).Bottom(24, 84, 32, 32);
@@ -108,6 +114,34 @@ namespace Gahwit.UI
             toKitchen.gameObject.SetActive(!afford);
             restore.Label().text = Loc.T("cafe.restore", game.CurrentTaskCost);
             need.text = afford ? "" : Loc.T("cafe.need", game.CurrentTaskCost - game.State.Coins);
+
+            bool choosing = afford && task.Styles != null && task.Styles.Count > 0;
+            styleRow.gameObject.SetActive(choosing);
+            if (choosing && styleTask != task.Id)
+            {
+                styleTask = task.Id;
+                chosenStyle = task.Styles[0];
+            }
+            if (choosing) BuildStyleChips(task.Styles);
+        }
+
+        // One chip per style, painted like the sign would look; the chosen one has a thick outline.
+        void BuildStyleChips(System.Collections.Generic.List<string> styles)
+        {
+            UiKit.Clear(styleRow);
+            foreach (var id in styles)
+            {
+                string style = id;
+                var def = game.Content.Styles[style];
+                var chip = UiKit.Button(styleRow, "Style " + style, Loc.T("style." + style),
+                    Palette.Hex(def.SignBoard), Palette.Hex(def.SignText), 26, () => { chosenStyle = style; Refresh(); }, 30);
+                chip.gameObject.AddComponent<LayoutElement>().flexibleWidth = 1;
+                var outline = chip.gameObject.AddComponent<Outline>();
+                bool chosen = style == chosenStyle;
+                outline.effectColor = chosen ? Palette.Rose : new Color(0.23f, 0.15f, 0.19f, 0.25f);
+                outline.effectDistance = chosen ? new Vector2(5, -5) : new Vector2(1.5f, -1.5f);
+                if (chosen) chip.Label().fontStyle = TMPro.FontStyles.Bold;
+            }
         }
     }
 }
