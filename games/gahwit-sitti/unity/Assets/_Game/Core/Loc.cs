@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
@@ -13,13 +14,16 @@ namespace Gahwit.Core
 
         static StringTable table;
 
-        // Loads the table for "ar" or "en" synchronously; the table is marked to preload, so this is quick.
-        public static void Load(string language)
+        // Loads the table for "ar" or "en". Run it as a coroutine: it waits without blocking, because a blocking
+        // wait (WaitForCompletion) never finishes on the phone.
+        public static IEnumerator Load(string language)
         {
-            LocalizationSettings.InitializationOperation.WaitForCompletion();
+            yield return LocalizationSettings.InitializationOperation;
             var locale = LocalizationSettings.AvailableLocales.GetLocale(new LocaleIdentifier(language));
-            if (locale != null) LocalizationSettings.SelectedLocale = locale;
-            table = LocalizationSettings.StringDatabase.GetTable(UiTable, locale);
+            if (locale != null && LocalizationSettings.SelectedLocale != locale) LocalizationSettings.SelectedLocale = locale;
+            var loading = LocalizationSettings.StringDatabase.GetTableAsync(UiTable, locale);
+            yield return loading;
+            table = loading.Result;
             if (table == null) Debug.LogError($"[Loc] No '{UiTable}' string table for '{language}'.");
         }
 

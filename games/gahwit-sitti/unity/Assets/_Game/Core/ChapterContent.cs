@@ -97,6 +97,7 @@ namespace Gahwit.Core
         public string Story;
         public string Knot;       // the letter's lines
         public string VoiceKnot;  // Teta's voice note
+        public string VoiceClip;  // its recording under Resources; a draft until the actor's take (tools/voice_drafts.json)
         public string NotifyKnot; // the message that arrives afterwards
     }
 }

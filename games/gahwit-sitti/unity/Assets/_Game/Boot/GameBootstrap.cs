@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Gahwit.Cafe;
@@ -32,7 +33,9 @@ namespace Gahwit.Boot
         bool dirty, reloading;
         float nextSave, nextTick, nextSync;
 
-        void Awake()
+        // Everything waits for the text tables, which load in the background: waiting for them in one blocking call
+        // hangs on the phone.
+        IEnumerator Start()
         {
             Application.targetFrameRate = 60;
             var config = BalanceConfig.Load();
@@ -40,7 +43,9 @@ namespace Gahwit.Boot
 
             saves = new SaveService(config, content);
             var state = saves.Load(out var clock);
-            Loc.Load(saves.Data.Settings.Language);
+            Debug.Log("[Boot] Save loaded.");
+            yield return Loc.Load(saves.Data.Settings.Language);
+            Debug.Log("[Boot] Text loaded.");
             time = new TimeService(new DeviceClock(), clock);
             if (state == null) state = Game.NewState(config, content, (ulong)DateTime.UtcNow.Ticks, time.NowMs);
             game = new Game(config, content, state);
@@ -66,10 +71,8 @@ namespace Gahwit.Boot
             game.LeveledUp += level => ui.Toast.Show(Loc.T("toast.levelUp", level, config.PlayerLevels.Rewards.Energy));
             game.TaskCompleted += OnTaskCompleted;
             game.ChapterCompleted += OnChapterCompleted;
-        }
+            Debug.Log("[Boot] Café and interface built.");
 
-        void Start()
-        {
             nextSync = Time.unscaledTime + SyncEverySeconds;
             Run(account.Start);
             if (account.NeedsAgeGate) ui.AgeGate.Show(account.Language, (language, birthYear) =>
@@ -157,7 +160,8 @@ namespace Gahwit.Boot
             var letter = story.ReadAll(def.Knot);
             var voice = story.ReadAll(def.VoiceKnot)[0];
             var message = story.ReadAll(def.NotifyKnot)[0];
-            ui.Letter.Play(letter, voice, message, Loc.T("char." + message.Speaker), () =>
+            var recording = def.VoiceClip != null ? Resources.Load<AudioClip>(def.VoiceClip) : null;
+            ui.Letter.Play(letter, voice, recording, message, Loc.T("char." + message.Speaker), () =>
             {
                 foreach (var knot in new[] { def.Knot, def.VoiceKnot, def.NotifyKnot })
                     if (!game.State.ScenesSeen.Contains(knot)) game.State.ScenesSeen.Add(knot);
@@ -214,6 +218,7 @@ namespace Gahwit.Boot
 
         void Update()
         {
+            if (account == null) return; // still starting
             if (Time.unscaledTime >= nextTick)
             {
                 nextTick = Time.unscaledTime + 1f;
@@ -229,7 +234,7 @@ namespace Gahwit.Boot
 
         void Save()
         {
-            if (reloading) return;
+            if (reloading || game == null) return;
             dirty = false;
             nextSave = Time.unscaledTime + SaveEverySeconds;
             saves.Save(game.State, time);
@@ -237,7 +242,7 @@ namespace Gahwit.Boot
 
         void OnApplicationPause(bool paused)
         {
-            if (!paused) return;
+            if (!paused || account == null) return;
             Save();
             Run(() => account.Sync(false)); // also sent when the app goes to the background
         }

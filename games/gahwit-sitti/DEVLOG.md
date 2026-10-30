@@ -2,6 +2,48 @@
 
 Decisions and known gaps. Newest first. Read this at the start of each session (`/CLAUDE.md`).
 
+## 2026-10-31: iPhone build, player accounts, settings, draft voice
+
+**iPhone build**
+- **Gahwit Sitti > Build iOS (Xcode project)** writes `unity/Builds/iOS` (`BuildTools.cs`; also runs with `-executeMethod`).
+- Signing uses team `QJ9MPD82U5` with automatic signing.
+- `IosPostBuild.cs` links AuthenticationServices and adds the Sign in with Apple capability.
+- Addressables (the text tables) now build with the player.
+- Two problems found on a real iPhone 14 Pro:
+  - **Text tables:** the blocking wait for them (`WaitForCompletion`) never finished on the phone. They now load in a coroutine before anything else is built (`Loc.Load`, `GameBootstrap.Start`).
+  - **Café materials:** they were copied from the render pipeline's default material, which exists only in the Editor. They now come from `Resources/Materials/CafeLit.mat`; `CafeLitEmissive.mat` keeps the glow variant in builds.
+
+**Accounts (COMPLETE_SPEC.md sections 4, 9, 14, 16)**
+- **Platform client** (`_Game/Platform`, plain C#, 15 tests):
+  - Guest account on first launch, kept by a sign-in token in the iPhone Keychain.
+  - Access tokens renew themselves.
+  - Everything returns "offline" instead of failing.
+  - Lives in the game for now; it moves to `unity-shared` once it has worked here (`unity-shared/README.md`).
+- **Cloud save** (`CloudSync.cs`):
+  - Uploads every 60 seconds and when the app goes to the background.
+  - At launch it compares with the platform. When both phones changed, the player chooses "this phone or the other one", with level and chapter shown for each.
+  - A new install takes the cloud save without asking.
+  - What the phone last agreed with the platform is kept in `gahwit-sitti-sync.json`, beside the save.
+- **Sign in with Apple:** `Plugins/iOS/GahwitAppleSignIn.mm` asks for no name and no email. If the Apple id already has a café, the player picks which café to keep. Google sign-in on Android isn't built.
+- **Age gate** (`screens/AgeGate`):
+  - Language and birth year, with no year picked in advance.
+  - The age band counts the younger possible age (`AgeRules.cs`, the same rule as the platform).
+  - Under-13s and unknown ages need a parent for ads and social features. Neither feature exists yet.
+  - The parent-consent flow itself isn't designed.
+- **Settings** (`screens/Settings`; the gear at the top left of the café):
+  - Switches for sound, music, notifications, explained words and full voice. Only the explained-words switch has an effect today; the rest are saved for when audio and notifications land.
+  - Language, link account, help and contact (FAQ plus a form; the platform adds player id, version and phone), privacy and terms, and delete account.
+  - Restore purchases waits for in-app purchases.
+- **Save schema v2:** `account` (birth year, parent consent), plus `settings.notifications` and `settings.voice`. A v1 save migrates and shows the age gate once (tested).
+- **Placeholders:** `Resources/Config/platform.json` holds the platform address and the legal page addresses, all still in [brackets]. Until they're set, the phone plays offline as a guest. The Editor uses `http://localhost:5080`.
+- **Text:** new menu text is neutral Arabic, as CLAUDE.md asks, so the dialect lines in the AgeGate and Settings designs were rewritten. The English needs a review.
+- **Touch targets:** new buttons and rows are at least 120 canvas px, about 44 pt on an iPhone 14 Pro. The existing tab bar buttons are 96 px (about 35 pt) and should grow.
+
+**Draft voice**
+- Teta's voice note now plays a recording: `Resources/Voice/Drafts/voice_1_teta.mp3`, 10.6 s, made with ElevenLabs. The subtitles follow the clip's length.
+- It is a **draft**: PLAN.md keeps main voices for native actors. A native listener should check the Ammani pronunciation.
+- `tools/voice_drafts.py` remakes draft lines from `tools/voice_drafts.json`. The API key comes from the git-ignored `/.env`.
+
 ## 2026-10-30: task style choice (backlog 16)
 
 - The sign and chairs tasks offer three styles: Old Levantine, Modern Ammani and Gulf majlis (`chapters.json` `styles`, colours from the prototype and `cafe-3d`).

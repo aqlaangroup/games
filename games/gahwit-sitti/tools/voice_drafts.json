@@ -1,0 +1,31 @@
+{
+  "_note": "DRAFT voice lines made with ElevenLabs. Placeholders only: key voices are recorded by native actors before release (PLAN.md, design/COMPLETE_SPEC.md section 7). Regenerate with tools/voice_drafts.py. Paths are relative to games/gahwit-sitti.",
+  "voices": {
+    "teta": {
+      "name": "Gahwit draft - Teta",
+      "voice_id": "SPEjerjPXck3PRYwtvka",
+      "designed": true,
+      "design_model": "eleven_ttv_v3",
+      "design_preview_text": "Teta's lines from chapter1.ink: line 8 (the letter) and knot voice_1",
+      "description": "An old Jordanian grandmother in her late seventies from Old Amman, speaking colloquial Ammani Arabic (Jordanian Levantine dialect), never Modern Standard Arabic. Soft, warm, slightly husky low-mid timbre with a faint age tremor; a little tired and breathy, but tender and loving. Slow, unhurried pacing with small pauses, like a grandmother leaving a voice note for her granddaughter. Gentle urban Ammani intonation, qaf softened to a glottal stop as older city women in Amman say it. Intimate close-mic phone voice note, quiet room, no reverb, no music."
+    }
+  },
+  "lines": [
+    {
+      "id": "voice_1_teta",
+      "character": "teta",
+      "ink_file": "unity/Assets/Content/Resources/Story/chapter1.ink",
+      "ink_knot": "voice_1",
+      "voice_id": "SPEjerjPXck3PRYwtvka",
+      "model_id": "eleven_v3",
+      "language_code": "ar",
+      "voice_settings": {
+        "stability": 1.0,
+        "similarity_boost": 0.75
+      },
+      "seed": 1974,
+      "output_format": "mp3_44100_128",
+      "output": "unity/Assets/Content/Resources/Voice/Drafts/voice_1_teta.mp3"
+    }
+  ]
+}

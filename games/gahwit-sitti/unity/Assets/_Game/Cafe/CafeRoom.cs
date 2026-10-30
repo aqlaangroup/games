@@ -55,7 +55,9 @@ namespace Gahwit.Cafe
         {
             sun = sunLight;
             cam = camera;
-            litTemplate = GraphicsSettings.currentRenderPipeline.defaultMaterial;
+            // The pipeline's default material exists only in the Editor, so the template is a real asset. Its glowing
+            // twin (CafeLitEmissive) is never loaded; it keeps the _EMISSION shader variant in phone builds.
+            litTemplate = Resources.Load<Material>("Materials/CafeLit");
             brass = Mat("#D9B06C", 0.6f, 0.6f);
             tarnished = Mat("#7D6F62", 0.1f);
 

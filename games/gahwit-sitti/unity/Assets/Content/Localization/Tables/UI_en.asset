@@ -324,6 +324,329 @@ MonoBehaviour:
     m_Localized: Gulf majlis
     m_Metadata:
       m_Items: []
+  - m_Id: 83242467188736
+    m_Localized: Close
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383040
+    m_Localized: Cancel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383041
+    m_Localized: "\u0627\u0644\u0639\u0631\u0628\u064A\u0629"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383042
+    m_Localized: English
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383043
+    m_Localized: Gahwit Sitti
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383044
+    m_Localized: Welcome. Two small questions before we start.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383045
+    m_Localized: Game language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383046
+    m_Localized: The story is in Amman and Najdi dialect. Menus are in simple Arabic.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383047
+    m_Localized: Year of birth
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383048
+    m_Localized: 'We ask to protect children: under-13s need a parent''s consent
+      and see no targeted ads.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383049
+    m_Localized: No chatting with strangers. Your picture is a drawing you choose.
+      You never need a real photo.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383050
+    m_Localized: Continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383051
+    m_Localized: By continuing you agree to the
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383052
+    m_Localized: Terms
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383053
+    m_Localized: Privacy policy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383054
+    m_Localized: This page is coming soon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383055
+    m_Localized: Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383056
+    m_Localized: S
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383057
+    m_Localized: "Salma's caf\xE9 \xB7 Level {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383058
+    m_Localized: Play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383059
+    m_Localized: Account and help
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383060
+    m_Localized: Sound
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383061
+    m_Localized: Music
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383062
+    m_Localized: Notifications
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383063
+    m_Localized: When energy is full or an event starts
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383064
+    m_Localized: Explain local words
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383065
+    m_Localized: Highlighted words in the story show their meaning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383066
+    m_Localized: Full dialogue voice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383067
+    m_Localized: 'When off: main characters only'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383068
+    m_Localized: Language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383069
+    m_Localized: Link account
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383070
+    m_Localized: Apple / Google
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383071
+    m_Localized: Linked to Apple
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383072
+    m_Localized: Linked to Google
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383073
+    m_Localized: Help and contact
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383074
+    m_Localized: Privacy and terms
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383075
+    m_Localized: Delete my account
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383076
+    m_Localized: "Gahwit Sitti \xB7 version {0} \xB7 rated 12+"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383077
+    m_Localized: Progress saved to the cloud
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383078
+    m_Localized: "Saving to the cloud\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383079
+    m_Localized: Cloud save needs the internet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383080
+    m_Localized: Progress saved on this phone only
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383081
+    m_Localized: Update the game to continue from the other device
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383082
+    m_Localized: This phone or the other device?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383083
+    m_Localized: There is progress saved from another device. Choose where to continue.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383084
+    m_Localized: This phone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383085
+    m_Localized: The other device
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383086
+    m_Localized: Continue on this phone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383087
+    m_Localized: Continue from the other device
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383088
+    m_Localized: "Level {0} \xB7 Chapter {1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383089
+    m_Localized: 'Device: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383090
+    m_Localized: Your account is linked and your progress is saved with it.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383091
+    m_Localized: We need the internet for this
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383092
+    m_Localized: Linking didn't work. Please try again.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383093
+    m_Localized: Linking with Apple works on iPhone.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383094
+    m_Localized: Delete account
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383095
+    m_Localized: Your account and progress will be deleted from this phone now, and
+      from our servers within 30 days. They can't be recovered.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383096
+    m_Localized: Delete my account
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383097
+    m_Localized: Your account was deleted. Starting fresh.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383098
+    m_Localized: We need the internet for this
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383099
+    m_Localized: Deleting didn't work. Please try again.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383100
+    m_Localized: Help and contact
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383101
+    m_Localized: Is my progress saved?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383102
+    m_Localized: Always on your phone, and in the cloud when you're online. Link
+      your account to Apple or Google so it's never lost.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383103
+    m_Localized: How do I move to a new phone?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383104
+    m_Localized: Link your account in Settings, then link the same account in Settings
+      on the new phone.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383105
+    m_Localized: I bought something and didn't get it.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383106
+    m_Localized: Write to us below and we'll answer within 48 hours.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383107
+    m_Localized: How do I delete my account?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383108
+    m_Localized: In Settings, choose Delete my account. We delete all your data within
+      30 days.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383109
+    m_Localized: Write to us
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383110
+    m_Localized: Write your message here
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383111
+    m_Localized: Your email (optional)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383112
+    m_Localized: We send your account number, game version and phone model with your
+      message, so we can help faster.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383113
+    m_Localized: Send
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383114
+    m_Localized: Write your message first
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383115
+    m_Localized: We got your message. We'll answer within 48 hours.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383116
+    m_Localized: We need the internet for this
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83242471383117
+    m_Localized: Sending didn't work. Please try again.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -259,7 +259,9 @@ namespace Gahwit.Boot
                 if (keepThis) await Upload(true);
                 else await Download(null);
             }
+            // A café on only one side needs no question: a new phone takes the cloud one, and vice versa.
             if (otherSave == null) Run(() => Switch(true));
+            else if (IsFresh(game.State)) Run(() => Switch(false));
             else
             {
                 choosing = true;
