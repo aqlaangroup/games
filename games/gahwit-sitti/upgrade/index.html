@@ -1,0 +1,303 @@
+<title>Gahwit Sitti Level B</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;600;700&family=Amiri:ital@0;1&display=swap">
+<style>
+/* Layout: one calm column on a blush ground; frosted cards only where something is a unit; a single before/after split carries the story. Single soft light look, matching the game. */
+:root {
+  color-scheme: light;
+  --bg: #FBF5F3;
+  --card: #FFFFFF;
+  --ink: #3A2731;
+  --muted: #806A76;
+  --rose: #C8697A;
+  --rose-soft: #F6E3E3;
+  --lilac: #ECE6F6;
+  --sage: #E1ECE3;
+  --gold: #B58A4E;
+  --line: rgba(58, 39, 49, .09);
+  --shadow: 0 10px 30px rgba(58, 39, 49, .07);
+  --f-ui: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Arabic", system-ui, "Segoe UI", "Noto Sans Arabic", sans-serif;
+  --f-letter: "Amiri", "Noto Naskh Arabic", Georgia, serif;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-ui); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 920px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+section { padding-block: 44px; }
+h1, h2, h3 { margin: 0; letter-spacing: -.02em; text-wrap: balance; }
+h2 { font-size: clamp(26px, 3.6vw, 34px); font-weight: 700; line-height: 1.15; }
+h3 { font-size: 18px; font-weight: 650; letter-spacing: -.01em; }
+p { margin: 0; }
+.eyebrow { font-size: 13px; font-weight: 600; color: var(--rose); letter-spacing: .02em; }
+.lede { color: var(--muted); font-size: 17px; max-width: 60ch; }
+.head { display: grid; gap: 10px; margin-bottom: 24px; }
+.ar { font-family: var(--f-letter); }
+
+/* Hero */
+.hero { padding-block: 56px 40px; display: grid; gap: 18px; }
+.hero .ar-name { font-family: var(--f-letter); font-size: clamp(44px, 8vw, 72px); line-height: 1; color: var(--rose); }
+.hero h1 { font-size: clamp(34px, 5.4vw, 54px); font-weight: 700; line-height: 1.05; }
+.hero h1 span { color: var(--muted); font-weight: 500; }
+.hero .lede { font-size: 19px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font-size: 13px; font-weight: 600; padding: 6px 12px; border-radius: 999px; background: var(--card); box-shadow: 0 1px 0 var(--line), 0 4px 12px rgba(58,39,49,.04); }
+
+/* Before / after */
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.side { border-radius: 26px; padding: 24px; display: grid; gap: 14px; align-content: start; min-width: 0; }
+.side.before { background: transparent; box-shadow: inset 0 0 0 1.5px var(--line); }
+.side.after { background: var(--card); box-shadow: var(--shadow); }
+.side .tag { font-size: 12px; font-weight: 700; letter-spacing: .04em; color: var(--muted); }
+.side.after .tag { color: var(--rose); }
+.side ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.side li { display: grid; grid-template-columns: 18px 1fr; gap: 10px; font-size: 15px; }
+.side li::before { content: ""; width: 8px; height: 8px; border-radius: 50%; margin-top: 8px; background: #D9C9CF; }
+.side.after li::before { background: var(--rose); }
+
+/* Pillars */
+.pillars { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.pillar { background: var(--card); border-radius: 22px; padding: 20px; box-shadow: var(--shadow); display: grid; gap: 8px; align-content: start; min-width: 0; }
+.pillar .ic { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; }
+.pillar .ic svg { width: 24px; height: 24px; }
+.pillar p { font-size: 15px; color: var(--muted); }
+.keep { margin-top: 16px; padding: 16px 20px; border-radius: 18px; background: var(--sage); font-size: 15px; display: flex; gap: 12px; align-items: flex-start; }
+.keep svg { width: 22px; height: 22px; flex-shrink: 0; margin-top: 2px; }
+
+/* Day loop */
+.loop { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; counter-reset: s; }
+.loop li { counter-increment: s; min-width: 0; background: var(--card); border-radius: 18px; padding: 16px 14px; box-shadow: var(--shadow); font-size: 14px; color: var(--muted); }
+.loop li::before { content: counter(s); display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--rose-soft); color: var(--rose); font-weight: 700; font-size: 13px; margin-bottom: 10px; }
+.loop b { display: block; color: var(--ink); font-size: 15px; margin-bottom: 2px; }
+.loop-note { margin-top: 12px; font-size: 14px; color: var(--muted); }
+
+/* Season numbers */
+.nums { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; }
+.num { background: var(--card); border-radius: 18px; padding: 16px; box-shadow: var(--shadow); min-width: 0; }
+.num b { display: block; font-size: 34px; font-weight: 700; letter-spacing: -.03em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.num span { font-size: 13px; color: var(--muted); }
+
+/* Memory quote */
+.quote { margin-top: 18px; background: var(--lilac); border-radius: 24px; padding: 24px; display: grid; gap: 8px; }
+.quote .ar { font-size: 24px; line-height: 1.6; direction: rtl; text-align: right; }
+.quote small { color: var(--muted); font-size: 14px; }
+
+/* Removed */
+.removed { display: flex; flex-wrap: wrap; gap: 10px; }
+.removed span { font-size: 14px; padding: 8px 14px; border-radius: 999px; background: transparent; box-shadow: inset 0 0 0 1.5px var(--line); color: var(--muted); text-decoration: line-through; text-decoration-color: var(--rose); }
+
+/* Roadmap */
+.road { display: grid; gap: 0; }
+.stage { display: grid; grid-template-columns: 92px 1fr; gap: 18px; padding: 16px 0; border-top: 1px solid var(--line); }
+.stage:first-child { border-top: 0; }
+.stage .when { font-size: 13px; font-weight: 700; color: var(--rose); font-variant-numeric: tabular-nums; padding-top: 2px; }
+.stage h3 { margin-bottom: 4px; }
+.stage p { font-size: 15px; color: var(--muted); }
+.gate { display: inline-block; margin-top: 8px; font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--rose-soft); color: var(--ink); }
+
+/* Team and budget */
+.money { display: grid; grid-template-columns: 1.1fr 1fr; gap: 16px; }
+.money > div { background: var(--card); border-radius: 24px; padding: 22px; box-shadow: var(--shadow); min-width: 0; }
+.big { font-size: 40px; font-weight: 700; letter-spacing: -.03em; line-height: 1.1; }
+.rows { margin-top: 12px; display: grid; gap: 8px; font-size: 14px; }
+.rows div { display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid var(--line); padding-top: 8px; }
+.rows span:last-child { font-variant-numeric: tabular-nums; color: var(--muted); white-space: nowrap; }
+.fine { font-size: 13px; color: var(--muted); margin-top: 12px; }
+.fund { margin: 12px 0 0; padding-left: 20px; display: grid; gap: 8px; font-size: 15px; }
+
+/* Files */
+.files { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.file { display: flex; justify-content: space-between; gap: 12px; padding: 12px 14px; border-radius: 14px; background: var(--card); box-shadow: 0 1px 0 var(--line); font-size: 14px; min-width: 0; }
+.file code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12.5px; color: var(--rose); overflow-wrap: anywhere; }
+footer { padding-block: 32px 48px; font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); }
+
+@media (max-width: 820px) {
+  .pillars { grid-template-columns: 1fr 1fr; }
+  .loop, .nums { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .money { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .split, .pillars, .files { grid-template-columns: 1fr; }
+  .loop, .nums { grid-template-columns: 1fr 1fr; }
+  .stage { grid-template-columns: 1fr; gap: 4px; }
+}
+</style>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="ar-name" lang="ar" dir="rtl">قهوة ستّي</div>
+    <h1>Gahwit Sitti, level B. <span>From a simple merge game to a premium cozy game.</span></h1>
+    <p class="lede">Merging stays as the short, relaxing core that earns money. Around it we now build a real world: a 3D café you decorate, neighbours with their own lives, memories you play with your hands, and a family mystery told like an Arab drama series.</p>
+    <div class="chips"><span class="chip">Unity 6 · stylized 3D</span><span class="chip">iOS and Android</span><span class="chip">Women 25–45</span><span class="chip">Arabic first</span><span class="chip">12–16 months</span></div>
+  </header>
+
+  <section>
+    <div class="head"><span class="eyebrow">The upgrade</span><h2>What changed</h2></div>
+    <div class="split">
+      <div class="side before">
+        <span class="tag">BEFORE · SIMPLE MERGE</span>
+        <ul>
+          <li>A flat merge board with a café picture</li>
+          <li>Random customers asking for items</li>
+          <li>Story told in text boxes</li>
+          <li>Decor chosen from 3 fixed styles per task</li>
+          <li>Races against strangers</li>
+          <li>Ramadan as the main idea</li>
+          <li>A known game with an Arab skin</li>
+        </ul>
+      </div>
+      <div class="side after">
+        <span class="tag">AFTER · PREMIUM COZY GAME</span>
+        <ul>
+          <li>A 3D café you turn, zoom and furnish piece by piece</li>
+          <li>12 regulars with routines, friendships and their own stories</li>
+          <li>1974 memories you play: pour, shape ma'amoul, sew, restore photos</li>
+          <li>60 decor pieces and a cosiness score that brings more customers</li>
+          <li>Friends visit your café and help cater a wedding together</li>
+          <li>A family mystery that works every month of the year</li>
+          <li>Salma's modest-fashion wardrobe and shareable café postcards</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="head"><span class="eyebrow">Six pillars</span><h2>What makes it worth playing</h2></div>
+    <div class="pillars">
+      <div class="pillar">
+        <span class="ic" style="background:var(--rose-soft)"><svg viewBox="0 0 24 24" fill="none" stroke="#C8697A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10 L12 3 L21 10 V20 H3z"/><path d="M9 20 v-6 h6 v6"/></svg></span>
+        <h3>A living 3D café</h3>
+        <p>Light follows the real time of day, rain falls in winter, and customers walk in, sit, chat and leave.</p>
+      </div>
+      <div class="pillar">
+        <span class="ic" style="background:var(--lilac)"><svg viewBox="0 0 24 24" fill="none" stroke="#7B66A8" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 7 v5 l3 2"/></svg></span>
+        <h3>Playable memories</h3>
+        <p>Every chapter opens a scene from Amman in 1974 that you play with your hands. 8 game types, never the same twice.</p>
+      </div>
+      <div class="pillar">
+        <span class="ic" style="background:#F3E7DA"><svg viewBox="0 0 24 24" fill="none" stroke="#B58A4E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M4 7 l8 6 8-6"/></svg></span>
+        <h3>A family mystery</h3>
+        <p>Two sisters who stopped speaking 20 years ago, letters hidden in the café, and a coffee-chain owner who wants the building.</p>
+      </div>
+      <div class="pillar">
+        <span class="ic" style="background:var(--sage)"><svg viewBox="0 0 24 24" fill="none" stroke="#5E8A6A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20 c0-4 3-6 6-6 s6 2 6 6"/><path d="M15 15 c3 0 6 1 6 5"/></svg></span>
+        <h3>Neighbours with lives</h3>
+        <p>Abu Fadi's lost love, Tala's final school exams, a young widow's catering business. 36 small stories in season 1.</p>
+      </div>
+      <div class="pillar">
+        <span class="ic" style="background:var(--rose-soft)"><svg viewBox="0 0 24 24" fill="none" stroke="#C8697A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3 l-4 4 3 3 v11 h10 v-11 l3-3 -4-4 q-2 3 -4 3 t-4-3z"/></svg></span>
+        <h3>Self-expression</h3>
+        <p>Dress Salma for each chapter's occasion and share your café as a postcard on Snapchat, Instagram or WhatsApp.</p>
+      </div>
+      <div class="pillar">
+        <span class="ic" style="background:var(--lilac)"><svg viewBox="0 0 24 24" fill="none" stroke="#7B66A8" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20 C5 15 3 12 3 8.5 a4.5 4.5 0 0 1 9 -1 a4.5 4.5 0 0 1 9 1 c0 3.5 -2 6.5 -9 11.5z"/></svg></span>
+        <h3>Warm social play</h3>
+        <p>Invite friends to help with big orders like weddings. Visit their cafés and leave a gift. No chat with strangers.</p>
+      </div>
+    </div>
+    <div class="keep"><svg viewBox="0 0 24 24" fill="none" stroke="#3F6B4B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12 l5 5 9-10"/></svg><span><b>What stays:</b> the merge kitchen, energy, orders and levels from the first design. It's proven with this audience (Gossip Harbor: 79% female, top-10 grossing in Saudi Arabia), and it pays for everything else.</span></div>
+  </section>
+
+  <section>
+    <div class="head"><span class="eyebrow">How it plays</span><h2>A session, 2 to 10 minutes</h2></div>
+    <ol class="loop">
+      <li><b>Open</b>The café shows the real time of day, with regulars at their tables.</li>
+      <li><b>Merge</b>A few minutes in the kitchen to make what customers want.</li>
+      <li><b>Serve</b>Drag the cup to a customer and watch them react.</li>
+      <li><b>Decorate</b>Spend coins on a task or a piece and place it yourself.</li>
+      <li><b>Story</b>A scene plays. The chapter's last task opens a 1974 memory.</li>
+      <li><b>Share</b>Dress Salma, snap a postcard, visit a friend.</li>
+    </ol>
+    <p class="loop-note">Then the player comes back later, when energy has refilled and a new regular is due at the café.</p>
+  </section>
+
+  <section>
+    <div class="head"><span class="eyebrow">Season 1</span><h2>How much there is to do</h2></div>
+    <div class="nums">
+      <div class="num"><b>10</b><span>chapters</span></div>
+      <div class="num"><b>10</b><span>playable memories</span></div>
+      <div class="num"><b>12</b><span>regulars, 36 stories</span></div>
+      <div class="num"><b>20</b><span>recipes to discover</span></div>
+      <div class="num"><b>60</b><span>decor pieces</span></div>
+      <div class="num"><b>40</b><span>wardrobe pieces</span></div>
+    </div>
+    <div class="quote">
+      <div class="ar" lang="ar">«القهوة إلكم التنتين. مش لأنكم تصالحتوا… لأني بدّي إياكم تتصالحوا.»</div>
+      <small>From Teta's hidden letter: "The café is for both of you. Not because you've made peace, but because I want you to."</small>
+    </div>
+  </section>
+
+  <section>
+    <div class="head"><span class="eyebrow">Removed</span><h2>What we dropped</h2></div>
+    <div class="removed"><span>Ramadan as the core idea</span><span>Races against strangers</span><span>Paid random boxes</span><span>Open chat</span><span>Forced video ads</span><span>Story only in text boxes</span></div>
+    <p class="lede" style="margin-top:14px">Ramadan, Eid and winter remain as optional themed events. The game must work every month.</p>
+  </section>
+
+  <section>
+    <div class="head"><span class="eyebrow">Roadmap</span><h2>Five stages, each with a gate</h2><p class="lede">We only spend on the next stage when the current one proves itself.</p></div>
+    <div class="road">
+      <div class="stage"><span class="when">Months 1–2</span><div><h3>Pre-production</h3><p>Art bible, a 3D style test in the engine, and the season 1 story bible.</p><span class="gate">Gate: the 3D café runs at 30+ fps on a 3 GB Android</span></div></div>
+      <div class="stage"><span class="when">Months 3–5</span><div><h3>Vertical slice</h3><p>One decoratable café room, the merge kitchen, Abu Fadi, chapter 1, the pour memory and the letter.</p><span class="gate">Gate: 70%+ of 30–50 women in Amman and Riyadh want to keep playing</span></div></div>
+      <div class="stage"><span class="when">Months 6–9</span><div><h3>Alpha</h3><p>Chapters 1–5, shop, rewarded ads, analytics and the shared .NET platform.</p><span class="gate">Gate: crashes under 1%</span></div></div>
+      <div class="stage"><span class="when">Months 10–11</span><div><h3>Beta</h3><p>The full season with hosting, postcards, the Sitti wall and Arabic voice for key moments.</p><span class="gate">Gate: testers finish the season</span></div></div>
+      <div class="stage"><span class="when">Months 12–14</span><div><h3>Soft launch</h3><p>Jordan and Egypt first, then Saudi Arabia.</p><span class="gate">Gate: 40% return on day 1 · 3%+ pay in Saudi Arabia</span></div></div>
+      <div class="stage"><span class="when">Months 15–16</span><div><h3>Launch</h3><p>Saudi Arabia, the UAE and the wider region, with season 2 in production.</p></div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="head"><span class="eyebrow">Team and budget</span><h2>What it takes</h2></div>
+    <div class="money">
+      <div>
+        <div class="big">$0.8–1.2M</div>
+        <p style="color:var(--muted);font-size:15px">Estimated, about 16 months to launch</p>
+        <div class="rows">
+          <div><span>Team salaries</span><span>$520–680K</span></div>
+          <div><span>Outsourced art and cutscenes</span><span>$80–150K</span></div>
+          <div><span>Audio, music, voice actors</span><span>$30–60K</span></div>
+          <div><span>Tools, licences, servers</span><span>$25–40K</span></div>
+          <div><span>Soft-launch ads</span><span>$30–60K</span></div>
+          <div><span>Legal and setup</span><span>$15–25K</span></div>
+          <div><span>Contingency 15%</span><span>$105–150K</span></div>
+        </div>
+        <p class="fine">Assumes a team based mainly in Jordan. Confirm with real quotes before committing.</p>
+      </div>
+      <div>
+        <div class="big">~14 people</div>
+        <p style="color:var(--muted);font-size:15px">At the peak, from the alpha stage</p>
+        <div class="rows">
+          <div><span>Unity developers</span><span>3</span></div>
+          <div><span>3D artists</span><span>2</span></div>
+          <div><span>Director, designer, narrative lead</span><span>3</span></div>
+          <div><span>Tech artist, 2D artist, animator</span><span>3</span></div>
+          <div><span>.NET platform developer</span><span>1</span></div>
+          <div><span>QA, community</span><span>2</span></div>
+          <div><span>Dialect writers, audio, voice</span><span>part-time</span></div>
+        </div>
+        <ol class="fund">
+          <li>Own money and the KAFD grant for the first stages</li>
+          <li>A publisher such as Tamatem after the vertical slice</li>
+          <li>Investors such as Merak after the soft launch</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="head"><span class="eyebrow">In the repo</span><h2>Where everything lives</h2></div>
+    <div class="files">
+      <div class="file"><span>What the game is</span><code>games/gahwit-sitti/CONCEPT.md</code></div>
+      <div class="file"><span>Production plan</span><code>games/gahwit-sitti/PLAN.md</code></div>
+      <div class="file"><span>Level B systems</span><code>design/SYSTEMS_B.md</code></div>
+      <div class="file"><span>Merge economy</span><code>design/GAME_SYSTEMS.md</code></div>
+      <div class="file"><span>All game numbers</span><code>design/balance.json</code></div>
+      <div class="file"><span>Unity structure</span><code>unity/README.md</code></div>
+      <div class="file"><span>Art and video prompts</span><code>art/FLOW_PROMPTS.md</code></div>
+      <div class="file"><span>Shared payments platform</span><code>platform/</code></div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">Gahwit Sitti · قهوة ستّي · Level B plan. Budget and timing are estimates. The game is proven only by the gates above.</div>
+</footer>
