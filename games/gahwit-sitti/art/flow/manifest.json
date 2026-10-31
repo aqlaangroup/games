@@ -1,24 +1,8 @@
 {
   "project": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195",
-  "status": "7 of 23 expression sheets done (Nano Banana Pro, 2026-10-31). All 13 icon sheets done on Nano Banana 2.1 (2026-11-01, finished 2026-11-01 01:16 +03). Nano Banana Pro has shown 'You've reached your usage limit. Please try again later. You have not been charged for this generation.' since about 22:10 on 2026-10-31 (retried 22:38 and 00:05: same message). Portraits stay on Pro to keep their look. App icon done on Nano Banana 2.1 (2026-11-01). Trial: portraits/teta.png made on Nano Banana 2.1 with teta_young and salma as references (2026-11-01).",
+  "status": "All 23 expression sheets, 13 icon sheets and the app icon are done. Portraits salma, lana, abu_fadi, teta_young, samira, rana on Nano Banana Pro (2026-10-31); teta, nawal (regenerated) and the 15 others on Nano Banana 2.1 with kept Pro sheets as references (2026-11-01). Icons and app icon on Nano Banana 2.1. Nano Banana Pro showed \"You've reached your usage limit. Please try again later. You have not been charged for this generation.\" from about 22:10 on 2026-10-31.",
   "credits": "Flow showed 'Generating will use 0 credits' for every generation. Download sizes offered: 1K original, 2K upscaled, 4K greyed out ('Learn more').",
-  "pending": [
-    "portraits/fadi_young.png (use abu_fadi as reference)",
-    "portraits/karim.png (two earlier options put a beige tile behind each face; regeneration hit the limit)",
-    "portraits/faris.png",
-    "portraits/hani.png",
-    "portraits/dr_hiba.png",
-    "portraits/tala.png",
-    "portraits/um_rami.png",
-    "portraits/yazan.png",
-    "portraits/sara_noor.png",
-    "portraits/postman.png",
-    "portraits/mrs_odeh.png",
-    "portraits/tourist.png",
-    "portraits/seller_1974.png",
-    "portraits/samira_mother_1974.png",
-    "portraits/karim_master_1974.png"
-  ],
+  "pending": [],
   "files": [
     {
       "path": "portraits/salma.png",
@@ -73,15 +57,6 @@
       "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/b72ae57a-4801-4ee2-93a9-73b5a5682606",
       "size": "1376x768",
       "note": "Option A of 2. The 'thinking' frame glances to the side. A one-row regeneration was requested but Flow's usage limit blocked it; the 1K original has no extra row. Flow 1K original (JPEG 1376x768) converted to PNG with sips. Not 2K: Flow's 2K 'Upscaled' download adds a partial or faded duplicate row of faces above the real row (checked on rana: the 1K original is clean, the 2K file has the extra row)."
-    },
-    {
-      "path": "portraits/nawal.png",
-      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. Expression sheet of Nawal, 49, Lana's mother, living in Riyadh. Black abaya, soft beige hijab, gentle careful face. Five head-and-shoulders portraits of the SAME character side by side in one row, evenly spaced, all the same size, each looking at the viewer: 1 neutral, 2 smiling, 3 sad, 4 surprised, 5 thinking. Plain flat background #FBF5F3. Nothing between or behind them.",
-      "model": "Nano Banana Pro (Google Flow), 16:9, 2 images per prompt",
-      "date": "2026-10-31",
-      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/97df784b-0b9b-4162-9b58-4e333cd0a077",
-      "size": "1376x768",
-      "note": "Option A of 2 (option B changed hijab colour in every frame). Abayas nearly touch; abaya trim colour varies between frames (sage/gold); looks younger than 49. Flow 1K original (JPEG 1376x768) converted to PNG with sips. Not 2K: Flow's 2K 'Upscaled' download adds a partial or faded duplicate row of faces above the real row (checked on rana: the 1K original is clean, the 2K file has the extra row)."
     },
     {
       "path": "icons/sheet_01.png",
@@ -221,6 +196,214 @@
       "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/8ee5ce3c-b8aa-47a8-add8-62afe92858de",
       "size": "1376x768",
       "note": "Option B of 2. Same face as teta_young (round face, eyes, nose) aged to about 75-80 with grey brows and soft wrinkles; same lilac flowered dress and cream cardigan; cream headscarf tied at the back like her young one, though from the front it reads a little like a cap. One clean row of rounded busts, like the Pro sheets. The 'smiling' frame is a wink, copied from the young Teta reference (both options did it). Wrinkle detail is slightly more realistic than Abu Fadi's. Background blush-cream. Option A had a wrapped hijab but looked closer to 60. Flow 1K original (JPEG) converted to PNG with sips."
+    },
+    {
+      "path": "portraits/um_rami.png",
+      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. Warm, heartfelt and inviting, with genuine emotion in the eyes; premium animated-film quality; lovingly detailed fabric, hair and skin; soft cinematic light; balanced composition; nothing cheap, flat or generic. Match the rendering, proportions, lighting and layout of the two reference sheets exactly. The references show other characters: take only their style from them, not their faces or clothes. Expression sheet of Um Rami, 34, a young widow who cooks. Sage hijab, cream blouse, a gentle determined face. She clearly looks 34. Five head-and-shoulders portraits of the SAME character side by side in one row, evenly spaced, all the same size, each looking at the viewer: 1 neutral, 2 smiling (a real, warm smile with both eyes open, no wink), 3 sad, 4 surprised, 5 thinking. Plain flat background #FBF5F3. Nothing between or behind them. Only one row of five portraits. The portraits fill the image from the top of the head near the top edge to the chest at the bottom edge. Nothing above or below them: no extra faces, no reflections, no faded copies.",
+      "model": "Nano Banana 2.1 (Google Flow), 16:9, 2 images per prompt (Nano Banana Pro was at its usage limit)",
+      "references": [
+        "portraits/salma.png",
+        "portraits/abu_fadi.png"
+      ],
+      "date": "2026-11-01",
+      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/9bd599e0-137c-4255-adae-9a8ae7cdc804",
+      "size": "1376x768",
+      "note": "Option 1 of 2 (the two were nearly identical). Sage hijab, cream blouse, gentle determined face, looks early 30s. Real open-eyed smile. One clean row of rounded busts like the Pro sheets. Flow 1K original (JPEG) converted to PNG with sips."
+    },
+    {
+      "path": "portraits/faris.png",
+      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. Warm, heartfelt and inviting, with genuine emotion in the eyes; premium animated-film quality; lovingly detailed fabric, hair and skin; soft cinematic light; balanced composition; nothing cheap, flat or generic. Match the rendering, proportions, lighting and layout of the two reference sheets exactly. The references show other characters: take only their style from them, not their faces or clothes. Expression sheet of Faris, 40, owner of a coffee chain. Neatly trimmed beard, navy blazer over an open-collar white shirt, a smart watch. Polished and polite. He clearly looks 40. Five head-and-shoulders portraits of the SAME character side by side in one row, evenly spaced, all the same size, each looking at the viewer: 1 neutral, 2 smiling (a real, warm smile with both eyes open, no wink), 3 sad, 4 surprised, 5 thinking. Plain flat background #FBF5F3. Nothing between or behind them. Only one row of five portraits. The portraits fill the image from the top of the head near the top edge to the chest at the bottom edge. Nothing above or below them: no extra faces, no reflections, no faded copies.",
+      "model": "Nano Banana 2.1 (Google Flow), 16:9, 2 images per prompt (Nano Banana Pro was at its usage limit)",
+      "references": [
+        "portraits/salma.png",
+        "portraits/abu_fadi.png"
+      ],
+      "date": "2026-11-01",
+      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/268a0ee4-f56a-4197-9674-16213053d186",
+      "size": "1376x768",
+      "note": "Option B of 2 (clearer gaps between busts). Trimmed beard with grey at the temples, navy blazer, open white collar, smart watch visible in the thinking frame. Looks about 40, polished and polite. Real open-eyed smile. Flow 1K original (JPEG) converted to PNG with sips."
+    },
+    {
+      "path": "portraits/fadi_young.png",
+      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. Warm, heartfelt and inviting, with genuine emotion in the eyes; premium animated-film quality; lovingly detailed fabric, hair and skin; soft cinematic light; balanced composition; nothing cheap, flat or generic. ERA: Amman, 1974; warm faded film colours, amber and rose tones. Match the rendering, proportions, lighting and layout of the two reference sheets exactly. The old man in the second reference is this same man fifty years later: keep his face shape, eyes and nose, but make him young. Take nothing else from the first reference but its style. Expression sheet of Young Fadi in 1974, 23. Dark wavy hair, black moustache, light blue 70s-collar shirt. Shy and charming. He clearly looks 23. Five head-and-shoulders portraits of the SAME character side by side in one row, evenly spaced, all the same size, each looking at the viewer: 1 neutral, 2 smiling (a real, warm smile with both eyes open, no wink), 3 sad, 4 surprised, 5 thinking. Plain flat background #FBF5F3. Nothing between or behind them. Only one row of five portraits. The portraits fill the image from the top of the head near the top edge to the chest at the bottom edge. Nothing above or below them: no extra faces, no reflections, no faded copies.",
+      "model": "Nano Banana 2.1 (Google Flow), 16:9, 2 images per prompt (Nano Banana Pro was at its usage limit)",
+      "references": [
+        "portraits/salma.png",
+        "portraits/abu_fadi.png (same man, 50 years older)"
+      ],
+      "date": "2026-11-01",
+      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/5dc0e99f-ced4-4405-a639-f4eba6f61105",
+      "size": "1376x768",
+      "note": "Option 1 of 2 (the two were nearly identical). Dark wavy hair, black moustache, light-blue 70s collar; long face and nose carried over from Abu Fadi so the family resemblance reads. Looks mid-20s, shy and charming. The 1974 amber tint is subtle: background is cream like the present-day sheets. Flow 1K original (JPEG) converted to PNG with sips."
+    },
+    {
+      "path": "portraits/karim.png",
+      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. Warm, heartfelt and inviting, with genuine emotion in the eyes; premium animated-film quality; lovingly detailed fabric, hair and skin; soft cinematic light; balanced composition; nothing cheap, flat or generic. Match the rendering, proportions, lighting and layout of the two reference sheets exactly. The references show other characters: take only their style from them, not their faces or clothes. Expression sheet of Karim, 31, Jordanian carpenter. Short dark hair, light beard, kind eyes, canvas work apron over an olive shirt, a pencil behind his ear. He clearly looks 31. Five head-and-shoulders portraits of the SAME character side by side in one row, evenly spaced, all the same size, each looking at the viewer: 1 neutral, 2 smiling (a real, warm smile with both eyes open, no wink), 3 sad, 4 surprised, 5 thinking. Plain flat background #FBF5F3. Nothing between or behind them. Only one row of five portraits. The portraits fill the image from the top of the head near the top edge to the chest at the bottom edge. Nothing above or below them: no extra faces, no reflections, no faded copies.",
+      "model": "Nano Banana 2.1 (Google Flow), 16:9, 2 images per prompt (Nano Banana Pro was at its usage limit)",
+      "references": [
+        "portraits/salma.png",
+        "portraits/abu_fadi.png"
+      ],
+      "date": "2026-11-01",
+      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/95d4136f-40f2-4130-80b6-10e570d80b5c",
+      "size": "1376x768",
+      "note": "Option B of 2 (warmer and kinder face). Short dark tousled hair, light beard, pencil behind the ear, olive shirt with brown apron straps. Looks early 30s. Real open-eyed smile. Replaces the earlier Pro attempts that put a beige tile behind each face. Flow 1K original (JPEG) converted to PNG with sips."
+    },
+    {
+      "path": "portraits/yazan.png",
+      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. Warm, heartfelt and inviting, with genuine emotion in the eyes; premium animated-film quality; lovingly detailed fabric, hair and skin; soft cinematic light; balanced composition; nothing cheap, flat or generic. Match the rendering, proportions, lighting and layout of the two reference sheets exactly. The references show other characters: take only their style from them, not their faces or clothes. Expression sheet of Yazan, 26, a street musician. Curly dark hair, light stubble, olive jacket, an oud strap on his shoulder. He clearly looks 26. Five head-and-shoulders portraits of the SAME character side by side in one row, evenly spaced, all the same size, each looking at the viewer: 1 neutral, 2 smiling (a real, warm smile with both eyes open, no wink), 3 sad, 4 surprised, 5 thinking. Plain flat background #FBF5F3. Nothing between or behind them. Only one row of five portraits. The portraits fill the image from the top of the head near the top edge to the chest at the bottom edge. Nothing above or below them: no extra faces, no reflections, no faded copies.",
+      "model": "Nano Banana 2.1 (Google Flow), 16:9, 2 images per prompt (Nano Banana Pro was at its usage limit)",
+      "references": [
+        "portraits/salma.png",
+        "portraits/abu_fadi.png"
+      ],
+      "date": "2026-11-01",
+      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/9d251d0e-e084-4aff-b5a2-618233e227c6",
+      "size": "1376x768",
+      "note": "Only one image came back from this generation (the second never appeared; no error shown). Curly dark hair, light stubble, small earring, olive jacket over a cream shirt, embroidered strap on the shoulder for the oud (the oud itself is not in frame). Looks mid-20s. Real open-eyed smile. Flow 1K original (JPEG) converted to PNG with sips."
+    },
+    {
+      "path": "portraits/hani.png",
+      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. Warm, heartfelt and inviting, with genuine emotion in the eyes; premium animated-film quality; lovingly detailed fabric, hair and skin; soft cinematic light; balanced composition; nothing cheap, flat or generic. Match the rendering, proportions, lighting and layout of the two reference sheets exactly. The references show other characters: take only their style from them, not their faces or clothes. Expression sheet of Hani, 32, a quiet pharmacist. Glasses, short hair, a grey cardigan. Kind and shy. He clearly looks 32. Five head-and-shoulders portraits of the SAME character side by side in one row, evenly spaced, all the same size, each looking at the viewer: 1 neutral, 2 smiling (a real, warm smile with both eyes open, no wink), 3 sad, 4 surprised, 5 thinking. Plain flat background #FBF5F3. Nothing between or behind them. Only one row of five portraits. The portraits fill the image from the top of the head near the top edge to the chest at the bottom edge. Nothing above or below them: no extra faces, no reflections, no faded copies.",
+      "model": "Nano Banana 2.1 (Google Flow), 16:9, 2 images per prompt (Nano Banana Pro was at its usage limit)",
+      "references": [
+        "portraits/salma.png",
+        "portraits/abu_fadi.png"
+      ],
+      "date": "2026-11-01",
+      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/10f3b3a2-6646-49df-8844-1fb5bd4933b3",
+      "size": "1376x768",
+      "note": "Option B of 2 (warmer open-eyed smile). Round glasses, short dark hair, grey cardigan over a cream shirt; kind and shy, looks early 30s. Flow 1K original (JPEG) converted to PNG with sips."
+    },
+    {
+      "path": "portraits/dr_hiba.png",
+      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. Warm, heartfelt and inviting, with genuine emotion in the eyes; premium animated-film quality; lovingly detailed fabric, hair and skin; soft cinematic light; balanced composition; nothing cheap, flat or generic. Match the rendering, proportions, lighting and layout of the two reference sheets exactly. The references show other characters: take only their style from them, not their faces or clothes. Expression sheet of Dr. Hiba, 31, a night-shift doctor. Dusty-rose hijab, white doctor's coat over a sage top, tired but warm eyes. She clearly looks 31. Five head-and-shoulders portraits of the SAME character side by side in one row, evenly spaced, all the same size, each looking at the viewer: 1 neutral, 2 smiling (a real, warm smile with both eyes open, no wink), 3 sad, 4 surprised, 5 thinking. Plain flat background #FBF5F3. Nothing between or behind them. Only one row of five portraits. The portraits fill the image from the top of the head near the top edge to the chest at the bottom edge. Nothing above or below them: no extra faces, no reflections, no faded copies.",
+      "model": "Nano Banana 2.1 (Google Flow), 16:9, 2 images per prompt (Nano Banana Pro was at its usage limit)",
+      "references": [
+        "portraits/salma.png",
+        "portraits/abu_fadi.png"
+      ],
+      "date": "2026-11-01",
+      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/28be76d5-ea07-4257-9b92-5a4612b80847",
+      "size": "1376x768",
+      "note": "Option 1 of 2 (the two were nearly identical). Dusty-rose hijab, white coat with stethoscope over a sage top; looks early 30s. The 'tired' part of 'tired but warm eyes' barely shows: she looks fresh rather than night-shift weary. Flow 1K original (JPEG) converted to PNG with sips."
+    },
+    {
+      "path": "portraits/tala.png",
+      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. Warm, heartfelt and inviting, with genuine emotion in the eyes; premium animated-film quality; lovingly detailed fabric, hair and skin; soft cinematic light; balanced composition; nothing cheap, flat or generic. Match the rendering, proportions, lighting and layout of the two reference sheets exactly. The references show other characters: take only their style from them, not their faces or clothes. Expression sheet of Tala, 17, a school student studying for her final exams. Lilac hijab, a hoodie, a pencil in hand. Earnest. She clearly looks 17. Five head-and-shoulders portraits of the SAME character side by side in one row, evenly spaced, all the same size, each looking at the viewer: 1 neutral, 2 smiling (a real, warm smile with both eyes open, no wink), 3 sad, 4 surprised, 5 thinking. Plain flat background #FBF5F3. Nothing between or behind them. Only one row of five portraits. The portraits fill the image from the top of the head near the top edge to the chest at the bottom edge. Nothing above or below them: no extra faces, no reflections, no faded copies.",
+      "model": "Nano Banana 2.1 (Google Flow), 16:9, 2 images per prompt (Nano Banana Pro was at its usage limit)",
+      "references": [
+        "portraits/salma.png",
+        "portraits/abu_fadi.png"
+      ],
+      "date": "2026-11-01",
+      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/2dc1bbfe-8b83-4d3a-b3be-bddcb85ac64a",
+      "size": "1376x768",
+      "note": "Option A of 2 (sage hoodie fits the palette; the other had a dark grey hoodie). Lilac hijab, pencil in hand in the thinking frame. Earnest and sweet, but she reads closer to 19-20 than 17. Flow 1K original (JPEG) converted to PNG with sips."
+    },
+    {
+      "path": "portraits/mrs_odeh.png",
+      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. Warm, heartfelt and inviting, with genuine emotion in the eyes; premium animated-film quality; lovingly detailed fabric, hair and skin; soft cinematic light; balanced composition; nothing cheap, flat or generic. Match the rendering, proportions, lighting and layout of the two reference sheets exactly. The references show other characters: take only their style from them, not their faces or clothes. Expression sheet of Mrs. Odeh, 72, a retired schoolteacher. Short white hair, reading glasses on a chain, a lilac cardigan. She clearly looks 72. Five head-and-shoulders portraits of the SAME character side by side in one row, evenly spaced, all the same size, each looking at the viewer: 1 neutral, 2 smiling (a real, warm smile with both eyes open, no wink), 3 sad, 4 surprised, 5 thinking. Plain flat background #FBF5F3. Nothing between or behind them. Only one row of five portraits. The portraits fill the image from the top of the head near the top edge to the chest at the bottom edge. Nothing above or below them: no extra faces, no reflections, no faded copies.",
+      "model": "Nano Banana 2.1 (Google Flow), 16:9, 2 images per prompt (Nano Banana Pro was at its usage limit)",
+      "references": [
+        "portraits/salma.png",
+        "portraits/abu_fadi.png"
+      ],
+      "date": "2026-11-01",
+      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/ff86992a-709a-4c07-8c66-6aba1c6e75a7",
+      "size": "1376x768",
+      "note": "Option A of 2 (both were good). Short white curls, reading glasses on a chain, lilac cardigan over a cream blouse; clearly early 70s. Real open-eyed smile. Flow 1K original (JPEG) converted to PNG with sips."
+    },
+    {
+      "path": "portraits/postman.png",
+      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. Warm, heartfelt and inviting, with genuine emotion in the eyes; premium animated-film quality; lovingly detailed fabric, hair and skin; soft cinematic light; balanced composition; nothing cheap, flat or generic. Match the rendering, proportions, lighting and layout of the two reference sheets exactly. The references show other characters: take only their style from them, not their faces or clothes. Expression sheet of The postman, 60, a Jordanian man in a grey-blue postal uniform cap and jacket, a leather mail bag strap. Apologetic eyes. He clearly looks 60. Five head-and-shoulders portraits of the SAME character side by side in one row, evenly spaced, all the same size, each looking at the viewer: 1 neutral, 2 smiling (a real, warm smile with both eyes open, no wink), 3 sad, 4 surprised, 5 thinking. Plain flat background #FBF5F3. Nothing between or behind them. Only one row of five portraits. The portraits fill the image from the top of the head near the top edge to the chest at the bottom edge. Nothing above or below them: no extra faces, no reflections, no faded copies.",
+      "model": "Nano Banana 2.1 (Google Flow), 16:9, 2 images per prompt (Nano Banana Pro was at its usage limit)",
+      "references": [
+        "portraits/salma.png",
+        "portraits/abu_fadi.png"
+      ],
+      "date": "2026-11-01",
+      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/8ccfaf11-4465-4a98-b5a7-c579c52c6775",
+      "size": "1376x768",
+      "note": "Option A of 2: dark slate-blue cap with a plain shield badge, jacket, brown mail-bag strap, grey moustache, apologetic eyes. The other option was a truer grey-blue but its cap badge had an eagle logo with letter-like marks, so it was not used. He reads mid-60s rather than 60. Flow 1K original (JPEG) converted to PNG with sips."
+    },
+    {
+      "path": "portraits/sara_noor.png",
+      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. Warm, heartfelt and inviting, with genuine emotion in the eyes; premium animated-film quality; lovingly detailed fabric, hair and skin; soft cinematic light; balanced composition; nothing cheap, flat or generic. Match the rendering, proportions, lighting and layout of the two reference sheets exactly. The references show other characters: take only their style from them, not their faces or clothes. Expression sheet of Sara and Noor, newlyweds in their late 20s, side by side in each of the five frames (two people per frame): she in a blush hijab, he with a short beard and a cream shirt. They clearly look in their late 20s. Five head-and-shoulders portraits of the SAME couple side by side in one row, evenly spaced, all the same size; each of the five frames shows both of them together, looking at the viewer: 1 neutral, 2 smiling (a real, warm smile with both eyes open, no wink), 3 sad, 4 surprised, 5 thinking. Plain flat background #FBF5F3. Nothing between or behind the five frames. Only one row of five portraits. The portraits fill the image from the top of the head near the top edge to the chest at the bottom edge. Nothing above or below them: no extra faces, no reflections, no faded copies.",
+      "model": "Nano Banana 2.1 (Google Flow), 16:9, 2 images per prompt (Nano Banana Pro was at its usage limit)",
+      "references": [
+        "portraits/salma.png",
+        "portraits/abu_fadi.png"
+      ],
+      "date": "2026-11-01",
+      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/7a05b5d0-f61f-4118-8c9b-62dabddb6429",
+      "size": "1376x768",
+      "note": "Option B of 2. Each of the five frames is one rounded bust holding both of them: Sara in a blush hijab and dusty-pink top, Noor with a short beard and cream shirt; late 20s. Neighbouring couples nearly touch at the edges, so cut carefully. The other option had the couples overlapping each other. Flow 1K original (JPEG) converted to PNG with sips."
+    },
+    {
+      "path": "portraits/samira_mother_1974.png",
+      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. Warm, heartfelt and inviting, with genuine emotion in the eyes; premium animated-film quality; lovingly detailed fabric, hair and skin; soft cinematic light; balanced composition; nothing cheap, flat or generic. ERA: Amman, 1974; warm faded film colours, amber and rose tones. Match the rendering, proportions, lighting and layout of the two reference sheets exactly. The references show other characters: take only their style from them, not their faces or clothes. Expression sheet of Um Samira in 1974, about 30, a neighbour. Floral headscarf, a simple dress. Warm. She clearly looks about 30. Five head-and-shoulders portraits of the SAME character side by side in one row, evenly spaced, all the same size, each looking at the viewer: 1 neutral, 2 smiling (a real, warm smile with both eyes open, no wink), 3 sad, 4 surprised, 5 thinking. Plain flat background #FBF5F3. Nothing between or behind them. Only one row of five portraits. The portraits fill the image from the top of the head near the top edge to the chest at the bottom edge. Nothing above or below them: no extra faces, no reflections, no faded copies.",
+      "model": "Nano Banana 2.1 (Google Flow), 16:9, 2 images per prompt (Nano Banana Pro was at its usage limit)",
+      "references": [
+        "portraits/salma.png",
+        "portraits/abu_fadi.png"
+      ],
+      "date": "2026-11-01",
+      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/00068887-c287-4257-be78-16a50e1c8656",
+      "size": "1376x768",
+      "note": "Option B of 2 (warmer smile; hair showing at the front of a loosely wrapped floral scarf suits 1974). Floral headscarf over a simple taupe dress; looks about 30. The 1974 amber tint is subtle: background is cream like the present-day sheets. Flow 1K original (JPEG) converted to PNG with sips."
+    },
+    {
+      "path": "portraits/seller_1974.png",
+      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. Warm, heartfelt and inviting, with genuine emotion in the eyes; premium animated-film quality; lovingly detailed fabric, hair and skin; soft cinematic light; balanced composition; nothing cheap, flat or generic. ERA: Amman, 1974; warm faded film colours, amber and rose tones. Match the rendering, proportions, lighting and layout of the two reference sheets exactly. The references show other characters: take only their style from them, not their faces or clothes. Expression sheet of A souk spice seller in 1974, about 50. Red-and-white keffiyeh, grey moustache, a waistcoat. Cheeky. He clearly looks about 50. Five head-and-shoulders portraits of the SAME character side by side in one row, evenly spaced, all the same size, each looking at the viewer: 1 neutral, 2 smiling (a real, warm smile with both eyes open, no wink), 3 sad, 4 surprised, 5 thinking. Plain flat background #FBF5F3. Nothing between or behind them. Only one row of five portraits. The portraits fill the image from the top of the head near the top edge to the chest at the bottom edge. Nothing above or below them: no extra faces, no reflections, no faded copies.",
+      "model": "Nano Banana 2.1 (Google Flow), 16:9, 2 images per prompt (Nano Banana Pro was at its usage limit)",
+      "references": [
+        "portraits/salma.png",
+        "portraits/abu_fadi.png"
+      ],
+      "date": "2026-11-01",
+      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/b8dcc960-2714-42b3-8056-8f52d3dd496d",
+      "size": "1376x768",
+      "note": "Option A of 2 (clean rounded busts; the other faded out at the bottom). Red-and-white keffiyeh with black agal, grey moustache, dark waistcoat over a cream shirt, cheeky grin; reads mid-50s to 60 rather than 50. The 1974 amber tint is subtle. Flow 1K original (JPEG) converted to PNG with sips."
+    },
+    {
+      "path": "portraits/tourist.png",
+      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. Warm, heartfelt and inviting, with genuine emotion in the eyes; premium animated-film quality; lovingly detailed fabric, hair and skin; soft cinematic light; balanced composition; nothing cheap, flat or generic. Match the rendering, proportions, lighting and layout of the two reference sheets exactly. The references show other characters: take only their style from them, not their faces or clothes. Expression sheet of A 74-year-old woman from Jeddah visiting Amman. Black abaya, white headscarf, elegant, a quiet longing smile. She clearly looks 74. Five head-and-shoulders portraits of the SAME character side by side in one row, evenly spaced, all the same size, each looking at the viewer: 1 neutral, 2 smiling (a real, warm smile with both eyes open, no wink), 3 sad, 4 surprised, 5 thinking. Plain flat background #FBF5F3. Nothing between or behind them. Only one row of five portraits. The portraits fill the image from the top of the head near the top edge to the chest at the bottom edge. Nothing above or below them: no extra faces, no reflections, no faded copies.",
+      "model": "Nano Banana 2.1 (Google Flow), 16:9, 2 images per prompt (Nano Banana Pro was at its usage limit)",
+      "references": [
+        "portraits/salma.png",
+        "portraits/abu_fadi.png"
+      ],
+      "date": "2026-11-01",
+      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/6a2adeac-6d6a-40f5-975c-4e2532a24fab",
+      "size": "1376x768",
+      "note": "Option A of 2 (clearly 74 with gentle lines; the other looked younger). White headscarf, black abaya, quiet longing smile. Small gold earring visible under the scarf. Flow 1K original (JPEG) converted to PNG with sips."
+    },
+    {
+      "path": "portraits/karim_master_1974.png",
+      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. Warm, heartfelt and inviting, with genuine emotion in the eyes; premium animated-film quality; lovingly detailed fabric, hair and skin; soft cinematic light; balanced composition; nothing cheap, flat or generic. ERA: Amman, 1974; warm faded film colours, amber and rose tones. Match the rendering, proportions, lighting and layout of the two reference sheets exactly. The references show other characters: take only their style from them, not their faces or clothes. Expression sheet of Master Subhi, a carpenter in 1974, about 45. Flat cap, thick moustache, a work apron with wood shavings. He clearly looks about 45. Five head-and-shoulders portraits of the SAME character side by side in one row, evenly spaced, all the same size, each looking at the viewer: 1 neutral, 2 smiling (a real, warm smile with both eyes open, no wink), 3 sad, 4 surprised, 5 thinking. Plain flat background #FBF5F3. Nothing between or behind them. Only one row of five portraits. The portraits fill the image from the top of the head near the top edge to the chest at the bottom edge. Nothing above or below them: no extra faces, no reflections, no faded copies.",
+      "model": "Nano Banana 2.1 (Google Flow), 16:9, 2 images per prompt (Nano Banana Pro was at its usage limit)",
+      "references": [
+        "portraits/salma.png",
+        "portraits/abu_fadi.png"
+      ],
+      "date": "2026-11-01",
+      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/14e284f3-e3f9-48d8-ad2f-0e8aa7922f58",
+      "size": "1376x768",
+      "note": "Option 1 of 2 (olive shirt fits the palette; the other had a mauve-grey shirt). Flat cap, thick moustache, brown work apron flecked with wood shavings; reads about 45-50. The 1974 amber tint is subtle. Flow 1K original (JPEG) converted to PNG with sips."
+    },
+    {
+      "path": "portraits/nawal.png",
+      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. Warm, heartfelt and inviting, with genuine emotion in the eyes; premium animated-film quality; lovingly detailed fabric, hair and skin; soft cinematic light; balanced composition; nothing cheap, flat or generic. Match the rendering, proportions, lighting and layout of the two reference sheets exactly. The references show other characters: take only their style from them, not their faces or clothes. Expression sheet of Nawal, 49, Lana's mother, living in Riyadh. Black abaya, soft beige hijab, gentle careful face. She clearly looks about 49: a few gentle lines around the eyes and mouth, a mother's warmth. Five head-and-shoulders portraits of the SAME character side by side in one row, evenly spaced, all the same size, each looking at the viewer: 1 neutral, 2 smiling (a real, warm smile with both eyes open, no wink), 3 sad, 4 surprised, 5 thinking. Plain flat background #FBF5F3. Nothing between or behind them. Only one row of five portraits. The portraits fill the image from the top of the head near the top edge to the chest at the bottom edge. Nothing above or below them: no extra faces, no reflections, no faded copies.",
+      "model": "Nano Banana 2.1 (Google Flow), 16:9, 2 images per prompt (Nano Banana Pro was at its usage limit)",
+      "references": [
+        "portraits/rana.png",
+        "portraits/salma.png"
+      ],
+      "date": "2026-11-01",
+      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/dbcd4414-d336-4722-9a95-bd818a70dcbe",
+      "size": "1376x768",
+      "note": "Regenerated on Nano Banana 2.1 with rana.png and salma.png as references; replaces the earlier Nano Banana Pro sheet (which looked younger than 49 and changed its abaya trim between frames). Option A of 2: clearly about 49 with gentle lines around the eyes and mouth, a mother's warmth, beige hijab over a dark under-cap, plain black abaya, same in every frame. Rounded busts like the rest of the set. Flow 1K original (JPEG) converted to PNG with sips."
     }
   ],
   "models_offered": [

@@ -16,6 +16,40 @@ HEIGHT = 512
 def strong(px, bg, limit=40):
     return abs(px[0] - bg[0]) + abs(px[1] - bg[1]) + abs(px[2] - bg[2]) > limit
 
+def backdrop_below(crop, bg, from_y, limit=24):
+    # Busts that end in a rounded bowl leave cream below them, which the mask sometimes takes for the subject. Below
+    # from_y, pixels of the backdrop's colour joined to the crop's bottom or sides are backdrop, whatever the mask says.
+    cw, ch = crop.size
+    data = crop.load()
+    def near(x, y):
+        r, g, b = data[x, y][:3]
+        return abs(r - bg[0]) + abs(g - bg[1]) + abs(b - bg[2]) < limit
+    stack = [(x, ch - 1) for x in range(cw) if near(x, ch - 1)]
+    stack += [(x, y) for y in range(from_y, ch) for x in (0, cw - 1) if near(x, y)]
+    seen = set()
+    while stack:
+        x, y = stack.pop()
+        if (x, y) in seen: continue
+        seen.add((x, y))
+        for nx, ny in ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)):
+            if 0 <= nx < cw and from_y <= ny < ch and (nx, ny) not in seen and near(nx, ny): stack.append((nx, ny))
+    return seen
+
+def trim_side_slivers(crop):
+    # A strip of a neighbour left at a side, cut off from the figure by a nearly empty column: cleared up to that column.
+    cw, ch = crop.size
+    data = crop.load()
+    counts = [sum(1 for y in range(ch) if data[x, y][3] > 100) for x in range(cw)]
+    for cols in (list(range(0, cw // 8)), list(range(cw - 1, cw - cw // 8, -1))):
+        for i, x in enumerate(cols[1:], 1):
+            outer = max(counts[c] for c in cols[:i])
+            if outer > 25 and counts[x] < outer * 0.4:
+                for c in cols[:i]:
+                    for y in range(ch):
+                        r, g, b, _ = data[c, y]
+                        data[c, y] = (r, g, b, 0)
+                break
+
 def keep_figure(crop):
     # Keeps the figure and what belongs to it (a hand at the chin, an earring): solid pieces whose middle is near the
     # middle. Slivers of the neighbours' shoulders at the sides, and faint pixels outside what's kept, are cleared.
@@ -86,16 +120,18 @@ def cut(path):
         # The mask comes from macOS Vision's subject lifting (lift.py), so parts close to the backdrop's cream, like a
         # pale headscarf, stay whole.
         mask = lift(crop).load()
+        backdrop = backdrop_below(crop, bg, int(ch * 0.55))
         data = crop.load()
         for y in range(ch):
             for x in range(cw):
                 r, g, b, _ = data[x, y]
-                a = mask[x, y]
+                a = 0 if (x, y) in backdrop else mask[x, y]
                 if 0 < a < 255:  # an edge pixel: take the backdrop's cream out of it, so no pale halo shows
                     f = a / 255
                     r, g, b = (max(0, min(255, round((c - (1 - f) * k) / f))) for c, k in zip((r, g, b), bg))
                 data[x, y] = (r, g, b, a)
         keep_figure(crop)
+        trim_side_slivers(crop)
         crop = crop.crop(crop.getbbox() or (0, 0, cw, ch))
         crop = crop.resize((max(1, crop.width * HEIGHT // crop.height), HEIGHT), Image.LANCZOS)
         crop.save(os.path.join(OUT, f"{tag}_{name}.png"))

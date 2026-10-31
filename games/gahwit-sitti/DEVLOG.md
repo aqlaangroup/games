@@ -11,7 +11,16 @@ Decisions and known gaps. Newest first. Read this at the start of each session (
 - **Weak spots to redo some day:**
   - The dough and the ma'amoul ball are both plain balls, told apart by colour (pale and golden), plus the level badge.
   - The cheese plate is a wooden board.
-- **Teta's portraits:** these are made on Nano Banana 2.1, given young Teta's and Salma's Pro sheets as references. The rendering, proportions, lighting and one-row layout match, and she is clearly young Teta grown old. Her smile closes both eyes in a laugh, like her young self. The other 15 characters follow the same way.
+- **Every character has a face:** 23 characters with five expressions each, 115 portraits.
+  - Teta and 15 more are made on Nano Banana 2.1, given two Pro sheets as references (young Fadi gets Abu Fadi's, Nawal Rana's). The rendering, proportions, lighting and one-row layout match.
+  - Teta is clearly young Teta grown old. Her smile closes both eyes in a laugh, like her young self.
+  - Nawal is redone to look her 49 years.
+  - These sheets end each bust in a rounded bowl over cream, which Vision sometimes counted as subject. The cutter now clears backdrop-coloured pixels joined to the crop's lower edges, and trims a neighbour's strip cut off by an empty column. A scan of all 115 finds no slivers.
+  - Weak spots:
+    - Tala reads about 19, not 17.
+    - Dr Hiba looks fresh rather than tired.
+    - The postman and the 1974 seller read a few years older than written.
+    - The 1974 sheets' amber tint is faint, but the game's 1974 film look covers it.
 - **The app icon** is from Flow too (Nano Banana 2.1): Teta's brass dallah pouring into a rose-banded finjan, with a heart of steam rising, on blush and cream.
   - It reads at 60 px, and its corners hold only soft flowers, which iOS rounding can lose.
   - `Editor/AppIconSetup.cs` (Gahwit Sitti > Set app icon) sets it as the default icon, uncompressed at 1024 px. Unity scales it for every iOS and Android size; the simulator build's `AppIcon60x60@2x` is the new icon.
