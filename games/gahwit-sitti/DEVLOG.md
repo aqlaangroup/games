@@ -2,6 +2,15 @@
 
 Decisions and known gaps. Newest first. Read this at the start of each session (`/CLAUDE.md`).
 
+## 2026-10-31: cleaner portrait cut-outs
+
+The owner asked that every image feel well designed. Three flaws in the portrait cut-outs are fixed:
+- **Slivers:** six portraits carried a strip of the neighbouring face's shoulder at the edge. Pieces are now found above the bottom strip, where shoulders run off the frame and touch. Only the figure and what belongs to it (a hand at the chin) are kept.
+- **Holes:** young Teta's cream headscarf is close to Flow's cream backdrop, so keying by colour punched holes in it. Masks now come from macOS Vision's subject lifting (`tools/art/lift.swift`), which runs offline.
+- **Halos:** edge pixels had the backdrop's cream in them and glowed on dark backgrounds. That colour is now taken out.
+
+The cutters now live in the repo: `tools/art/cut_portraits.py` and `tools/art/cut_icons.py` (icons use the same masks). Flow's usage limit stopped the remaining sheets for today; regenerations for Nawal (to look her age) and young Teta (whose smile came out as a wink) are first in line.
+
 ## 2026-10-31: a kitchen with feeling (the owner's request)
 
 The owner said the kitchen felt like the same steps with no story or feeling. Four things give it a heart; their numbers are in `balance.json` `levelB.kitchen`, all proposed:
