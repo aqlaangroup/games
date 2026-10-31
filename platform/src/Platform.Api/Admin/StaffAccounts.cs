@@ -8,7 +8,7 @@ using Platform.Domain;
 
 namespace Platform.Api.Admin;
 
-public record AdminDto(Guid Id, string Email, bool MustChangePassword, Dictionary<string, string> Roles);
+public record AdminDto(Guid Id, string Email, bool MustChangePassword, bool TwoFactorEnabled, Dictionary<string, string> Roles);
 
 /// <summary>Staff accounts: passwords, temporary passwords, roles and the audit log.</summary>
 public sealed class StaffAccounts(PlatformDb db, TimeProvider clock)
@@ -63,7 +63,7 @@ public sealed class StaffAccounts(PlatformDb db, TimeProvider clock)
         var roles = await db.AdminRoles.Where(r => r.AdminUserId == admin.Id)
             .Join(db.Games, r => r.GameId, g => g.Id, (r, g) => new { g.Slug, r.Role })
             .ToListAsync(ct);
-        return new AdminDto(admin.Id, admin.Email, admin.MustChangePassword,
+        return new AdminDto(admin.Id, admin.Email, admin.MustChangePassword, admin.TwoFactorEnabled,
             roles.ToDictionary(r => r.Slug, r => RoleName(r.Role)));
     }
 

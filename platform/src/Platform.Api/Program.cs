@@ -91,6 +91,25 @@ await using (var scope = app.Services.CreateAsyncScope())
     }
 }
 
+// The staff panel (wwwroot/staff, missing/22): plain files over the staff API, with strict headers.
+app.Use(async (context, next) =>
+{
+    if (context.Request.Path.Value == "/staff") context.Response.Redirect("/staff/");
+    else await next();
+});
+app.UseDefaultFiles();
+app.UseStaticFiles(new StaticFileOptions
+{
+    OnPrepareResponse = context =>
+    {
+        var headers = context.Context.Response.Headers;
+        headers["Content-Security-Policy"] = "default-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'";
+        headers["X-Content-Type-Options"] = "nosniff";
+        headers["Referrer-Policy"] = "no-referrer";
+        headers["Cache-Control"] = "no-cache";
+    },
+});
+
 app.UseRateLimiter();
 app.UseAuthentication();
 app.UseAuthorization();
@@ -137,6 +156,7 @@ EventEndpoints.Map(me);
 PurchaseEndpoints.Map(signedIn);
 AdminEndpoints.MapGame(games);
 LiveOpsEndpoints.Map(games);
+AdminInsights.Map(games);
 StoreNotificationEndpoints.Map(games);
 LegalPages.Map(games);
 

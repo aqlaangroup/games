@@ -232,6 +232,11 @@ public class AdminUser
     public bool Disabled { get; set; }
     /// <summary>True after a temporary password; staff must set their own before doing anything else.</summary>
     public bool MustChangePassword { get; set; }
+    /// <summary>Authenticator-app secret (base32). Sign-in asks for a code once TwoFactorEnabled.</summary>
+    public string? TotpSecret { get; set; }
+    public bool TwoFactorEnabled { get; set; }
+    /// <summary>The last 30-second step a code was used for, so a code can't be used twice.</summary>
+    public long TotpLastStep { get; set; }
     public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
 }
 

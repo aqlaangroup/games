@@ -7,7 +7,8 @@ using Platform.Domain;
 
 namespace Platform.Api.Admin;
 
-public record AdminSignInRequest(string? Email, string? Password);
+public record AdminSignInRequest(string? Email, string? Password, string? Code);
+public record CodeRequest(string? Code);
 public record ChangePasswordRequest(string? CurrentPassword, string? NewPassword);
 public record GrantRequest(string? Currency, long Amount, string? Reason);
 public record CloseTicketRequest(string? Note);
@@ -28,6 +29,41 @@ public static partial class AdminEndpoints
             .AddEndpointFilter(new StaffFilter(null, allowPasswordChangeDue: true));
         me.MapGet("", (HttpContext http, StaffAccounts staff, CancellationToken ct) => staff.DtoAsync(http.Admin(), ct));
         me.MapPost("/password", ChangePassword);
+        me.MapPost("/two-factor", SetUpTwoFactor);
+        me.MapPost("/two-factor/enable", EnableTwoFactor);
+        me.MapPost("/two-factor/disable", DisableTwoFactor);
+    }
+
+    // A new authenticator secret to add to an app; sign-in asks for codes only after a first code proves it works.
+    static async Task<IResult> SetUpTwoFactor(HttpContext http, PlatformDb db, CancellationToken ct)
+    {
+        var admin = await db.AdminUsers.FirstAsync(a => a.Id == http.Admin().Id, ct);
+        if (admin.TwoFactorEnabled) return RequestContext.Error("already_enabled");
+        admin.TotpSecret = Totp.NewSecret();
+        await db.SaveChangesAsync(ct);
+        return Results.Ok(new { secret = admin.TotpSecret, uri = Totp.Uri(admin.TotpSecret, admin.Email) });
+    }
+
+    static async Task<IResult> EnableTwoFactor(CodeRequest request, HttpContext http, PlatformDb db, TimeProvider clock, CancellationToken ct)
+    {
+        var admin = await db.AdminUsers.FirstAsync(a => a.Id == http.Admin().Id, ct);
+        if (admin.TotpSecret is null) return RequestContext.Error("not_set_up");
+        if (Totp.Match(admin.TotpSecret, request.Code, clock.GetUtcNow(), admin.TotpLastStep) is not long step) return RequestContext.Error("invalid_code");
+        admin.TwoFactorEnabled = true;
+        admin.TotpLastStep = step;
+        await db.SaveChangesAsync(ct);
+        return Results.NoContent();
+    }
+
+    static async Task<IResult> DisableTwoFactor(CodeRequest request, HttpContext http, PlatformDb db, TimeProvider clock, CancellationToken ct)
+    {
+        var admin = await db.AdminUsers.FirstAsync(a => a.Id == http.Admin().Id, ct);
+        if (!admin.TwoFactorEnabled || admin.TotpSecret is null) return Results.NoContent();
+        if (Totp.Match(admin.TotpSecret, request.Code, clock.GetUtcNow(), admin.TotpLastStep) is null) return RequestContext.Error("invalid_code");
+        admin.TwoFactorEnabled = false;
+        admin.TotpSecret = null;
+        await db.SaveChangesAsync(ct);
+        return Results.NoContent();
     }
 
     public static void MapGame(RouteGroupBuilder game)
@@ -45,10 +81,19 @@ public static partial class AdminEndpoints
         admin.MapGet("/metrics", Metrics.Get).AddEndpointFilter(new StaffFilter(StaffRole.Viewer));
     }
 
-    static async Task<IResult> SignIn(AdminSignInRequest request, StaffAccounts staff, TokenService tokens, CancellationToken ct)
+    static async Task<IResult> SignIn(AdminSignInRequest request, StaffAccounts staff, TokenService tokens, PlatformDb db,
+        TimeProvider clock, CancellationToken ct)
     {
         var admin = await staff.CheckPasswordAsync(request.Email ?? "", request.Password ?? "", ct);
         if (admin is null) return RequestContext.Error("invalid_credentials", StatusCodes.Status401Unauthorized);
+        if (admin.TwoFactorEnabled && admin.TotpSecret is not null)
+        {
+            if (string.IsNullOrEmpty(request.Code)) return RequestContext.Error("code_required", StatusCodes.Status401Unauthorized);
+            if (Totp.Match(admin.TotpSecret, request.Code, clock.GetUtcNow(), admin.TotpLastStep) is not long step)
+                return RequestContext.Error("invalid_code", StatusCodes.Status401Unauthorized);
+            admin.TotpLastStep = step;
+            await db.SaveChangesAsync(ct);
+        }
         var (token, expires) = tokens.AdminAccess(admin.Id);
         return Results.Ok(new { accessToken = token, expiresAt = expires, admin = await staff.DtoAsync(admin, ct) });
     }

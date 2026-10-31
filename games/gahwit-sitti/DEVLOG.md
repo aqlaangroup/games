@@ -2,6 +2,15 @@
 
 Decisions and known gaps. Newest first. Read this at the start of each session (`/CLAUDE.md`).
 
+## 2026-10-31: the staff panel (missing/22)
+
+- **Decision, the stack:** plain HTML and JavaScript at `/staff/`, served by the platform over its staff API (`platform/src/Platform.Api/wwwroot/staff`). There's no build step and no framework to keep up, and one deploy covers both. It's served with a strict content security policy. Every value from the API is set as text, never HTML, because players write support messages.
+- **Two-factor sign-in** for staff with an authenticator app (TOTP, RFC 6238, checked against its test vector). It's turned on from My account. Each 30-second code works once, and sign-in asks for a code once it's on. The migration `StaffTwoFactor` adds three columns to `AdminUsers`.
+- **Pages:** players with compensation (audited), the support inbox, purchases and refunds, store revenue, config (compare a new `balance.json` with the active one, publish, go back), events (schedule, cancel), deletions, metrics, the game and its products, staff and the audit log. Each page shows only for the roles allowed to use it.
+- **New staff routes:** game, purchases, revenue, deletions, and a config version's text (5 new tests, 66 in all).
+- **Checked in Chrome** against the local platform: the sign-in, forced password change, players, a player's page, config compare, events and revenue all worked. Two bugs found and fixed there: hidden elements showed (CSS overrode `hidden`), and the config compare parsed JSON twice.
+- **Still missing:** the Sitti wall queue (20), imported ad revenue (17), and requiring two-factor for every staff member.
+
 ## 2026-10-31: privacy policy, terms, privacy forms, store listing, FAQ (missing/21)
 
 - **Legal pages:** a privacy policy and terms of use in Arabic and English (`legal/`, built by `legal/build_pages.py`), written from what the code actually collects. They're drafts: the company details are `[brackets]`, and they need a lawyer's review. The support email isn't filled in on purpose; it would make an address public.

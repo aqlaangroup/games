@@ -184,12 +184,31 @@ All JSON is camelCase. Errors look like `{ "error": "code" }`. Every game route 
 - **Apple sign-in:** turn on the Sign in with Apple capability for the bundle id. To revoke Apple tokens when an account is deleted (Apple asks for this), the platform needs the Sign in with Apple key (`.p8`, key id, team id) and the Apple refresh token from the first sign-in. Until then `IAppleTokenRevoker` only logs.
 - **Store keys:** the App Store in-app purchase key and a Google Play service account (above), the Pub/Sub topic and push subscription for Google's notifications, and the App Store Server Notifications URL in App Store Connect. Until then each store refuses every receipt, so nothing is granted by mistake.
 
-## Admin panel (to come)
+## Staff panel
 
-One web app for all games, on top of the staff API above:
-- **Games:** add a game from its `game.json`.
-- **Players:** look up a player, see their purchases and fix their wallet.
-- **Purchases and refunds:** see every purchase and refund.
-- **Config:** publish a new `balance.json`.
-- **Live events:** schedule events.
-- **Revenue dashboards:** store and ad revenue per game and per country.
+`/staff/` on the platform: plain HTML and JavaScript over the staff API above (`src/Platform.Api/wwwroot/staff`), served with a strict content security policy. Staff sign in with their email and password, and with a code from an authenticator app once they turn on two-factor sign-in (My account).
+
+Pages, shown by role:
+- **Players** (viewer): search, everything about a player, and **compensation** (support), which goes into the audit log.
+- **Support** (support): open and closed messages, the player behind each, and closing with a note.
+- **Purchases** (viewer): by transaction id, player or product, with refunds.
+- **Revenue** (viewer): store sales by day, currency and product. Google's records carry no price; ad revenue arrives with the ad network.
+- **Config** (viewer; producer publishes): published versions, comparing a new `balance.json` with the active one, publishing, and going back.
+- **Events** (viewer; producer schedules): scheduled events, scheduling and cancelling.
+- **Deletions** (support): accounts waiting for the purge.
+- **Metrics** (viewer), **Game** (viewer: what game.json registered), **Staff** and **Audit** (owner), **My account** (password, two-factor).
+
+Routes the panel added:
+
+| Method and route | Role | Job |
+|---|---|---|
+| `POST /admin/me/two-factor` | any | A new authenticator secret `{ secret, uri }`; sign-in asks for codes only after it's turned on |
+| `POST /admin/me/two-factor/enable` / `disable` | any | `{ code }` from the authenticator app |
+| `POST /admin/sign-in` | | Now also `{ code }`: `401 code_required` or `invalid_code` when two-factor is on. Each 30-second code works once |
+| `GET /games/{slug}/admin/game` | viewer | The registered game and its products |
+| `GET /games/{slug}/admin/purchases?query=&status=` | viewer | Newest 100 purchases matching a transaction id, player id or sku |
+| `GET /games/{slug}/admin/revenue?days=30` | viewer | Sales by day and currency, and by product |
+| `GET /games/{slug}/admin/deletions` | support | Accounts waiting for the purge |
+| `GET /games/{slug}/admin/config/{version}` | viewer | A published config's text |
+
+Still to come: the Sitti wall moderation queue (with social, games/gahwit-sitti/missing/20), imported ad revenue, and requiring two-factor for every staff member.
