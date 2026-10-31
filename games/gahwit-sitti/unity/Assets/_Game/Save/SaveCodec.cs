@@ -74,6 +74,9 @@ namespace Gahwit.Save
             };
             into.Cafe.TaskStyles = new Dictionary<string, string>(state.TaskStyles);
             into.Cafe.Cosiness = state.Cosiness;
+            into.Cafe.Owned = new List<string>(state.OwnedDecor);
+            into.Cafe.Placed = new JArray(state.PlacedDecor.Select(p => new JObject
+                { ["id"] = p.Id, ["x"] = p.X, ["z"] = p.Z, ["rot"] = p.Rot * 90 }));
             foreach (var regular in state.Regulars)
             {
                 var entry = into.Regulars[regular.Key] as JObject ?? new JObject();
@@ -106,6 +109,14 @@ namespace Gahwit.Save
                 TaskIndex = data.Story.Task,
                 TaskStyles = new Dictionary<string, string>(data.Cafe.TaskStyles),
                 Cosiness = data.Cafe.Cosiness,
+                OwnedDecor = new List<string>(data.Cafe.Owned),
+                PlacedDecor = data.Cafe.Placed.OfType<JObject>().Select(p => new PlacedDecor
+                {
+                    Id = p.Value<string>("id"),
+                    X = p.Value<int?>("x") ?? 0,
+                    Z = p.Value<int?>("z") ?? 0,
+                    Rot = ((p.Value<int?>("rot") ?? 0) / 90 % 4 + 4) % 4
+                }).ToList(),
                 Choices = new Dictionary<string, string>(data.Story.Choices),
                 ScenesSeen = new List<string>(data.Story.ScenesSeen),
                 LettersFound = new List<string>(data.Story.LettersFound),

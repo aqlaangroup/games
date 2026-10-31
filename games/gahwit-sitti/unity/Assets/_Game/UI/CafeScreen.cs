@@ -1,5 +1,6 @@
 using Gahwit.Cafe;
 using Gahwit.Core;
+using Gahwit.Decor;
 using Gahwit.Merge;
 using RTLTMPro;
 using TMPro;
@@ -29,6 +30,20 @@ namespace Gahwit.UI
         ItemLook look;
         int bubblesFor = -1;
 
+        // Decor mode (missing/07): the task card gives way to a bar with cosiness and the piece tools.
+        DecorRules decor;
+        DecorShopView shop;
+        bool decorMode;
+        string selected;
+        OrbitPad pad;
+        GameObject taskCard, decorBar;
+        Button decorButton, turn, store;
+        RTLTextMeshPro cosiness;
+        CafeCamera cafeCamera;
+
+        // With reduced motion the camera cuts instead of gliding (COMPLETE_SPEC.md section 5).
+        public System.Func<bool> ReducedMotion = () => false;
+
         public void Init(Game game, GameUi ui, CafeCamera cafeCamera, CafeRoom room, System.Action openDrawer, ItemLook look)
         {
             this.look = look;
@@ -36,10 +51,13 @@ namespace Gahwit.UI
             this.ui = ui;
             this.room = room;
             view = cafeCamera.GetComponent<Camera>();
+            this.cafeCamera = cafeCamera;
 
-            var pad = UiKit.Rect(transform, "OrbitPad").Stretch();
-            pad.gameObject.AddComponent<Image>().color = Color.clear;
-            pad.gameObject.AddComponent<OrbitPad>().Target = cafeCamera;
+            var padRect = UiKit.Rect(transform, "OrbitPad").Stretch();
+            padRect.gameObject.AddComponent<Image>().color = Color.clear;
+            pad = padRect.gameObject.AddComponent<OrbitPad>();
+            pad.Target = cafeCamera;
+            pad.DoubleTap = Focus;
             bubbleLayer = UiKit.Rect(transform, "Bubbles").Stretch();
 
             UiKit.Text(transform, "Hint", Loc.T("cafe.hintOrbit"), 24, Palette.InkSoft, TextAlignmentOptions.Center)
@@ -49,7 +67,13 @@ namespace Gahwit.UI
             ((RectTransform)settings.transform).Pin(new Vector2(0, 1), new Vector2(20, -12), new Vector2(124, 124));
             UiKit.Icon(settings.transform, "Gear", UiSprites.Gear, Palette.InkSoft, 76).rectTransform.Pin(new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(76, 76));
 
+            decorButton = UiKit.Button(transform, "Decor", Loc.T("decor.button"), Palette.Card, Palette.Ink, 26, EnterDecor, 60);
+            ((RectTransform)decorButton.transform).Pin(new Vector2(0, 1), new Vector2(20, -148), new Vector2(124, 124));
+            decorButton.gameObject.SetActive(false);
+            BuildDecorBar();
+
             var card = UiKit.Panel(transform, "TaskCard", Palette.Card, 40);
+            taskCard = card.gameObject;
             card.rectTransform.Bottom(16, 412, 24, 24);
             chapter = UiKit.Text(card.transform, "Chapter", "", 28, Palette.InkSoft);
             chapter.rectTransform.Top(24, 40, 32, 32);
@@ -136,8 +160,115 @@ namespace Gahwit.UI
             }
         }
 
+        public void SetDecor(DecorRules rules, DecorShopView shopView)
+        {
+            decor = rules;
+            shop = shopView;
+            rules.Changed += RefreshDecor;
+            Refresh();
+        }
+
+        void BuildDecorBar()
+        {
+            var bar = UiKit.Panel(transform, "DecorBar", Palette.Card, 40);
+            bar.rectTransform.Bottom(16, 300, 24, 24);
+            decorBar = bar.gameObject;
+            cosiness = UiKit.Text(bar.transform, "Cosiness", "", 30, Palette.Ink);
+            cosiness.fontStyle = FontStyles.Bold;
+            cosiness.rectTransform.Top(24, 48, 32, 32);
+            UiKit.Text(bar.transform, "Hint", Loc.T("decor.hint"), 24, Palette.InkSoft).rectTransform.Top(76, 40, 32, 32);
+            var row = UiKit.Rect(bar.transform, "Tools").Bottom(24, 124, 24, 24);
+            UiKit.Row(row.gameObject, 12).childForceExpandWidth = true;
+            Tool(row, Loc.T("decor.shop"), () => shop.Show());
+            turn = Tool(row, Loc.T("decor.rotate"), () => { if (selected != null && !decor.Rotate(selected)) UiSound.Play("ui_error"); });
+            store = Tool(row, Loc.T("decor.store"), () =>
+            {
+                if (selected == null) return;
+                decor.Store(selected);
+                Select(null);
+            });
+            Tool(row, Loc.T("decor.done"), ExitDecor).targetGraphic.color = Palette.Rose;
+            decorBar.SetActive(false);
+        }
+
+        static Button Tool(RectTransform row, string label, UnityEngine.Events.UnityAction act)
+        {
+            var button = UiKit.Button(row, label, label, Palette.Muted, Palette.Ink, 26, act, 30);
+            button.gameObject.AddComponent<LayoutElement>().flexibleWidth = 1;
+            return button;
+        }
+
+        void EnterDecor()
+        {
+            decorMode = true;
+            pad.PressPiece = PressPiece;
+            pad.DragPiece = DragPiece;
+            pad.Tap = _ => Select(null);
+            Refresh();
+        }
+
+        void ExitDecor()
+        {
+            decorMode = false;
+            pad.PressPiece = null;
+            pad.DragPiece = null;
+            pad.Tap = null;
+            Select(null);
+            Refresh();
+        }
+
+        void Select(string id)
+        {
+            selected = id;
+            room.Decor.Select(id);
+            RefreshDecor();
+        }
+
+        bool PressPiece(Vector2 screen)
+        {
+            string id = room.Decor.PieceAt(view.ScreenPointToRay(screen));
+            if (id == null) return false;
+            if (id != selected) Select(id);
+            return true;
+        }
+
+        void DragPiece(Vector2 screen)
+        {
+            if (selected != null && FloorPoint(screen, out var point)) decor.MoveTo(selected, point.x, point.z);
+        }
+
+        // Double tap: look closer at that spot, or back at the whole room.
+        void Focus(Vector2 screen)
+        {
+            if (cafeCamera.Focused) cafeCamera.Unfocus(ReducedMotion());
+            else if (FloorPoint(screen, out var point)) cafeCamera.Focus(point, ReducedMotion());
+        }
+
+        bool FloorPoint(Vector2 screen, out Vector3 point)
+        {
+            var ray = view.ScreenPointToRay(screen);
+            point = default;
+            if (Mathf.Abs(ray.direction.y) < 0.0001f) return false;
+            float distance = -ray.origin.y / ray.direction.y;
+            if (distance <= 0) return false;
+            point = ray.origin + ray.direction * distance;
+            return true;
+        }
+
+        void RefreshDecor()
+        {
+            if (decor == null) return;
+            int next = decor.NextTableAt;
+            cosiness.text = next < 0 ? Loc.T("decor.cosinessMax", game.State.Cosiness) : Loc.T("decor.cosinessNext", game.State.Cosiness, next);
+            turn.interactable = store.interactable = selected != null;
+        }
+
         public void Refresh()
         {
+            taskCard.SetActive(!decorMode);
+            decorBar.SetActive(decorMode);
+            decorButton.gameObject.SetActive(decor != null && decor.ShopOpen && !decorMode);
+            if (decorMode) RefreshDecor();
             var config = game.Config.Chapter(game.State.Chapter);
             chapter.text = config != null ? Loc.T("cafe.chapter", game.State.Chapter, config.Ar) : "";
 

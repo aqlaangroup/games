@@ -695,6 +695,138 @@ MonoBehaviour:
     m_Key: toast.friendship
     m_Metadata:
       m_Items: []
+  - m_Id: 104851680780288
+    m_Key: decor.button
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168896
+    m_Key: decor.shop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168897
+    m_Key: decor.rotate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168898
+    m_Key: decor.store
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168899
+    m_Key: decor.done
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168900
+    m_Key: decor.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168901
+    m_Key: decor.cosinessNext
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168902
+    m_Key: decor.cosinessMax
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168903
+    m_Key: decor.shopTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168904
+    m_Key: decor.forSale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168905
+    m_Key: decor.soldOut
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168906
+    m_Key: decor.buy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168907
+    m_Key: decor.bought
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168908
+    m_Key: decor.noRoom
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168909
+    m_Key: decor.storage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168910
+    m_Key: decor.place
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168911
+    m_Key: decor.styles
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168912
+    m_Key: decor.cosinessPlus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168913
+    m_Key: decor.basil_pot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168914
+    m_Key: decor.old_lantern
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168915
+    m_Key: decor.gulf_incense_burner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168916
+    m_Key: decor.modern_floor_lamp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168917
+    m_Key: decor.old_rug
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168918
+    m_Key: decor.modern_rug
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168919
+    m_Key: decor.gulf_low_table
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168920
+    m_Key: decor.old_copper_table
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168921
+    m_Key: decor.modern_shelf
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168922
+    m_Key: decor.modern_armchair
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168923
+    m_Key: decor.gulf_dallah_stand
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168924
+    m_Key: decor.gulf_floor_cushions
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168925
+    m_Key: decor.olive_tree
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168926
+    m_Key: decor.old_wooden_bench
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168927
+    m_Key: decor.teta_radio
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

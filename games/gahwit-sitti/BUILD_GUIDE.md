@@ -143,7 +143,7 @@ Each line is roughly one Claude Code session (S) or a few sessions (M). Do them 
 | 8 | Orders logic: size formula, level cap, fairness rule | M | Tests; matches the simulator's pacing |
 | 9 | Kitchen view: grid, drag and drop, merge animation, generator taps | M | Playable on a phone |
 | 10 | Progression: XP, levels, unlock cards | S | Level-ups fire the right unlocks |
-| 11 | Café scene: modular room, orbit and pinch camera (Cinemachine), time of day | M | Runs at 30+ fps on a 3 GB Android |
+| 11 | Café scene: modular room, orbit and pinch camera (a small script; Cinemachine wasn't needed), time of day | M | Runs at 30+ fps on a 3 GB Android |
 | 12 | Decor: shop, placement grid, rotate, styles, cosiness | M | 15 pieces placeable; cosiness updates |
 | 13 | Customers: walk-in path, sit, order bubble, serve from the kitchen, sip, tip | M | Abu Fadi visits, orders and reacts |
 | 14 | Regular friendship (Abu Fadi, levels 1–3) | S | Level 3 plays his first story scene |

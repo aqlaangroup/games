@@ -64,10 +64,13 @@ namespace Gahwit.Cafe
             cam = camera;
             Customers = new GameObject("Customers").AddComponent<CafeCustomers>();
             Customers.transform.SetParent(transform, false);
+            Decor = new GameObject("Decor").AddComponent<CafeDecor>();
+            Decor.transform.SetParent(transform, false);
             // The pipeline's default material exists only in the Editor, so the template is a real asset. Its glowing
             // twin (CafeLitEmissive) is never loaded; it keeps the _EMISSION shader variant in phone builds.
             litTemplate = Resources.Load<Material>("Materials/CafeLit");
             Customers.Init(this);
+            Decor.Init();
             brass = Mat("#D9B06C", 0.6f, 0.6f);
             tarnished = Mat("#7D6F62", 0.1f);
 
@@ -125,6 +128,54 @@ namespace Gahwit.Cafe
         // 1974: warm faded film colours and grain (CONCEPT.md, Look), faded in and out.
         public void SetPast(bool past) => pastTarget = past ? 1f : 0f;
 
+        ParticleSystem rain;
+
+        // Winter rain on the window and a light fog (Core.Weather). Mood only.
+        public void SetWeather(WeatherKind weather)
+        {
+            RenderSettings.fog = weather == WeatherKind.Fog;
+            if (RenderSettings.fog)
+            {
+                RenderSettings.fogMode = FogMode.Exponential;
+                RenderSettings.fogDensity = 0.025f;
+                RenderSettings.fogColor = (time ?? Presets[TimeOfDay.Morning]).Background;
+            }
+            if (weather == WeatherKind.Rain && rain == null) rain = BuildRain();
+            if (rain == null) return;
+            if (weather == WeatherKind.Rain) rain.Play();
+            else rain.Stop();
+        }
+
+        // Streaks falling just inside the window, like rain on the glass.
+        ParticleSystem BuildRain()
+        {
+            var go = new GameObject("Rain");
+            go.transform.SetParent(transform, false);
+            go.transform.localPosition = new Vector3(-1.6f, 3.3f, -D / 2 + 0.3f);
+            var system = go.AddComponent<ParticleSystem>();
+            var main = system.main;
+            main.startLifetime = 0.45f;
+            main.startSpeed = 0f;
+            main.startSize = 0.025f;
+            main.maxParticles = 300;
+            main.startColor = new Color(0.82f, 0.88f, 1f, 0.55f);
+            var emission = system.emission;
+            emission.rateOverTime = 200f;
+            var shape = system.shape;
+            shape.shapeType = ParticleSystemShapeType.Box;
+            shape.scale = new Vector3(1.8f, 0.05f, 0.05f);
+            var velocity = system.velocityOverLifetime;
+            velocity.enabled = true;
+            velocity.x = new ParticleSystem.MinMaxCurve(0f);
+            velocity.y = new ParticleSystem.MinMaxCurve(-4f);
+            velocity.z = new ParticleSystem.MinMaxCurve(0f);
+            var renderer = go.GetComponent<ParticleSystemRenderer>();
+            renderer.renderMode = ParticleSystemRenderMode.Stretch;
+            renderer.lengthScale = 5f;
+            renderer.sharedMaterial = Resources.Load<Material>("Materials/CafeRain");
+            return system;
+        }
+
         // The counter's middle drawer glows while a letter waits in it.
         public void SetDrawerGlow(bool glow)
         {
@@ -133,6 +184,17 @@ namespace Gahwit.Cafe
         }
 
         public CafeCustomers Customers { get; private set; }
+        public CafeDecor Decor { get; private set; }
+
+        public const float Width = W, Depth = D;
+
+        // Where decor can't go (missing/07): the counter, the tables with their chairs, and the way in from the door.
+        public static IEnumerable<(float minX, float minZ, float maxX, float maxZ)> KeepClear()
+        {
+            yield return (0.7f, -D / 2, 4.7f, -2.3f);
+            foreach (var spot in TableSpots) yield return (spot.x - 1.5f, spot.y - 0.7f, spot.x + 1.5f, spot.y + 0.7f);
+            yield return (-W / 2, 1.2f, -3.2f, 3.2f);
+        }
 
         public Vector3 DrawerPosition => drawer.position + new Vector3(0, 0.1f, 0.1f);
 

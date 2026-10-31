@@ -362,6 +362,7 @@ namespace Gahwit.Boot
                 case "notifications": return s.Notifications;
                 case "glossary": return s.Glossary;
                 case "voice": return s.Voice;
+                case "reducedMotion": return s.ReducedMotion;
                 default: return false;
             }
         }

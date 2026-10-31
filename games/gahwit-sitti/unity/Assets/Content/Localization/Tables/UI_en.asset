@@ -708,6 +708,138 @@ MonoBehaviour:
     m_Localized: '{0}: friendship level {1}'
     m_Metadata:
       m_Items: []
+  - m_Id: 104851680780288
+    m_Localized: Decor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168896
+    m_Localized: Shop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168897
+    m_Localized: Turn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168898
+    m_Localized: Store
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168899
+    m_Localized: Done
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168900
+    m_Localized: Drag a piece to move it. Double-tap to look closer.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168901
+    m_Localized: "Cosiness: {0} \xB7 a new table at {1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168902
+    m_Localized: 'Cosiness: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168903
+    m_Localized: Decor shop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168904
+    m_Localized: For sale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168905
+    m_Localized: You've bought every piece available for now.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168906
+    m_Localized: '{0} coins'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168907
+    m_Localized: "{0} is in the caf\xE9 now"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168908
+    m_Localized: No room for it now. Move or store a piece.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168909
+    m_Localized: In storage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168910
+    m_Localized: Place
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168911
+    m_Localized: Styles
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168912
+    m_Localized: +{0} cosiness
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168913
+    m_Localized: Teta's basil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168914
+    m_Localized: Old lantern
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168915
+    m_Localized: Incense burner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168916
+    m_Localized: Floor lamp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168917
+    m_Localized: Old rug
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168918
+    m_Localized: Modern rug
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168919
+    m_Localized: Low table
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168920
+    m_Localized: Copper table
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168921
+    m_Localized: Bookshelf
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168922
+    m_Localized: Armchair
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168923
+    m_Localized: Dallah stand
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168924
+    m_Localized: Floor cushions
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168925
+    m_Localized: Olive tree
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168926
+    m_Localized: Wooden bench
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104851689168927
+    m_Localized: Teta's radio, 1974
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

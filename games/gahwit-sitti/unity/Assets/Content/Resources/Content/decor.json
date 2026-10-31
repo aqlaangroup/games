@@ -1,0 +1,603 @@
+{
+ "$comment": "Ring 1's 15 decor pieces (missing/07). Footprint w and d are in 0.25 m grid cells (balance.json levelB.cafe.gridCellMeters). priceTier indexes levelB.cafe.decorPriceCoinsByTier. Parts are placeholder shapes until the 3D art (missing/13); sizes and positions are metres from the footprint's centre. Names are the decor.<id> keys in the UI table.",
+ "pieces": [
+  {
+   "id": "basil_pot",
+   "cosiness": 1,
+   "priceTier": 0,
+   "fromLevel": 2,
+   "w": 2,
+   "d": 2,
+   "parts": [
+    {
+     "shape": "cylinder",
+     "size": [
+      0.36,
+      0.3,
+      0.36
+     ],
+     "at": [
+      0,
+      0.15,
+      0
+     ],
+     "color": "#B5654A"
+    },
+    {
+     "shape": "sphere",
+     "size": [
+      0.44,
+      0.44,
+      0.44
+     ],
+     "at": [
+      0,
+      0.45,
+      0
+     ],
+     "color": "#5E8C4A"
+    }
+   ]
+  },
+  {
+   "id": "old_lantern",
+   "style": "old",
+   "cosiness": 1,
+   "priceTier": 0,
+   "fromLevel": 2,
+   "w": 2,
+   "d": 2,
+   "parts": [
+    {
+     "shape": "box",
+     "size": [
+      0.3,
+      0.08,
+      0.3
+     ],
+     "at": [
+      0,
+      0.04,
+      0
+     ],
+     "color": "#6B4A2E"
+    },
+    {
+     "shape": "box",
+     "size": [
+      0.22,
+      0.4,
+      0.22
+     ],
+     "at": [
+      0,
+      0.28,
+      0
+     ],
+     "color": "#F6E2A8"
+    },
+    {
+     "shape": "cylinder",
+     "size": [
+      0.28,
+      0.08,
+      0.28
+     ],
+     "at": [
+      0,
+      0.52,
+      0
+     ],
+     "color": "#6B4A2E"
+    }
+   ]
+  },
+  {
+   "id": "gulf_incense_burner",
+   "style": "gulf",
+   "cosiness": 2,
+   "priceTier": 1,
+   "fromLevel": 2,
+   "w": 2,
+   "d": 2,
+   "parts": [
+    {
+     "shape": "cylinder",
+     "size": [
+      0.28,
+      0.3,
+      0.28
+     ],
+     "at": [
+      0,
+      0.15,
+      0
+     ],
+     "color": "#C9A15A"
+    },
+    {
+     "shape": "sphere",
+     "size": [
+      0.2,
+      0.2,
+      0.2
+     ],
+     "at": [
+      0,
+      0.36,
+      0
+     ],
+     "color": "#8E3B2E"
+    }
+   ]
+  },
+  {
+   "id": "modern_floor_lamp",
+   "style": "modern",
+   "cosiness": 2,
+   "priceTier": 1,
+   "fromLevel": 2,
+   "w": 2,
+   "d": 2,
+   "parts": [
+    {
+     "shape": "cylinder",
+     "size": [
+      0.3,
+      0.04,
+      0.3
+     ],
+     "at": [
+      0,
+      0.02,
+      0
+     ],
+     "color": "#3A3A3A"
+    },
+    {
+     "shape": "cylinder",
+     "size": [
+      0.05,
+      1.5,
+      0.05
+     ],
+     "at": [
+      0,
+      0.77,
+      0
+     ],
+     "color": "#3A3A3A"
+    },
+    {
+     "shape": "cylinder",
+     "size": [
+      0.44,
+      0.3,
+      0.44
+     ],
+     "at": [
+      0,
+      1.55,
+      0
+     ],
+     "color": "#F2E6D0"
+    }
+   ]
+  },
+  {
+   "id": "old_rug",
+   "style": "old",
+   "cosiness": 3,
+   "priceTier": 2,
+   "fromLevel": 2,
+   "w": 8,
+   "d": 6,
+   "parts": [
+    {
+     "shape": "box",
+     "size": [
+      2.0,
+      0.02,
+      1.5
+     ],
+     "at": [
+      0,
+      0.01,
+      0
+     ],
+     "color": "#9B2C3F"
+    }
+   ]
+  },
+  {
+   "id": "modern_rug",
+   "style": "modern",
+   "cosiness": 3,
+   "priceTier": 2,
+   "fromLevel": 4,
+   "w": 8,
+   "d": 6,
+   "parts": [
+    {
+     "shape": "box",
+     "size": [
+      2.0,
+      0.02,
+      1.5
+     ],
+     "at": [
+      0,
+      0.01,
+      0
+     ],
+     "color": "#C9C3B8"
+    }
+   ]
+  },
+  {
+   "id": "gulf_low_table",
+   "style": "gulf",
+   "cosiness": 2,
+   "priceTier": 1,
+   "fromLevel": 4,
+   "w": 4,
+   "d": 4,
+   "parts": [
+    {
+     "shape": "box",
+     "size": [
+      0.9,
+      0.06,
+      0.9
+     ],
+     "at": [
+      0,
+      0.32,
+      0
+     ],
+     "color": "#8A5A3C"
+    },
+    {
+     "shape": "box",
+     "size": [
+      0.8,
+      0.29,
+      0.8
+     ],
+     "at": [
+      0,
+      0.15,
+      0
+     ],
+     "color": "#6E452C"
+    }
+   ]
+  },
+  {
+   "id": "old_copper_table",
+   "style": "old",
+   "cosiness": 3,
+   "priceTier": 2,
+   "fromLevel": 4,
+   "w": 4,
+   "d": 4,
+   "parts": [
+    {
+     "shape": "cylinder",
+     "size": [
+      0.9,
+      0.04,
+      0.9
+     ],
+     "at": [
+      0,
+      0.55,
+      0
+     ],
+     "color": "#C27B45"
+    },
+    {
+     "shape": "cylinder",
+     "size": [
+      0.12,
+      0.55,
+      0.12
+     ],
+     "at": [
+      0,
+      0.27,
+      0
+     ],
+     "color": "#6B4A2E"
+    }
+   ]
+  },
+  {
+   "id": "modern_shelf",
+   "style": "modern",
+   "cosiness": 2,
+   "priceTier": 1,
+   "fromLevel": 4,
+   "w": 4,
+   "d": 2,
+   "parts": [
+    {
+     "shape": "box",
+     "size": [
+      0.9,
+      1.4,
+      0.35
+     ],
+     "at": [
+      0,
+      0.7,
+      0
+     ],
+     "color": "#E7DCCB"
+    },
+    {
+     "shape": "box",
+     "size": [
+      0.7,
+      0.25,
+      0.25
+     ],
+     "at": [
+      0,
+      1.0,
+      0
+     ],
+     "color": "#4F7D5C"
+    }
+   ]
+  },
+  {
+   "id": "modern_armchair",
+   "style": "modern",
+   "cosiness": 3,
+   "priceTier": 2,
+   "fromLevel": 4,
+   "w": 3,
+   "d": 3,
+   "parts": [
+    {
+     "shape": "box",
+     "size": [
+      0.7,
+      0.4,
+      0.7
+     ],
+     "at": [
+      0,
+      0.2,
+      0
+     ],
+     "color": "#9FB7D6"
+    },
+    {
+     "shape": "box",
+     "size": [
+      0.7,
+      0.5,
+      0.15
+     ],
+     "at": [
+      0,
+      0.55,
+      -0.28
+     ],
+     "color": "#7F9CC2"
+    }
+   ]
+  },
+  {
+   "id": "gulf_dallah_stand",
+   "style": "gulf",
+   "cosiness": 3,
+   "priceTier": 2,
+   "fromLevel": 6,
+   "w": 3,
+   "d": 3,
+   "parts": [
+    {
+     "shape": "box",
+     "size": [
+      0.6,
+      0.5,
+      0.6
+     ],
+     "at": [
+      0,
+      0.25,
+      0
+     ],
+     "color": "#6E452C"
+    },
+    {
+     "shape": "cylinder",
+     "size": [
+      0.24,
+      0.3,
+      0.24
+     ],
+     "at": [
+      0,
+      0.65,
+      0
+     ],
+     "color": "#D9B06C"
+    }
+   ]
+  },
+  {
+   "id": "gulf_floor_cushions",
+   "style": "gulf",
+   "cosiness": 4,
+   "priceTier": 3,
+   "fromLevel": 6,
+   "w": 8,
+   "d": 3,
+   "parts": [
+    {
+     "shape": "box",
+     "size": [
+      1.9,
+      0.2,
+      0.7
+     ],
+     "at": [
+      0,
+      0.1,
+      0
+     ],
+     "color": "#B84A60"
+    },
+    {
+     "shape": "box",
+     "size": [
+      1.9,
+      0.35,
+      0.15
+     ],
+     "at": [
+      0,
+      0.35,
+      -0.28
+     ],
+     "color": "#8E2E45"
+    }
+   ]
+  },
+  {
+   "id": "olive_tree",
+   "cosiness": 4,
+   "priceTier": 3,
+   "fromLevel": 6,
+   "w": 3,
+   "d": 3,
+   "parts": [
+    {
+     "shape": "cylinder",
+     "size": [
+      0.6,
+      0.4,
+      0.6
+     ],
+     "at": [
+      0,
+      0.2,
+      0
+     ],
+     "color": "#B5654A"
+    },
+    {
+     "shape": "cylinder",
+     "size": [
+      0.12,
+      0.8,
+      0.12
+     ],
+     "at": [
+      0,
+      0.8,
+      0
+     ],
+     "color": "#6B4A2E"
+    },
+    {
+     "shape": "sphere",
+     "size": [
+      1.0,
+      0.9,
+      1.0
+     ],
+     "at": [
+      0,
+      1.45,
+      0
+     ],
+     "color": "#7A8F5A"
+    }
+   ]
+  },
+  {
+   "id": "old_wooden_bench",
+   "style": "old",
+   "cosiness": 2,
+   "priceTier": 1,
+   "fromLevel": 6,
+   "w": 6,
+   "d": 2,
+   "parts": [
+    {
+     "shape": "box",
+     "size": [
+      1.4,
+      0.08,
+      0.4
+     ],
+     "at": [
+      0,
+      0.42,
+      0
+     ],
+     "color": "#A57A62"
+    },
+    {
+     "shape": "box",
+     "size": [
+      1.3,
+      0.38,
+      0.3
+     ],
+     "at": [
+      0,
+      0.19,
+      0
+     ],
+     "color": "#6B4A2E"
+    }
+   ]
+  },
+  {
+   "id": "teta_radio",
+   "style": "old",
+   "cosiness": 4,
+   "source": "memory",
+   "memory": "m1_pour",
+   "memoryStars": 3,
+   "w": 2,
+   "d": 2,
+   "parts": [
+    {
+     "shape": "box",
+     "size": [
+      0.45,
+      0.3,
+      0.25
+     ],
+     "at": [
+      0,
+      0.15,
+      0
+     ],
+     "color": "#6B4A2E"
+    },
+    {
+     "shape": "box",
+     "size": [
+      0.2,
+      0.12,
+      0.02
+     ],
+     "at": [
+      0,
+      0.18,
+      0.13
+     ],
+     "color": "#F6E2A8"
+    }
+   ]
+  }
+ ]
+}

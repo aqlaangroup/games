@@ -260,6 +260,9 @@ namespace Gahwit.Merge
             item != null && !item.IsGenerator &&
             State.Orders.Any(o => o.Lines.Any(line => line.Chain == item.Chain && line.Level == item.Level));
 
+        // For rule classes outside Game (decor, customers) that change the state: tells everyone it changed.
+        public void Touch() => Changed?.Invoke();
+
         // A customer who leaves unserved takes the order away; a new customer takes the slot.
         public bool DropOrder(int orderId)
         {

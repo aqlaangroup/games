@@ -1083,6 +1083,7 @@
         "night": 20
       },
       "styleSetBonusAt": 3,
+      "styleSetBonus": 10,
       "cosinessPerPiece": [
         1,
         5
@@ -1107,7 +1108,7 @@
         900,
         2000
       ],
-      "proposed": "Proposed on 2026-10-31 where the specs gave no number (missing/02). Tune in playtests. Applies to afternoon's start hour, tip bonus and decor price tiers."
+      "proposed": "Proposed on 2026-10-31 where the specs gave no number (missing/02). Tune in playtests. Applies to afternoon's start hour, tip bonus, decor price tiers and styleSetBonus."
     },
     "walkIns": {
       "tipCoins": [
@@ -1347,5 +1348,15 @@
         4.99
       ]
     }
+  },
+  "weather": {
+    "winterMonths": [
+      12,
+      1,
+      2
+    ],
+    "rainChance": 0.3,
+    "fogChance": 0.2,
+    "proposed": "Proposed on 2026-10-31 (missing/07): SYSTEMS_B.md section 2 says rain and fog in winter, by date, for mood only."
   }
 }

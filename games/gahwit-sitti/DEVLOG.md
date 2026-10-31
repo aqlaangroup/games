@@ -2,6 +2,33 @@
 
 Decisions and known gaps. Newest first. Read this at the start of each session (`/CLAUDE.md`).
 
+## 2026-10-31: decor, cosiness, live time of day, winter weather (missing/07)
+
+- **Catalogue:** 15 pieces in `Content/Resources/Content/decor.json`, across Old Levantine, Modern Ammani, Gulf majlis and neutral.
+  - Each has cosiness (1–5), a price tier (`levelB.cafe.decorPriceCoinsByTier`), the level it reaches the shop at, a footprint in 0.25 m cells, and placeholder shapes.
+  - 5 pieces arrive when the shop opens at level 2, 5 more at 4, and 4 at 6.
+  - **Teta's 1974 radio** comes from 3 stars in her pour memory (SYSTEMS_B.md section 5).
+- **Rules** (`_Game/Decor`, plain C#, 7 tests):
+  - `DecorLayout`: snaps to the grid, turns in quarter turns, allows no overlaps, and keeps clear of the counter, the tables with their chairs, and the way in from the door.
+  - `DecorRules`: buys a piece with coins (it's placed in the first free spot), moves, turns, stores and places pieces, and changes the sign's and chairs' styles for free.
+  - Cosiness is the sum of placed pieces plus `styleSetBonus` for each style with 3 or more pieces placed. It sets the seats and the tip bonus (missing/08).
+- **Café:**
+  - `CafeDecor` draws the pieces.
+  - The **Decor** button (from level 2) opens decor mode: a bar shows cosiness and the next table, with Shop, Turn, Store and Done.
+  - Press a piece to pick it, drag it to move it, and tap the floor to let go. Dragging the floor still turns the camera.
+  - The shop sheet lists pieces for sale, pieces in storage, and the sign's and chairs' styles.
+- **Camera:** double-tap to look closer, double-tap again for the whole room. It cuts instead of gliding when reduced motion is on.
+  - The small orbit script stays; Cinemachine is removed (BUILD_GUIDE.md item 11 and `unity/README.md` updated).
+- **Time of day:** the light and music now follow the clock while the app is open; a memory keeps its own music.
+- **Weather:** rain on the window or a light fog on some winter days, picked from the date (`Core/Weather.cs`, tested; `balance.json` `weather`, proposed).
+- **Save:** `cafe.owned`, and `cafe.placed` as grid cells with turns in degrees. The schema example was updated; it had no saves yet, so the version stays.
+- **Proposed numbers:** `styleSetBonus` 10, and the weather chances.
+- **Still missing:**
+  - Wall pieces and a wall rule (all 15 stand on the floor).
+  - The kitchen corner, the rooftop and Teta's back room.
+  - Real models (missing/13).
+  - Measuring speed on a 3 GB Android (missing/23).
+
 ## 2026-10-31: customers in the café, Abu Fadi as a regular (missing/08)
 
 **Decisions**

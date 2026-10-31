@@ -5,6 +5,7 @@ using System.Linq;
 using Gahwit.Cafe;
 using Gahwit.Core;
 using Gahwit.Customers;
+using Gahwit.Decor;
 using Gahwit.Memories;
 using Gahwit.Merge;
 using Gahwit.Platform;
@@ -31,12 +32,16 @@ namespace Gahwit.Boot
         AudioService audio;
         TutorialFlow tutorial;
         CustomerRules customers;
+        DecorRules decor;
+        readonly List<CafeDecor.Placement> placements = new List<CafeDecor.Placement>();
         readonly List<CafeCustomers.Info> present = new List<CafeCustomers.Info>();
         bool customersShown;
         const string TutorialSeenKey = "gahwit.tutorial.finishedOnThisPhone";
         PlatformAnalytics analytics;
         float sessionStartedAt;
         string cafeMusic;
+        TimeOfDay timeOfDay;
+        bool inMemory;
         long gemsHeard;
         readonly Dictionary<string, string> generatorCues = new Dictionary<string, string>();
         bool dirty, reloading;
@@ -59,8 +64,9 @@ namespace Gahwit.Boot
             var camera = Camera.main;
             cafe = new GameObject("Cafe").AddComponent<CafeRoom>();
             cafe.Build(FindSun(), camera);
-            var timeOfDay = CafeRoom.TimeFromClock(DateTime.Now, config.LevelB.Cafe.TimeOfDayStartHours);
+            timeOfDay = CafeRoom.TimeFromClock(DateTime.Now, config.LevelB.Cafe.TimeOfDayStartHours);
             cafe.SetTimeOfDay(timeOfDay);
+            cafe.SetWeather(Weather.For(DateTime.Now, config.Weather));
             cafe.Apply(game.CompletedTaskIds(), game.State.TaskStyles, game.Content.Styles);
             var cafeCamera = camera.gameObject.AddComponent<CafeCamera>();
 
@@ -73,6 +79,7 @@ namespace Gahwit.Boot
 
             analytics = services.Analytics;
             TrackGame();
+            WireDecor();
             WireCustomers();
             tutorial.StepFinished += OnTutorialStep;
             tutorial.Skipped += () =>
@@ -141,6 +148,29 @@ namespace Gahwit.Boot
                 ui.ShowKitchen();
                 ResumeMemories();
             });
+        }
+
+        // Decor (missing/07): the 15 pieces, placed on the café floor's grid, and the cosiness they add up to.
+        void WireDecor()
+        {
+            var keepClear = CafeRoom.KeepClear().Select(a => new DecorLayout.Area(a.minX, a.minZ, a.maxX, a.maxZ));
+            var layout = new DecorLayout(CafeRoom.Width, CafeRoom.Depth, game.Config.LevelB.Cafe.GridCellMeters, keepClear);
+            decor = new DecorRules(game, DecorCatalog.Load(), layout);
+            decor.Changed += ShowDecor;
+            ui.SetDecor(decor);
+            ShowDecor();
+        }
+
+        void ShowDecor()
+        {
+            placements.Clear();
+            foreach (var piece in game.State.PlacedDecor)
+            {
+                var (x, z) = decor.Centre(piece);
+                placements.Add(new CafeDecor.Placement { Id = piece.Id, X = x, Z = z, Degrees = piece.Rot * 90 });
+            }
+            cafe.Decor.Show(placements, decor.Catalog, game.Config.LevelB.Cafe.GridCellMeters);
+            cafe.Apply(game.CompletedTaskIds(), game.State.TaskStyles, game.Content.Styles); // a style may have changed
         }
 
         // Every order is a customer in the café (DEVLOG 2026-10-31): they walk in, sit, sip when served and leave.
@@ -234,6 +264,15 @@ namespace Gahwit.Boot
             var fields = new Dictionary<string, object>();
             for (int i = 0; i + 1 < pairs.Length; i += 2) fields[(string)pairs[i]] = pairs[i + 1];
             analytics.Track(name, fields);
+        }
+
+        // The light and music follow the clock while the app stays open (missing/07).
+        void ChangeTimeOfDay(TimeOfDay now)
+        {
+            timeOfDay = now;
+            cafe.SetTimeOfDay(now);
+            cafeMusic = CafeMusic(now);
+            if (!inMemory) audio.PlayMusic(cafeMusic);
         }
 
         // The café's music follows the time of day (missing/14); the afternoon shares the morning's track for now.
@@ -336,6 +375,7 @@ namespace Gahwit.Boot
             {
                 // 1974: the café as Teta ran it, in faded film colours.
                 cafe.SetPast(true);
+                inMemory = true;
                 audio.PlayMusic("music_memory");
                 // Teta ran it in the old Levantine style.
                 cafe.Apply(game.Content.Chapters.SelectMany(c => c.Tasks).Select(t => t.Id).ToList(),
@@ -351,6 +391,7 @@ namespace Gahwit.Boot
                         PlayScene(story, def.OutroKnot, () =>
                         {
                             cafe.SetPast(false);
+                            inMemory = false;
                             audio.PlayMusic(cafeMusic);
                             cafe.Apply(game.CompletedTaskIds(), game.State.TaskStyles, game.Content.Styles);
                             ui.Memory.ShowBanner(false);
@@ -446,7 +487,9 @@ namespace Gahwit.Boot
             if (Time.unscaledTime >= nextTick)
             {
                 nextTick = Time.unscaledTime + 1f;
-                game.TimeOfDay = CafeRoom.TimeFromClock(DateTime.Now, game.Config.LevelB.Cafe.TimeOfDayStartHours).ToString().ToLowerInvariant();
+                var now = CafeRoom.TimeFromClock(DateTime.Now, game.Config.LevelB.Cafe.TimeOfDayStartHours);
+                if (now != timeOfDay) ChangeTimeOfDay(now);
+                game.TimeOfDay = now.ToString().ToLowerInvariant();
                 game.Tick(time.NowMs);
                 customers.Tick(time.NowMs);
             }

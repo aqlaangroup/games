@@ -9,7 +9,8 @@ namespace Gahwit.Cafe
     public sealed class CafeCamera : MonoBehaviour
     {
         // Slightly toward the counter and sign, so the whole room fits a portrait screen.
-        static readonly Vector3 Target = new Vector3(0.8f, 0.6f, -0.4f);
+        static readonly Vector3 Home = new Vector3(0.8f, 0.6f, -0.4f);
+        const float FocusRadius = 13f;
         const float HomeTheta = 0.62f, HomePhi = 1.02f;
         const float ThetaHalfRange = 1.05f, PhiMin = 0.6f, PhiMax = 1.3f;
         const float RadiusMin = 11f, RadiusMax = 34f;
@@ -17,15 +18,17 @@ namespace Gahwit.Cafe
 
         Camera cam;
         float theta = HomeTheta, phi = HomePhi, radius, thetaGoal = HomeTheta, phiGoal = HomePhi, radiusGoal;
-        float lastPinch;
+        float lastPinch, homeRadius;
+        Vector3 target = Home, targetGoal = Home;
         bool visible = true;
+        public bool Focused { get; private set; }
 
         void Awake()
         {
             cam = GetComponent<Camera>();
             bool portrait = cam.aspect < 0.75f;
             cam.fieldOfView = portrait ? 46f : 34f;
-            radius = radiusGoal = portrait ? 28f : 17f;
+            radius = radiusGoal = homeRadius = portrait ? 28f : 17f;
             Place();
         }
 
@@ -43,6 +46,30 @@ namespace Gahwit.Cafe
             float perPixel = Mathf.PI / Mathf.Max(1, Screen.width);
             thetaGoal = Mathf.Clamp(thetaGoal - screenDelta.x * perPixel, HomeTheta - ThetaHalfRange, HomeTheta + ThetaHalfRange);
             phiGoal = Mathf.Clamp(phiGoal + screenDelta.y * perPixel * 0.6f, PhiMin, PhiMax);
+        }
+
+        // Double-tap a table to look closer (SYSTEMS_B.md section 2); with reduced motion the camera cuts there.
+        public void Focus(Vector3 point, bool cut)
+        {
+            targetGoal = new Vector3(point.x, Home.y, point.z);
+            radiusGoal = FocusRadius;
+            Focused = true;
+            if (cut) Snap();
+        }
+
+        public void Unfocus(bool cut)
+        {
+            targetGoal = Home;
+            radiusGoal = homeRadius;
+            Focused = false;
+            if (cut) Snap();
+        }
+
+        void Snap()
+        {
+            target = targetGoal;
+            radius = radiusGoal;
+            Place();
         }
 
         public void Zoom(float factor) => radiusGoal = Mathf.Clamp(radiusGoal * factor, RadiusMin, RadiusMax);
@@ -74,16 +101,17 @@ namespace Gahwit.Cafe
             theta = Mathf.Lerp(theta, thetaGoal, k);
             phi = Mathf.Lerp(phi, phiGoal, k);
             radius = Mathf.Lerp(radius, radiusGoal, k);
+            target = Vector3.Lerp(target, targetGoal, k);
             Place();
         }
 
         void Place()
         {
-            transform.position = Target + new Vector3(
+            transform.position = target + new Vector3(
                 radius * Mathf.Sin(phi) * Mathf.Sin(theta),
                 radius * Mathf.Cos(phi),
                 radius * Mathf.Sin(phi) * Mathf.Cos(theta));
-            transform.LookAt(Target);
+            transform.LookAt(target);
         }
 
         static bool TwoFingersDown()

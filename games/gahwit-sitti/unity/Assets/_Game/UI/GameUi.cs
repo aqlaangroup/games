@@ -1,6 +1,7 @@
 using System;
 using Gahwit.Cafe;
 using Gahwit.Core;
+using Gahwit.Decor;
 using Gahwit.Merge;
 using Gahwit.Tutorial;
 using UnityEngine;
@@ -34,10 +35,13 @@ namespace Gahwit.UI
         public TutorialView Tutorial { get; private set; }
         HelpView help;
         ConfirmView confirm;
+        DecorShopView decorShop;
+        IAccountUi account;
 
         // A panel over the game: the tutorial waits under it.
         public bool ModalOpen => Settings.IsOpen || help.gameObject.activeSelf || confirm.gameObject.activeSelf || CloudChoice.IsOpen
-                                 || AgeGate.IsOpen || UpdateRequired.gameObject.activeSelf || Letter.IsOpen || Memory.IsPlaying;
+                                 || AgeGate.IsOpen || UpdateRequired.gameObject.activeSelf || Letter.IsOpen || Memory.IsPlaying
+                                 || decorShop != null && decorShop.IsOpen;
 
         public static GameUi Create(Game game, CafeCamera cafeCamera, CafeRoom room, Func<long> now, Action openDrawer, IAccountUi account,
             TutorialFlow tutorial, bool canSkipTutorial)
@@ -96,6 +100,8 @@ namespace Gahwit.UI
             Toast = UiKit.Rect(root, "Toast").Pin(new Vector2(0.5f, 1), new Vector2(0, -136), new Vector2(920, 84)).gameObject.AddComponent<Toast>();
             Toast.Init();
 
+            this.account = account;
+            cafe.ReducedMotion = () => account.GetSetting("reducedMotion");
             Tutorial = UiKit.Rect(root, "Tutorial").Stretch().gameObject.AddComponent<TutorialView>();
             Tutorial.Init(tutorial, this, game, canSkipTutorial);
             help = UiKit.Rect(root, "Help").Stretch().gameObject.AddComponent<HelpView>();
@@ -160,6 +166,15 @@ namespace Gahwit.UI
         {
             tab.targetGraphic.color = active ? Palette.Rose : Palette.Card;
             tab.Label().color = active ? Color.white : Palette.Ink;
+        }
+
+        // Decor comes once its rules exist (Boot.CafeScene): the shop sheet and the café's decor mode.
+        public void SetDecor(DecorRules rules)
+        {
+            decorShop = UiKit.Rect(transform.Find("SafeArea"), "DecorShop").Stretch().gameObject.AddComponent<DecorShopView>();
+            decorShop.Init(rules, game, Toast);
+            Toast.transform.SetAsLastSibling();
+            cafe.SetDecor(rules, decorShop);
         }
 
         // What the tutorial's pointer shows for a step: one target, or two for a drag (from, to). On the wrong screen

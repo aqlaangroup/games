@@ -27,7 +27,9 @@ namespace Gahwit.Merge
         public int TutorialStep;   // the last finished step of COMPLETE_SPEC.md section 1
         public bool TutorialDone;
         public int EasyOrdersLeft; // free play starts with a few easy orders
-        public int Cosiness;       // from placed decor (missing/07)
+        public int Cosiness;       // from placed decor (Decor.DecorRules)
+        public List<string> OwnedDecor = new List<string>();
+        public List<PlacedDecor> PlacedDecor = new List<PlacedDecor>();
         public Dictionary<string, RegularState> Regulars = new Dictionary<string, RegularState>();
         public ulong Rng;
     }
@@ -54,6 +56,14 @@ namespace Gahwit.Merge
 
         public bool SameAs(Item other) =>
             other != null && other.Generator == Generator && other.Chain == Chain && other.Level == Level;
+    }
+
+    // A decor piece on the café floor: its footprint's corner cell and its quarter turns.
+    public sealed class PlacedDecor
+    {
+        public string Id;
+        public int X, Z;
+        public int Rot; // 0 to 3
     }
 
     // A regular's friendship (SYSTEMS_B.md section 3): points inside the current level, like XP.

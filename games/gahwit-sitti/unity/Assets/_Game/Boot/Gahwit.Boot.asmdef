@@ -4,6 +4,7 @@
     "references": [
         "Gahwit.Core",
         "Gahwit.Customers",
+        "Gahwit.Decor",
         "Gahwit.Memories",
         "Gahwit.Merge",
         "Gahwit.Platform",

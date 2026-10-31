@@ -22,6 +22,7 @@ namespace Gahwit.Core
         public UnlocksConfig Unlocks;
         public TutorialConfig Tutorial;
         public SavesConfig Saves;
+        public WeatherConfig Weather;
         public UiConfig Ui;
         public LevelBConfig LevelB;
 
@@ -200,6 +201,13 @@ namespace Gahwit.Core
         public int MaxItemLevel;
     }
 
+    public sealed class WeatherConfig
+    {
+        public List<int> WinterMonths;
+        public float RainChance;
+        public float FogChance;
+    }
+
     public sealed class SavesConfig
     {
         public float LocalEverySeconds;
@@ -228,6 +236,12 @@ namespace Gahwit.Core
     public sealed class CafeConfig
     {
         public Dictionary<string, int> TimeOfDayStartHours; // morning, afternoon, evening, night
+        public float GridCellMeters;
+        public List<string> Styles;
+        public int StyleSetBonusAt;
+        public int StyleSetBonus;
+        public List<int> DecorPriceCoinsByTier;
+        public List<int> CosinessPerPiece; // [min, max]
         public MinMax WalkInTables;
         public List<int> CosinessForExtraTable;
         public float TipBonusPerCosinessPoint;

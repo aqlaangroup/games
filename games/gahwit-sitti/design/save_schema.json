@@ -1,5 +1,5 @@
 {
-  "$comment": "Shape of one player's save for Gahwit Sitti. Stored on the phone and synced to the platform (PlayerSave.Json). Gems and purchases are NOT here: the platform's Wallet owns them. Times are trusted milliseconds from the time service (server time moved forward by the phone's uptime counter); 'clock' is that service's anchor. 'account' holds the age gate's answer (birth year only); the sign-in itself lives on the platform, not in the save. 'saveVersion' counts local saves; the platform keeps its own version for conflicts. Unity code: Assets/_Game/Save.",
+  "$comment": "Shape of one player's save for Gahwit Sitti. Stored on the phone and synced to the platform (PlayerSave.Json). Gems and purchases are NOT here: the platform's Wallet owns them. Times are trusted milliseconds from the time service (server time moved forward by the phone's uptime counter); 'clock' is that service's anchor. 'cafe.placed' positions are 0.25 m grid cells from the back-left corner, and rot is in degrees. 'account' holds the age gate's answer (birth year only); the sign-in itself lives on the platform, not in the save. 'saveVersion' counts local saves; the platform keeps its own version for conflicts. Unity code: Assets/_Game/Save.",
   "schemaVersion": 4,
   "saveVersion": 42,
   "savedAt": "2026-10-30T15:00:00Z",
@@ -23,8 +23,8 @@
   "story": { "chapter": 3, "task": 2, "choices": { "c2_groom": "ask_who" }, "scenesSeen": ["intro", "sign", "chairs"], "lettersFound": ["letter_1"] },
   "cafe": {
     "space": "floor",
-    "placed": [ { "id": "decor_lamp_old", "x": 1.5, "z": -0.5, "rot": 90 } ],
-    "owned": ["decor_lamp_old", "decor_plant_modern"],
+    "placed": [ { "id": "old_lantern", "x": 12, "z": 3, "rot": 90 } ],
+    "owned": ["old_lantern", "basil_pot"],
     "taskStyles": { "sign": "old", "chairs": "modern" },
     "cosiness": 34
   },

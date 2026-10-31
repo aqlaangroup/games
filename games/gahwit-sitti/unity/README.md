@@ -19,7 +19,7 @@ Also add the shared package from `/unity-shared/` (see its README). Systems that
 | Arabic text | TextMeshPro + **RTLTMPro** (joins Arabic letters and lays text right to left) |
 | Story and dialogue | **Ink** (inkle's Unity integration) |
 | Input | Input System (touch: tap, drag, pinch, orbit) |
-| Camera | Cinemachine (café orbit and zoom, cutscene shots) |
+| Camera | A small orbit, zoom and focus script (`_Game/Cafe/CafeCamera.cs`); add Cinemachine only if cutscenes need it |
 | Downloadable content | Addressables (chapters, events and decor downloaded later) |
 | Purchases | Unity IAP; receipts verified by the platform API |
 | Ads | LevelPlay or AppLovin MAX (rewarded ads only) |
