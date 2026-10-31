@@ -18,10 +18,10 @@ namespace Gahwit.Cafe
 
         Camera cam;
         float theta = HomeTheta, phi = HomePhi, radius, thetaGoal = HomeTheta, phiGoal = HomePhi, radiusGoal;
-        float lastPinch, homeRadius, floorRadius;
+        float lastPinch, homeRadius, floorRadius, homePhi = HomePhi;
         Vector3 home = Home, target = Home, targetGoal = Home;
         int spaceMask = ~0;
-        bool visible = true;
+        bool visible = true, held;
         public bool Focused { get; private set; }
 
         void Awake()
@@ -35,12 +35,13 @@ namespace Gahwit.Cafe
 
         // Another space of the café (CafeRoom.ShowSpace): look at it from its own angle and distance, and draw only its
         // layer.
-        public void GoTo(Vector3 lookAt, float zoom, float homePhi, int mask, bool cut)
+        public void GoTo(Vector3 lookAt, float zoom, float phiAtHome, int mask, bool cut)
         {
+            homePhi = Mathf.Clamp(phiAtHome, PhiMin, PhiMax);
             home = targetGoal = lookAt;
             homeRadius = radiusGoal = floorRadius * zoom;
             thetaGoal = HomeTheta;
-            phiGoal = Mathf.Clamp(homePhi, PhiMin, PhiMax);
+            phiGoal = homePhi;
             Focused = false;
             spaceMask = mask;
             if (visible) cam.cullingMask = mask;
@@ -85,6 +86,30 @@ namespace Gahwit.Cafe
             if (cut) Snap();
         }
 
+        // A cut-scene (the intro) places the camera itself; the orbit waits.
+        public void Hold(Vector3 position, Vector3 lookAt)
+        {
+            held = true;
+            transform.position = position;
+            transform.LookAt(lookAt);
+            target = lookAt;
+        }
+
+        // Back to the orbit, gliding from wherever the cut-scene left the camera to the space's home view.
+        public void Release()
+        {
+            if (!held) return;
+            held = false;
+            var offset = transform.position - target;
+            radius = offset.magnitude;
+            phi = Mathf.Acos(Mathf.Clamp(offset.y / Mathf.Max(radius, 0.001f), -1f, 1f));
+            theta = Mathf.Atan2(offset.x, offset.z);
+            thetaGoal = HomeTheta;
+            phiGoal = homePhi;
+            targetGoal = home;
+            radiusGoal = homeRadius;
+        }
+
         void Snap()
         {
             target = targetGoal;
@@ -117,6 +142,7 @@ namespace Gahwit.Cafe
 
         void LateUpdate()
         {
+            if (held) return;
             float k = 1 - Mathf.Exp(-Smoothing * Time.unscaledDeltaTime);
             theta = Mathf.Lerp(theta, thetaGoal, k);
             phi = Mathf.Lerp(phi, phiGoal, k);

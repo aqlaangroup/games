@@ -30,7 +30,7 @@ namespace Gahwit.Core
             if (isMusic) return AudioGroup.Music;
             if (id.StartsWith("ui_")) return AudioGroup.Interface;
             if (id.StartsWith("gen_") || id.StartsWith("merge") || id == "sell" || id == "bubble_pop" || id == "order_served") return AudioGroup.Kitchen;
-            if (id == "door_bell" || id == "decor_place") return AudioGroup.Cafe;
+            if (id == "door_bell" || id == "decor_place" || id == "shutter_open" || id == "door_creak") return AudioGroup.Cafe;
             return AudioGroup.Story;
         }
     }

@@ -37,6 +37,9 @@ MonoBehaviour:
   - Id: door_bell
     Clip: {fileID: 8300000, guid: fc4aa6716e9174c8ab1d7a73848cf160, type: 3}
     Group: 4
+  - Id: door_creak
+    Clip: {fileID: 8300000, guid: 6a30d23ba524f4df6b29c098332755dc, type: 3}
+    Group: 4
   - Id: drawer_open
     Clip: {fileID: 8300000, guid: f0d574ef80e27449b9e6c5e150f6d18e, type: 3}
     Group: 5
@@ -67,6 +70,9 @@ MonoBehaviour:
   - Id: sell
     Clip: {fileID: 8300000, guid: 43d2903721d7e4caa98df9c7727fc024, type: 3}
     Group: 3
+  - Id: shutter_open
+    Clip: {fileID: 8300000, guid: f276ea8934cc24dcd98dd232f87186f9, type: 3}
+    Group: 4
   - Id: ui_coin
     Clip: {fileID: 8300000, guid: 58810585cad9f45a78251d868ac78bc1, type: 3}
     Group: 2

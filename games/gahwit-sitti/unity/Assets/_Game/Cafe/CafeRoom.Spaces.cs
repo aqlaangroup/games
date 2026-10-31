@@ -68,6 +68,7 @@ namespace Gahwit.Cafe
             material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
             materials[key] = material;
             glows.Add((material, Hex(hex)));
+            material.SetColor("_EmissionColor", Hex(hex) * Mathf.Max(0.8f, (time ?? Presets[TimeOfDay.Morning]).Bulbs));
             return material;
         }
 

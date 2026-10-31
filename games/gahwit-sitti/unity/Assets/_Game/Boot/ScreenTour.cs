@@ -46,6 +46,20 @@ namespace Gahwit.Boot
             string language = UiKit.LeftToRight ? "en" : "ar";
 
             yield return Shot("01_cafe");
+            var room = FindFirstObjectByType<Gahwit.Cafe.CafeRoom>();
+
+            // The intro (tutorial step 2), shot at its main moments.
+            ui.SetCinematic(true, null);
+            StartCoroutine(room.Intro(false, _ => { }, ui.CinematicFade));
+            float played = 0f;
+            foreach (var (at, shot) in new[] { (1.5f, "00a_intro_dark"), (4.6f, "00b_intro_shutter"), (6.8f, "00c_intro_door"), (9.8f, "00d_intro_room"), (13.5f, "00e_intro_counter") })
+            {
+                yield return Wait(at - played);
+                played = at;
+                yield return Shot(shot);
+            }
+            yield return Wait(Gahwit.Cafe.CafeRoom.IntroSeconds - played + 0.5f);
+            ui.SetCinematic(false, null);
 
             // The wall pieces (missing/07), bought and hung where they go, then taken down again.
             var hung = new List<string> { "old_hebron_plates", "old_family_frames", "modern_wall_clock", "modern_arch_mirror", "gulf_sadu_weaving", "gulf_finjan_shelf" };
@@ -73,7 +87,6 @@ namespace Gahwit.Boot
             }
 
             // The café's other spaces (missing/07), then back to the floor.
-            var room = FindFirstObjectByType<Gahwit.Cafe.CafeRoom>();
             foreach (var (space, shot) in new[] { ("kitchen", "01b_kitchen_corner"), ("rooftop", "01c_rooftop"), ("backroom", "01d_back_room") })
             {
                 room.ShowSpace(space, true);

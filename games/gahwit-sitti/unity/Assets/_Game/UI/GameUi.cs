@@ -207,6 +207,41 @@ namespace Gahwit.UI
             cafeBadge.rectTransform.Pin(new Vector2(1, 1), new Vector2(-18, -10), new Vector2(28, 28));
         }
 
+        // The intro's frame (tutorial step 2): the controls hidden, letterbox bars, a fade from black, and a skip button
+        // when this phone has finished the tutorial before.
+        GameObject cinematic;
+        Image cinematicBlack;
+        Button cinematicSkip;
+        Action skipCinematic;
+
+        public void SetCinematic(bool on, Action skip)
+        {
+            var safe = transform.Find("SafeArea");
+            var group = safe.GetComponent<CanvasGroup>();
+            if (group == null) group = safe.gameObject.AddComponent<CanvasGroup>();
+            group.alpha = on ? 0f : 1f;
+            group.blocksRaycasts = !on;
+            if (cinematic == null)
+            {
+                var root = UiKit.Rect(transform, "Cinematic").Stretch();
+                cinematic = root.gameObject;
+                UiKit.Panel(root, "Top", Color.black, 0).rectTransform.Top(0, 240);
+                UiKit.Panel(root, "Bottom", Color.black, 0).rectTransform.Bottom(0, 240);
+                cinematicBlack = UiKit.Panel(root, "Black", Color.black, 0);
+                cinematicBlack.rectTransform.Stretch();
+                cinematicBlack.raycastTarget = false;
+                cinematicSkip = UiKit.Button(root, "Skip", Loc.T("tutorial.skip"), new Color(1f, 1f, 1f, 0.18f), Color.white, 26,
+                    () => skipCinematic?.Invoke(), 30);
+                ((RectTransform)cinematicSkip.transform).Pin(new Vector2(0, 0), new Vector2(24, 54), new Vector2(220, UiKit.MinTouch));
+            }
+            skipCinematic = skip;
+            cinematicSkip.gameObject.SetActive(skip != null);
+            cinematic.SetActive(on);
+            cinematic.transform.SetAsLastSibling();
+        }
+
+        public void CinematicFade(float black) => cinematicBlack.color = new Color(0f, 0f, 0f, black);
+
         public void ShowKitchen() => SetCafeShown(false);
 
         public void ShowCafe() => SetCafeShown(true);

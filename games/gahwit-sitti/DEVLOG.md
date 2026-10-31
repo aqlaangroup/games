@@ -2,6 +2,20 @@
 
 Decisions and known gaps. Newest first. Read this at the start of each session (`/CLAUDE.md`).
 
+## 2026-11-01: the intro, shot in the engine (missing/06 step 2)
+
+The spec allows the 15-second intro to be "from Veo or shot in the engine". Flow's limit is on, so it's built in the engine, and no video player is needed.
+- **What plays (`Cafe/CafeRoom.Intro.cs`):**
+  - The dusty café is dark behind a corrugated shutter, with slits of light between the slats.
+  - The shutter rattles up (`shutter_open`) and morning floods in, with dust drifting in the light.
+  - The door creaks open (`door_creak`); Salma walks in, looks round, and goes behind the counter.
+  - The camera starts close on the window and draws back to the room's usual view. Salma's three intro lines follow.
+- **Details:**
+  - It always plays at morning; the café's own time of day comes back after.
+  - With reduced motion the camera doesn't move.
+  - Letterbox bars and a fade from black frame it. There's a skip button only on a phone that has finished the tutorial, as with the tutorial's own skip.
+- **Sounds:** the two new sounds are ElevenLabs drafts, like the others (`tools/audio_drafts.json`).
+
 ## 2026-11-01: the season's 60 decor pieces, and rewards that arrive (missing/07)
 
 - **A bug fixed:**

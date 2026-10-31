@@ -136,6 +136,20 @@
       "prompt": "Old wooden counter drawer sliding open with a soft creak"
     },
     {
+      "id": "shutter_open",
+      "kind": "sfx",
+      "output": "unity/Assets/Audio/Sfx/Drafts/shutter_open.mp3",
+      "seconds": 3.0,
+      "prompt": "An old corrugated metal shop shutter being rolled up by hand in the early morning, rattling and clattering as it rises, then a soft thud as it stops at the top"
+    },
+    {
+      "id": "door_creak",
+      "kind": "sfx",
+      "output": "unity/Assets/Audio/Sfx/Drafts/door_creak.mp3",
+      "seconds": 2.0,
+      "prompt": "An old wooden café door slowly creaking open after being closed for a long time, warm and gentle"
+    },
+    {
       "id": "page_turn",
       "kind": "sfx",
       "output": "unity/Assets/Audio/Sfx/Drafts/page_turn.mp3",

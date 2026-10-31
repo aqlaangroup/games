@@ -167,11 +167,24 @@ namespace Gahwit.Boot
                 return;
             }
             audio.PlayMusic("music_main_theme");
-            PlayScene(StoryFor(game.State.Chapter), intro, () =>
+            // Step 2: the shutter goes up on the dusty café (CafeRoom.Intro), then Salma's first lines.
+            bool canSkip = PlayerPrefs.GetInt(TutorialSeenKey, 0) == 1;
+            ui.SetCinematic(true, canSkip ? cafe.SkipIntro : (Action)null);
+            StartCoroutine(Then(cafe.Intro(account.GetSetting("reducedMotion"), id => audio.Play(id), ui.CinematicFade), () =>
             {
-                audio.PlayMusic(cafeMusic);
-                Arrival();
-            });
+                ui.SetCinematic(false, null);
+                PlayScene(StoryFor(game.State.Chapter), intro, () =>
+                {
+                    audio.PlayMusic(cafeMusic);
+                    Arrival();
+                });
+            }));
+        }
+
+        static IEnumerator Then(IEnumerator routine, Action then)
+        {
+            yield return routine;
+            then();
         }
 
         // Tutorial step 3: the door bell, and Abu Fadi walks in with the first order. Then the kitchen opens.

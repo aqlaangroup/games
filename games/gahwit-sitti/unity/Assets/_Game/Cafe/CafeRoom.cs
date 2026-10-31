@@ -41,7 +41,7 @@ namespace Gahwit.Cafe
         Light sun, signLight, counterLight;
         Camera cam;
         bool highQuality = true;
-        Transform plaque, drawer;
+        Transform plaque, drawer, doorRoot;
         Volume pastVolume;
         float pastTarget;
         bool drawerGlowing;
@@ -365,7 +365,7 @@ namespace Gahwit.Cafe
             Box("Mullion", window, new Vector3(0.06f, 2.4f, 0.05f), new Vector3(0, 2.8f, 0.17f), white);
             Box("Sill", window, new Vector3(2.6f, 0.12f, 0.45f), new Vector3(0, 1.42f, 0.2f), white);
 
-            var door = Group("Door", transform, new Vector3(-W / 2 + 0.02f, 0, 2.2f), 90);
+            var door = doorRoot = Group("Door", transform, new Vector3(-W / 2 + 0.02f, 0, 2.2f), 90);
             var lilac = Mat("#D8CDEB");
             Box("Panel", door, new Vector3(1.5f, 2.05f, 0.1f), new Vector3(0, 1.03f, 0.05f), lilac);
             Disc("Arch", door, 0.75f, 0.1f, new Vector3(0, 2.05f, 0.05f), lilac);
