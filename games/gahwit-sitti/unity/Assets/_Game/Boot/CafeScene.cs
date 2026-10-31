@@ -71,6 +71,7 @@ namespace Gahwit.Boot
             var camera = Camera.main;
             cafe = new GameObject("Cafe").AddComponent<CafeRoom>();
             cafe.Build(FindSun(), camera);
+            cafe.SetTaskProps(content.Chapters.SelectMany(c => c.Tasks));
             timeOfDay = CafeRoom.TimeFromClock(DateTime.Now, config.LevelB.Cafe.TimeOfDayStartHours);
             cafe.SetTimeOfDay(timeOfDay);
             cafe.SetWeather(Weather.For(DateTime.Now, config.Weather));
@@ -480,17 +481,22 @@ namespace Gahwit.Boot
         {
             var config = game.Config.LevelB.Memories;
             var story = Story(def.Story);
+            // The season's last memory happens in today's café; every other one goes back to 1974.
+            bool past = !def.Present;
             PlayScene(story, def.LeadKnot, () =>
             {
-                // 1974: the café as Teta ran it, in faded film colours. A sepia wash spreads from the last touch.
-                ui.MemoryWipe();
-                cafe.SetPast(true);
                 inMemory = true;
                 audio.PlayMusic("music_memory");
-                // Teta ran it in the old Levantine style.
-                cafe.Apply(game.Content.Chapters.SelectMany(c => c.Tasks).Select(t => t.Id).ToList(),
-                    new Dictionary<string, string> { ["sign"] = "old", ["chairs"] = "old" }, game.Content.Styles);
-                ui.Memory.ShowBanner(true);
+                if (past)
+                {
+                    // 1974: the café as Teta ran it, in faded film colours. A sepia wash spreads from the last touch.
+                    ui.MemoryWipe();
+                    cafe.SetPast(true);
+                    // Teta ran it in the old Levantine style, before anything later chapters added.
+                    cafe.Apply(game.Content.ForChapter(1).Tasks.Select(t => t.Id).ToList(),
+                        new Dictionary<string, string> { ["sign"] = "old", ["chairs"] = "old" }, game.Content.Styles);
+                    ui.Memory.ShowBanner(true);
+                }
                 PlayScene(story, def.IntroKnot, () => PlayMemoryGame(memoryId, def, story, played => AfterMemoryGame(memoryId, def, story, record, played, stars =>
                 {
                     PlayScene(story, stars >= config.Stars[1] ? def.PerfectKnot : def.OkKnot, () =>

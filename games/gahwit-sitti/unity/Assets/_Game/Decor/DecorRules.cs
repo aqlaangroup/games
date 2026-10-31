@@ -120,13 +120,16 @@ namespace Gahwit.Decor
             return sum + sets * Cafe.StyleSetBonus;
         }
 
-        // Pieces earned elsewhere, such as Teta's radio for 3 stars in her pour memory.
+        // Pieces earned elsewhere: Teta's radio for 3 stars in her pour memory, or a regular's gift at friendship level 10.
         void GrantEarnedPieces()
         {
             foreach (var def in Catalog.Pieces)
             {
-                if (def.Source != "memory" || Owns(def.Id)) continue;
-                if (State.MemoryStars.TryGetValue(def.Memory, out int stars) && stars >= def.MemoryStars)
+                if (Owns(def.Id)) continue;
+                bool earned = def.Source == "memory"
+                    ? State.MemoryStars.TryGetValue(def.Memory, out int stars) && stars >= def.MemoryStars
+                    : def.Source == "friendship" && State.Regulars.TryGetValue(def.Regular, out var regular) && regular.Level >= def.FriendshipLevel;
+                if (earned)
                 {
                     State.OwnedDecor.Add(def.Id);
                     Place(def.Id);

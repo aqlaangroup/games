@@ -2512,6 +2512,798 @@ MonoBehaviour:
     m_Localized: 'Fridays before 2006: everyone was here. Bring them back.'
     m_Metadata:
       m_Items: []
+  - m_Id: 299941858631680
+    m_Localized: Hang the curtains
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862825984
+    m_Localized: "New curtains for the caf\xE9 windows"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862825985
+    m_Localized: Put in the sweets case
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862825986
+    m_Localized: "A glass case to show off the caf\xE9's sweets"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862825987
+    m_Localized: Plant the basil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862825988
+    m_Localized: Basil on the windowsill, the way Teta kept it
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862825989
+    m_Localized: Hang the old photos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862825990
+    m_Localized: "Photos from the caf\xE9's early days on the wall"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862825991
+    m_Localized: Lay the tablecloths
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862825992
+    m_Localized: Embroidered cloths on every table
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862825993
+    m_Localized: Set up the Eid corner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862825994
+    m_Localized: The old ma'amoul moulds in a corner for Eid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862825995
+    m_Localized: Make Lana a corner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862825996
+    m_Localized: "A place in the caf\xE9 for Lana's things"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862825997
+    m_Localized: Put up the tea shelf
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862825998
+    m_Localized: A tea shelf, and tea joins the kitchen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862825999
+    m_Localized: Start the shared ledger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826000
+    m_Localized: One ledger for two owners
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826001
+    m_Localized: Hang the lanterns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826002
+    m_Localized: "Lanterns to light the caf\xE9 in the evening"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826003
+    m_Localized: Fix the back room door
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826004
+    m_Localized: The door Teta always kept locked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826005
+    m_Localized: Tidy Teta's back room
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826006
+    m_Localized: The room where Teta kept everything
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826007
+    m_Localized: Hani
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826008
+    m_Localized: Um Samira
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826009
+    m_Localized: Rana
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826010
+    m_Localized: Tray
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826011
+    m_Localized: Cardamom sack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826012
+    m_Localized: Tin box
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826013
+    m_Localized: Eid ma'amoul
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826014
+    m_Localized: Teta's back room
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826015
+    m_Localized: Set up the workbench
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826016
+    m_Localized: A corner for Karim and his tools
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826017
+    m_Localized: Put up the dallah shelf
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826018
+    m_Localized: A place for every dallah
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826019
+    m_Localized: Repair the counter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826020
+    m_Localized: Wood from 1974
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826021
+    m_Localized: Polish the little dallah
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826022
+    m_Localized: The one only Teta poured from
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826023
+    m_Localized: Put up the photo frames
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826024
+    m_Localized: "A wall for the caf\xE9's old photos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826025
+    m_Localized: Frame the opening-day photo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826026
+    m_Localized: "The caf\xE9's opening day, 1974"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826027
+    m_Localized: Set up the Saudi coffee station
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826028
+    m_Localized: Cardamom, saffron and Lana's dallah
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826029
+    m_Localized: Add a majlis bench
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826030
+    m_Localized: Low seating with cushions
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826031
+    m_Localized: Hang the menu board
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826032
+    m_Localized: Both coffees on one board
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826033
+    m_Localized: Put dates on the tables
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826034
+    m_Localized: A bowl of dates on every table
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826035
+    m_Localized: Fill the spice jars
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826036
+    m_Localized: Cardamom and saffron, labelled in Teta's hand
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826037
+    m_Localized: Set two cups on the counter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826038
+    m_Localized: Two matching cups for two owners
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826039
+    m_Localized: Master Subhi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826040
+    m_Localized: The guest from Jeddah
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826041
+    m_Localized: Nawal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826042
+    m_Localized: Roasting pan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826043
+    m_Localized: Coffee grinder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826044
+    m_Localized: Coffee beans
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826045
+    m_Localized: Kerosene stove
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826046
+    m_Localized: Matchbox
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826047
+    m_Localized: "The \u201Cfor later\u201D jar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826048
+    m_Localized: The opening-day photo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826049
+    m_Localized: The first roast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826050
+    m_Localized: Fix the rooftop stairs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826051
+    m_Localized: Old wooden stairs up to the roof
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826052
+    m_Localized: Hang the rooftop lights
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826053
+    m_Localized: All of Amman, seen from above
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826054
+    m_Localized: Put up the new sign
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826055
+    m_Localized: The same name, in new letters
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826056
+    m_Localized: Write the invitations
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826057
+    m_Localized: An invitation for every house, by the door
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826058
+    m_Localized: "Fill the caf\xE9 with flowers"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826059
+    m_Localized: Flowers in every corner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826060
+    m_Localized: "Open the caf\xE9 to everyone"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826061
+    m_Localized: The night of the grand reopening
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826062
+    m_Localized: Set up the long table
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826063
+    m_Localized: One table with room for the whole street
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826064
+    m_Localized: Set up the breakfast counter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826065
+    m_Localized: Fava beans, hummus, olive oil and za'atar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826066
+    m_Localized: Put tables out on the pavement
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826067
+    m_Localized: Breakfast in the open air
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826068
+    m_Localized: Put the radio back on its shelf
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826069
+    m_Localized: Teta's old radio still works
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826070
+    m_Localized: Fill the bread baskets
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826071
+    m_Localized: Fresh bread and sesame ka'ak
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826072
+    m_Localized: Serve the first Friday breakfast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826073
+    m_Localized: The whole street at one table
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826074
+    m_Localized: Yazan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826075
+    m_Localized: Um Rami
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826076
+    m_Localized: The postman
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826077
+    m_Localized: The wedding dress
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826078
+    m_Localized: The Friday radio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826079
+    m_Localized: Set up the accounts desk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826080
+    m_Localized: "A proper desk for the caf\xE9's books"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826081
+    m_Localized: Repair the roof
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826082
+    m_Localized: Before the winter rain comes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826083
+    m_Localized: Set Faris's table
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826084
+    m_Localized: The table he asks for every day
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826085
+    m_Localized: Hang the family photos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826086
+    m_Localized: Family photos by the counter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826087
+    m_Localized: Put back the knafeh frame
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826088
+    m_Localized: An empty frame where the knafeh board hung
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826089
+    m_Localized: Set the deciding table
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826090
+    m_Localized: The table where you two decide together
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826091
+    m_Localized: Put up the recipe book shelf
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826092
+    m_Localized: A shelf for Teta's recipe book
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826093
+    m_Localized: Set up the knafeh station
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826094
+    m_Localized: A tray and a low flame
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826095
+    m_Localized: Restore Abu Fadi's chair
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826096
+    m_Localized: His old chair by the window
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826097
+    m_Localized: Build the window seat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826098
+    m_Localized: A warm seat under the window
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826099
+    m_Localized: Put up the case for the old books
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826100
+    m_Localized: A case for Teta's old notebooks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826101
+    m_Localized: Put the page under glass
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826102
+    m_Localized: The missing page, home at last
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826103
+    m_Localized: Hang the wedding lights
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826104
+    m_Localized: Lights across the whole street
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826105
+    m_Localized: Put up the flower arch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826106
+    m_Localized: "A flower arch at the caf\xE9 door"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826107
+    m_Localized: Set the dessert table
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826108
+    m_Localized: Knafeh for every wedding guest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826109
+    m_Localized: Set the family table
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826110
+    m_Localized: One table on the pavement for the whole family
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941862826111
+    m_Localized: Set two chairs side by side
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020288
+    m_Localized: Two chairs for two sisters, side by side
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020289
+    m_Localized: Host the wedding
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020290
+    m_Localized: The whole street at the wedding
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020291
+    m_Localized: Faris
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020292
+    m_Localized: The first dallah
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020293
+    m_Localized: Knafeh Im Khalil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020294
+    m_Localized: Two cups
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020295
+    m_Localized: Tala
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020296
+    m_Localized: Dr. Hiba
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020297
+    m_Localized: Sara and Noor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020298
+    m_Localized: Mrs. Odeh
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020299
+    m_Localized: The one he waited for
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020300
+    m_Localized: The photo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020301
+    m_Localized: Her name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020302
+    m_Localized: Tawjihi year
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020303
+    m_Localized: The red mark
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020304
+    m_Localized: Results day
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020305
+    m_Localized: Cards by the till
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020306
+    m_Localized: The burned pot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020307
+    m_Localized: Two hundred plates
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020308
+    m_Localized: The master's counter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020309
+    m_Localized: The workshop's family
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020310
+    m_Localized: A sign for Riyadh
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020311
+    m_Localized: My husband in Dubai
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020312
+    m_Localized: Two years
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020313
+    m_Localized: Khalto goes quiet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020314
+    m_Localized: The light stays on
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020315
+    m_Localized: Two in the morning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020316
+    m_Localized: Sweeter than coffee
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020317
+    m_Localized: Come in and play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020318
+    m_Localized: The Friday song
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020319
+    m_Localized: His first wedding
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020320
+    m_Localized: Sums on a napkin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020321
+    m_Localized: Small news
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020322
+    m_Localized: A chair waiting for her
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020323
+    m_Localized: A letter never delivered
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020324
+    m_Localized: From Riyadh, 2007
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020325
+    m_Localized: A promise is still a promise
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020326
+    m_Localized: The same eyes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020327
+    m_Localized: Her brightest pupil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020328
+    m_Localized: The school bell
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020329
+    m_Localized: Just a customer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020330
+    m_Localized: The corner piece
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020331
+    m_Localized: The first sack of beans
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020332
+    m_Localized: By the window
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020333
+    m_Localized: The man at the window
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020334
+    m_Localized: A letter for Abu Fadi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020335
+    m_Localized: Teta's ma'amoul moulds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020336
+    m_Localized: The tin box
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020337
+    m_Localized: The opening-day photo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020338
+    m_Localized: The roasting pan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020339
+    m_Localized: Teta's sewing box
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020340
+    m_Localized: Teta's record
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020341
+    m_Localized: The first dallah
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020342
+    m_Localized: The knafeh tray
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020343
+    m_Localized: The two cups
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020344
+    m_Localized: Abu Fadi's window clock
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020345
+    m_Localized: Tala's study lamp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020346
+    m_Localized: Um Rami's clay plate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020347
+    m_Localized: The Riyadh sign
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020348
+    m_Localized: The embroidered cushion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020349
+    m_Localized: Night jasmine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020350
+    m_Localized: Yazan's old oud
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020351
+    m_Localized: The little wooden chair
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020352
+    m_Localized: The wooden letterbox
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020353
+    m_Localized: The school bell
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020354
+    m_Localized: The first grinder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020355
+    m_Localized: The Jeddah roshan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299941867020356
+    m_Localized: "{0} have arrived at the caf\xE9"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

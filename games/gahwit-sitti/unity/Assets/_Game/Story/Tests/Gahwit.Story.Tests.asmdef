@@ -3,6 +3,7 @@
     "rootNamespace": "Gahwit.Story.Tests",
     "references": [
         "Gahwit.Story",
+        "Gahwit.Core",
         "Ink",
         "Ink-Libraries",
         "UnityEngine.TestRunner",

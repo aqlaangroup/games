@@ -25,6 +25,8 @@ namespace Gahwit.Core
         public string Source = "coins";
         public string Memory;         // source "memory": earned with MemoryStars stars in this memory
         public int MemoryStars;
+        public string Regular;        // source "friendship": this regular's gift at FriendshipLevel (SYSTEMS_B.md section 3)
+        public int FriendshipLevel;
         public int W, D;              // footprint in grid cells
         public List<DecorPart> Parts = new List<DecorPart>();
     }

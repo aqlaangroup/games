@@ -2,6 +2,20 @@
 
 Decisions and known gaps. Newest first. Read this at the start of each session (`/CLAUDE.md`).
 
+## 2026-10-31: the whole season written, and the café changes with every task (missing/11, 12)
+
+- **The owner asked us to write the story ourselves.** Chapters 2–10 (54 task scenes, memories 2–10, letters 2–6 with voice notes) and the 36 regulars' scenes (`Story/regulars.ink`) are written in the three files each: dialect, English and neutral Arabic. All `[draft]`. Lana speaks Najdi everywhere, including chapter 1's message.
+- **Callbacks read the knot,** because the game saves a choice under the knot it was made in: `chose("basil_pots")`, `chose("menu_board")`, `chose("faris_table")`. The parity test now walks every file with every choice id of the season, and a new test checks that every knot the content names exists and every speaker has a character entry.
+- **Story details settled while writing** (STORY_BIBLE.md still holds the outline):
+  - Karim's master is Subhi.
+  - Abu Fadi's lost love is Najwa.
+  - Samira's mother remarried in 1974, so the wedding dress in memory 6 is for a second marriage.
+  - Letter 6 puts «رنا ونوال» under Teta's sign; the bible had «قهوة البنتين».
+  - Every letter has a voice note; voice notes 2–6 still need recordings.
+- **Café props:** each chapter 2–10 task adds placeholder-shape props to the café, defined in `chapters.json` under `props`; 90 props in all, some only for the chosen style. The 1974 memories now show only chapter 1's café.
+- **Rewards:** one decor piece per memory at 3 stars, and one gift from each regular at friendship level 10 (new `source: "friendship"`), 21 new pieces, tested.
+- **Smaller fixes:** memory 10 plays in today's café (`present`). Sara and Noor get a plural arrival note. Samira and Karim get favourite orders. Faris's later scenes wait for chapters 9 and 10.
+
 ## 2026-10-31: story systems, the journal, and a screen-by-screen pass (missing/10, 11, 15)
 
 - **Languages for dialogue (decided):** one Ink file per language. `chapter1.ink` is the Amman dialect source; `chapter1_en.ink` is English; `chapter1_ar.ink` is neutral Arabic, played in step under the dialect as subtitles. `StoryTests` walks every path through every knot and fails if the files differ in knots, lines, speakers or choices. The game loads the player's language and falls back to the dialect file.

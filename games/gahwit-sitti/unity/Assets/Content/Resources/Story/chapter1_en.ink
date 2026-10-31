@@ -108,11 +108,3 @@ Salma, my heart… if you've found the letter, make two cups. One for you, and o
 === lana_notify ===
 Landed in Amman. Mom says she doesn't want to see my aunt… and I want to know why. #lana
 -> END
-
-// [draft]
-=== abu_fadi_3 ===
-You know, Salma… I had someone I used to wait for here, too. #abu_fadi
-Every Friday she sat by the window, ordered her coffee without sugar, and didn't say a word. #abu_fadi
-And what happened, Uncle? #salma
-She left in '76. And I kept coming every Friday, in case she came back. Your Teta knew, and never told a soul. #abu_fadi
--> END

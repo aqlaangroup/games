@@ -147,16 +147,18 @@ Hello there. #salma #smile
         [Test]
         public void EveryLanguageFollowsTheDialectFileLineForLine()
         {
-            var sources = Directory.GetFiles(StoryFolder, "*.ink").Select(Path.GetFileNameWithoutExtension)
-                .Where(name => !name.EndsWith("_en") && !name.EndsWith("_ar")).ToList();
+            var sources = DialectFiles();
             Assert.IsNotEmpty(sources);
+            // chose() can read a choice made in another file (chapter 10 reads chapter 2's), so every file is walked
+            // with every choice id of the season, and with none.
+            var answers = new List<string> { "" };
+            answers.AddRange(sources.Select(name => StoryPlayer.FromResources("Story/" + name))
+                .SelectMany(story => story.Knots.SelectMany(knot => Paths(story, knot))).SelectMany(p => p)
+                .Where(step => step.StartsWith("choice ")).SelectMany(step => step.Substring(7).Split(',')).Distinct());
             foreach (var name in sources)
             {
                 string path = "Story/" + name;
                 var dialect = StoryPlayer.FromResources(path);
-                var answers = new List<string> { "" };
-                answers.AddRange(dialect.Knots.SelectMany(knot => Paths(dialect, knot)).SelectMany(p => p)
-                    .Where(step => step.StartsWith("choice ")).SelectMany(step => step.Substring(7).Split(',')).Distinct());
                 foreach (string other in new[] { StoryPlayer.PathFor(path, "en"), StoryPlayer.SubtitlesPath(path) })
                 {
                     Assert.IsTrue(StoryPlayer.Exists(other), $"{other} is missing");
@@ -169,6 +171,36 @@ Hello there. #salma #smile
                             CollectionAssert.AreEqual(Paths(dialect, knot), Paths(translation, knot), $"{other}, {knot}, chose \"{answer}\"");
                     }
                 }
+            }
+        }
+
+        static List<string> DialectFiles() => Directory.GetFiles(StoryFolder, "*.ink").Select(Path.GetFileNameWithoutExtension)
+            .Where(name => !name.EndsWith("_en") && !name.EndsWith("_ar")).ToList();
+
+        // Every knot the game's content names (task scenes, memories, letters) is in its file, and every speaker in
+        // every file is a character with a colour (or a letter or narration line).
+        [Test]
+        public void TheContentAndTheStoriesAgree()
+        {
+            var content = Gahwit.Core.ChapterContent.Load();
+            var named = new List<(string story, string knot)>();
+            foreach (var chapter in content.Chapters)
+                named.AddRange(chapter.Tasks.Select(t => (chapter.Story, t.Knot)));
+            foreach (var memory in content.Memories.Values)
+                named.AddRange(new[] { memory.LeadKnot, memory.IntroKnot, memory.PerfectKnot, memory.OkKnot, memory.OutroKnot, memory.ReturnKnot, memory.GameKnot }
+                    .Where(k => k != null).Select(k => (memory.Story, k)));
+            foreach (var letter in content.Letters.Values)
+                named.AddRange(new[] { letter.Knot, letter.VoiceKnot, letter.NotifyKnot }.Select(k => (letter.Story, k)));
+            foreach (var (story, knot) in named)
+                CollectionAssert.Contains(StoryPlayer.FromResources(story).Knots.ToList(), knot, $"{story} has no knot {knot}");
+
+            var notCharacters = new HashSet<string> { "sys", "letter", "letter_faded", "letter_signature" };
+            foreach (var name in DialectFiles())
+            {
+                var story = StoryPlayer.FromResources("Story/" + name);
+                foreach (string speaker in story.Knots.SelectMany(knot => Paths(story, knot)).SelectMany(p => p)
+                             .Where(step => step.StartsWith("line ")).Select(step => step.Split(' ')[1]).Distinct())
+                    Assert.IsTrue(notCharacters.Contains(speaker) || content.Characters.ContainsKey(speaker), $"{name}: no character '{speaker}' in chapters.json");
             }
         }
 

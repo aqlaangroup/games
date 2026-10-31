@@ -90,8 +90,41 @@ namespace Gahwit.Cafe
         // ---------- Task states ----------
 
         // Tasks with a style choice (sign, chairs) take their colours from the chosen style.
+        // Chapters 2–10 change the café through their tasks' props (chapters.json), built once and shown when done.
+        public void SetTaskProps(IEnumerable<TaskDef> tasks)
+        {
+            foreach (var task in tasks)
+            {
+                if (task.Props == null || taskProps.ContainsKey(task.Id)) continue;
+                var built = new List<(TaskProp, GameObject)>();
+                foreach (var prop in task.Props)
+                {
+                    var root = Group("Prop " + task.Id, transform, new Vector3(prop.At[0], prop.At[1], prop.At[2]), prop.Rot);
+                    foreach (var part in prop.Parts)
+                    {
+                        var type = part.Shape == "sphere" ? PrimitiveType.Sphere : part.Shape == "cylinder" ? PrimitiveType.Cylinder : PrimitiveType.Cube;
+                        // Unity's cylinder is 2 units tall, so its height scale is halved.
+                        var size = new Vector3(part.Size[0], type == PrimitiveType.Cylinder ? part.Size[1] / 2f : part.Size[1], part.Size[2]);
+                        Shape(type, part.Shape, root, new Vector3(part.At[0], part.At[1], part.At[2]), size, Mat(part.Color), true);
+                    }
+                    root.gameObject.SetActive(false);
+                    built.Add((prop, root.gameObject));
+                }
+                taskProps[task.Id] = built;
+            }
+        }
+
+        readonly Dictionary<string, List<(TaskProp prop, GameObject root)>> taskProps = new Dictionary<string, List<(TaskProp, GameObject)>>();
+
         public void Apply(ICollection<string> done, IDictionary<string, string> taskStyles = null, IDictionary<string, StyleDef> styles = null)
         {
+            foreach (var pair in taskProps)
+            {
+                string chosen = taskStyles != null && taskStyles.TryGetValue(pair.Key, out var style) ? style : null;
+                foreach (var (prop, root) in pair.Value)
+                    root.SetActive(done.Contains(pair.Key) && (prop.Style == null || prop.Style == chosen));
+            }
+
             var signStyle = StyleFor("sign", taskStyles, styles);
             bool sign = done.Contains("sign");
             plaque.localRotation = Quaternion.Euler(0, 0, sign ? 0 : 9);

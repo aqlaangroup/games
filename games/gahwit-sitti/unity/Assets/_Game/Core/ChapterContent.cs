@@ -56,6 +56,7 @@ namespace Gahwit.Core
         public FavouriteItem Favourite;    // a regular's favourite: +3 friendship points (SYSTEMS_B.md section 3)
         public bool FriendshipFromStart;   // Abu Fadi: friendship counts before level 6 unlocks it for others
         public bool Female;                // for Arabic text that agrees with her (وصلت, not وصل)
+        public bool Plural;                // a couple, such as Sara and Noor (وصلوا)
         // A friendship scene that waits for the story: level → chapter. Faris's 6 and 10 wait for chapters 8 and 9
         // (STORY_BIBLE.md section 9).
         public Dictionary<int, int> StoryFromChapter;
@@ -80,6 +81,16 @@ namespace Gahwit.Core
         public string Knot;
         public string Memory; // a memory that plays after this task's scene, if any
         public List<string> Styles; // style choices offered when restoring, if any
+        public List<TaskProp> Props; // what the finished task adds to the café (chapters 2–10)
+    }
+
+    // Something a finished task adds to the café, made of placeholder shapes until the 3D art replaces it (missing/13).
+    public sealed class TaskProp
+    {
+        public List<DecorPart> Parts = new List<DecorPart>();
+        public float[] At;   // metres from the room's centre: x (right), y (up), z (towards the camera); the back wall is z = -4
+        public float Rot;    // degrees around y
+        public string Style; // only when the player chose this style for the task, if set
     }
 
     public sealed class StyleDef
@@ -106,6 +117,7 @@ namespace Gahwit.Core
         public List<string> Objects; // find: what to find (memobj.<id>)
         public List<string> Decoys;  // find: the rest of the room
         public List<List<float>> Line; // trace: the seam, as [x, y] in centimetres
+        public bool Present;      // played in today's café instead of 1974 (the season's last memory)
     }
 
     public sealed class LetterDef

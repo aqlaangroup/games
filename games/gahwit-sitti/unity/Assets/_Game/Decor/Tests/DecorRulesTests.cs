@@ -34,9 +34,14 @@ namespace Gahwit.Decor.Tests
         }
 
         [Test]
-        public void TheCatalogHasFifteenPiecesThatAllFitTheGrid()
+        public void TheCatalogHasItsShopPiecesAndARewardForEachMemoryAndRegular()
         {
-            Assert.AreEqual(15, catalog.Pieces.Count);
+            Assert.AreEqual(14, catalog.Pieces.Count(p => p.Source == "coins"), "ring 1's shop");
+            var content = ChapterContent.Load();
+            CollectionAssert.AreEquivalent(content.Memories.Keys, catalog.Pieces.Where(p => p.Source == "memory").Select(p => p.Memory),
+                "one 3-star piece per memory (SYSTEMS_B.md section 5)");
+            CollectionAssert.AreEquivalent(config.LevelB.Regulars.Schedule.Keys,
+                catalog.Pieces.Where(p => p.Source == "friendship").Select(p => p.Regular), "one level-10 gift per regular (section 3)");
             Assert.IsTrue(catalog.Pieces.All(p => p.Cosiness >= config.LevelB.Cafe.CosinessPerPiece[0] && p.Cosiness <= config.LevelB.Cafe.CosinessPerPiece[1]));
             Assert.IsTrue(catalog.Pieces.Where(p => p.Source == "coins").All(p => p.PriceTier < config.LevelB.Cafe.DecorPriceCoinsByTier.Count));
             Assert.AreEqual(5, catalog.Pieces.Count(p => p.FromLevel == config.Unlocks.Level("decor_shop")), "5 pieces when the shop opens");
@@ -115,6 +120,20 @@ namespace Gahwit.Decor.Tests
             game.RecordMemory("m1_pour", 3);
             Assert.IsTrue(rules.Owns("teta_radio"));
             Assert.IsTrue(rules.IsPlaced("teta_radio"));
+        }
+
+        [Test]
+        public void ARegularAtFriendshipTenGivesTheirPiece()
+        {
+            var game = NewGame();
+            var rules = new DecorRules(game, catalog, Layout());
+            var gift = catalog.Get("abu_fadi_clock");
+            game.State.Regulars["abu_fadi"] = new RegularState { Level = gift.FriendshipLevel - 1 };
+            game.Touch();
+            Assert.IsFalse(rules.Owns(gift.Id));
+            game.State.Regulars["abu_fadi"].Level = gift.FriendshipLevel;
+            game.Touch();
+            Assert.IsTrue(rules.Owns(gift.Id));
         }
 
         [Test]

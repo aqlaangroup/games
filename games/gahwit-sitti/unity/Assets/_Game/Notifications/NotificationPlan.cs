@@ -36,7 +36,7 @@ namespace Gahwit.Notifications
                 {
                     if (!game.Content.Characters.TryGetValue(regular.Key, out var character) || !character.PlacesOrders || character.FromChapter > state.Chapter) continue;
                     var at = NextVisit(regular.Value, game.Config.LevelB.Cafe.TimeOfDayStartHours, nowLocal);
-                    if (at != null) plan.Add(Note("regular", at.Value, character.Female ? "notify.regularF" : "notify.regular", "char." + regular.Key));
+                    if (at != null) plan.Add(Note("regular", at.Value, character.Plural ? "notify.regularP" : character.Female ? "notify.regularF" : "notify.regular", "char." + regular.Key));
                 }
 
             if (on.Away) plan.Add(Note("away", nowLocal.AddDays(config.AwayDays), "notify.away", null));
