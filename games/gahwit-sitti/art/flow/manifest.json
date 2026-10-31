@@ -1,0 +1,102 @@
+{
+  "project": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195",
+  "status": "Stopped early: Flow returned 'You've reached your usage limit. Please try again later. You have not been charged for this generation.' 7 of 23 expression sheets done; no icon sheets or app icon yet.",
+  "credits": "Flow showed 'Generating will use 0 credits' for every generation. Download sizes offered: 1K original, 2K upscaled, 4K greyed out ('Learn more').",
+  "pending": [
+    "portraits/teta.png (use teta_young as reference)",
+    "portraits/fadi_young.png (use abu_fadi as reference)",
+    "portraits/karim.png (two earlier options put a beige tile behind each face; regeneration hit the limit)",
+    "portraits/faris.png",
+    "portraits/hani.png",
+    "portraits/dr_hiba.png",
+    "portraits/tala.png",
+    "portraits/um_rami.png",
+    "portraits/yazan.png",
+    "portraits/sara_noor.png",
+    "portraits/postman.png",
+    "portraits/mrs_odeh.png",
+    "portraits/tourist.png",
+    "portraits/seller_1974.png",
+    "portraits/samira_mother_1974.png",
+    "portraits/karim_master_1974.png",
+    "icons/sheet_01.png",
+    "icons/sheet_02.png",
+    "icons/sheet_03.png",
+    "icons/sheet_04.png",
+    "icons/sheet_05.png",
+    "icons/sheet_06.png",
+    "icons/sheet_07.png",
+    "icons/sheet_08.png",
+    "icons/sheet_09.png",
+    "icons/sheet_10.png",
+    "icons/sheet_11.png",
+    "icons/sheet_12.png",
+    "icons/sheet_13.png",
+    "app_icon.png"
+  ],
+  "files": [
+    {
+      "path": "portraits/salma.png",
+      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. Expression sheet of Salma, 29, Jordanian woman from Amman. Warm light-olive skin, dark brown hair in a loose low bun, soft brown eyes, small gold earrings, blush-pink linen shirt, cream apron. Kind and capable. Five head-and-shoulders portraits of the SAME character side by side in one row, evenly spaced, all the same size, each looking at the viewer: 1 neutral, 2 smiling, 3 sad, 4 surprised, 5 thinking. Plain flat background #FBF5F3. Nothing between or behind them.",
+      "model": "Nano Banana Pro (Google Flow), 16:9, 2 images per prompt",
+      "date": "2026-10-31",
+      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/f9e1a6e7-6fb3-44e5-9fb8-4d59e1886ae1",
+      "size": "1376x768",
+      "note": "Option 2 of 2. Clean gaps between all five. Flow 1K original (JPEG 1376x768) converted to PNG with sips. Not 2K: Flow's 2K 'Upscaled' download adds a partial or faded duplicate row of faces above the real row (checked on rana: the 1K original is clean, the 2K file has the extra row)."
+    },
+    {
+      "path": "portraits/lana.png",
+      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. Expression sheet of Lana, 28, Saudi woman from Riyadh. Soft lilac hijab wrapped neatly, plum open abaya over cream, minimal gold jewellery. Sharp confident eyes, a teasing half-smile. Five head-and-shoulders portraits of the SAME character side by side in one row, evenly spaced, all the same size, each looking at the viewer: 1 neutral, 2 smiling, 3 sad, 4 surprised, 5 thinking. Plain flat background #FBF5F3. Nothing between or behind them.",
+      "model": "Nano Banana Pro (Google Flow), 16:9, 2 images per prompt",
+      "date": "2026-10-31",
+      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/8d1ed437-15bc-42e8-8201-3c8f2e58e243",
+      "size": "1376x768",
+      "note": "Option B of 2. Thin gaps between figures; bodies end in a hard flat line at the bottom. Flow 1K original (JPEG 1376x768) converted to PNG with sips. Not 2K: Flow's 2K 'Upscaled' download adds a partial or faded duplicate row of faces above the real row (checked on rana: the 1K original is clean, the 2K file has the extra row)."
+    },
+    {
+      "path": "portraits/abu_fadi.png",
+      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. Expression sheet of Abu Fadi, 75, Jordanian man. Silver hair combed back, neat grey moustache, warm wrinkled eyes, sage knitted cardigan over a white shirt. Gentle. Five head-and-shoulders portraits of the SAME character side by side in one row, evenly spaced, all the same size, each looking at the viewer: 1 neutral, 2 smiling, 3 sad, 4 surprised, 5 thinking. Plain flat background #FBF5F3. Nothing between or behind them.",
+      "model": "Nano Banana Pro (Google Flow), 16:9, 2 images per prompt",
+      "date": "2026-10-31",
+      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/1da67907-c883-46b7-a883-379c5c0afdf3",
+      "size": "1376x768",
+      "note": "Regenerated once (first round's cardigans overlapped). Kept regeneration option B: rounded busts with clear gaps. Flow 1K original (JPEG 1376x768) converted to PNG with sips. Not 2K: Flow's 2K 'Upscaled' download adds a partial or faded duplicate row of faces above the real row (checked on rana: the 1K original is clean, the 2K file has the extra row)."
+    },
+    {
+      "path": "portraits/teta_young.png",
+      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. ERA: Amman, 1974; warm faded film colours, amber and rose tones. Expression sheet of Young Teta (Im Khalil) in 1974, a 29-year-old Jordanian woman who has just opened a café. Light floral rose headscarf tied loosely at the back, lilac dress with small white flowers, cream cardigan. Warm round face, bright laughing eyes. Five head-and-shoulders portraits of the SAME character side by side in one row, evenly spaced, all the same size, each looking at the viewer: 1 neutral, 2 smiling, 3 sad, 4 surprised, 5 thinking. Plain flat background #FBF5F3. Nothing between or behind them.",
+      "model": "Nano Banana Pro (Google Flow), 16:9, 2 images per prompt",
+      "date": "2026-10-31",
+      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/7cd446cb-edeb-49b6-abc5-6468705f7e3a",
+      "size": "1376x768",
+      "note": "Option A of 2. Background is blush pink, not #FBF5F3 (owner said this is fine). The 'smiling' frame is a wink (both options did this). Flow 1K original (JPEG 1376x768) converted to PNG with sips. Not 2K: Flow's 2K 'Upscaled' download adds a partial or faded duplicate row of faces above the real row (checked on rana: the 1K original is clean, the 2K file has the extra row)."
+    },
+    {
+      "path": "portraits/samira.png",
+      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. Expression sheet of Khalto Samira, 58, Jordanian. Plum headscarf, patterned long dress, gold bracelets. Expressive eyebrows, funny and warm. Five head-and-shoulders portraits of the SAME character side by side in one row, evenly spaced, all the same size, each looking at the viewer: 1 neutral, 2 smiling, 3 sad, 4 surprised, 5 thinking. Plain flat background #FBF5F3. Nothing between or behind them.",
+      "model": "Nano Banana Pro (Google Flow), 16:9, 2 images per prompt",
+      "date": "2026-10-31",
+      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/836142fc-cae0-4d19-9623-308212aec511",
+      "size": "1376x768",
+      "note": "Regenerated once; kept regeneration option B, the only one of four with gaps between figures. Half-body framing instead of head-and-shoulders, so faces are smaller than on the other sheets. Flow 1K original (JPEG 1376x768) converted to PNG with sips. Not 2K: Flow's 2K 'Upscaled' download adds a partial or faded duplicate row of faces above the real row (checked on rana: the 1K original is clean, the 2K file has the extra row)."
+    },
+    {
+      "path": "portraits/rana.png",
+      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. Expression sheet of Rana, 51, Salma's mother, from Amman. Elegant, short dark hair with grey streaks, pearl earrings, a navy blouse. Proud, guarded eyes. Five head-and-shoulders portraits of the SAME character side by side in one row, evenly spaced, all the same size, each looking at the viewer: 1 neutral, 2 smiling, 3 sad, 4 surprised, 5 thinking. Plain flat background #FBF5F3. Nothing between or behind them.",
+      "model": "Nano Banana Pro (Google Flow), 16:9, 2 images per prompt",
+      "date": "2026-10-31",
+      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/b72ae57a-4801-4ee2-93a9-73b5a5682606",
+      "size": "1376x768",
+      "note": "Option A of 2. The 'thinking' frame glances to the side. A one-row regeneration was requested but Flow's usage limit blocked it; the 1K original has no extra row. Flow 1K original (JPEG 1376x768) converted to PNG with sips. Not 2K: Flow's 2K 'Upscaled' download adds a partial or faded duplicate row of faces above the real row (checked on rana: the 1K original is clean, the 2K file has the extra row)."
+    },
+    {
+      "path": "portraits/nawal.png",
+      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. Expression sheet of Nawal, 49, Lana's mother, living in Riyadh. Black abaya, soft beige hijab, gentle careful face. Five head-and-shoulders portraits of the SAME character side by side in one row, evenly spaced, all the same size, each looking at the viewer: 1 neutral, 2 smiling, 3 sad, 4 surprised, 5 thinking. Plain flat background #FBF5F3. Nothing between or behind them.",
+      "model": "Nano Banana Pro (Google Flow), 16:9, 2 images per prompt",
+      "date": "2026-10-31",
+      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/97df784b-0b9b-4162-9b58-4e333cd0a077",
+      "size": "1376x768",
+      "note": "Option A of 2 (option B changed hijab colour in every frame). Abayas nearly touch; abaya trim colour varies between frames (sage/gold); looks younger than 49. Flow 1K original (JPEG 1376x768) converted to PNG with sips. Not 2K: Flow's 2K 'Upscaled' download adds a partial or faded duplicate row of faces above the real row (checked on rana: the 1K original is clean, the 2K file has the extra row)."
+    }
+  ]
+}

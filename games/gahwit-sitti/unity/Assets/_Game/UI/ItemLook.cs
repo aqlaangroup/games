@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Gahwit.Core;
 using Gahwit.Merge;
 using RTLTMPro;
@@ -11,10 +12,20 @@ namespace Gahwit.UI
     public sealed class ItemLook
     {
         readonly Game game;
+        readonly Dictionary<string, Sprite> icons = new Dictionary<string, Sprite>();
 
         public ItemLook(Game game)
         {
             this.game = game;
+        }
+
+        // The item's picture: Art/Items/<chain>_<level>, or the generator's id (missing/13). Null where none is drawn.
+        public Sprite Icon(Item item)
+        {
+            string name = item.IsGenerator ? item.Generator : item.Chain + "_" + item.Level;
+            if (icons.TryGetValue(name, out var sprite)) return sprite;
+            var texture = Resources.Load<Texture2D>("Art/Items/" + name);
+            return icons[name] = texture != null ? Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f)) : null;
         }
 
         public Color Tint(string chain, int level)
@@ -51,17 +62,26 @@ namespace Gahwit.UI
         readonly CanvasGroup group;
         readonly RTLTextMeshPro level;
         readonly RTLTextMeshPro name;
-        readonly float levelSize;
+        readonly Image icon, badge;
+        readonly float levelSize, nameSize;
 
         public ItemTile(Transform parent, string objectName, float levelSize, float nameSize)
         {
             this.levelSize = levelSize;
+            this.nameSize = nameSize;
             body = UiKit.Panel(parent, objectName, Color.white, 24);
             body.raycastTarget = false;
             Root = body.rectTransform;
             group = Root.gameObject.AddComponent<CanvasGroup>();
             group.blocksRaycasts = false;
             group.interactable = false;
+
+            icon = UiKit.Icon(Root, "Icon", null, Color.white, 0);
+            icon.rectTransform.Stretch(6, 6, 6, 6);
+            icon.gameObject.SetActive(false);
+            badge = UiKit.Panel(Root, "Badge", new Color(0.23f, 0.15f, 0.19f, 0.82f), 14);
+            badge.raycastTarget = false;
+            badge.gameObject.SetActive(false);
 
             level = UiKit.Text(Root, "Level", "", levelSize, Color.white, TextAlignmentOptions.Center);
             level.fontStyle = FontStyles.Bold;
@@ -85,6 +105,25 @@ namespace Gahwit.UI
             var color = item.IsGenerator ? look.GeneratorTint(item.Chain) : look.Tint(item.Chain, item.Level);
             body.color = color;
             var text = Palette.TextOn(color);
+            var picture = look.Icon(item);
+            icon.sprite = picture;
+            icon.gameObject.SetActive(picture != null);
+            badge.gameObject.SetActive(picture != null);
+            if (picture != null)
+            {
+                // The picture fills the tile, and the level stays readable in a badge in the corner (not colour alone).
+                var corner = new Vector2(levelSize * 0.9f, levelSize * 0.75f);
+                badge.rectTransform.Pin(new Vector2(0, 1), new Vector2(4, -4), corner);
+                level.rectTransform.Pin(new Vector2(0, 1), new Vector2(4, -4), corner);
+                level.fontSizeMax = levelSize * 0.55f;
+                level.lineSpacing = 0;
+                level.text = item.Level.ToString();
+                level.color = Color.white;
+                if (name != null) name.gameObject.SetActive(false);
+                return;
+            }
+            level.rectTransform.Stretch(4, 4, 0, nameSize > 0 ? nameSize * 1.2f : 0);
+            if (name != null) name.gameObject.SetActive(true);
             level.text = item.IsGenerator ? look.GeneratorName(item.Generator) : item.Level.ToString();
             // A generator shows its two-word name where an item shows a number: smaller, with tighter lines.
             level.fontSizeMax = item.IsGenerator ? levelSize * 0.55f : levelSize;
