@@ -512,6 +512,7 @@
       "n": 1,
       "ar": "رجعة سلمى",
       "en": "Homecoming",
+      "targetDay": 1,
       "taskCosts": [
         10,
         15,
@@ -530,6 +531,7 @@
       "n": 2,
       "ar": "خطط خالتو",
       "en": "Khalto's plans",
+      "targetDay": 1,
       "taskCosts": [
         60,
         70,
@@ -548,6 +550,7 @@
       "n": 3,
       "ar": "لانا من الرياض",
       "en": "Lana from Riyadh",
+      "targetDay": 2,
       "taskCosts": [
         110,
         120,
@@ -566,6 +569,7 @@
       "n": 4,
       "ar": "دلال ستّي",
       "en": "Teta's dallahs",
+      "targetDay": 3,
       "taskCosts": [
         140,
         150,
@@ -584,6 +588,7 @@
       "n": 5,
       "ar": "قهوتين",
       "en": "Two coffees",
+      "targetDay": 5,
       "taskCosts": [
         200,
         220,
@@ -602,6 +607,7 @@
       "n": 6,
       "ar": "الافتتاح",
       "en": "Grand reopening",
+      "targetDay": 7,
       "taskCosts": [
         250,
         270,
@@ -620,6 +626,7 @@
       "n": 7,
       "ar": "فطور الجمعة",
       "en": "Friday breakfast",
+      "targetDay": 10,
       "taskCosts": [
         330,
         350,
@@ -638,6 +645,7 @@
       "n": 8,
       "ar": "عرض فارس",
       "en": "Faris's offer",
+      "targetDay": 14,
       "taskCosts": [
         450,
         480,
@@ -656,6 +664,7 @@
       "n": 9,
       "ar": "الصفحة الناقصة",
       "en": "The missing page",
+      "targetDay": 21,
       "taskCosts": [
         850,
         900,
@@ -674,6 +683,7 @@
       "n": 10,
       "ar": "عرس بالحارة",
       "en": "A wedding in the neighborhood",
+      "targetDay": 30,
       "taskCosts": [
         1250,
         1300,
@@ -1112,10 +1122,11 @@
     },
     "walkIns": {
       "tipCoins": [
-        2,
-        10
+        1,
+        5
       ],
-      "leaveAfterMinutes": 10
+      "leaveAfterMinutes": 10,
+      "proposed": "Changed on 2026-10-31 from the spec's 2–10 to 1–5 coins: with 2–10 the typical player finished chapter 6 two days early (missing/05 pacing test). Tune in playtests."
     },
     "regulars": {
       "count": 12,

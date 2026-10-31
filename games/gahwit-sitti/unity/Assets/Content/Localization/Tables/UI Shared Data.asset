@@ -947,6 +947,210 @@ MonoBehaviour:
     m_Key: wardrobe.dress_embroidered
     m_Metadata:
       m_Items: []
+  - m_Id: 109159625252864
+    m_Key: kitchen.store
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447168
+    m_Key: kitchen.storage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447169
+    m_Key: storage.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447170
+    m_Key: storage.count
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447171
+    m_Key: storage.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447172
+    m_Key: storage.takeOut
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447173
+    m_Key: storage.buySlot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447174
+    m_Key: gems.done
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447175
+    m_Key: gems.offline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447176
+    m_Key: gems.failed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447177
+    m_Key: gems.notenoughgems
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447178
+    m_Key: gems.cancelled
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447179
+    m_Key: gems.unavailable
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447180
+    m_Key: ads.soon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447181
+    m_Key: levelUp.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447182
+    m_Key: levelUp.rewards
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447183
+    m_Key: levelUp.continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447184
+    m_Key: chapterDone.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447185
+    m_Key: chapterDone.rewards
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447186
+    m_Key: chapterDone.continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447187
+    m_Key: energy.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447188
+    m_Key: energy.tip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447189
+    m_Key: energy.refill
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447190
+    m_Key: bubble.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447191
+    m_Key: bubble.text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447192
+    m_Key: bubble.buy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447193
+    m_Key: bubble.no
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447194
+    m_Key: space.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447195
+    m_Key: space.text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447196
+    m_Key: space.sell
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447197
+    m_Key: space.store
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447198
+    m_Key: space.later
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447199
+    m_Key: unlock.ok
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447200
+    m_Key: unlock.storage.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447201
+    m_Key: unlock.storage.text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447202
+    m_Key: unlock.decor_shop.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447203
+    m_Key: unlock.decor_shop.text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447204
+    m_Key: unlock.wardrobe.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447205
+    m_Key: unlock.wardrobe.text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447206
+    m_Key: unlock.order_slot_4.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447207
+    m_Key: unlock.order_slot_4.text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447208
+    m_Key: unlock.order_slot_5.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447209
+    m_Key: unlock.order_slot_5.text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447210
+    m_Key: unlock.regular_friendship.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447211
+    m_Key: unlock.regular_friendship.text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447212
+    m_Key: unlock.chain_tea.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447213
+    m_Key: unlock.chain_tea.text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447214
+    m_Key: unlock.chain_saudi.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447215
+    m_Key: unlock.chain_saudi.text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447216
+    m_Key: unlock.chain_dairy.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447217
+    m_Key: unlock.chain_dairy.text
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -16,7 +16,8 @@ namespace Gahwit.Save
             [1] = AddAccount,
             [2] = AddEasyOrders,
             [3] = AddArrivalTimes,
-            [4] = AddOccasions
+            [4] = AddOccasions,
+            [5] = AddUnlockCards
         };
 
         public static JObject Upgrade(JObject raw, BalanceConfig config)
@@ -141,6 +142,16 @@ namespace Gahwit.Save
             if (wardrobe["occasions"] == null) wardrobe["occasions"] = new JObject();
             save["wardrobe"] = wardrobe;
             save["schemaVersion"] = 5;
+            return save;
+        }
+
+        // Version 6 (2026-10-31) remembers which unlock cards were shown, so each shows once.
+        static JObject AddUnlockCards(JObject save, BalanceConfig config)
+        {
+            var player = save["player"] as JObject ?? new JObject();
+            if (player["unlocksShown"] == null) player["unlocksShown"] = new JArray();
+            save["player"] = player;
+            save["schemaVersion"] = 6;
             return save;
         }
 

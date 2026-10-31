@@ -133,6 +133,23 @@ namespace Gahwit.Cafe
 
         ParticleSystem rain;
 
+        // A finished chapter: the café's bulbs go dark, then come on one by one (screens/ChapterDone).
+        public void LightsOn() => StartCoroutine(BulbsOneByOne());
+
+        System.Collections.IEnumerator BulbsOneByOne()
+        {
+            var bulbs = new List<GameObject>();
+            foreach (Transform child in lights.transform)
+                if (child.name == "Bulb") bulbs.Add(child.gameObject);
+            foreach (var bulb in bulbs) bulb.SetActive(false);
+            yield return new WaitForSecondsRealtime(0.4f);
+            foreach (var bulb in bulbs)
+            {
+                bulb.SetActive(true);
+                yield return new WaitForSecondsRealtime(0.15f);
+            }
+        }
+
         // Winter rain on the window and a light fog (Core.Weather). Mood only.
         public void SetWeather(WeatherKind weather)
         {

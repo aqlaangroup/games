@@ -139,7 +139,7 @@ def run(profile, days=35):
     return {"finished": finished, "rows": rows, "passTier28": tier_at_28}
 
 
-TARGETS = {1: 1, 2: 1, 3: 2, 4: 3, 5: 5, 6: 7, 7: 10, 8: 14, 9: 21, 10: 30}
+TARGETS = {c["n"]: c["targetDay"] for c in CHAPTERS}  # GAME_SYSTEMS.md section 9; balance.json chapters[].targetDay
 
 
 def main():

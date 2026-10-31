@@ -13,6 +13,7 @@ namespace Gahwit.Core
 
         public FormulasConfig Formulas;
         public BoardConfig Board;
+        public BubblesConfig Bubbles;
         public EnergyConfig Energy;
         public GeneratorsConfig Generators;
         public Dictionary<string, ChainConfig> Chains;
@@ -87,6 +88,7 @@ namespace Gahwit.Core
         public int OrderMinCoins;
         public QuadraticFormula XpToNext;
         public LevelUpGemsFormula LevelUpGems;
+        public BubbleGemsFormula BubbleGems;
         public TaskXpFormula TaskXp;
     }
 
@@ -94,6 +96,7 @@ namespace Gahwit.Core
     public sealed class LinearFormula { public float Base; public float PerLevel; }
     public sealed class QuadraticFormula { public int Base; public int PerLevel; public int PerLevelSquared; }
     public sealed class LevelUpGemsFormula { public int Base; public int LevelDivisor; }
+    public sealed class BubbleGemsFormula { public int Base; public int FromLevel; }
     public sealed class TaskXpFormula { public int Base; public int PerChapter; }
     public sealed class OrderLevelPickConfig { public float TopLevelChance; public int Spread; }
 
@@ -101,6 +104,17 @@ namespace Gahwit.Core
     {
         public int Cols;
         public int Rows;
+        public int InventorySlots;
+        public List<int> InventorySlotGemCosts;
+        public int FreeSpaceTargetPct;
+        public int FreeSpaceOfferAfterHoursAway;
+    }
+
+    public sealed class BubblesConfig
+    {
+        public float Chance;
+        public int LifetimeSeconds;
+        public int RewardedAdPopsPerDay;
     }
 
     public sealed class EnergyConfig
@@ -108,6 +122,14 @@ namespace Gahwit.Core
         public int Cap;
         public int RegenSeconds;
         public int StartingEnergy;
+        public int RewardedAdAmount;
+        public GemRefillConfig GemRefill;
+    }
+
+    public sealed class GemRefillConfig
+    {
+        public int Amount;
+        public List<int> GemCostsByPurchaseOfDay;
     }
 
     public sealed class GeneratorsConfig
@@ -157,6 +179,7 @@ namespace Gahwit.Core
         public string En;
         public List<int> TaskCosts;
         public ChapterReward Reward;
+        public int TargetDay; // the typical player's finish day (GAME_SYSTEMS.md section 9)
     }
 
     public sealed class ChapterReward
@@ -179,6 +202,8 @@ namespace Gahwit.Core
     public sealed class UnlocksConfig
     {
         public Dictionary<string, List<string>> ByPlayerLevel;
+        public Dictionary<string, List<string>> ByChapter;
+        public int UnlockCardsPerSession;
 
         // The player level a feature opens at (balance.json unlocks), or 1 when it isn't listed.
         public int Level(string feature)

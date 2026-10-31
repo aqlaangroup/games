@@ -1,13 +1,13 @@
 {
-  "$comment": "Shape of one player's save for Gahwit Sitti. Stored on the phone and synced to the platform (PlayerSave.Json). Gems and purchases are NOT here: the platform's Wallet owns them. Times are trusted milliseconds from the time service (server time moved forward by the phone's uptime counter); 'clock' is that service's anchor. 'wardrobe.occasions' holds the hearts won for each chapter's occasion, paid once. 'cafe.placed' positions are 0.25 m grid cells from the back-left corner, and rot is in degrees. 'account' holds the age gate's answer (birth year only); the sign-in itself lives on the platform, not in the save. 'saveVersion' counts local saves; the platform keeps its own version for conflicts. Unity code: Assets/_Game/Save.",
-  "schemaVersion": 5,
+  "$comment": "Shape of one player's save for Gahwit Sitti. Stored on the phone and synced to the platform (PlayerSave.Json). Gems and purchases are NOT here: the platform's Wallet owns them. Times are trusted milliseconds from the time service (server time moved forward by the phone's uptime counter); 'clock' is that service's anchor. 'board.storageSlots' counts the storage slots bought with gems, on top of balance.json board.inventorySlots. 'player.unlocksShown' lists the unlock cards already shown. 'wardrobe.occasions' holds the hearts won for each chapter's occasion, paid once. 'cafe.placed' positions are 0.25 m grid cells from the back-left corner, and rot is in degrees. 'account' holds the age gate's answer (birth year only); the sign-in itself lives on the platform, not in the save. 'saveVersion' counts local saves; the platform keeps its own version for conflicts. Unity code: Assets/_Game/Save.",
+  "schemaVersion": 6,
   "saveVersion": 42,
   "savedAt": "2026-10-30T15:00:00Z",
   "rng": "11400714819323198485",
   "clock": { "trustedMs": 1793372280000, "uptimeMs": 123456789, "lastSeenMs": 1793372400000, "fromServer": true },
   "account": { "birthYear": 1994, "parentConsent": false },
   "tutorial": { "lastStep": 11, "done": true, "easyOrdersLeft": 0 },
-  "player": { "level": 6, "xp": 210, "coins": 1340, "energy": 64, "energyStampMs": 1793372350000, "lastServerTime": "2026-10-30T14:58:00Z", "ordersServed": 58 },
+  "player": { "level": 6, "xp": 210, "coins": 1340, "energy": 64, "energyStampMs": 1793372350000, "lastServerTime": "2026-10-30T14:58:00Z", "ordersServed": 58, "unlocksShown": ["storage", "decor_shop", "wardrobe"] },
   "board": {
     "cols": 7,
     "rows": 9,
@@ -17,7 +17,7 @@
       { "i": 9, "gen": "gen_coffee", "genLevel": 2 }
     ],
     "storage": [ { "chain": "tea", "level": 4 }, null ],
-    "storageSlots": 6
+    "storageSlots": 1
   },
   "orders": [ { "id": "o_1029", "items": [ { "chain": "coffee", "level": 4 } ], "coins": 42, "xp": 26, "character": "abu_fadi", "createdMs": 1793372300000 } ],
   "story": { "chapter": 3, "task": 2, "choices": { "c2_groom": "ask_who" }, "scenesSeen": ["intro", "sign", "chairs"], "lettersFound": ["letter_1"] },

@@ -27,6 +27,7 @@ namespace Gahwit.Boot
         public PlatformClient Platform { get; private set; }
         public AudioService Audio { get; private set; }
         public PlatformAnalytics Analytics { get; private set; }
+        public long AwayMs { get; private set; } // since the save was last written, for the free-space offer
 
         // A coroutine, because the text tables load in the background (a blocking wait hangs on the phone).
         public static IEnumerator Start()
@@ -42,7 +43,9 @@ namespace Gahwit.Boot
             Debug.Log("[Boot] Save loaded.");
             yield return Loc.Load(services.Saves.Data.Settings.Language);
             Debug.Log("[Boot] Text loaded.");
+            long lastSeen = clock?.LastSeenMs ?? 0; // read before the time service moves it on
             services.Time = new TimeService(new DeviceClock(), clock);
+            services.AwayMs = lastSeen > 0 ? Math.Max(0, services.Time.NowMs - lastSeen) : 0;
             services.PlatformConfig = PlatformConfig.Load();
             services.Platform = new PlatformClient(new UnityPlatformHttp(), new DeviceSecrets(), services.PlatformConfig.ActiveBaseUrl,
                 services.PlatformConfig.Slug, SystemInfo.deviceModel, Application.version, () => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());

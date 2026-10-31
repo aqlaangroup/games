@@ -34,7 +34,7 @@ Their numbers live in `balance.json` under `levelB`. They are starting values to
 
 **Walk-ins**
 - 2–6 at a time, depending on the cosiness score.
-- They sit, show what they'd like over their head, and leave a tip of 2–10 coins when served from the board.
+- They sit, show what they'd like over their head, and leave a tip of 1–5 coins when served from the board (`balance.json` `levelB.walkIns.tipCoins`; 2–10 ran the season too fast, DEVLOG 2026-10-31).
 - They leave after 10 minutes of real time if no one serves them, with no penalty.
 
 **Regulars**

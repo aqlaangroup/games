@@ -5,7 +5,7 @@ namespace Gahwit.UI
 {
     public enum CloudStatus { Offline, Saved, Saving, NotSaved }
 
-    public enum ActionResult { Done, Offline, Failed, Cancelled, Unavailable }
+    public enum ActionResult { Done, Offline, Failed, Cancelled, Unavailable, NotEnoughGems }
 
     // What the settings, help and delete screens need from the account side (Boot.AccountService).
     public interface IAccountUi

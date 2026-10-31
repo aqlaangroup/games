@@ -34,6 +34,11 @@ namespace Gahwit.UI
         public AgeGateView AgeGate { get; private set; }
         public UpdateRequiredView UpdateRequired { get; private set; }
         public TutorialView Tutorial { get; private set; }
+        public PromptView Prompt { get; private set; }
+        public StorageView Storage { get; private set; }
+        public Action OutOfEnergy;  // set by Boot: opens the out-of-energy card
+        public Action BubbleTapped; // set by Boot: opens the bubble offer
+        ItemLook look;
         HelpView help;
         ConfirmView confirm;
         DecorShopView decorShop;
@@ -43,7 +48,8 @@ namespace Gahwit.UI
         // A panel over the game: the tutorial waits under it.
         public bool ModalOpen => Settings.IsOpen || help.gameObject.activeSelf || confirm.gameObject.activeSelf || CloudChoice.IsOpen
                                  || AgeGate.IsOpen || UpdateRequired.gameObject.activeSelf || Letter.IsOpen || Memory.IsPlaying
-                                 || decorShop != null && decorShop.IsOpen || wardrobe != null && wardrobe.IsOpen;
+                                 || decorShop != null && decorShop.IsOpen || wardrobe != null && wardrobe.IsOpen
+                                 || Prompt.IsOpen || Storage != null && Storage.IsOpen;
 
         public static GameUi Create(Game game, CafeCamera cafeCamera, CafeRoom room, Func<long> now, Action openDrawer, IAccountUi account,
             TutorialFlow tutorial, bool canSkipTutorial)
@@ -75,7 +81,7 @@ namespace Gahwit.UI
         {
             this.game = game;
             this.cafeCamera = cafeCamera;
-            var look = new ItemLook(game);
+            look = new ItemLook(game);
 
             background = UiKit.Panel(transform, "Background", Palette.Blush, 0);
             background.rectTransform.Stretch();
@@ -117,6 +123,8 @@ namespace Gahwit.UI
             CloudChoice.Init();
             AgeGate = UiKit.Rect(root, "AgeGate").Stretch().gameObject.AddComponent<AgeGateView>();
             AgeGate.Init(account);
+            Prompt = UiKit.Rect(root, "Prompt").Stretch().gameObject.AddComponent<PromptView>();
+            Prompt.Init();
             UpdateRequired = UiKit.Rect(root, "UpdateRequired").Stretch().gameObject.AddComponent<UpdateRequiredView>();
             UpdateRequired.Init(Toast);
             Toast.transform.SetAsLastSibling();
@@ -177,6 +185,14 @@ namespace Gahwit.UI
             decorShop.Init(rules, game, Toast);
             Toast.transform.SetAsLastSibling();
             cafe.SetDecor(rules, decorShop);
+        }
+
+        // Storage needs gems from the platform to buy slots (Boot.GemShop).
+        public void SetGems(Func<System.Threading.Tasks.Task<ActionResult>> buyStorageSlot)
+        {
+            Storage = UiKit.Rect(transform.Find("SafeArea"), "Storage").Stretch().gameObject.AddComponent<StorageView>();
+            Storage.Init(game, look, Toast, buyStorageSlot);
+            Toast.transform.SetAsLastSibling();
         }
 
         public void SetWardrobe(WardrobeRules rules)

@@ -56,6 +56,11 @@ namespace Gahwit.Core.Tests
             }
             foreach (var occasion in wardrobe["occasions"])
                 Assert.IsTrue(keys.Contains("occasion." + occasion["id"]), $"occasion.{occasion["id"]}");
+            foreach (var card in Newtonsoft.Json.Linq.JObject.Parse(Resources.Load<TextAsset>("Content/unlock_cards").text)["cards"])
+            {
+                Assert.IsTrue(keys.Contains($"unlock.{card}.title"), $"unlock.{card}.title");
+                Assert.IsTrue(keys.Contains($"unlock.{card}.text"), $"unlock.{card}.text");
+            }
             foreach (var piece in DecorCatalog.Load().Pieces)
                 Assert.IsTrue(keys.Contains("decor." + piece.Id), $"decor.{piece.Id}");
             foreach (var id in content.WalkIns)

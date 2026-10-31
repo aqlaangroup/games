@@ -37,7 +37,8 @@ namespace Gahwit.Save
                 Energy = state.Energy,
                 EnergyStampMs = state.EnergyStampMs,
                 LastServerTime = clock.FromServer ? Iso(clock.TrustedMs) : null,
-                OrdersServed = state.OrdersServed
+                OrdersServed = state.OrdersServed,
+                UnlocksShown = new List<string>(state.UnlocksShown)
             };
 
             var board = new BoardSave { Cols = config.Board.Cols, Rows = config.Board.Rows, StorageSlots = state.StorageSlots };
@@ -108,6 +109,7 @@ namespace Gahwit.Save
                 Xp = data.Player.Xp,
                 Level = data.Player.Level,
                 OrdersServed = data.Player.OrdersServed,
+                UnlocksShown = new List<string>(data.Player.UnlocksShown ?? new List<string>()),
                 Chapter = data.Story.Chapter,
                 TaskIndex = data.Story.Task,
                 TaskStyles = new Dictionary<string, string>(data.Cafe.TaskStyles),

@@ -27,6 +27,7 @@ namespace Gahwit.Merge
         public int TutorialStep;   // the last finished step of COMPLETE_SPEC.md section 1
         public bool TutorialDone;
         public int EasyOrdersLeft; // free play starts with a few easy orders
+        public List<string> UnlocksShown = new List<string>(); // unlock cards already shown
         public int Cosiness;       // from placed decor (Decor.DecorRules)
         public List<string> OwnedDecor = new List<string>();
         public List<PlacedDecor> PlacedDecor = new List<PlacedDecor>();

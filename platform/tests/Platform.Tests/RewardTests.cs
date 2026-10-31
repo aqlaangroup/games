@@ -97,7 +97,9 @@ public class RewardTests(PlatformFactory api)
         Assert.Equal(30, (await (await client.PostAsJsonAsync($"/games/{GameA}/players/me/spend", new { item = "storageSlot:1", requestId = "s1" })).Json()).GetProperty("gems").GetInt64());
         var twice = await client.PostAsJsonAsync($"/games/{GameA}/players/me/spend", new { item = "storageSlot:1", requestId = "s2" });
         Assert.Equal("already_owned", (await twice.Json()).Str("error"));
-        Assert.Equal(20, (await (await client.PostAsJsonAsync($"/games/{GameA}/players/me/spend", new { item = "bubble:6", requestId = "s3" })).Json()).GetProperty("gems").GetInt64());
+        var bubble = await (await client.PostAsJsonAsync($"/games/{GameA}/players/me/spend", new { item = "bubble:6:coffee", requestId = "s3" })).Json();
+        Assert.Equal(20, bubble.GetProperty("gems").GetInt64());
+        Assert.Equal("coffee", bubble.GetProperty("grant").Str("chain"));
         Assert.Equal(10, (await (await client.PostAsJsonAsync($"/games/{GameA}/players/me/spend", new { item = "memoryRetry:m2_rhythm", requestId = "s4" })).Json()).GetProperty("gems").GetInt64());
     }
 

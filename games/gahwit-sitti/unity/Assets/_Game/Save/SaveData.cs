@@ -8,7 +8,7 @@ namespace Gahwit.Save
     // so a save written by a newer build loses nothing here.
     public sealed class SaveData
     {
-        public const int CurrentSchema = 5;
+        public const int CurrentSchema = 6;
 
         public int SchemaVersion = CurrentSchema;
         public long SaveVersion;
@@ -62,6 +62,7 @@ namespace Gahwit.Save
         public long EnergyStampMs;
         public string LastServerTime;
         public int OrdersServed;
+        public List<string> UnlocksShown = new List<string>();
     }
 
     public sealed class BoardSave

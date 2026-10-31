@@ -59,11 +59,14 @@ public static class RewardRules
                 var slotCosts = balance.GetProperty("board").GetProperty("inventorySlotGemCosts");
                 if (slot < 1 || slot > slotCosts.GetArrayLength()) return (0, null, "unknown_item");
                 return (slotCosts[slot - 1].GetInt64(), new { storageSlot = slot }, null);
-            case "bubble" when parts.Length == 2 && int.TryParse(parts[1], out int level):
+            // "bubble:5" or "bubble:5:coffee": the chain comes back in the grant, so a replayed purchase knows what to add.
+            case "bubble" when parts.Length == 2 && int.TryParse(parts[1].Split(':')[0], out int level):
                 var bubble = balance.GetProperty("formulas").GetProperty("bubbleGems");
                 int from = bubble.GetProperty("fromLevel").GetInt32();
                 if (level < from || level > 20) return (0, null, "unknown_item");
-                return (bubble.GetProperty("base").GetInt64() << (level - from), new { bubbleLevel = level }, null);
+                var bits = parts[1].Split(':');
+                string? chain = bits.Length > 1 && bits[1].Length is > 0 and <= 32 ? bits[1] : null;
+                return (bubble.GetProperty("base").GetInt64() << (level - from), new { bubbleLevel = level, chain }, null);
             case "memoryRetry" when parts.Length == 2 && parts[1].Length is > 0 and <= 64:
                 return (balance.GetProperty("levelB").GetProperty("memories").GetProperty("skipRetryGems").GetInt64(),
                     new { memory = parts[1] }, null);

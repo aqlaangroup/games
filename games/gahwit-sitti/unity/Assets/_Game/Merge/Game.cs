@@ -12,7 +12,7 @@ namespace Gahwit.Merge
     // The rules of the merge kitchen, orders, player levels and café tasks (GAME_SYSTEMS.md sections 1–9).
     // Plain C# with no Unity objects; the views call it and listen to its events.
     // Times are trusted milliseconds from TimeService, never the phone clock.
-    public sealed class Game
+    public sealed partial class Game
     {
 
         public readonly BalanceConfig Config;
@@ -86,6 +86,7 @@ namespace Gahwit.Merge
         public void Tick(long nowMs)
         {
             ClockMs = nowMs;
+            if (Bubble != null && nowMs >= Bubble.ExpiresMs) Bubble = null;
             foreach (var order in State.Orders)
                 if (order.CreatedMs == 0) order.CreatedMs = nowMs; // orders from before arrival times were saved
             if (State.Energy >= EnergyCap)
@@ -164,18 +165,6 @@ namespace Gahwit.Merge
             else State.Storage.Add(piece);
         }
 
-        // Pieces waiting in storage come back as soon as there is room.
-        void Settle()
-        {
-            while (State.Storage.Count > 0)
-            {
-                int cell = NearestEmptyCell(CellCount - 1 - Cols / 2);
-                if (cell < 0) return;
-                State.Board[cell] = State.Storage[0];
-                State.Storage.RemoveAt(0);
-            }
-        }
-
         public int NearestEmptyCell(int near)
         {
             int best = -1;
@@ -222,7 +211,7 @@ namespace Gahwit.Merge
             {
                 State.Board[to] = new Item(moving.Chain, moving.Level + 1, moving.Generator);
                 State.Board[from] = null;
-                Settle();
+                MaybeBubble(State.Board[to]);
                 ItemsMerged?.Invoke(to);
                 Changed?.Invoke();
                 return MoveResult.Merged;
@@ -245,7 +234,6 @@ namespace Gahwit.Merge
             int coins = SellValue(item);
             State.Board[cell] = null;
             State.Coins += coins;
-            Settle();
             Changed?.Invoke();
             return coins;
         }
@@ -294,7 +282,6 @@ namespace Gahwit.Merge
             State.Orders.Remove(order);
             State.OrdersServed++;
             State.Coins += order.Coins;
-            Settle();
             OrderServed?.Invoke(order);
             AddXp(order.Xp);
             FillOrders();

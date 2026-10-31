@@ -2,6 +2,24 @@
 
 Decisions and known gaps. Newest first. Read this at the start of each session (`/CLAUDE.md`).
 
+## 2026-10-31: storage, bubbles, energy refill, level and chapter screens, unlock cards, pacing test (missing/05)
+
+- **Storage** (`Merge/Game.Kitchen.cs`, tested):
+  - Opens at level 2 with `board.inventorySlots` (6) slots. `board.storageSlots` now counts slots bought with gems through the platform (`storageSlot:N`).
+  - **Store** sits beside Sell for the picked item; with nothing picked, the same place shows **Storage (n)**. The storage sheet takes pieces back and buys a slot.
+  - **Decision:** rewards that don't fit the board still wait in storage, past the limit. The old automatic return to the board is gone, because it would empty storage the player filled on purpose.
+- **Free space:** after a chapter, or after 4 hours away, a card offers to sell or store the lowest pieces no order wants, until a quarter of the board is free.
+- **Bubbles:** a merge to level 4 or higher floats a copy 6% of the time, for 60 seconds.
+  - It shows in the kitchen's top corner with a countdown, and is bought with gems through the platform (`bubble:L:chain`; the chain comes back in the grant).
+  - The free ad pop waits for ads (missing/17).
+- **Out of energy:** a card instead of a toast, with the time until full and a gem refill through the platform (+100). The price shown rises with refills that day; the platform has the final say. The ad option waits for ads.
+- **`GemShop`** (Boot): each gem purchase is kept on the phone until its grant is applied. A purchase cut off by the connection or a closed app is sent again with the same request id, so the platform spends once.
+- **Level up and chapter complete:** cards with the rewards and a petal burst (`PromptView`) instead of toasts. When a chapter ends, the café's bulbs go dark and come on one by one.
+- **Unlock cards:** `Merge/Unlocks.cs` (tested) reads the one schedule in `balance.json`. Features in `unlock_cards.json` get a card: only the ones this build has, at most one a session, each once, never during a scene, a panel or the hands-on tutorial. Save schema v6 keeps `player.unlocksShown`.
+- **Pacing test** (`_Game/Pacing/Tests`): the simulator's typical player (4 sessions, 3 ads, 85% of what she makes served) plays the real rules for 35 days. It fails when a chapter ends more than 25% (at least a day) from `chapters[].targetDay`, which is now in `balance.json` for both the simulator and the test. Chapters without content yet are paid from their task costs.
+  - **It found a real problem:** with tips of 2–10 coins (SYSTEMS_B.md), chapter 6 finished on day 5 instead of 7. **Decision: tips are now 1–5 coins** (proposed, written into SYSTEMS_B.md). With that, every chapter is within range: 1, 1, 1, 2, 4, 6, 9, 12, 20 and 30 against targets 1, 1, 2, 3, 5, 7, 10, 14, 21 and 30.
+- **`Game.cs`** started its split: the kitchen extras live in `Game.Kitchen.cs` (missing/01).
+
 ## 2026-10-31: Salma's wardrobe (missing/09)
 
 - **Decision, how an outfit scores:** each piece has style tags, and each chapter's occasion lists the tags it likes. Worn pieces that match make the hearts: always 1, 2 for 2 matches, 3 for 4 (`levelB.wardrobe.heartsAtMatches`, proposed). The bonus is 100 × hearts × chapter coins, paid once per chapter. It never blocks the story. Written into SYSTEMS_B.md section 6.

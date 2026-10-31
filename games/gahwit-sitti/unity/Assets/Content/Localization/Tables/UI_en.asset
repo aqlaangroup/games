@@ -960,6 +960,216 @@ MonoBehaviour:
     m_Localized: Embroidered dress
     m_Metadata:
       m_Items: []
+  - m_Id: 109159625252864
+    m_Localized: Store
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447168
+    m_Localized: Storage ({0})
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447169
+    m_Localized: Storage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447170
+    m_Localized: '{0} of {1} in use'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447171
+    m_Localized: Keep pieces you'll need later here, so the board stays free to work
+      on.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447172
+    m_Localized: Back to the board
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447173
+    m_Localized: "Open a slot \xB7 {0} gems"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447174
+    m_Localized: Done
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447175
+    m_Localized: We need the internet for this
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447176
+    m_Localized: That didn't work. Please try again.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447177
+    m_Localized: Not enough gems
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447178
+    m_Localized: Cancelled
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447179
+    m_Localized: Not available now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447180
+    m_Localized: "A short free ad \xB7 coming soon"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447181
+    m_Localized: Level up
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447182
+    m_Localized: "Well done, Salma! +{0} energy \xB7 +{1} gems"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447183
+    m_Localized: Continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447184
+    m_Localized: Chapter {0} complete
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447185
+    m_Localized: "+{0} gems \xB7 +{1} energy \xB7 {2} to merge"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447186
+    m_Localized: Continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447187
+    m_Localized: Out of energy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447188
+    m_Localized: It fills up by itself. Meanwhile, sell small pieces you don't need,
+      or merge what's on the board.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447189
+    m_Localized: "+{0} energy \xB7 {1} gems"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447190
+    m_Localized: An extra copy!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447191
+    m_Localized: Your last merge floated a copy in a bubble. It disappears after
+      a minute.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447192
+    m_Localized: Take it for {0} gems
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447193
+    m_Localized: No, thanks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447194
+    m_Localized: The board is nearly full
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447195
+    m_Localized: Shall we free a quarter of the board? We start with the smallest
+      pieces no order wants.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447196
+    m_Localized: "Sell {0} pieces \xB7 +{1} coins"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447197
+    m_Localized: Store them
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447198
+    m_Localized: Later
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447199
+    m_Localized: Got it
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447200
+    m_Localized: Storage is open
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447201
+    m_Localized: Keep pieces you'll need later, and leave the board free to work
+      on.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447202
+    m_Localized: The decor shop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447203
+    m_Localized: "Buy pieces for the caf\xE9 with your coins, and arrange them as
+      you like."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447204
+    m_Localized: Salma's wardrobe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447205
+    m_Localized: Choose what Salma wears, and dress for each chapter's occasion.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447206
+    m_Localized: A fourth order
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447207
+    m_Localized: "One more customer waits in the caf\xE9 now."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447208
+    m_Localized: A fifth order
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447209
+    m_Localized: "The caf\xE9 is busier: a fifth order."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447210
+    m_Localized: Friendship with regulars
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447211
+    m_Localized: Every regular has a story. Serve what they love to grow closer.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447212
+    m_Localized: Tea
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447213
+    m_Localized: 'A new chain on the board: tea with mint.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447214
+    m_Localized: Saudi coffee
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447215
+    m_Localized: 'A new chain: coffee with cardamom and saffron.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447216
+    m_Localized: Breakfast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 109159629447217
+    m_Localized: 'A new chain: Friday breakfast.'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

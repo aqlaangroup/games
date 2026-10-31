@@ -32,6 +32,9 @@ namespace Gahwit.Boot
         AccountService account;
         AudioService audio;
         TutorialFlow tutorial;
+        GemShop gems;
+        Unlocks unlocks;
+        float nextUnlockCheck;
         CustomerRules customers;
         DecorRules decor;
         WardrobeRules wardrobe;
@@ -101,7 +104,7 @@ namespace Gahwit.Boot
 
             game.Changed += () => dirty = true;
             game.OrderServed += order => ui.Toast.Show(Loc.T("toast.served", order.Coins, order.Xp));
-            game.LeveledUp += level => ui.Toast.Show(Loc.T("toast.levelUp", level, config.PlayerLevels.Rewards.Energy));
+            game.LeveledUp += ShowLevelUp;
             game.TaskCompleted += OnTaskCompleted;
             game.ChapterCompleted += OnChapterCompleted;
             // A level-up or a finished chapter earns gems; upload soon so the platform can pay them.
@@ -110,7 +113,18 @@ namespace Gahwit.Boot
             Debug.Log("[Boot] Café and interface built.");
 
             nextSync = Time.unscaledTime + game.Config.Saves.CloudEverySeconds; // COMPLETE_SPEC.md section 9
-            Run(account.Start);
+            gems = new GemShop(services.Platform, game);
+            ui.SetGems(() => gems.Buy("storageSlot:" + game.NextStorageSlot));
+            ui.OutOfEnergy = ShowOutOfEnergy;
+            ui.BubbleTapped = ShowBubble;
+            unlocks = new Unlocks(game, Newtonsoft.Json.Linq.JObject.Parse(Resources.Load<TextAsset>("Content/unlock_cards").text)["cards"]
+                .Select(c => (string)c));
+            Run(async () =>
+            {
+                await account.Start();
+                await gems.Replay();
+            });
+            if (services.AwayMs >= config.Board.FreeSpaceOfferAfterHoursAway * 3_600_000L) afterScene.Enqueue(OfferFreeSpace);
             if (account.NeedsAgeGate) ui.AgeGate.Show(account.Language, (language, birthYear) =>
             {
                 account.SetAge(language, birthYear);
@@ -454,8 +468,89 @@ namespace Gahwit.Boot
         {
             var reward = game.Config.Chapter(chapter).Reward;
             string generator = game.Config.GeneratorDef(reward.GeneratorCopy)?.Ar ?? "";
-            afterScene.Enqueue(() => ui.Toast.Show(Loc.T("toast.chapterDone", chapter, reward.Energy, generator)));
+            afterScene.Enqueue(() =>
+            {
+                cafe.LightsOn();
+                string title = game.Config.Chapter(chapter)?.Ar ?? "";
+                ui.Prompt.Show(Loc.T("chapterDone.title", chapter), title,
+                    Loc.T("chapterDone.rewards", reward.Gems, reward.Energy, generator),
+                    new[] { PromptView.Primary(Loc.T("chapterDone.continue"), OfferFreeSpace) }, celebrate: true);
+            });
             StartCoroutine(PlayTheme());
+        }
+
+        // The level-up card (screens/LevelUp): the new level, its energy and gems, and a petal burst.
+        void ShowLevelUp(int level)
+        {
+            ui.Prompt.Show(Loc.T("levelUp.title"), level.ToString(),
+                Loc.T("levelUp.rewards", game.Config.PlayerLevels.Rewards.Energy, game.Config.LevelUpGems(level)),
+                new[] { PromptView.Primary(Loc.T("levelUp.continue"), MaybeShowUnlock) }, celebrate: true);
+        }
+
+        // Out of energy (screens/OutOfEnergy): the wait, a gem refill through the platform, and a tip.
+        void ShowOutOfEnergy()
+        {
+            var refill = game.Config.Energy.GemRefill;
+            int price = refill.GemCostsByPurchaseOfDay[Mathf.Min(RefillsToday(), refill.GemCostsByPurchaseOfDay.Count - 1)];
+            int seconds = game.SecondsToFullEnergy(time.NowMs);
+            ui.Prompt.Show(Loc.T("energy.title"), $"{seconds / 3600}:{seconds / 60 % 60:00}:{seconds % 60:00}", Loc.T("energy.tip"), new[]
+            {
+                PromptView.Primary(Loc.T("energy.refill", refill.Amount, price), () => Run(async () =>
+                {
+                    var result = await gems.Buy("energyRefill");
+                    if (result == ActionResult.Done) CountRefill();
+                    ui.Toast.Show(Loc.T("gems." + result.ToString().ToLowerInvariant()));
+                })),
+                new PromptView.Choice { Label = Loc.T("ads.soon"), Color = Palette.Muted, Enabled = false },
+                PromptView.Quiet(Loc.T("common.close"))
+            });
+        }
+
+        // Refill prices rise through the day (energy.gemRefill); the platform has the final say, this is the label.
+        static string RefillKey => "gahwit.refills." + DateTime.UtcNow.ToString("yyyy-MM-dd");
+        static int RefillsToday() => PlayerPrefs.GetInt(RefillKey, 0);
+        static void CountRefill() => PlayerPrefs.SetInt(RefillKey, RefillsToday() + 1);
+
+        // A bubble offer (screens/Bubble): its piece for gems through the platform, before it floats away.
+        void ShowBubble()
+        {
+            var offer = game.Bubble;
+            if (offer == null) return;
+            int price = game.BubbleGems(offer.Level);
+            ui.Prompt.Show(Loc.T("bubble.title"), game.ItemName(offer.Chain, offer.Level), Loc.T("bubble.text"), new[]
+            {
+                PromptView.Primary(Loc.T("bubble.buy", price), () => Run(async () =>
+                {
+                    var result = await gems.Buy($"bubble:{offer.Level}:{offer.Chain}");
+                    ui.Toast.Show(Loc.T("gems." + result.ToString().ToLowerInvariant()));
+                })),
+                new PromptView.Choice { Label = Loc.T("ads.soon"), Color = Palette.Muted, Enabled = false },
+                PromptView.Quiet(Loc.T("bubble.no"), game.LetBubbleGo)
+            });
+        }
+
+        // The free-space offer (GAME_SYSTEMS.md section 2): after a chapter, or after a long time away.
+        void OfferFreeSpace()
+        {
+            if (!game.NeedsSpace) return;
+            var plan = game.SpacePlan();
+            if (plan.Count == 0) return;
+            int coins = plan.Sum(cell => game.SellValue(game.ItemAt(cell)));
+            var choices = new List<PromptView.Choice> { PromptView.Primary(Loc.T("space.sell", plan.Count, coins), () => game.ClearSpace(false)) };
+            if (game.StorageCapacity - game.State.Storage.Count > 0) choices.Add(PromptView.Quiet(Loc.T("space.store"), () => game.ClearSpace(true)));
+            choices.Add(PromptView.Quiet(Loc.T("space.later")));
+            ui.Prompt.Show(Loc.T("space.title"), null, Loc.T("space.text"), choices);
+        }
+
+        // One unlock card at a time, never during a scene, a panel or the hands-on tutorial.
+        void MaybeShowUnlock()
+        {
+            if (ui.Dialogue.IsOpen || ui.ModalOpen || !tutorial.Done && tutorial.Current != null && tutorial.Current.HandsOn) return;
+            string feature = unlocks.NextCard();
+            if (feature == null) return;
+            unlocks.Shown(feature);
+            ui.Prompt.Show(Loc.T($"unlock.{feature}.title"), null, Loc.T($"unlock.{feature}.text"),
+                new[] { PromptView.Primary(Loc.T("unlock.ok"), null) });
         }
 
         // The main theme marks a finished chapter, then the café's music comes back.
@@ -512,6 +607,11 @@ namespace Gahwit.Boot
         void Update()
         {
             if (account == null) return; // still starting
+            if (Time.unscaledTime >= nextUnlockCheck)
+            {
+                nextUnlockCheck = Time.unscaledTime + 5f;
+                MaybeShowUnlock();
+            }
             if (Time.unscaledTime >= nextTick)
             {
                 nextTick = Time.unscaledTime + 1f;
