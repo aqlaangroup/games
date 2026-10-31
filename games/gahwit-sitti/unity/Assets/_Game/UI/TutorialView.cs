@@ -43,7 +43,7 @@ namespace Gahwit.UI
             var bannerImage = UiKit.Panel(transform, "Banner", Palette.Card, 36);
             bannerImage.raycastTarget = false;
             banner = bannerImage.rectTransform;
-            banner.Pin(new Vector2(0.5f, 1), new Vector2(0, -392), new Vector2(1000, 170)); // under the orders, over the empty top rows
+            banner.Pin(new Vector2(0.5f, 1), new Vector2(0, -424), new Vector2(1000, 170)); // under the orders and the café's side buttons
             counter = UiKit.Text(banner, "Step", "", 24, Palette.Rose);
             counter.fontStyle = FontStyles.Bold;
             counter.rectTransform.Top(16, 36, 32, canSkip ? 200 : 32);

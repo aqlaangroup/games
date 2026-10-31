@@ -95,6 +95,7 @@ One memory per chapter, so 10 in season 1. Each lasts 3–5 minutes and uses one
 
 - **Season 1:** 40 pieces in 6 slots: top, bottom or dress, outer layer, shoes, accessories, and an optional hijab.
 - **Occasions:** each chapter has one, for example "a family lunch" or "the grand reopening". Dressing for it earns a style score of 1–3 hearts, worth bonus coins (100 / 200 / 300 × chapter). It never blocks the story.
+- **How an outfit scores** (decided 2026-10-31): each piece has style tags, and each occasion lists the tags it likes. Worn pieces with a liked tag count: 1 heart always, 2 hearts for 2, 3 hearts for 4 (`balance.json` `levelB.wardrobe.heartsAtMatches`).
 - **How players get pieces:** 15 from tasks and memories, 15 bought with coins, 6 from events and the pass, 4 premium sets.
 - **Every piece is modest by default,** with the hijab as an option, never a requirement.
 

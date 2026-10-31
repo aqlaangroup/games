@@ -12,6 +12,7 @@ using Gahwit.Platform;
 using Gahwit.Save;
 using Gahwit.Story;
 using Gahwit.Tutorial;
+using Gahwit.Wardrobe;
 using Gahwit.UI;
 using UnityEngine;
 
@@ -33,6 +34,7 @@ namespace Gahwit.Boot
         TutorialFlow tutorial;
         CustomerRules customers;
         DecorRules decor;
+        WardrobeRules wardrobe;
         readonly List<CafeDecor.Placement> placements = new List<CafeDecor.Placement>();
         readonly List<CafeCustomers.Info> present = new List<CafeCustomers.Info>();
         bool customersShown;
@@ -80,6 +82,7 @@ namespace Gahwit.Boot
             analytics = services.Analytics;
             TrackGame();
             WireDecor();
+            WireWardrobe();
             WireCustomers();
             tutorial.StepFinished += OnTutorialStep;
             tutorial.Skipped += () =>
@@ -159,6 +162,31 @@ namespace Gahwit.Boot
             decor.Changed += ShowDecor;
             ui.SetDecor(decor);
             ShowDecor();
+        }
+
+        // Salma's wardrobe (missing/09): she wears her outfit in the café.
+        void WireWardrobe()
+        {
+            wardrobe = new WardrobeRules(game, WardrobeContent.Load());
+            wardrobe.Changed += DressSalma;
+            ui.SetWardrobe(wardrobe);
+            DressSalma();
+        }
+
+        // Her own clothes show where no wardrobe piece is worn.
+        static readonly Color BaseTop = Palette.Hex("#F7EFE6"), BaseBottom = Palette.Hex("#6B5B73");
+
+        void DressSalma()
+        {
+            Color? Worn(string slot) => wardrobe.Worn(slot) is string id ? Palette.Hex(wardrobe.Content.Get(id).Color) : (Color?)null;
+            cafe.Salma.Dress(new CafeSalma.Outfit
+            {
+                Top = Worn("top") ?? BaseTop,
+                Bottom = Worn("bottom_or_dress") ?? BaseBottom,
+                Outer = Worn("outer"),
+                Hijab = Worn("hijab_optional"),
+                Dress = wardrobe.Worn("bottom_or_dress") is string bottom && wardrobe.Content.Get(bottom).Dress
+            });
         }
 
         void ShowDecor()

@@ -1,0 +1,13 @@
+{
+  "$comment": "Salma's wardrobe for ring 1 (missing/09, SYSTEMS_B.md section 6). Every piece is modest; the hijab is optional, never required. priceTier indexes balance.json levelB.wardrobe.priceCoinsByTier. Occasions score an outfit by the style tags they like (DEVLOG 2026-10-31). Colours are placeholders until the art (missing/13). Names are the wardrobe.<id> keys in the UI table.",
+  "pieces": [
+    { "id": "top_blush_linen", "slot": "top", "tags": ["casual", "cosy"], "priceTier": 0, "color": "#E9A0AE" },
+    { "id": "pants_sage", "slot": "bottom_or_dress", "tags": ["casual"], "priceTier": 0, "color": "#8FAE8B" },
+    { "id": "cardigan_cream", "slot": "outer", "tags": ["cosy", "family"], "priceTier": 1, "color": "#F2E6D0" },
+    { "id": "hijab_lilac", "slot": "hijab_optional", "tags": ["family", "festive"], "priceTier": 1, "color": "#B9A8DE" },
+    { "id": "dress_embroidered", "slot": "bottom_or_dress", "dress": true, "tags": ["traditional", "festive"], "source": "task", "task": "dallahs", "color": "#8E2E45" }
+  ],
+  "occasions": [
+    { "chapter": 1, "id": "family_lunch", "likes": ["family", "traditional", "cosy"] }
+  ]
+}

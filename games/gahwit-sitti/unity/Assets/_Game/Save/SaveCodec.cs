@@ -75,6 +75,9 @@ namespace Gahwit.Save
             into.Cafe.TaskStyles = new Dictionary<string, string>(state.TaskStyles);
             into.Cafe.Cosiness = state.Cosiness;
             into.Cafe.Owned = new List<string>(state.OwnedDecor);
+            into.Wardrobe["owned"] = new JArray(state.WardrobeOwned);
+            into.Wardrobe["worn"] = JObject.FromObject(state.WardrobeWorn);
+            into.Wardrobe["occasions"] = new JObject(state.OccasionHearts.Select(o => new JProperty(o.Key.ToString(), o.Value)));
             into.Cafe.Placed = new JArray(state.PlacedDecor.Select(p => new JObject
                 { ["id"] = p.Id, ["x"] = p.X, ["z"] = p.Z, ["rot"] = p.Rot * 90 }));
             foreach (var regular in state.Regulars)
@@ -110,6 +113,11 @@ namespace Gahwit.Save
                 TaskStyles = new Dictionary<string, string>(data.Cafe.TaskStyles),
                 Cosiness = data.Cafe.Cosiness,
                 OwnedDecor = new List<string>(data.Cafe.Owned),
+                WardrobeOwned = data.Wardrobe["owned"]?.Values<string>().ToList() ?? new List<string>(),
+                WardrobeWorn = (data.Wardrobe["worn"] as JObject)?.Properties().Where(p => p.Value.Type == JTokenType.String)
+                    .ToDictionary(p => p.Name, p => (string)p.Value) ?? new Dictionary<string, string>(),
+                OccasionHearts = (data.Wardrobe["occasions"] as JObject)?.Properties()
+                    .ToDictionary(p => int.Parse(p.Name), p => (int)p.Value) ?? new Dictionary<int, int>(),
                 PlacedDecor = data.Cafe.Placed.OfType<JObject>().Select(p => new PlacedDecor
                 {
                     Id = p.Value<string>("id"),

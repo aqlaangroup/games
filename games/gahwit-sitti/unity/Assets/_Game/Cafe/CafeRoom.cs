@@ -66,11 +66,14 @@ namespace Gahwit.Cafe
             Customers.transform.SetParent(transform, false);
             Decor = new GameObject("Decor").AddComponent<CafeDecor>();
             Decor.transform.SetParent(transform, false);
+            Salma = new GameObject("Salma").AddComponent<CafeSalma>();
+            Salma.transform.SetParent(transform, false);
             // The pipeline's default material exists only in the Editor, so the template is a real asset. Its glowing
             // twin (CafeLitEmissive) is never loaded; it keeps the _EMISSION shader variant in phone builds.
             litTemplate = Resources.Load<Material>("Materials/CafeLit");
             Customers.Init(this);
             Decor.Init();
+            Salma.Init(new Vector3(2.0f, 0, -3.65f)); // behind the counter
             brass = Mat("#D9B06C", 0.6f, 0.6f);
             tarnished = Mat("#7D6F62", 0.1f);
 
@@ -185,6 +188,7 @@ namespace Gahwit.Cafe
 
         public CafeCustomers Customers { get; private set; }
         public CafeDecor Decor { get; private set; }
+        public CafeSalma Salma { get; private set; }
 
         public const float Width = W, Depth = D;
 

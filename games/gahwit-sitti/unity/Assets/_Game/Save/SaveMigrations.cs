@@ -15,7 +15,8 @@ namespace Gahwit.Save
             [0] = FromFirstPlayable,
             [1] = AddAccount,
             [2] = AddEasyOrders,
-            [3] = AddArrivalTimes
+            [3] = AddArrivalTimes,
+            [4] = AddOccasions
         };
 
         public static JObject Upgrade(JObject raw, BalanceConfig config)
@@ -130,6 +131,16 @@ namespace Gahwit.Save
             foreach (var order in (save["orders"] as JArray ?? new JArray()).OfType<JObject>())
                 if (order["createdMs"] == null) order["createdMs"] = 0;
             save["schemaVersion"] = 4;
+            return save;
+        }
+
+        // Version 5 (2026-10-31) remembers the hearts won for each chapter's occasion, so each pays once.
+        static JObject AddOccasions(JObject save, BalanceConfig config)
+        {
+            var wardrobe = save["wardrobe"] as JObject ?? new JObject();
+            if (wardrobe["occasions"] == null) wardrobe["occasions"] = new JObject();
+            save["wardrobe"] = wardrobe;
+            save["schemaVersion"] = 5;
             return save;
         }
 

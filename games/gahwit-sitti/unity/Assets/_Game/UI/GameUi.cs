@@ -4,6 +4,7 @@ using Gahwit.Core;
 using Gahwit.Decor;
 using Gahwit.Merge;
 using Gahwit.Tutorial;
+using Gahwit.Wardrobe;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.UI;
@@ -36,12 +37,13 @@ namespace Gahwit.UI
         HelpView help;
         ConfirmView confirm;
         DecorShopView decorShop;
+        WardrobeView wardrobe;
         IAccountUi account;
 
         // A panel over the game: the tutorial waits under it.
         public bool ModalOpen => Settings.IsOpen || help.gameObject.activeSelf || confirm.gameObject.activeSelf || CloudChoice.IsOpen
                                  || AgeGate.IsOpen || UpdateRequired.gameObject.activeSelf || Letter.IsOpen || Memory.IsPlaying
-                                 || decorShop != null && decorShop.IsOpen;
+                                 || decorShop != null && decorShop.IsOpen || wardrobe != null && wardrobe.IsOpen;
 
         public static GameUi Create(Game game, CafeCamera cafeCamera, CafeRoom room, Func<long> now, Action openDrawer, IAccountUi account,
             TutorialFlow tutorial, bool canSkipTutorial)
@@ -175,6 +177,14 @@ namespace Gahwit.UI
             decorShop.Init(rules, game, Toast);
             Toast.transform.SetAsLastSibling();
             cafe.SetDecor(rules, decorShop);
+        }
+
+        public void SetWardrobe(WardrobeRules rules)
+        {
+            wardrobe = UiKit.Rect(transform.Find("SafeArea"), "Wardrobe").Stretch().gameObject.AddComponent<WardrobeView>();
+            wardrobe.Init(rules, game, Toast);
+            Toast.transform.SetAsLastSibling();
+            cafe.SetWardrobe(rules, wardrobe);
         }
 
         // What the tutorial's pointer shows for a step: one target, or two for a drag (from, to). On the wrong screen

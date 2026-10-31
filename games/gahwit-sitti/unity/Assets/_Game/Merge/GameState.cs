@@ -30,6 +30,9 @@ namespace Gahwit.Merge
         public int Cosiness;       // from placed decor (Decor.DecorRules)
         public List<string> OwnedDecor = new List<string>();
         public List<PlacedDecor> PlacedDecor = new List<PlacedDecor>();
+        public List<string> WardrobeOwned = new List<string>();
+        public Dictionary<string, string> WardrobeWorn = new Dictionary<string, string>(); // slot → piece
+        public Dictionary<int, int> OccasionHearts = new Dictionary<int, int>();           // chapter → hearts, paid once
         public Dictionary<string, RegularState> Regulars = new Dictionary<string, RegularState>();
         public ulong Rng;
     }

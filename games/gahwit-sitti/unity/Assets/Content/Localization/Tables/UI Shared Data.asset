@@ -827,6 +827,126 @@ MonoBehaviour:
     m_Key: decor.teta_radio
     m_Metadata:
       m_Items: []
+  - m_Id: 106309360803840
+    m_Key: wardrobe.button
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106309364998144
+    m_Key: wardrobe.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106309364998145
+    m_Key: wardrobe.occasion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106309364998146
+    m_Key: wardrobe.likes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106309364998147
+    m_Key: wardrobe.hearts
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106309364998148
+    m_Key: wardrobe.ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106309364998149
+    m_Key: wardrobe.paid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106309364998150
+    m_Key: wardrobe.done
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106309364998151
+    m_Key: wardrobe.owned
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106309364998152
+    m_Key: wardrobe.forSale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106309364998153
+    m_Key: wardrobe.wear
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106309364998154
+    m_Key: wardrobe.takeOff
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106309364998155
+    m_Key: wardrobe.buy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106309364998156
+    m_Key: occasion.family_lunch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106309364998157
+    m_Key: slot.top
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106309364998158
+    m_Key: slot.bottom_or_dress
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106309364998159
+    m_Key: slot.outer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106309364998160
+    m_Key: slot.shoes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106309364998161
+    m_Key: slot.accessory
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106309364998162
+    m_Key: slot.hijab_optional
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106309364998163
+    m_Key: tag.casual
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106309364998164
+    m_Key: tag.cosy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106309364998165
+    m_Key: tag.family
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106309364998166
+    m_Key: tag.festive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106309364998167
+    m_Key: tag.traditional
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106309364998168
+    m_Key: wardrobe.top_blush_linen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106309364998169
+    m_Key: wardrobe.pants_sage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106309364998170
+    m_Key: wardrobe.cardigan_cream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106309364998171
+    m_Key: wardrobe.hijab_lilac
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106309364998172
+    m_Key: wardrobe.dress_embroidered
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

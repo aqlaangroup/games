@@ -1303,6 +1303,12 @@
         "hijab_optional"
       ],
       "occasionBonusCoinsPerHeart": "100*chapter",
+      "occasionBonusPerHeartPerChapter": 100,
+      "heartsAtMatches": [
+        0,
+        2,
+        4
+      ],
       "sources": {
         "tasks_memories": 15,
         "coins": 15,
@@ -1316,7 +1322,7 @@
         900,
         1500
       ],
-      "proposed": "Proposed on 2026-10-31 where the specs gave no number (missing/02). Tune in playtests. Applies to priceCoinsByTier."
+      "proposed": "Proposed on 2026-10-31 where the specs gave no number (missing/02). Tune in playtests. Applies to priceCoinsByTier and heartsAtMatches (worn pieces matching the occasion for 1, 2 and 3 hearts)."
     },
     "hosting": {
       "perWeek": 2,

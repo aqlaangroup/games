@@ -47,6 +47,15 @@ namespace Gahwit.Core.Tests
             var tutorial = Newtonsoft.Json.Linq.JObject.Parse(Resources.Load<TextAsset>("Content/tutorial").text);
             foreach (var step in tutorial["steps"])
                 if (step["text"] != null) Assert.IsTrue(keys.Contains((string)step["text"]), $"tutorial step {step["n"]}: {step["text"]}");
+            var wardrobe = Newtonsoft.Json.Linq.JObject.Parse(Resources.Load<TextAsset>("Content/wardrobe").text);
+            foreach (var piece in wardrobe["pieces"])
+            {
+                Assert.IsTrue(keys.Contains("wardrobe." + piece["id"]), $"wardrobe.{piece["id"]}");
+                Assert.IsTrue(keys.Contains("slot." + piece["slot"]), $"slot.{piece["slot"]}");
+                foreach (var tag in piece["tags"]) Assert.IsTrue(keys.Contains("tag." + tag), $"tag.{tag}");
+            }
+            foreach (var occasion in wardrobe["occasions"])
+                Assert.IsTrue(keys.Contains("occasion." + occasion["id"]), $"occasion.{occasion["id"]}");
             foreach (var piece in DecorCatalog.Load().Pieces)
                 Assert.IsTrue(keys.Contains("decor." + piece.Id), $"decor.{piece.Id}");
             foreach (var id in content.WalkIns)

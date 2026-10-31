@@ -2,6 +2,17 @@
 
 Decisions and known gaps. Newest first. Read this at the start of each session (`/CLAUDE.md`).
 
+## 2026-10-31: Salma's wardrobe (missing/09)
+
+- **Decision, how an outfit scores:** each piece has style tags, and each chapter's occasion lists the tags it likes. Worn pieces that match make the hearts: always 1, 2 for 2 matches, 3 for 4 (`levelB.wardrobe.heartsAtMatches`, proposed). The bonus is 100 × hearts × chapter coins, paid once per chapter. It never blocks the story. Written into SYSTEMS_B.md section 6.
+- **Content:** `Content/Resources/Content/wardrobe.json` has 5 modest pieces: a blush linen top, sage trousers, a cream cardigan, a lilac hijab (optional, never required), and an embroidered dress earned by restoring the dallahs. It also has chapter 1's occasion, "a family lunch" (it suits family, traditional and cosy).
+- **`WardrobeRules`** (`_Game/Wardrobe`, plain C#, 4 tests): opens at level 4, buys with coins (`priceCoinsByTier`), wears or takes off one piece per slot, earns pieces from tasks, and works out and pays hearts.
+- **Café:**
+  - Salma stands behind the counter wearing her outfit (`CafeSalma`, simple shapes until her 3D model).
+  - The **Wardrobe** button opens her sheet: the occasion with a hearts preview and "I'm ready", her pieces, and pieces for sale.
+- **Save schema v5:** `wardrobe.occasions` keeps the hearts won per chapter; `owned` and `worn` are now read and written.
+- **Still missing:** the 3D Salma with swappable pieces and 2D piece icons (missing/13), occasions for chapters 2–10 (missing/11), and premium bundles (missing/17).
+
 ## 2026-10-31: decor, cosiness, live time of day, winter weather (missing/07)
 
 - **Catalogue:** 15 pieces in `Content/Resources/Content/decor.json`, across Old Levantine, Modern Ammani, Gulf majlis and neutral.

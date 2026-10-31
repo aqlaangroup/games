@@ -229,6 +229,7 @@ namespace Gahwit.Core
     {
         public CafeConfig Cafe;
         public WalkInsConfig WalkIns;
+        public WardrobeConfig Wardrobe;
         public RegularsConfig Regulars;
         public MemoriesConfig Memories;
     }
@@ -252,6 +253,13 @@ namespace Gahwit.Core
     {
         public int Min;
         public int Max;
+    }
+
+    public sealed class WardrobeConfig
+    {
+        public List<int> PriceCoinsByTier;
+        public int OccasionBonusPerHeartPerChapter;
+        public List<int> HeartsAtMatches; // matching pieces worn for 1, 2 and 3 hearts
     }
 
     public sealed class WalkInsConfig

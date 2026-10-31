@@ -185,11 +185,11 @@ namespace Gahwit.Save.Tests
         {
             var time = new TimeService(new FakeClock(), null);
             var data = new SaveData();
-            data.Wardrobe["owned"] = new JArray("top_blush_linen");
+            data.Events["pass_2026_11"] = new JObject { ["points"] = 4120 };
             var state = PlayedState();
             SaveCodec.Write(state, time.State, config, data);
             var reloaded = JObject.Parse(JsonConvert.SerializeObject(data, SaveCodec.Json));
-            Assert.AreEqual("top_blush_linen", (string)reloaded["wardrobe"]["owned"][0]);
+            Assert.AreEqual(4120, (int)reloaded["events"]["pass_2026_11"]["points"]);
         }
     }
 }

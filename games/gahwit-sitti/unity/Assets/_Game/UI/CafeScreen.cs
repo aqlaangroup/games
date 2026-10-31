@@ -2,6 +2,7 @@ using Gahwit.Cafe;
 using Gahwit.Core;
 using Gahwit.Decor;
 using Gahwit.Merge;
+using Gahwit.Wardrobe;
 using RTLTMPro;
 using TMPro;
 using UnityEngine;
@@ -37,7 +38,8 @@ namespace Gahwit.UI
         string selected;
         OrbitPad pad;
         GameObject taskCard, decorBar;
-        Button decorButton, turn, store;
+        Button decorButton, turn, store, wardrobeButton;
+        WardrobeRules wardrobe;
         RTLTextMeshPro cosiness;
         CafeCamera cafeCamera;
 
@@ -70,6 +72,9 @@ namespace Gahwit.UI
             decorButton = UiKit.Button(transform, "Decor", Loc.T("decor.button"), Palette.Card, Palette.Ink, 26, EnterDecor, 60);
             ((RectTransform)decorButton.transform).Pin(new Vector2(0, 1), new Vector2(20, -148), new Vector2(124, 124));
             decorButton.gameObject.SetActive(false);
+            wardrobeButton = UiKit.Button(transform, "Wardrobe", Loc.T("wardrobe.button"), Palette.Card, Palette.Ink, 24, null, 60);
+            ((RectTransform)wardrobeButton.transform).Pin(new Vector2(0, 1), new Vector2(20, -284), new Vector2(124, 124));
+            wardrobeButton.gameObject.SetActive(false);
             BuildDecorBar();
 
             var card = UiKit.Panel(transform, "TaskCard", Palette.Card, 40);
@@ -165,6 +170,13 @@ namespace Gahwit.UI
             decor = rules;
             shop = shopView;
             rules.Changed += RefreshDecor;
+            Refresh();
+        }
+
+        public void SetWardrobe(WardrobeRules rules, WardrobeView view)
+        {
+            wardrobe = rules;
+            wardrobeButton.onClick.AddListener(view.Show);
             Refresh();
         }
 
@@ -268,6 +280,7 @@ namespace Gahwit.UI
             taskCard.SetActive(!decorMode);
             decorBar.SetActive(decorMode);
             decorButton.gameObject.SetActive(decor != null && decor.ShopOpen && !decorMode);
+            wardrobeButton.gameObject.SetActive(wardrobe != null && wardrobe.Open && !decorMode);
             if (decorMode) RefreshDecor();
             var config = game.Config.Chapter(game.State.Chapter);
             chapter.text = config != null ? Loc.T("cafe.chapter", game.State.Chapter, config.Ar) : "";
