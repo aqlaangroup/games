@@ -36,7 +36,7 @@ A system moves here only once it works in one game. Don't build it here first an
 - **Core:** the time service, device clock, save slots and the analytics interface (from Gahwit Sitti, 2026-10-31).
 - **Platform client:** the platform client, cloud sync, device secrets and Sign in with Apple (from Gahwit Sitti, 2026-10-31).
 
-The package's own `README.md` lists the files. The other modules in the table above still live in Gahwit Sitti; `games/gahwit-sitti/missing/24.md` says when each one is ready to move.
+The package's own `README.md` lists the files. The other modules in the table above still live in Gahwit Sitti; `games/gahwit-sitti/missing/done/24.md` says when each one is ready to move.
 
 ## Tests
 
