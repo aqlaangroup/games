@@ -43,14 +43,14 @@ namespace Gahwit.UI
             var bannerImage = UiKit.Panel(transform, "Banner", Palette.Card, 36);
             bannerImage.raycastTarget = false;
             banner = bannerImage.rectTransform;
-            banner.Pin(new Vector2(0.5f, 1), new Vector2(0, -424), new Vector2(1000, 170)); // under the orders and the café's side buttons
+            banner.Pin(new Vector2(0.5f, 1), new Vector2(0, -440), new Vector2(1000, 170)); // under the orders and the café's side buttons
             counter = UiKit.Text(banner, "Step", "", 24, Palette.Rose);
             counter.fontStyle = FontStyles.Bold;
             counter.rectTransform.Top(16, 36, 32, canSkip ? 200 : 32);
             text = UiKit.Text(banner, "Text", "", 30, Palette.Ink);
             text.rectTransform.Stretch(canSkip ? 200 : 32, 32, 56, 16);
             skip = UiKit.Button(banner, "Skip", Loc.T("tutorial.skip"), Palette.Muted, Palette.Ink, 26, flow.Skip, 30);
-            ((RectTransform)skip.transform).Pin(new Vector2(0, 0.5f), new Vector2(24, 0), new Vector2(160, 124));
+            ((RectTransform)skip.transform).Pin(new Vector2(0, 0.5f), new Vector2(20, 0), new Vector2(160, UiKit.MinTouch));
             skip.gameObject.SetActive(canSkip);
             SetShown(false);
         }

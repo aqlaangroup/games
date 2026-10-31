@@ -99,7 +99,7 @@ namespace Gahwit.UI
         void Row(DecorDef def, string action, bool enabled, UnityEngine.Events.UnityAction act)
         {
             var row = UiKit.Panel(list, "Piece " + def.Id, Color.white, 28);
-            Sheet.Sized(row, 140);
+            Sheet.Sized(row, UiKit.MinTouch + 16);
             var name = UiKit.Text(row.transform, "Name", Loc.T("decor." + def.Id), 30, Palette.Ink);
             name.fontStyle = FontStyles.Bold;
             name.rectTransform.Stretch(290, 28, 18, 70);
@@ -108,15 +108,15 @@ namespace Gahwit.UI
                 .rectTransform.Stretch(290, 28, 72, 18);
             var button = UiKit.Button(row.transform, "Act", action, enabled ? Palette.Rose : Palette.Muted, enabled ? Color.white : Palette.InkSoft, 26, act, 30);
             button.interactable = enabled;
-            ((RectTransform)button.transform).Pin(new Vector2(0, 0.5f), new Vector2(20, 0), new Vector2(240, 120));
+            ((RectTransform)button.transform).Pin(new Vector2(0, 0.5f), new Vector2(20, 0), new Vector2(240, UiKit.MinTouch));
         }
 
         void StyleRow(string task)
         {
             var row = UiKit.Panel(list, "Style " + task, Color.white, 28);
-            Sheet.Sized(row, 210);
+            Sheet.Sized(row, 220);
             UiKit.Text(row.transform, "Task", Loc.T($"task.{task}.title"), 30, Palette.Ink).rectTransform.Top(16, 50, 28, 28);
-            var chips = UiKit.Rect(row.transform, "Chips").Bottom(14, 124, 20, 20);
+            var chips = UiKit.Rect(row.transform, "Chips").Bottom(14, UiKit.MinTouch, 20, 20);
             UiKit.Row(chips.gameObject, 12).childForceExpandWidth = true;
             game.State.TaskStyles.TryGetValue(task, out var current);
             foreach (var style in game.Config.LevelB.Cafe.Styles)

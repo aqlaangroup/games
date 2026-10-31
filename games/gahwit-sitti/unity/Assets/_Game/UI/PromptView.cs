@@ -13,8 +13,8 @@ namespace Gahwit.UI
     // news. Only one shows at a time; the next waits.
     public sealed class PromptView : MonoBehaviour
     {
-        const int Petals = 18;
-        const float PetalSeconds = 1.4f;
+        const int Petals = 18, CountSteps = 16;
+        const float PetalSeconds = 1.4f, CountSeconds = 0.8f;
 
         public struct Choice
         {
@@ -30,20 +30,22 @@ namespace Gahwit.UI
         readonly Vector2[] petalDirections = new Vector2[Petals];
         RTLTextMeshPro title, big, body;
         RectTransform buttons, card;
-        float burstAt = -10;
+        float burstAt = -10, countAt = -10;
+        int countShown;
+        Func<float, string> countUp;
 
         public bool IsOpen => gameObject.activeSelf;
 
         public void Init()
         {
-            card = Sheet.Card(transform, 920, 1000);
+            card = Sheet.Card(transform, 920, 1040);
             title = Sheet.Title(card, "", null);
             big = UiKit.Text(card, "Big", "", 96, Palette.Rose, TextAlignmentOptions.Center);
             big.fontStyle = FontStyles.Bold;
             big.rectTransform.Top(130, 140, 48, 48);
             body = UiKit.Text(card, "Body", "", 30, Palette.Ink, TextAlignmentOptions.Center);
             body.rectTransform.Stretch(56, 56, 280, 440);
-            buttons = UiKit.Rect(card, "Buttons").Bottom(40, 400, 56, 56);
+            buttons = UiKit.Rect(card, "Buttons").Bottom(40, 430, 56, 56);
             var column = buttons.gameObject.AddComponent<VerticalLayoutGroup>();
             column.spacing = 14;
             column.childControlWidth = column.childControlHeight = true;
@@ -61,8 +63,10 @@ namespace Gahwit.UI
             gameObject.SetActive(false);
         }
 
-        // Shows now, or after the card on screen closes.
-        public void Show(string heading, string bigLine, string text, IList<Choice> choices, bool celebrate = false)
+        // Shows now, or after the card on screen closes. countUp, when given, writes the body for a fraction from 0 to 1,
+        // so rewards count up to their totals.
+        public void Show(string heading, string bigLine, string text, IList<Choice> choices, bool celebrate = false,
+            Func<float, string> countUp = null)
         {
             void Open()
             {
@@ -80,9 +84,12 @@ namespace Gahwit.UI
                         c.Act?.Invoke();
                     }, 40);
                     button.interactable = c.Enabled;
-                    Sheet.Sized(button, 124);
+                    Sheet.Sized(button, UiKit.MinTouch);
                 }
-                if (celebrate) burstAt = Time.unscaledTime;
+                if (celebrate && !Tweens.Reduced) burstAt = Time.unscaledTime;
+                this.countUp = Tweens.Reduced ? null : countUp;
+                countAt = Time.unscaledTime;
+                countShown = -1;
                 transform.SetAsLastSibling();
                 gameObject.SetActive(true);
                 UiSound.Play("ui_panel_open");
@@ -105,6 +112,18 @@ namespace Gahwit.UI
 
         void Update()
         {
+            if (countUp != null)
+            {
+                // A new string only when the shown step changes: sixteen in all.
+                int step = Mathf.Min(CountSteps, Mathf.FloorToInt((Time.unscaledTime - countAt) / CountSeconds * CountSteps));
+                if (step != countShown)
+                {
+                    countShown = step;
+                    body.text = countUp(step / (float)CountSteps);
+                }
+                if (step >= CountSteps) countUp = null;
+            }
+
             float t = (Time.unscaledTime - burstAt) / PetalSeconds;
             bool show = t >= 0 && t < 1;
             for (int i = 0; i < Petals; i++)

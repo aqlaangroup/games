@@ -8,12 +8,9 @@ namespace Gahwit.UI
     // One square of the board: tap to select, tap or drag onto another square to move or merge.
     public sealed class CellView : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
-        const float PopSeconds = 0.24f;
-
         BoardView board;
         Image ring, wantedDot;
         ItemTile tile;
-        float popAge = -1;
 
         public int Index { get; private set; }
 
@@ -46,16 +43,7 @@ namespace Gahwit.UI
             wantedDot.enabled = wanted;
         }
 
-        public void Pop() => popAge = 0;
-
-        void Update()
-        {
-            if (popAge < 0) return;
-            popAge += Time.unscaledDeltaTime;
-            float t = Mathf.Clamp01(popAge / PopSeconds);
-            tile.Root.localScale = Vector3.one * (1f + 0.22f * Mathf.Sin(t * Mathf.PI));
-            if (t >= 1) popAge = -1;
-        }
+        public RectTransform Tile => tile.Root;
 
         public void OnPointerClick(PointerEventData eventData)
         {

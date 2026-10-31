@@ -1,0 +1,23 @@
+{
+    "name": "Gahwit.UI.PlayTests",
+    "rootNamespace": "Gahwit.UI.PlayTests",
+    "references": [
+        "Gahwit.UI",
+        "Gahwit.Core",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

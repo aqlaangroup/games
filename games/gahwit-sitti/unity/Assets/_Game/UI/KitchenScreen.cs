@@ -35,22 +35,24 @@ namespace Gahwit.UI
             orders = UiKit.Rect(root, "Orders").Top(8, 250).gameObject.AddComponent<OrdersView>();
             orders.Init(game, look, Serve);
 
-            board = UiKit.Rect(root, "Board").Stretch(12, 12, 268, 108).gameObject.AddComponent<BoardView>();
+            // The hint bar grows with large text; the board takes what is left.
+            float infoHeight = 140 * UiKit.TextScale;
+            board = UiKit.Rect(root, "Board").Stretch(12, 12, 268, infoHeight + 16).gameObject.AddComponent<BoardView>();
             board.Init(game, look, dragLayer, TapGenerator);
             board.DroppedOnOrder += ServeByDrop;
             board.SelectionChanged += RefreshInfo;
 
             var infoBar = UiKit.Panel(root, "Info", Palette.Card, 28);
-            infoBar.rectTransform.Bottom(8, 92, 24, 24);
+            infoBar.rectTransform.Bottom(8, infoHeight, 24, 24);
             info = UiKit.Text(infoBar.transform, "Text", "", 26, Palette.Ink);
             info.rectTransform.Stretch(232, 24, 6, 6);
             sell = UiKit.Button(infoBar.transform, "Sell", "", Palette.Gold, Palette.Ink, 26, Sell, 24);
-            ((RectTransform)sell.transform).Pin(new Vector2(0, 0.5f), new Vector2(14, 0), new Vector2(200, 66));
+            ((RectTransform)sell.transform).Pin(new Vector2(0, 0.5f), new Vector2(4, 0), new Vector2(200, UiKit.MinTouch));
             // With an item picked: keep it in storage. With nothing picked: open storage.
             store = UiKit.Button(infoBar.transform, "Store", Loc.T("kitchen.store"), Palette.Lilac, Palette.Ink, 24, StoreSelected, 24);
-            ((RectTransform)store.transform).Pin(new Vector2(0, 0.5f), new Vector2(222, 0), new Vector2(150, 66));
+            ((RectTransform)store.transform).Pin(new Vector2(0, 0.5f), new Vector2(212, 0), new Vector2(UiKit.MinTouch + 18, UiKit.MinTouch));
             storage = UiKit.Button(infoBar.transform, "Storage", "", Palette.Lilac, Palette.Ink, 24, () => ui.Storage.Show(), 24);
-            ((RectTransform)storage.transform).Pin(new Vector2(0, 0.5f), new Vector2(14, 0), new Vector2(200, 66));
+            ((RectTransform)storage.transform).Pin(new Vector2(0, 0.5f), new Vector2(4, 0), new Vector2(200, UiKit.MinTouch));
             info.rectTransform.Stretch(390, 24, 6, 6);
 
             // A bubble floats over the board's top corner for its last seconds (GAME_SYSTEMS.md section 7).
@@ -141,17 +143,17 @@ namespace Gahwit.UI
             {
                 string makes = game.ItemName(item.Chain, 1);
                 info.text = Loc.T("kitchen.generator", game.GeneratorName(item.Generator), item.Level) +
-                            $"\n<size=22>{Loc.T("kitchen.generatorHint", makes, game.Config.Generators.TapEnergyCost)}</size>";
+                            $"\n<size=85%>{Loc.T("kitchen.generatorHint", makes, game.Config.Generators.TapEnergyCost)}</size>";
             }
             else if (item != null)
             {
                 string next = item.Level < game.MaxLevel(item.Chain)
                     ? Loc.T("kitchen.next", game.ItemName(item.Chain, item.Level + 1))
                     : Loc.T("kitchen.top");
-                info.text = Loc.T("kitchen.selected", game.ItemName(item.Chain, item.Level), item.Level) + $"\n<size=22>{next}</size>";
+                info.text = Loc.T("kitchen.selected", game.ItemName(item.Chain, item.Level), item.Level) + $"\n<size=85%>{next}</size>";
                 sell.Label().text = Loc.T("kitchen.sell", game.SellValue(item));
             }
-            else if (game.State.OrdersServed == 0) info.text = Loc.T("kitchen.hint.start") + $"\n<size=22>{Loc.T("kitchen.hint.merge")}</size>";
+            else if (game.State.OrdersServed == 0) info.text = Loc.T("kitchen.hint.start") + $"\n<size=85%>{Loc.T("kitchen.hint.merge")}</size>";
             else if (game.EmptyCells < game.Config.Ui.KitchenHints.NearlyFullEmptySquares) info.text = Loc.T("kitchen.hint.full");
             else if (game.State.Energy < game.Config.Ui.KitchenHints.LowEnergy) info.text = Loc.T("kitchen.hint.lowEnergy");
             else info.text = Loc.T("kitchen.hint.merge");

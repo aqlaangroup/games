@@ -31,6 +31,16 @@ namespace Gahwit.Merge.Tests
         static int Generator(Game game, string id) => Find(game, p => p.Generator == id);
 
         [Test]
+        public void NamesFollowTheLanguage()
+        {
+            var game = NewGame();
+            Assert.AreEqual(config.Chains["coffee"].Items[0][0], game.ItemName("coffee", 1));
+            game.English = true;
+            Assert.AreEqual(config.Chains["coffee"].Items[0][1], game.ItemName("coffee", 1));
+            Assert.AreEqual(config.GeneratorDef("gen_coffee").En, game.GeneratorName("gen_coffee"));
+        }
+
+        [Test]
         public void XpToNextMatchesTheDesignExamples()
         {
             // GAME_SYSTEMS.md section 8: 92 XP from level 1, 560 from level 10, 1,460 from level 20.

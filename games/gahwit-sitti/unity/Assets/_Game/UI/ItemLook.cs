@@ -27,7 +27,13 @@ namespace Gahwit.UI
 
         public string ShortName(string chain, int level)
         {
+            // One word fits a square: the noun, which comes first in Arabic and last in English.
             string name = game.ItemName(chain, level);
+            if (game.English)
+            {
+                int last = name.LastIndexOf(' ');
+                return last > 0 ? name.Substring(last + 1) : name;
+            }
             int space = name.IndexOf(' ');
             return space > 0 ? name.Substring(0, space) : name;
         }

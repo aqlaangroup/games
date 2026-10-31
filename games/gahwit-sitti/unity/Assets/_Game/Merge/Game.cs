@@ -75,8 +75,15 @@ namespace Gahwit.Merge
 
         public Item ItemAt(int cell) => State.Board[cell];
         public int MaxLevel(string chain) => Config.MaxItemLevel(chain);
-        public string ItemName(string chain, int level) => Config.Chains[chain].Items[level - 1][0];
-        public string GeneratorName(string id) => Config.GeneratorDef(id).Ar;
+        public bool English { get; set; } // names in English instead of Arabic (the settings' language)
+
+        public string ItemName(string chain, int level)
+        {
+            var names = Config.Chains[chain].Items[level - 1];
+            return English && names.Count > 1 ? names[1] : names[0];
+        }
+
+        public string GeneratorName(string id) => English ? Config.GeneratorDef(id).En : Config.GeneratorDef(id).Ar;
         public int EmptyCells => State.Board.Count(item => item == null);
 
         IEnumerable<Item> AllPieces => State.Board.Where(i => i != null).Concat(State.Storage);

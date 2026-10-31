@@ -13,8 +13,8 @@ namespace Gahwit.UI
         Action<int> tapGenerator;
         RectTransform grid, dragLayer;
         CellView[] cells;
-        ItemTile ghost;
-        int selected = -1, dragFrom = -1;
+        ItemTile ghost, pull;
+        int selected = -1, dragFrom = -1, generatorTapped = -1;
 
         public int Selected => selected;
         public RectTransform CellRect(int cell) => (RectTransform)cells[cell].transform;
@@ -30,19 +30,58 @@ namespace Gahwit.UI
             grid = UiKit.Rect(transform, "Grid").Pin(new Vector2(0.5f, 0.5f), Vector2.zero, Vector2.zero);
             cells = new CellView[game.CellCount];
             for (int i = 0; i < cells.Length; i++) cells[i] = CellView.Create(grid, i, this);
-            game.ItemSpawned += Pop;
-            game.ItemsMerged += Pop;
+            game.ItemSpawned += Spawned;
+            game.ItemsMerged += Merged;
             Layout();
         }
 
         void OnDestroy()
         {
             if (game == null) return;
-            game.ItemSpawned -= Pop;
-            game.ItemsMerged -= Pop;
+            game.ItemSpawned -= Spawned;
+            game.ItemsMerged -= Merged;
         }
 
-        void Pop(int cell) => cells[cell].Pop();
+        // Generator tap (COMPLETE_SPEC.md section 8): the tin squashes and the new item arcs to its square, then pops.
+        void Spawned(int cell)
+        {
+            var tweens = Tweens.Instance;
+            if (tweens == null) return;
+            tweens.PopOf(cells[cell].Tile, 0.25f);
+            if (generatorTapped < 0 || generatorTapped == cell) return;
+            tweens.PopOf(cells[generatorTapped].Tile, -0.2f);
+            var item = game.ItemAt(cell);
+            if (item != null) tweens.Arc(CellRect(generatorTapped), CellRect(cell), look.Tint(item.Chain, item.Level));
+        }
+
+        // Merge: a soft flash, the new item pops past its size and settles, and a sparkle in its colour.
+        void Merged(int cell)
+        {
+            var tweens = Tweens.Instance;
+            if (tweens == null) return;
+            var item = game.ItemAt(cell);
+            var color = item != null ? look.Tint(item.Chain, item.Level) : Palette.Gold;
+            tweens.Flash(CellRect(cell), Color.white);
+            tweens.PopOf(cells[cell].Tile, 0.3f);
+            tweens.Sparkle(CellRect(cell), color);
+        }
+
+        // Tap-to-merge: a copy of the moving item slides into its partner, so the two pull together.
+        void PullTogether(int from, int to)
+        {
+            var tweens = Tweens.Instance;
+            var item = game.ItemAt(from);
+            if (tweens == null || Tweens.Reduced || item == null) return;
+            if (pull == null)
+            {
+                pull = new ItemTile(dragLayer, "PullGhost", 44, 18);
+                pull.Root.anchorMin = pull.Root.anchorMax = pull.Root.pivot = new Vector2(0.5f, 0.5f);
+            }
+            float size = CellRect(from).rect.width;
+            pull.Root.sizeDelta = new Vector2(size, size);
+            pull.Show(item, look);
+            tweens.SlideOf(pull.Root, CellRect(from), CellRect(to), 0.12f);
+        }
 
         void OnRectTransformDimensionsChange()
         {
@@ -89,7 +128,9 @@ namespace Gahwit.UI
             if (target != null && target.IsGenerator && (selected < 0 || selected == cell || !game.CanMerge(selected, cell)))
             {
                 selected = cell;
+                generatorTapped = cell;
                 tapGenerator(cell);
+                generatorTapped = -1;
             }
             else if (selected < 0) selected = target != null ? cell : -1;
             else if (selected == cell) selected = -1;
@@ -97,6 +138,7 @@ namespace Gahwit.UI
             {
                 int from = selected;
                 selected = -1;
+                if (target != null) PullTogether(from, cell);
                 game.Move(from, cell);
             }
             else selected = cell;

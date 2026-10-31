@@ -182,6 +182,23 @@ namespace Gahwit.Save.Tests
         }
 
         [Test]
+        public void AVersionSevenSaveStartsWithTheMemoryAssistOff()
+        {
+            var time = new TimeService(new FakeClock(), null);
+            var v7 = JObject.Parse(WriteJson(PlayedState(), time));
+            v7["schemaVersion"] = 7;
+            var settings = (JObject)v7["settings"];
+            settings.Remove("memoryAssist");
+            settings["largeText"] = true;
+
+            SaveService.FromJson(v7.ToString(), config, content, out var data, out _);
+
+            Assert.AreEqual(SaveData.CurrentSchema, data.SchemaVersion);
+            Assert.IsFalse(data.Settings.MemoryAssist);
+            Assert.IsTrue(data.Settings.LargeText, "existing settings are kept");
+        }
+
+        [Test]
         public void SectionsTheGameDoesNotUseYetSurviveASave()
         {
             var time = new TimeService(new FakeClock(), null);

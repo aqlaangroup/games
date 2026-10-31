@@ -44,6 +44,7 @@ namespace Gahwit.UI
         DecorShopView decorShop;
         WardrobeView wardrobe;
         IAccountUi account;
+        RectTransform tweens;
 
         // A panel over the game: the tutorial waits under it.
         public bool ModalOpen => Settings.IsOpen || help.gameObject.activeSelf || confirm.gameObject.activeSelf || CloudChoice.IsOpen
@@ -90,13 +91,13 @@ namespace Gahwit.UI
             var root = UiKit.Rect(transform, "SafeArea").Stretch();
             root.gameObject.AddComponent<SafeArea>();
 
-            var screens = UiKit.Rect(root, "Screens").Stretch(0, 0, 124, 140);
+            var screens = UiKit.Rect(root, "Screens").Stretch(0, 0, 124, 176);
             kitchen = UiKit.Rect(screens, "Kitchen").Stretch().gameObject.AddComponent<KitchenScreen>();
             cafe = UiKit.Rect(screens, "Cafe").Stretch().gameObject.AddComponent<CafeScreen>();
 
             hud = UiKit.Rect(root, "Hud").Top(0, 124).gameObject.AddComponent<Hud>();
             hud.Init(game, now);
-            BuildTabs(UiKit.Rect(root, "Tabs").Bottom(0, 140));
+            BuildTabs(UiKit.Rect(root, "Tabs").Bottom(0, 176));
 
             var dragLayer = UiKit.Rect(root, "DragLayer").Stretch();
             Memory = UiKit.Rect(root, "Memory").Stretch().gameObject.AddComponent<MemoryView>();
@@ -107,6 +108,8 @@ namespace Gahwit.UI
             Letter.Init();
             Toast = UiKit.Rect(root, "Toast").Pin(new Vector2(0.5f, 1), new Vector2(0, -136), new Vector2(920, 84)).gameObject.AddComponent<Toast>();
             Toast.Init();
+            tweens = UiKit.Rect(root, "Tweens").Stretch();
+            tweens.gameObject.AddComponent<Tweens>().Init();
 
             this.account = account;
             cafe.ReducedMotion = () => account.GetSetting("reducedMotion");
@@ -127,20 +130,57 @@ namespace Gahwit.UI
             Prompt.Init();
             UpdateRequired = UiKit.Rect(root, "UpdateRequired").Stretch().gameObject.AddComponent<UpdateRequiredView>();
             UpdateRequired.Init(Toast);
-            Toast.transform.SetAsLastSibling();
+            KeepOnTop();
 
             kitchen.Init(game, look, this, now, dragLayer);
             cafe.Init(game, this, cafeCamera, room, openDrawer, look);
 
             game.Changed += Refresh;
+            game.OrderServed += CoinsToCounter;
             Wallet.Changed += Refresh;
             ShowCafe(); // the 3D café is the main screen (COMPLETE_SPEC.md section 12)
         }
 
         void OnDestroy()
         {
-            if (game != null) game.Changed -= Refresh;
+            if (game != null)
+            {
+                game.Changed -= Refresh;
+                game.OrderServed -= CoinsToCounter;
+            }
             Wallet.Changed -= Refresh;
+        }
+
+        // Toasts and motion stay above every panel.
+        void KeepOnTop()
+        {
+            Toast.transform.SetAsLastSibling();
+            tweens.SetAsLastSibling();
+        }
+
+        // Order served (COMPLETE_SPEC.md section 8): coins burst from the order and fly to the counter.
+        void CoinsToCounter(Order order)
+        {
+            if (cafeShown || Tweens.Instance == null) return;
+            var card = kitchen.Orders.ServeButton(order.Id);
+            Tweens.Instance.Sparkle(card, Palette.Gold, 10);
+            Tweens.Instance.CoinsFly(card, hud.CoinsRect);
+            Tweens.Instance.PopOf(hud.CoinsRect, 0.15f);
+        }
+
+        // Decor placed: a dust puff where the piece landed.
+        public void DecorDust(Vector3 world)
+        {
+            if (!cafeShown || Tweens.Instance == null) return;
+            var screen = cafeCamera.GetComponent<Camera>().WorldToScreenPoint(world);
+            if (screen.z > 0) Tweens.Instance.Dust(screen);
+        }
+
+        // The way into a memory: a sepia wash spreads over the screen from the last touch.
+        public void MemoryWipe()
+        {
+            var touch = UnityEngine.InputSystem.Pointer.current?.position.ReadValue() ?? new Vector2(Screen.width / 2f, Screen.height / 2f);
+            Tweens.Instance?.Wipe(touch, Palette.Hex("#B98A5A"), 0.9f);
         }
 
         void BuildTabs(RectTransform tabs)
@@ -183,7 +223,7 @@ namespace Gahwit.UI
         {
             decorShop = UiKit.Rect(transform.Find("SafeArea"), "DecorShop").Stretch().gameObject.AddComponent<DecorShopView>();
             decorShop.Init(rules, game, Toast);
-            Toast.transform.SetAsLastSibling();
+            KeepOnTop();
             cafe.SetDecor(rules, decorShop);
         }
 
@@ -192,14 +232,14 @@ namespace Gahwit.UI
         {
             Storage = UiKit.Rect(transform.Find("SafeArea"), "Storage").Stretch().gameObject.AddComponent<StorageView>();
             Storage.Init(game, look, Toast, buyStorageSlot);
-            Toast.transform.SetAsLastSibling();
+            KeepOnTop();
         }
 
         public void SetWardrobe(WardrobeRules rules)
         {
             wardrobe = UiKit.Rect(transform.Find("SafeArea"), "Wardrobe").Stretch().gameObject.AddComponent<WardrobeView>();
             wardrobe.Init(rules, game, Toast);
-            Toast.transform.SetAsLastSibling();
+            KeepOnTop();
             cafe.SetWardrobe(rules, wardrobe);
         }
 

@@ -68,11 +68,22 @@ namespace Gahwit.UI
             UiKit.Text(card.transform, "Reward", Loc.T("order.reward", order.Coins), 24, Palette.InkSoft, TextAlignmentOptions.Center)
                 .rectTransform.Top(150, 32, 8, 8);
 
-            var button = UiKit.Button(card.transform, "Serve", Loc.T(ready ? "order.serve" : "order.notReady"),
-                ready ? Palette.SageDark : Palette.Muted, ready ? Color.white : Palette.InkSoft, 26, () => serve(order), 22);
-            button.interactable = ready;
-            ((RectTransform)button.transform).Bottom(10, 56, 14, 14);
-            serveButtons[order.Id] = (RectTransform)button.transform;
+            // A ready card is one big button to serve (44 pt and more), with a tick so it doesn't rely on colour.
+            var label = UiKit.Panel(card.transform, "Serve", ready ? Palette.SageDark : Palette.Muted, 22);
+            label.raycastTarget = false;
+            label.rectTransform.Bottom(10, 56, 14, 14);
+            UiKit.Text(label.transform, "Label", Loc.T(ready ? "order.serve" : "order.notReady"), 26, ready ? Color.white : Palette.InkSoft,
+                TextAlignmentOptions.Center).rectTransform.Stretch(8, 8, 2, 2);
+            if (ready)
+            {
+                var tick = UiKit.Icon(card.transform, "Ready", UiSprites.Tick, Palette.SageDark, 44);
+                tick.rectTransform.Pin(new Vector2(0, 1), new Vector2(12, -10), new Vector2(44, 44));
+                var tap = card.gameObject.AddComponent<Button>();
+                tap.targetGraphic = card;
+                tap.onClick.AddListener(() => UiSound.Play("ui_tap"));
+                tap.onClick.AddListener(() => serve(order));
+            }
+            serveButtons[order.Id] = card.rectTransform;
         }
     }
 

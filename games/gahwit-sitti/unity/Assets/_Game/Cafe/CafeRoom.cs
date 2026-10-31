@@ -40,6 +40,7 @@ namespace Gahwit.Cafe
         Material litTemplate, floorMat, glassMat, bulbMat, brass, tarnished, drawerMat, signBoardMat, chairSeatMat, chairBackMat;
         Light sun, signLight, counterLight;
         Camera cam;
+        bool highQuality = true;
         Transform plaque, drawer;
         Volume pastVolume;
         float pastTarget;
@@ -130,6 +131,16 @@ namespace Gahwit.Cafe
 
         // 1974: warm faded film colours and grain (CONCEPT.md, Look), faded in and out.
         public void SetPast(bool past) => pastTarget = past ? 1f : 0f;
+
+        // Graphics quality (COMPLETE_SPEC.md section 4): low drops the sun's shadows and the edge smoothing.
+        public void SetQuality(bool high)
+        {
+            highQuality = high;
+            sun.shadows = high ? LightShadows.Soft : LightShadows.None;
+            var data = cam.GetUniversalAdditionalCameraData();
+            data.renderShadows = high;
+            data.antialiasing = high ? AntialiasingMode.SubpixelMorphologicalAntiAliasing : AntialiasingMode.None;
+        }
 
         ParticleSystem rain;
 
@@ -257,7 +268,7 @@ namespace Gahwit.Cafe
             sun.color = time.Sun;
             sun.intensity = time.SunIntensity;
             sun.transform.rotation = Quaternion.LookRotation(-time.SunFrom.normalized);
-            sun.shadows = LightShadows.Soft;
+            sun.shadows = highQuality ? LightShadows.Soft : LightShadows.None;
 
             RenderSettings.ambientMode = AmbientMode.Trilight;
             RenderSettings.ambientSkyColor = Hex("#FFF6F2") * time.Ambient;

@@ -35,7 +35,7 @@ namespace Gahwit.UI
             UiKit.Text(card, "Welcome", Loc.T("age.welcome"), 30, Palette.InkSoft, TextAlignmentOptions.Center).rectTransform.Top(128, 48, 40, 40);
 
             UiKit.Text(card, "LanguageLabel", Loc.T("age.language"), 32, Palette.Ink).rectTransform.Top(200, 48, 56, 56);
-            var languages = UiKit.Rect(card, "Languages").Top(254, 120, 56, 56);
+            var languages = UiKit.Rect(card, "Languages").Top(254, UiKit.MinTouch, 56, 56);
             UiKit.Row(languages.gameObject, 20).childForceExpandWidth = true;
             foreach (var code in SettingsView.Languages)
             {
@@ -55,7 +55,7 @@ namespace Gahwit.UI
             {
                 int pick = y;
                 var row = UiKit.Button(years, "Year " + y, y.ToString(), Color.white, Palette.Ink, 32, () => PickYear(pick), 24);
-                Sheet.Sized(row, 120);
+                Sheet.Sized(row, UiKit.MinTouch);
                 row.gameObject.AddComponent<Outline>();
                 yearRows[y] = row;
             }
@@ -65,9 +65,9 @@ namespace Gahwit.UI
             UiKit.Text(card, "NoChat", Loc.T("age.noChat"), 24, Palette.InkSoft).rectTransform.Bottom(340, 90, 56, 56);
 
             next = UiKit.Button(card, "Continue", Loc.T("age.continue"), Palette.Rose, Color.white, 34, Continue, 40);
-            ((RectTransform)next.transform).Bottom(170, 124, 56, 56);
+            ((RectTransform)next.transform).Bottom(170, UiKit.MinTouch, 56, 56);
 
-            var legal = UiKit.Rect(card, "Legal").Bottom(30, 124, 56, 56);
+            var legal = UiKit.Rect(card, "Legal").Bottom(26, UiKit.MinTouch, 56, 56);
             UiKit.Row(legal.gameObject, 12);
             Sheet.Sized(UiKit.Text(legal, "Agree", Loc.T("age.agree"), 24, Palette.InkSoft, TextAlignmentOptions.Center), 60)
                 .GetComponent<LayoutElement>().preferredWidth = 330;
@@ -83,7 +83,7 @@ namespace Gahwit.UI
             link.Label().fontStyle = FontStyles.Underline;
             var size = link.gameObject.AddComponent<LayoutElement>();
             size.preferredWidth = 220;
-            size.preferredHeight = 120;
+            size.preferredHeight = UiKit.MinTouch;
         }
 
         public void Show(string currentLanguage, Action<string, int> onDone)

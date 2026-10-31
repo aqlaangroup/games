@@ -59,7 +59,7 @@ namespace Gahwit.UI
                 int index = i;
                 var piece = game.State.Storage[i];
                 var row = UiKit.Panel(list, "Stored", Color.white, 28);
-                Sheet.Sized(row, 140);
+                Sheet.Sized(row, UiKit.MinTouch + 16);
                 var tile = new ItemTile(row.transform, "Item", 30, 0);
                 tile.Root.Pin(new Vector2(1, 0.5f), new Vector2(-20, 0), new Vector2(110, 110));
                 tile.Show(piece, look);
@@ -67,7 +67,7 @@ namespace Gahwit.UI
                 {
                     if (!game.TakeOut(index)) toast.Show(Loc.T("kitchen.boardFull"));
                 }, 30);
-                ((RectTransform)back.transform).Pin(new Vector2(0, 0.5f), new Vector2(20, 0), new Vector2(300, 120));
+                ((RectTransform)back.transform).Pin(new Vector2(0, 0.5f), new Vector2(20, 0), new Vector2(300, UiKit.MinTouch));
             }
 
             int next = game.NextStorageSlot;
@@ -78,7 +78,7 @@ namespace Gahwit.UI
                 var result = await buySlot();
                 toast.Show(Loc.T("gems." + result.ToString().ToLowerInvariant()));
             }, 34);
-            Sheet.Sized(buy, 124);
+            Sheet.Sized(buy, UiKit.MinTouch);
         }
     }
 }

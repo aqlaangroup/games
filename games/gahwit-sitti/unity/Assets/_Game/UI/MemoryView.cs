@@ -8,12 +8,16 @@ using UnityEngine.UI;
 
 namespace Gahwit.UI
 {
-    // The 1974 banner and the "pour" memory game: a cup that fills while the button is held, with the line to stop at.
+    // The 1974 banner with film grain over the screen, and the "pour" memory game: a cup that fills while the button
+    // is held, with the line to stop at.
     public sealed class MemoryView : MonoBehaviour
     {
-        const float CupHeight = 330f, LiquidInset = 14f, ResultPauseSeconds = 1.1f;
+        const float CupHeight = 330f, LiquidInset = 14f, ResultPauseSeconds = 1.1f, GrainFadeSeconds = 1.2f, GrainAlpha = 0.16f;
+        const int GrainSize = 128;
 
         GameObject banner, sheet;
+        RawImage grain;
+        float grainSince, nextGrainShift;
         Image liquid, bandLow, bandHigh, band;
         RTLTextMeshPro hint;
         PourGame pour;
@@ -22,6 +26,12 @@ namespace Gahwit.UI
 
         public void Init()
         {
+            grain = UiKit.Rect(transform, "Grain").Stretch().gameObject.AddComponent<RawImage>();
+            grain.texture = GrainTexture();
+            grain.uvRect = new Rect(0, 0, 4, 7);
+            grain.raycastTarget = false;
+            grain.gameObject.SetActive(false);
+
             var bannerImage = UiKit.Panel(transform, "Banner", new Color(0.36f, 0.25f, 0.17f, 0.85f), 40);
             bannerImage.raycastTarget = false;
             bannerImage.rectTransform.Pin(new Vector2(0.5f, 1), new Vector2(0, -150), new Vector2(560, 72));
@@ -55,7 +65,7 @@ namespace Gahwit.UI
             bandHigh.transform.SetAsLastSibling();
 
             var hold = UiKit.Button(card.transform, "Hold", Loc.T("pour.hold"), Palette.Rose, Color.white, 32, null, 40);
-            ((RectTransform)hold.transform).Bottom(110, 110, 80, 80);
+            ((RectTransform)hold.transform).Bottom(110, UiKit.MinTouch, 80, 80);
             var holdInput = hold.gameObject.AddComponent<HoldButton>();
             holdInput.Pressed += () =>
             {
@@ -71,7 +81,29 @@ namespace Gahwit.UI
 
         public bool IsPlaying => pour != null && !pour.Finished;
 
-        public void ShowBanner(bool show) => banner.SetActive(show);
+        // In a memory (COMPLETE_SPEC.md section 8): the banner, and grain fading in over the faded café.
+        public void ShowBanner(bool show)
+        {
+            banner.SetActive(show);
+            grain.gameObject.SetActive(show);
+            grainSince = Time.unscaledTime;
+            grain.color = new Color(1, 1, 1, 0);
+        }
+
+        static Texture2D GrainTexture()
+        {
+            var texture = new Texture2D(GrainSize, GrainSize, TextureFormat.RGBA32, false) { wrapMode = TextureWrapMode.Repeat, name = "Grain" };
+            var pixels = new Color32[GrainSize * GrainSize];
+            var random = new System.Random(1974);
+            for (int i = 0; i < pixels.Length; i++)
+            {
+                byte v = (byte)random.Next(40, 230);
+                pixels[i] = new Color32(v, (byte)(v * 0.9f), (byte)(v * 0.75f), (byte)random.Next(0, 255));
+            }
+            texture.SetPixels32(pixels);
+            texture.Apply();
+            return texture;
+        }
 
         public void PlayPour(PourGame game, Action<int> done)
         {
@@ -125,6 +157,17 @@ namespace Gahwit.UI
 
         void Update()
         {
+            if (grain.gameObject.activeSelf)
+            {
+                float fade = Mathf.Clamp01((Time.unscaledTime - grainSince) / GrainFadeSeconds);
+                grain.color = new Color(1, 1, 1, GrainAlpha * fade);
+                // The grain moves like film; with reduced motion it stays still.
+                if (!Tweens.Reduced && Time.unscaledTime >= nextGrainShift)
+                {
+                    nextGrainShift = Time.unscaledTime + 0.06f;
+                    grain.uvRect = new Rect(UnityEngine.Random.value, UnityEngine.Random.value, 4, 7);
+                }
+            }
             if (pour == null || !sheet.activeSelf) return;
             if (!pour.Finished)
             {

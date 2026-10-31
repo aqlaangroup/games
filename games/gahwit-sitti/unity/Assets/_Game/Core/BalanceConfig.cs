@@ -252,7 +252,20 @@ namespace Gahwit.Core
 
     public sealed class UiConfig
     {
+        public float LargeTextScale;
+        public float MinTextPt;
+        public float MinTouchTargetPt;
+        public float PanelSlideSeconds;
+        public float SmallestPhoneWidthPt;
+        public GraphicsConfig Graphics;
         public KitchenHintsConfig KitchenHints;
+    }
+
+    public sealed class GraphicsConfig
+    {
+        public int AutoLowAtOrBelowMb;
+        public int LowFps;
+        public int HighFps;
     }
 
     public sealed class KitchenHintsConfig

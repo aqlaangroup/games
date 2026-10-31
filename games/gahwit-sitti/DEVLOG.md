@@ -2,6 +2,33 @@
 
 Decisions and known gaps. Newest first. Read this at the start of each session (`/CLAUDE.md`).
 
+## 2026-10-31: touch targets, settings, accessibility and feel (missing/15)
+
+- **Touch targets:** every button is now 44 pt or more on the narrowest phone we support (360 pt wide), which is 132 units on the 1080-unit canvas.
+  - `UiKit.MinTouch` comes from `balance.json` `ui` (`minTouchTargetPt`, `smallestPhoneWidthPt`) through `Core/UiRules.cs`.
+  - A ready order card is now one big serve button with a tick, so a ready order never relies on colour alone.
+  - **First play-mode test:** `_Game/UI/PlayTests/TouchTargetTests.cs` boots the game and checks every visible button on the café, the kitchen, settings, a prompt card and storage. Run it with `test run --mode PlayMode`. It uses the Editor's own save, like pressing Play.
+  - The Editor menu **Gahwit Sitti > Check touch targets** runs the same check on whatever screen is open.
+- **Settings:** a new "Accessibility" section.
+  - **Large text:** every size × 1.2 and nothing under 12 pt. The game reloads to apply it, like a language change, because every screen is built for its text size. The kitchen's hint bar grows with it.
+  - **Reduced motion:** the player's switch, and the phone's own setting too (iOS Reduce Motion through `Plugins/iOS/GahwitAccessibility.mm`; Android's animator scale of 0). It turns off every motion below and makes camera moves cuts.
+  - **Easy memories:** widens the pour target by `easyWiden`. **Save schema v8** adds `settings.memoryAssist` (off), with a migration test.
+  - **Graphics:** auto, low or high, at once. Low drops the sun's shadows and edge smoothing and runs at 30 fps; high runs at 60 fps. "Auto" picks low on phones with 3 GB or less (CLAUDE.md). The numbers are in `balance.json` `ui.graphics`.
+  - **English lays out left to right.** The `UiKit` helpers mirror every side, anchor, row and fill when the language is English, so the same screen code works both ways. Item and generator names now use their English names from `balance.json`.
+- **Feel** (`_Game/UI/Tweens.cs`, fixed pools, nothing allocated per frame):
+  - **Merge:** the moving piece slides into its partner, a soft flash, the new item pops past its size and settles, and a sparkle in its colour.
+  - **Generator tap:** the tin squashes and a dot arcs to the new item's square.
+  - **Order served:** coins burst from the order and fly to the coin counter.
+  - **Level up:** the rewards count up under the petal burst.
+  - **Decor placed:** the piece squashes and bounces, a dust puff rises, and cosiness ticks up.
+  - **Memory:** a sepia wash spreads from the last touch, and film grain fades in over the café.
+  - **Panels** spring up from below in 0.35 s (`ui.panelSlideSeconds`).
+- **Still missing:**
+  - Neutral-Arabic subtitles for dialogue, which need the neutral lines first (11).
+  - Restore purchases (17).
+  - The served item flying to its customer, who isn't on the kitchen screen.
+  - Checking the sizes and the motion on a real phone.
+
 ## 2026-10-31: local notifications (missing/19)
 
 - **Package:** Unity's Mobile Notifications (`com.unity.mobile.notifications` 2.5.0), through its unified API.

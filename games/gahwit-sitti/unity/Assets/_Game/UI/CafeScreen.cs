@@ -42,6 +42,8 @@ namespace Gahwit.UI
         WardrobeRules wardrobe;
         RTLTextMeshPro cosiness;
         CafeCamera cafeCamera;
+        int cosinessShown = -1;
+        float nextCosinessTick;
 
         // With reduced motion the camera cuts instead of gliding (COMPLETE_SPEC.md section 5).
         public System.Func<bool> ReducedMotion = () => false;
@@ -66,20 +68,20 @@ namespace Gahwit.UI
                 .rectTransform.Top(16, 36);
 
             var settings = UiKit.Button(transform, "Settings", "", Palette.Card, Palette.Ink, 24, () => ui.Settings.Show(), 60);
-            ((RectTransform)settings.transform).Pin(new Vector2(0, 1), new Vector2(20, -12), new Vector2(124, 124));
+            ((RectTransform)settings.transform).Pin(new Vector2(0, 1), new Vector2(20, -12), new Vector2(UiKit.MinTouch, UiKit.MinTouch));
             UiKit.Icon(settings.transform, "Gear", UiSprites.Gear, Palette.InkSoft, 76).rectTransform.Pin(new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(76, 76));
 
             decorButton = UiKit.Button(transform, "Decor", Loc.T("decor.button"), Palette.Card, Palette.Ink, 26, EnterDecor, 60);
-            ((RectTransform)decorButton.transform).Pin(new Vector2(0, 1), new Vector2(20, -148), new Vector2(124, 124));
+            ((RectTransform)decorButton.transform).Pin(new Vector2(0, 1), new Vector2(20, -156), new Vector2(UiKit.MinTouch, UiKit.MinTouch));
             decorButton.gameObject.SetActive(false);
             wardrobeButton = UiKit.Button(transform, "Wardrobe", Loc.T("wardrobe.button"), Palette.Card, Palette.Ink, 24, null, 60);
-            ((RectTransform)wardrobeButton.transform).Pin(new Vector2(0, 1), new Vector2(20, -284), new Vector2(124, 124));
+            ((RectTransform)wardrobeButton.transform).Pin(new Vector2(0, 1), new Vector2(20, -300), new Vector2(UiKit.MinTouch, UiKit.MinTouch));
             wardrobeButton.gameObject.SetActive(false);
             BuildDecorBar();
 
             var card = UiKit.Panel(transform, "TaskCard", Palette.Card, 40);
             taskCard = card.gameObject;
-            card.rectTransform.Bottom(16, 412, 24, 24);
+            card.rectTransform.Bottom(16, 520, 24, 24);
             chapter = UiKit.Text(card.transform, "Chapter", "", 28, Palette.InkSoft);
             chapter.rectTransform.Top(24, 40, 32, 32);
 
@@ -97,23 +99,24 @@ namespace Gahwit.UI
             need = UiKit.Text(card.transform, "Need", "", 26, Palette.Rose);
             need.rectTransform.Top(218, 40, 32, 32);
 
-            styleRow = UiKit.Rect(card.transform, "Styles").Top(214, 66, 32, 32);
+            styleRow = UiKit.Rect(card.transform, "Styles").Top(214, UiKit.MinTouch, 32, 32);
             UiKit.Row(styleRow.gameObject, 16).childForceExpandWidth = true;
 
             restore = UiKit.Button(card.transform, "Restore", "", Palette.Rose, Color.white, 32,
                 () => game.CompleteTask(game.CurrentTask?.Styles != null ? chosenStyle : null), 34);
-            ((RectTransform)restore.transform).Bottom(24, 84, 32, 32);
+            ((RectTransform)restore.transform).Bottom(24, UiKit.MinTouch, 32, 32);
             toKitchen = UiKit.Button(card.transform, "ToKitchen", Loc.T("cafe.toKitchen"), Palette.SageDark, Color.white, 30, ui.ShowKitchen, 34);
-            ((RectTransform)toKitchen.transform).Bottom(24, 84, 32, 32);
+            ((RectTransform)toKitchen.transform).Bottom(24, UiKit.MinTouch, 32, 32);
 
             // Floats over the counter's drawer while a letter waits in it.
             drawer = UiKit.Button(transform, "OpenDrawer", Loc.T("drawer.open"), Palette.Rose, Color.white, 30, () => openDrawer(), 40);
-            ((RectTransform)drawer.transform).Pin(new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(300, 88));
+            ((RectTransform)drawer.transform).Pin(new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(300, UiKit.MinTouch));
             drawer.gameObject.SetActive(false);
         }
 
         void Update()
         {
+            TickCosiness();
             PlaceBubbles();
             bool waiting = game.LetterWaiting() != null;
             room.SetDrawerGlow(waiting);
@@ -183,13 +186,13 @@ namespace Gahwit.UI
         void BuildDecorBar()
         {
             var bar = UiKit.Panel(transform, "DecorBar", Palette.Card, 40);
-            bar.rectTransform.Bottom(16, 300, 24, 24);
+            bar.rectTransform.Bottom(16, 310, 24, 24);
             decorBar = bar.gameObject;
             cosiness = UiKit.Text(bar.transform, "Cosiness", "", 30, Palette.Ink);
             cosiness.fontStyle = FontStyles.Bold;
             cosiness.rectTransform.Top(24, 48, 32, 32);
             UiKit.Text(bar.transform, "Hint", Loc.T("decor.hint"), 24, Palette.InkSoft).rectTransform.Top(76, 40, 32, 32);
-            var row = UiKit.Rect(bar.transform, "Tools").Bottom(24, 124, 24, 24);
+            var row = UiKit.Rect(bar.transform, "Tools").Bottom(24, UiKit.MinTouch, 24, 24);
             UiKit.Row(row.gameObject, 12).childForceExpandWidth = true;
             Tool(row, Loc.T("decor.shop"), () => shop.Show());
             turn = Tool(row, Loc.T("decor.rotate"), () => { if (selected != null && !decor.Rotate(selected)) UiSound.Play("ui_error"); });
@@ -270,9 +273,25 @@ namespace Gahwit.UI
         void RefreshDecor()
         {
             if (decor == null) return;
-            int next = decor.NextTableAt;
-            cosiness.text = next < 0 ? Loc.T("decor.cosinessMax", game.State.Cosiness) : Loc.T("decor.cosinessNext", game.State.Cosiness, next);
+            // Cosiness ticks up to its new total when a piece goes down (COMPLETE_SPEC.md section 8).
+            if (cosinessShown < 0 || cosinessShown > game.State.Cosiness || ReducedMotion()) cosinessShown = game.State.Cosiness;
+            WriteCosiness();
             turn.interactable = store.interactable = selected != null;
+        }
+
+        void WriteCosiness()
+        {
+            int next = decor.NextTableAt;
+            cosiness.text = next < 0 ? Loc.T("decor.cosinessMax", cosinessShown) : Loc.T("decor.cosinessNext", cosinessShown, next);
+        }
+
+        void TickCosiness()
+        {
+            if (decor == null || cosinessShown < 0 || cosinessShown >= game.State.Cosiness || Time.unscaledTime < nextCosinessTick) return;
+            cosinessShown++;
+            nextCosinessTick = Time.unscaledTime + 0.06f;
+            WriteCosiness();
+            Tweens.Instance?.PopOf(cosiness.rectTransform, 0.12f);
         }
 
         public void Refresh()

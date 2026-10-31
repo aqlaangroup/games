@@ -17,6 +17,7 @@ namespace Gahwit.UI
             shade.color = Palette.Shade;
             var card = UiKit.Panel(root, "Card", background ?? Palette.Cream, 44);
             card.rectTransform.Pin(new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(width, height));
+            card.gameObject.AddComponent<SpringIn>();
             return card.rectTransform;
         }
 
@@ -28,7 +29,7 @@ namespace Gahwit.UI
             if (close != null)
             {
                 var button = UiKit.Button(card, "Close", Loc.T("common.close"), Palette.Muted, Palette.Ink, 26, () => close(), 30);
-                ((RectTransform)button.transform).Pin(new Vector2(0, 1), new Vector2(28, -20), new Vector2(160, 120));
+                ((RectTransform)button.transform).Pin(new Vector2(0, 1), new Vector2(28, -16), new Vector2(160, UiKit.MinTouch));
             }
             return title;
         }
@@ -77,7 +78,7 @@ namespace Gahwit.UI
 
             var raw = UiKit.Rect(area, "Raw").Stretch().gameObject.AddComponent<TextMeshProUGUI>();
             raw.font = GameFonts.Arabic;
-            raw.fontSize = 30;
+            raw.fontSize = UiKit.FontSize(30);
             raw.color = Color.clear;
             var shown = UiKit.Text(area, "Shown", "", 30, Palette.Ink, TextAlignmentOptions.TopRight);
             shown.rectTransform.Stretch();

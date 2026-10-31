@@ -15,8 +15,10 @@ namespace Gahwit.UI
         bool CanLinkApple { get; }       // only on iPhone
         event Action Changed;
 
-        bool GetSetting(string id);      // sound, music, haptics, notify.<type>, glossary, voice, reducedMotion
-        void SetSetting(string id, bool on);
+        bool GetSetting(string id);      // sound, music, haptics, notify.<type>, glossary, voice, largeText, reducedMotion, memoryAssist
+        void SetSetting(string id, bool on); // largeText reloads the game at the new size
+        string Quality { get; }          // graphics: auto, low or high
+        void SetQuality(string choice);
         string Language { get; }
         void SetLanguage(string code);   // reloads the game in that language
 

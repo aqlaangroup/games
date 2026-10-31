@@ -48,7 +48,7 @@ namespace Gahwit.UI
             column.childForceExpandWidth = true;
             column.childForceExpandHeight = false;
             more = UiKit.Button(paperImage.transform, "More", Loc.T("letter.more"), Palette.Rose, Color.white, 30, ShowVoice, 34);
-            ((RectTransform)more.transform).Bottom(60, 90, 160, 160);
+            ((RectTransform)more.transform).Bottom(60, UiKit.MinTouch, 160, 160);
 
             var voiceImage = UiKit.Panel(transform, "VoiceNote", Palette.Cream, 44);
             voiceImage.rectTransform.Bottom(60, 640, 28, 28);
@@ -66,7 +66,7 @@ namespace Gahwit.UI
                 bars.Add(bar);
             }
             play = UiKit.Button(voiceImage.transform, "Play", Loc.T("voice.play"), Palette.Rose, Color.white, 28, PlayVoice, 60);
-            ((RectTransform)play.transform).Pin(new Vector2(0, 1), new Vector2(48, -165), new Vector2(150, 80));
+            ((RectTransform)play.transform).Pin(new Vector2(0, 1), new Vector2(48, -150), new Vector2(UiKit.MinTouch + 18, UiKit.MinTouch));
             duration = UiKit.Text(voiceImage.transform, "Duration", "", 24, Palette.InkSoft, TextAlignmentOptions.Left);
             duration.rectTransform.Pin(new Vector2(0, 1), new Vector2(48, -258), new Vector2(150, 36));
             subtitle = UiKit.Text(voiceImage.transform, "Subtitle", "", 34, Palette.Ink);

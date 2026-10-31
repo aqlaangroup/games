@@ -20,9 +20,9 @@ namespace Gahwit.UI
             body = UiKit.Text(card, "Body", "", 30, Palette.Ink);
             body.rectTransform.Stretch(48, 48, 140, 320);
             yes = UiKit.Button(card, "Yes", "", Palette.Hex("#9B2C3F"), Color.white, 32, Yes, 40);
-            ((RectTransform)yes.transform).Bottom(176, 124, 48, 48);
+            ((RectTransform)yes.transform).Bottom(184, UiKit.MinTouch, 48, 48);
             no = UiKit.Button(card, "No", "", Palette.Muted, Palette.Ink, 30, () => gameObject.SetActive(false), 40);
-            ((RectTransform)no.transform).Bottom(40, 124, 48, 48);
+            ((RectTransform)no.transform).Bottom(40, UiKit.MinTouch, 48, 48);
             gameObject.SetActive(false);
         }
 

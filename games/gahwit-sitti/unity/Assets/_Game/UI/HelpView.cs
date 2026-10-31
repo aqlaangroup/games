@@ -41,11 +41,11 @@ namespace Gahwit.UI
             // A small line, only while the platform can't be reached (COMPLETE_SPEC.md section 10).
             offline = Sheet.Paragraph(column, Loc.T("help.offlineBanner"), 24, Palette.InkSoft).gameObject;
             message = Sheet.Input(column, "Message", Loc.T("help.messageHint"), 260, true);
-            email = Sheet.Input(column, "Email", Loc.T("help.emailHint"), 124, false);
+            email = Sheet.Input(column, "Email", Loc.T("help.emailHint"), UiKit.MinTouch, false);
             email.contentType = TMP_InputField.ContentType.EmailAddress;
             Sheet.Paragraph(column, Loc.T("help.sentWith"), 22, Palette.InkSoft);
             send = UiKit.Button(column, "Send", Loc.T("help.send"), Palette.Rose, Color.white, 32, Send, 40);
-            Sheet.Sized(send, 124);
+            Sheet.Sized(send, UiKit.MinTouch);
 
             gameObject.SetActive(false);
         }

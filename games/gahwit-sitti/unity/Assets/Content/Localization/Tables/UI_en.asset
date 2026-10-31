@@ -1218,6 +1218,50 @@ MonoBehaviour:
     m_Localized: "{0} has arrived at the caf\xE9"
     m_Metadata:
       m_Items: []
+  - m_Id: 118077994819584
+    m_Localized: Accessibility
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118077999013888
+    m_Localized: Large text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118078003208192
+    m_Localized: Bigger text on every screen; the game reloads
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118078003208193
+    m_Localized: Reduce motion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118078003208194
+    m_Localized: No animations or slides; follows your phone too
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118078003208195
+    m_Localized: Easy memories
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118078003208196
+    m_Localized: A wider target in memory games
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118078003208197
+    m_Localized: Graphics
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118078003208198
+    m_Localized: Auto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118078003208199
+    m_Localized: Low
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118078003208200
+    m_Localized: High
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

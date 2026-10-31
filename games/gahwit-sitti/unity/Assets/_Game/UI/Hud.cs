@@ -18,6 +18,8 @@ namespace Gahwit.UI
         GameObject energyPill;
         float nextTimerUpdate;
 
+        public RectTransform CoinsRect { get; private set; } // where served coins fly to
+
         public void Init(Game game, Func<long> now)
         {
             this.game = game;
@@ -45,6 +47,7 @@ namespace Gahwit.UI
             timer.rectTransform.Stretch(14, 76, 50, 2);
 
             var coinPill = Pill("Coins", 200);
+            CoinsRect = coinPill;
             Badge(coinPill, UiSprites.Circle, Palette.Gold);
             coins = Value(coinPill, 34);
 

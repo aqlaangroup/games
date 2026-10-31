@@ -31,7 +31,8 @@ namespace Gahwit.UI
             gameObject.AddComponent<Image>().color = Palette.Shade;
 
             var card = UiKit.Panel(transform, "Card", Palette.Cream, 44);
-            card.rectTransform.Bottom(40, 480, 28, 28);
+            card.rectTransform.Bottom(40, 520, 28, 28);
+            card.gameObject.AddComponent<SpringIn>();
             speaker = UiKit.Text(card.transform, "Speaker", "", 36, Palette.Rose);
             speaker.fontStyle = FontStyles.Bold;
             speaker.rectTransform.Top(28, 50, 40, 40);
@@ -40,9 +41,9 @@ namespace Gahwit.UI
             glosses = UiKit.Text(card.transform, "Glosses", "", 26, Palette.Teal);
             glosses.rectTransform.Top(320, 44, 40, 40);
             next = UiKit.Button(card.transform, "Next", Loc.T("dialogue.next"), Palette.Rose, Color.white, 30, Advance, 32);
-            ((RectTransform)next.transform).Pin(Vector2.zero, new Vector2(32, 28), new Vector2(240, 76));
+            ((RectTransform)next.transform).Pin(Vector2.zero, new Vector2(32, 28), new Vector2(240, UiKit.MinTouch));
 
-            choices = UiKit.Rect(transform, "Choices").Bottom(540, 320, 40, 40);
+            choices = UiKit.Rect(transform, "Choices").Bottom(580, 440, 40, 40);
             var column = choices.gameObject.AddComponent<VerticalLayoutGroup>();
             column.spacing = 16;
             column.childAlignment = TextAnchor.LowerCenter;
@@ -91,7 +92,7 @@ namespace Gahwit.UI
                 {
                     int index = i;
                     var button = UiKit.Button(choices, "Choice", options[i], Palette.Card, Palette.Ink, 32, () => Choose(index), 30);
-                    button.gameObject.AddComponent<LayoutElement>().preferredHeight = 96;
+                    button.gameObject.AddComponent<LayoutElement>().preferredHeight = UiKit.MinTouch;
                 }
                 return;
             }

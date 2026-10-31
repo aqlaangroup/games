@@ -43,7 +43,7 @@ namespace Gahwit.UI
             var details = UiKit.Text(box.transform, "Details", "", 28, Palette.InkSoft);
             details.rectTransform.Top(86, 110, 36, 36);
             var button = UiKit.Button(box.transform, "Choose", action, color, Color.white, 30, () => Choose(keepThis), 36);
-            ((RectTransform)button.transform).Bottom(28, 124, 36, 36);
+            ((RectTransform)button.transform).Bottom(28, UiKit.MinTouch, 36, 36);
             return details;
         }
 

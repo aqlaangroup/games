@@ -9,12 +9,13 @@ namespace Gahwit.UI
         public const float RoundedRadius = 48f;
         const int Size = 128;
 
-        static Sprite rounded, circle, bolt, gem, gear;
+        static Sprite rounded, circle, bolt, gem, gear, tick;
 
         public static Sprite Rounded => rounded != null ? rounded : rounded = Make("Rounded", RoundedAlpha, new Vector4(RoundedRadius, RoundedRadius, RoundedRadius, RoundedRadius));
         public static Sprite Circle => circle != null ? circle : circle = Make("Circle", CircleAlpha, Vector4.zero);
         public static Sprite Bolt => bolt != null ? bolt : bolt = Polygon("Bolt", new[] { V(0.58f, 0.02f), V(0.16f, 0.56f), V(0.46f, 0.56f), V(0.36f, 0.98f), V(0.86f, 0.40f), V(0.55f, 0.40f), V(0.68f, 0.02f) });
         public static Sprite Gem => gem != null ? gem : gem = Polygon("Gem", new[] { V(0.5f, 0.04f), V(0.94f, 0.38f), V(0.5f, 0.96f), V(0.06f, 0.38f) });
+        public static Sprite Tick => tick != null ? tick : tick = Polygon("Tick", new[] { V(0.08f, 0.52f), V(0.22f, 0.38f), V(0.40f, 0.56f), V(0.78f, 0.14f), V(0.92f, 0.28f), V(0.40f, 0.84f) });
         public static Sprite Gear => gear != null ? gear : gear = Make("Gear", GearAlpha, Vector4.zero);
 
         static Vector2 V(float x, float yFromTop) => new Vector2(x, yFromTop);

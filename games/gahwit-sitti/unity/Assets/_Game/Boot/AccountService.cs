@@ -365,7 +365,9 @@ namespace Gahwit.Boot
                 case "notify.away": return s.Notifications.Away;
                 case "glossary": return s.Glossary;
                 case "voice": return s.Voice;
-                case "reducedMotion": return s.ReducedMotion;
+                case "largeText": return s.LargeText;
+                case "reducedMotion": return s.ReducedMotion || PhoneSettings.ReduceMotion; // the phone's setting wins
+                case "memoryAssist": return s.MemoryAssist;
                 default: return false;
             }
         }
@@ -384,8 +386,25 @@ namespace Gahwit.Boot
                 case "notify.away": s.Notifications.Away = on; break;
                 case "glossary": s.Glossary = on; break;
                 case "voice": s.Voice = on; break;
+                case "reducedMotion": s.ReducedMotion = on; break;
+                case "memoryAssist": s.MemoryAssist = on; break;
+                case "largeText":
+                    // Every screen is laid out for its text size, so the game reloads with the new one, like a language.
+                    s.LargeText = on;
+                    saveNow();
+                    restart(null);
+                    return;
             }
             if (Ui != null) Ui.Dialogue.ShowGlosses = s.Glossary;
+            SettingChanged?.Invoke();
+            saveNow();
+        }
+
+        public string Quality => UiRules.ValidQuality(saves.Data.Settings.Quality);
+
+        public void SetQuality(string choice)
+        {
+            saves.Data.Settings.Quality = UiRules.ValidQuality(choice);
             SettingChanged?.Invoke();
             saveNow();
         }

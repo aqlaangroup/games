@@ -18,8 +18,15 @@ namespace Gahwit.Cafe
         readonly Dictionary<string, Transform> pieces = new Dictionary<string, Transform>();
         readonly Dictionary<string, Material> materials = new Dictionary<string, Material>();
         readonly HashSet<string> shown = new HashSet<string>();
+        readonly Dictionary<string, float> bounceAt = new Dictionary<string, float>();
+        readonly Dictionary<string, Vector3> lastSpot = new Dictionary<string, Vector3>();
         Material template;
         string selected;
+        bool firstShow = true;
+        const float BounceSeconds = 0.35f;
+
+        public bool Calm { get; set; }               // reduced motion: no bounce
+        public event System.Action<Vector3> Settled; // a piece set down or moved, at its world position, for the dust puff
 
         public void Init() => template = Resources.Load<Material>("Materials/CafeLit");
 
@@ -33,7 +40,17 @@ namespace Gahwit.Cafe
                 piece.gameObject.SetActive(true);
                 piece.localPosition = new Vector3(place.X, 0, place.Z);
                 piece.localRotation = Quaternion.Euler(0, place.Degrees, 0);
+                // Decor placed (COMPLETE_SPEC.md section 8): a small bounce where it lands.
+                var spot = new Vector3(place.X, place.Degrees, place.Z);
+                bool moved = !lastSpot.TryGetValue(place.Id, out var before) || before != spot;
+                lastSpot[place.Id] = spot;
+                if (moved && !firstShow)
+                {
+                    if (!Calm) bounceAt[place.Id] = Time.unscaledTime;
+                    Settled?.Invoke(piece.position);
+                }
             }
+            firstShow = false;
             foreach (var pair in pieces)
                 if (!shown.Contains(pair.Key)) pair.Value.gameObject.SetActive(false);
         }
@@ -89,6 +106,14 @@ namespace Gahwit.Cafe
                 var position = pair.Value.localPosition;
                 position.y = pair.Key == selected ? 0.08f + 0.04f * Mathf.Sin(Time.unscaledTime * 5f) : 0f;
                 pair.Value.localPosition = position;
+                // Squash as it lands, stretch, then settle.
+                float scale = 1f;
+                if (bounceAt.TryGetValue(pair.Key, out float at))
+                {
+                    float t = (Time.unscaledTime - at) / BounceSeconds;
+                    if (t < 1f) scale = 1f - 0.18f * Mathf.Sin(t * Mathf.PI * 2f) * (1f - t);
+                }
+                pair.Value.localScale = new Vector3(2f - scale, scale, 2f - scale);
             }
         }
     }

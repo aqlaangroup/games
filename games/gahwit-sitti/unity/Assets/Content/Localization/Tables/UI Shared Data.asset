@@ -1199,6 +1199,50 @@ MonoBehaviour:
     m_Key: notify.regularF
     m_Metadata:
       m_Items: []
+  - m_Id: 118077994819584
+    m_Key: settings.access
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118077999013888
+    m_Key: settings.largeText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118078003208192
+    m_Key: settings.largeText.sub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118078003208193
+    m_Key: settings.reducedMotion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118078003208194
+    m_Key: settings.reducedMotion.sub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118078003208195
+    m_Key: settings.memoryAssist
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118078003208196
+    m_Key: settings.memoryAssist.sub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118078003208197
+    m_Key: settings.quality
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118078003208198
+    m_Key: quality.auto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118078003208199
+    m_Key: quality.low
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118078003208200
+    m_Key: quality.high
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

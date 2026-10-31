@@ -18,7 +18,7 @@ namespace Gahwit.UI
             Sheet.Title(card, Loc.T("update.title"), null);
             UiKit.Text(card, "Body", Loc.T("update.body"), 30, Palette.Ink).rectTransform.Stretch(48, 48, 140, 220);
             var button = UiKit.Button(card, "Update", Loc.T("update.button"), Palette.Rose, Color.white, 32, Open, 40);
-            ((RectTransform)button.transform).Bottom(48, 124, 48, 48);
+            ((RectTransform)button.transform).Bottom(48, UiKit.MinTouch, 48, 48);
             gameObject.SetActive(false);
         }
 

@@ -18,7 +18,8 @@ namespace Gahwit.Save
             [3] = AddArrivalTimes,
             [4] = AddOccasions,
             [5] = AddUnlockCards,
-            [6] = SplitNotifications
+            [6] = SplitNotifications,
+            [7] = AddMemoryAssist
         };
 
         public static JObject Upgrade(JObject raw, BalanceConfig config)
@@ -170,6 +171,16 @@ namespace Gahwit.Save
             }
             save["settings"] = settings;
             save["schemaVersion"] = 7;
+            return save;
+        }
+
+        // Version 8 (2026-10-31) has the memory games' easy assist switch, off to begin with.
+        static JObject AddMemoryAssist(JObject save, BalanceConfig config)
+        {
+            var settings = save["settings"] as JObject ?? new JObject();
+            if (settings["memoryAssist"] == null) settings["memoryAssist"] = false;
+            save["settings"] = settings;
+            save["schemaVersion"] = 8;
             return save;
         }
 

@@ -14,11 +14,14 @@ namespace Gahwit.UI
     public sealed class SettingsView : MonoBehaviour
     {
         public static readonly string[] Switches = { "sound", "music", "haptics", "notify.energyFull", "notify.regular", "notify.task", "notify.away", "glossary", "voice" };
-        public static readonly string[] WithSubtitle = { "glossary", "voice" };
+        public static readonly string[] AccessSwitches = { "largeText", "reducedMotion", "memoryAssist" };
+        public static readonly string[] WithSubtitle = { "glossary", "voice", "largeText", "reducedMotion", "memoryAssist" };
+        public static readonly string[] Qualities = UiRules.Qualities;
         public static readonly string[] Languages = { "ar", "en" };
 
         readonly Dictionary<string, (Image track, RectTransform knob)> switches = new Dictionary<string, (Image, RectTransform)>();
         readonly List<Button> languageChips = new List<Button>();
+        readonly List<Button> qualityChips = new List<Button>();
         Game game;
         IAccountUi account;
         Toast toast;
@@ -51,6 +54,10 @@ namespace Gahwit.UI
             var column = Sheet.Column(card, 268, 110, 14);
             Section(column, Loc.T("settings.play"));
             foreach (var id in Switches) SwitchRow(column, id);
+
+            Section(column, Loc.T("settings.access"));
+            foreach (var id in AccessSwitches) SwitchRow(column, id);
+            QualityRow(column);
 
             Section(column, Loc.T("settings.accountHelp"));
             LanguageRow(column);
@@ -92,12 +99,15 @@ namespace Gahwit.UI
             cloud.color = account.Cloud == CloudStatus.Saved ? Palette.SageDark : Palette.InkSoft;
             linkValue.text = account.LinkedProvider != null ? Loc.T("settings.linked." + account.LinkedProvider) : Loc.T("settings.linkHint");
             foreach (var pair in switches) Paint(pair.Value, account.GetSetting(pair.Key));
-            foreach (var chip in languageChips)
-            {
-                bool current = chip.name == account.Language;
-                chip.Label().fontStyle = current ? FontStyles.Bold : FontStyles.Normal;
-                chip.GetComponent<Outline>().effectDistance = current ? new Vector2(4, -4) : new Vector2(1, -1);
-            }
+            foreach (var chip in languageChips) Mark(chip, chip.name == account.Language);
+            foreach (var chip in qualityChips) Mark(chip, chip.name == account.Quality);
+        }
+
+        // The chosen chip is bold with a thick gold outline, so it doesn't rely on colour alone.
+        static void Mark(Button chip, bool current)
+        {
+            chip.Label().fontStyle = current ? FontStyles.Bold : FontStyles.Normal;
+            chip.GetComponent<Outline>().effectDistance = current ? new Vector2(4, -4) : new Vector2(1, -1);
         }
 
         static void Section(RectTransform column, string title)
@@ -116,7 +126,7 @@ namespace Gahwit.UI
 
         void SwitchRow(RectTransform column, string id)
         {
-            var row = Row(column, "Switch " + id, 124);
+            var row = Row(column, "Switch " + id, UiKit.MinTouch);
             bool explained = WithSubtitle.Contains(id);
             var name = UiKit.Text(row.transform, "Name", Loc.T($"settings.{id}"), 30, Palette.Ink);
             name.rectTransform.Stretch(180, 28, explained ? 18 : 38, explained ? 62 : 38);
@@ -146,7 +156,7 @@ namespace Gahwit.UI
 
         RTLTextMeshPro LinkRow(RectTransform column, string label, Color color, UnityEngine.Events.UnityAction open)
         {
-            var row = Row(column, "Link " + label, 124);
+            var row = Row(column, "Link " + label, UiKit.MinTouch);
             UiKit.Text(row.transform, "Name", label, 30, color).rectTransform.Stretch(330, 28, 20, 20);
             var value = UiKit.Text(row.transform, "Value", "", 24, Palette.InkSoft, TextAlignmentOptions.Left);
             value.rectTransform.Stretch(28, 330, 20, 20);
@@ -158,10 +168,10 @@ namespace Gahwit.UI
 
         void LanguageRow(RectTransform column)
         {
-            var row = Row(column, "Language", 140);
+            var row = Row(column, "Language", UiKit.MinTouch + 20);
             UiKit.Text(row.transform, "Name", Loc.T("settings.language"), 30, Palette.Ink).rectTransform.Stretch(420, 28, 20, 20);
             var chips = UiKit.Rect(row.transform, "Chips").Stretch(10, 600, 10, 10);
-            UiKit.Row(chips.gameObject, 12).childForceExpandWidth = true;
+            Chips(chips);
             foreach (var code in Languages)
             {
                 var chip = UiKit.Button(chips, code, Loc.T("language." + code), Palette.Cream, Palette.Ink, 26, () =>
@@ -175,12 +185,40 @@ namespace Gahwit.UI
             }
         }
 
+        // Graphics (COMPLETE_SPEC.md section 4): auto, low or high, applied at once.
+        void QualityRow(RectTransform column)
+        {
+            var row = Row(column, "Quality", UiKit.MinTouch + 20);
+            UiKit.Text(row.transform, "Name", Loc.T("settings.quality"), 30, Palette.Ink).rectTransform.Stretch(560, 28, 20, 20);
+            var chips = UiKit.Rect(row.transform, "Chips").Stretch(10, 400, 10, 10);
+            Chips(chips);
+            foreach (var code in Qualities)
+            {
+                var chip = UiKit.Button(chips, code, Loc.T("quality." + code), Palette.Cream, Palette.Ink, 26, () =>
+                {
+                    account.SetQuality(code);
+                    Refresh();
+                }, 24);
+                chip.name = code;
+                chip.gameObject.AddComponent<LayoutElement>().flexibleWidth = 1;
+                chip.gameObject.AddComponent<Outline>().effectColor = Palette.Gold;
+                qualityChips.Add(chip);
+            }
+        }
+
+        // Chips fill the row's height, so each is a full touch target.
+        static void Chips(RectTransform chips)
+        {
+            var row = UiKit.Row(chips.gameObject, 12);
+            row.childForceExpandWidth = row.childForceExpandHeight = true;
+        }
+
         void LegalRow(RectTransform column)
         {
-            var row = Row(column, "Legal", 140);
+            var row = Row(column, "Legal", UiKit.MinTouch + 20);
             UiKit.Text(row.transform, "Name", Loc.T("settings.legal"), 30, Palette.Ink).rectTransform.Stretch(420, 28, 20, 20);
             var chips = UiKit.Rect(row.transform, "Chips").Stretch(10, 560, 10, 10);
-            UiKit.Row(chips.gameObject, 12).childForceExpandWidth = true;
+            Chips(chips);
             foreach (var (label, open) in new (string, UnityEngine.Events.UnityAction)[]
                      { (Loc.T("legal.privacy"), account.OpenPrivacy), (Loc.T("legal.terms"), account.OpenTerms) })
             {

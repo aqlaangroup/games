@@ -71,7 +71,7 @@ namespace Gahwit.UI
             var occasion = rules.CurrentOccasion;
             if (occasion == null) return;
             var card = UiKit.Panel(list, "Occasion", Palette.Cream, 30);
-            Sheet.Sized(card, 300);
+            Sheet.Sized(card, 320);
             var name = UiKit.Text(card.transform, "Name", Loc.T("wardrobe.occasion", Loc.T("occasion." + occasion.Id)), 30, Palette.Ink);
             name.fontStyle = FontStyles.Bold;
             name.rectTransform.Top(20, 48, 28, 28);
@@ -88,7 +88,7 @@ namespace Gahwit.UI
                 int won = rules.DressFor(occasion);
                 if (won > 0) toast.Show(Loc.T("wardrobe.paid", won, rules.BonusCoins(occasion, won)));
             }, 34);
-            ((RectTransform)ready.transform).Bottom(20, 124, 28, 28);
+            ((RectTransform)ready.transform).Bottom(16, UiKit.MinTouch, 28, 28);
         }
 
         void Heading(string text)
@@ -101,7 +101,7 @@ namespace Gahwit.UI
         void Row(WardrobePiece piece, string action, bool enabled, bool worn, UnityEngine.Events.UnityAction act)
         {
             var row = UiKit.Panel(list, "Piece " + piece.Id, Color.white, 28);
-            Sheet.Sized(row, 140);
+            Sheet.Sized(row, UiKit.MinTouch + 16);
             var swatch = UiKit.Icon(row.transform, "Colour", UiSprites.Circle, Palette.Hex(piece.Color), 72);
             swatch.rectTransform.Pin(new Vector2(1, 0.5f), new Vector2(-24, 0), new Vector2(72, 72));
             var name = UiKit.Text(row.transform, "Name", Loc.T("wardrobe." + piece.Id), 30, Palette.Ink);
@@ -113,7 +113,7 @@ namespace Gahwit.UI
             var button = UiKit.Button(row.transform, "Act", action, worn ? Palette.Muted : enabled ? Palette.Rose : Palette.Muted,
                 worn || !enabled ? Palette.Ink : Color.white, 26, act, 30);
             button.interactable = enabled;
-            ((RectTransform)button.transform).Pin(new Vector2(0, 0.5f), new Vector2(20, 0), new Vector2(240, 120));
+            ((RectTransform)button.transform).Pin(new Vector2(0, 0.5f), new Vector2(20, 0), new Vector2(240, UiKit.MinTouch));
         }
     }
 }

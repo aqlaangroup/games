@@ -64,7 +64,7 @@ namespace Gahwit.Boot
             time = services.Time;
             var state = services.LoadedState;
             if (state == null) state = Game.NewState(config, content, (ulong)DateTime.UtcNow.Ticks, time.NowMs);
-            game = new Game(config, content, state);
+            game = new Game(config, content, state) { English = saves.Data.Settings.Language == "en" };
             game.Tick(time.NowMs);
 
             var camera = Camera.main;
@@ -78,6 +78,12 @@ namespace Gahwit.Boot
 
             account = new AccountService(services.Platform, services.PlatformConfig, saves, time, game, Save, Reload, ReloadFresh);
             tutorial = new TutorialFlow(game, TutorialContent.Load(), () => saves.Data.Account.BirthYear != null);
+            // Sizes and sides for the code-built interface (COMPLETE_SPEC.md sections 4 and 5).
+            UiKit.MinTouch = UiRules.MinTouchUnits(config.Ui);
+            UiKit.TextScale = UiRules.TextScale(config.Ui, saves.Data.Settings.LargeText);
+            UiKit.MinText = UiRules.MinTextUnits(config.Ui, saves.Data.Settings.LargeText);
+            UiKit.LeftToRight = account.Language == "en";
+            SpringIn.Seconds = config.Ui.PanelSlideSeconds;
             ui = GameUi.Create(game, cafeCamera, cafe, () => time.NowMs, OpenDrawer, account, tutorial,
                 PlayerPrefs.GetInt(TutorialSeenKey, 0) == 1);
             account.Ui = ui;
@@ -99,7 +105,10 @@ namespace Gahwit.Boot
             tutorial.Check();
             audio = services.Audio;
             ApplySoundSettings();
+            ApplyLookSettings();
             account.SettingChanged += ApplySoundSettings;
+            account.SettingChanged += ApplyLookSettings;
+            cafe.Decor.Settled += world => ui.DecorDust(world);
             WireSounds();
             cafeMusic = CafeMusic(timeOfDay);
             audio.PlayMusic(cafeMusic);
@@ -327,6 +336,18 @@ namespace Gahwit.Boot
             _ => "music_cafe_morning"
         };
 
+        // Reduced motion (the player's switch or the phone's own) and graphics quality take effect at once.
+        void ApplyLookSettings()
+        {
+            bool calm = account.GetSetting("reducedMotion");
+            Tweens.Reduced = calm;
+            cafe.Decor.Calm = calm;
+            var graphics = game.Config.Ui.Graphics;
+            bool high = UiRules.HighGraphics(account.Quality, PhoneSettings.MemoryMb, graphics);
+            cafe.SetQuality(high);
+            Application.targetFrameRate = UiRules.FrameRate(high, graphics);
+        }
+
         void ApplySoundSettings()
         {
             var settings = saves.Data.Settings;
@@ -417,7 +438,8 @@ namespace Gahwit.Boot
 
             PlayScene(story, def.LeadKnot, () =>
             {
-                // 1974: the café as Teta ran it, in faded film colours.
+                // 1974: the café as Teta ran it, in faded film colours. A sepia wash spreads from the last touch.
+                ui.MemoryWipe();
                 cafe.SetPast(true);
                 inMemory = true;
                 audio.PlayMusic("music_memory");
@@ -425,8 +447,8 @@ namespace Gahwit.Boot
                 cafe.Apply(game.Content.Chapters.SelectMany(c => c.Tasks).Select(t => t.Id).ToList(),
                     new Dictionary<string, string> { ["sign"] = "old", ["chairs"] = "old" }, game.Content.Styles);
                 ui.Memory.ShowBanner(true);
-                // The easy assist (COMPLETE_SPEC.md section 5) needs its own settings field; off until then.
-                PlayScene(story, def.IntroKnot, () => ui.Memory.PlayPour(new PourGame(config, easyAssist: false), stars =>
+                // The easy assist (COMPLETE_SPEC.md section 5) widens the target band.
+                PlayScene(story, def.IntroKnot, () => ui.Memory.PlayPour(new PourGame(config, saves.Data.Settings.MemoryAssist), stars =>
                 {
                     game.RecordMemory(memoryId, stars);
                     notifications.AskOnce(); // after the first memory, never at first launch
@@ -485,9 +507,10 @@ namespace Gahwit.Boot
         // The level-up card (screens/LevelUp): the new level, its energy and gems, and a petal burst.
         void ShowLevelUp(int level)
         {
-            ui.Prompt.Show(Loc.T("levelUp.title"), level.ToString(),
-                Loc.T("levelUp.rewards", game.Config.PlayerLevels.Rewards.Energy, game.Config.LevelUpGems(level)),
-                new[] { PromptView.Primary(Loc.T("levelUp.continue"), MaybeShowUnlock) }, celebrate: true);
+            int energy = game.Config.PlayerLevels.Rewards.Energy, gems = game.Config.LevelUpGems(level);
+            ui.Prompt.Show(Loc.T("levelUp.title"), level.ToString(), Loc.T("levelUp.rewards", energy, gems),
+                new[] { PromptView.Primary(Loc.T("levelUp.continue"), MaybeShowUnlock) }, celebrate: true,
+                countUp: t => Loc.T("levelUp.rewards", Mathf.RoundToInt(energy * t), Mathf.RoundToInt(gems * t)));
         }
 
         // Out of energy (screens/OutOfEnergy): the wait, a gem refill through the platform, and a tip.
