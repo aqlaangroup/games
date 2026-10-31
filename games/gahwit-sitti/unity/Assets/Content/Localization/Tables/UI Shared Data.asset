@@ -1367,6 +1367,186 @@ MonoBehaviour:
     m_Key: memory.carryOn
     m_Metadata:
       m_Items: []
+  - m_Id: 130574315413504
+    m_Key: unlock.recipes.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579328
+    m_Key: unlock.recipes.text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579329
+    m_Key: pan.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579330
+    m_Key: pan.how
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579331
+    m_Key: pan.empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579332
+    m_Key: pan.cook
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579333
+    m_Key: pan.book
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579334
+    m_Key: pan.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579335
+    m_Key: pan.known
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579336
+    m_Key: pan.wrong
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579337
+    m_Key: pan.button
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579338
+    m_Key: pan.noGenerator
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579339
+    m_Key: pan.sameChain
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579340
+    m_Key: recipes.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579341
+    m_Key: recipes.count
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579342
+    m_Key: recipes.blank
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579343
+    m_Key: recipes.items
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579344
+    m_Key: recipes.new
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579345
+    m_Key: recipes.openBook
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579346
+    m_Key: order.signature
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579347
+    m_Key: chain.coffee
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579348
+    m_Key: chain.sweets
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579349
+    m_Key: chain.tea
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579350
+    m_Key: chain.saudi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579351
+    m_Key: chain.dairy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579352
+    m_Key: recipe.coffee_kaak
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579353
+    m_Key: recipe.coffee_maamoul
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579354
+    m_Key: recipe.eid_welcome
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579355
+    m_Key: recipe.knafeh_qahwa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579356
+    m_Key: recipe.friday_welcome
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579357
+    m_Key: recipe.tea_kaak
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579358
+    m_Key: recipe.morning_blend
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579359
+    m_Key: recipe.afternoon_tea
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579360
+    m_Key: recipe.winter_evening
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579361
+    m_Key: recipe.two_cities
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579362
+    m_Key: recipe.cardamom_roast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579363
+    m_Key: recipe.najdi_welcome
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579364
+    m_Key: recipe.saffron_tea
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579365
+    m_Key: recipe.dates_light_coffee
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579366
+    m_Key: recipe.labneh_manousheh
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579367
+    m_Key: recipe.nabulsi_knafeh
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579368
+    m_Key: recipe.quick_breakfast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579369
+    m_Key: recipe.coffee_milk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579370
+    m_Key: recipe.family_breakfast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579371
+    m_Key: recipe.morning_majlis
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -2,6 +2,21 @@
 
 Decisions and known gaps. Newest first. Read this at the start of each session (`/CLAUDE.md`).
 
+## 2026-10-31: recipes (missing/10)
+
+- **Content:** 20 recipes in `Content/Resources/Content/recipes.json`, each two items from different chains, in any order. They run from coffee + sweets in chapter 1 to dairy in chapter 7; `two_cities` is the spec's example (Saudi cup + coffee with cardamom). 5 are marked as story-clue recipes. The pairs and names are proposed; the clue texts wait for the story bible (11).
+- **`RecipeBook`** (`_Game/Recipes`, plain C#, 5 tests):
+  - Two items from different chains go in the pan; no generators.
+  - A right pair fills its page and is used up.
+  - A wrong pair, or a recipe already found, goes back to the board (or storage when the board is full), so nothing is lost.
+  - After 3 wrong pairs in a row, the book hints one item of a recipe whose chains are open.
+- **Signature orders:** once a recipe is found, 20% of new orders (`levelB.recipes.signatureOrderChance`, proposed) ask for it by name: its two items, paying 1.5× a normal order of that size. The card shows a star, the dish's name and a gold edge. Only recipes whose chains the player has generators for are asked for.
+- **Screens:** the pan button sits over the board's top corner from level 5. With an item picked, it goes in the pan; with nothing picked, the pan opens: two slots, Cook, the hint and the book. A discovery shows a card with petals. The book lists all 20 pages, with found ones named.
+- **Save schema v9:** `recipes.found`, `recipes.wrongStreak` and `recipes.pan` are used, and `orders[].recipe` names a signature dish (migration tested).
+- **Unlock card** for recipes at level 5.
+- The touch-target play test now ignores errors other Editor packages log (the AI Assistant's network errors failed it once).
+- **Still missing:** the clue texts and showing them in the journal (11), and recipe art (13).
+
 ## 2026-10-31: every memory game type (missing/12)
 
 - **Rules** (`_Game/Memories`, plain C#, 12 new tests), numbers in `balance.json` `levelB.memories.<type>`:

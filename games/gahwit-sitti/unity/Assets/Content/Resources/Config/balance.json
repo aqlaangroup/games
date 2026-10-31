@@ -1195,7 +1195,9 @@
       "season1Count": 20,
       "signatureCoinMultiplier": 1.5,
       "hintAfterWrongTries": 3,
-      "storyClueRecipes": 5
+      "storyClueRecipes": 5,
+    "signatureOrderChance": 0.2,
+    "notes": "SYSTEMS_B.md section 4. The recipes themselves are in Content/Resources/Content/recipes.json. signatureOrderChance (proposed 2026-10-31, missing/10): once a recipe is found, this share of new orders ask for one by name."
     },
     "memories": {
       "pour": {

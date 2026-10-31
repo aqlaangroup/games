@@ -19,7 +19,8 @@ namespace Gahwit.Save
             [4] = AddOccasions,
             [5] = AddUnlockCards,
             [6] = SplitNotifications,
-            [7] = AddMemoryAssist
+            [7] = AddMemoryAssist,
+            [8] = AddRecipes
         };
 
         public static JObject Upgrade(JObject raw, BalanceConfig config)
@@ -181,6 +182,19 @@ namespace Gahwit.Save
             if (settings["memoryAssist"] == null) settings["memoryAssist"] = false;
             save["settings"] = settings;
             save["schemaVersion"] = 8;
+            return save;
+        }
+
+        // Version 9 (2026-10-31) uses the recipes section: found recipes, the wrong-pair streak and the pan's items.
+        // Orders may ask for a recipe by name (orders[].recipe), which older saves never have.
+        static JObject AddRecipes(JObject save, BalanceConfig config)
+        {
+            var recipes = save["recipes"] as JObject ?? new JObject();
+            if (recipes["found"] == null) recipes["found"] = new JArray();
+            if (recipes["wrongStreak"] == null) recipes["wrongStreak"] = 0;
+            if (recipes["pan"] == null) recipes["pan"] = new JArray();
+            save["recipes"] = recipes;
+            save["schemaVersion"] = 9;
             return save;
         }
 

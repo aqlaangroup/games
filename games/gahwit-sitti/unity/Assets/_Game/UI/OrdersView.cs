@@ -72,8 +72,18 @@ namespace Gahwit.UI
                 UiKit.Text(badge.transform, "N", "×" + line.Count, 22, Color.white, TextAlignmentOptions.Center).rectTransform.Stretch();
             }
 
-            UiKit.Text(card.transform, "Reward", Loc.T("order.reward", order.Coins), 24, Palette.InkSoft, TextAlignmentOptions.Center)
+            // A signature dish names its recipe, with a star and a gold edge, so it doesn't rely on colour alone.
+            string reward = order.Recipe != null
+                ? Loc.T("order.signature", Loc.T("recipe." + order.Recipe), order.Coins)
+                : Loc.T("order.reward", order.Coins);
+            UiKit.Text(card.transform, "Reward", reward, 24, order.Recipe != null ? Palette.Rose : Palette.InkSoft, TextAlignmentOptions.Center)
                 .rectTransform.Top(150, 32, 8, 8);
+            if (order.Recipe != null)
+            {
+                var edge = card.gameObject.AddComponent<Outline>();
+                edge.effectColor = Palette.Gold;
+                edge.effectDistance = new Vector2(4, -4);
+            }
 
             // A ready card is one big button to serve (44 pt and more), with a tick so it doesn't rely on colour.
             var label = UiKit.Panel(card.transform, "Serve", ready ? Palette.SageDark : Palette.Muted, 22);

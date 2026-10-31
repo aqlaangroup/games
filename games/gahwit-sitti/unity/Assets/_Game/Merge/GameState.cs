@@ -35,6 +35,9 @@ namespace Gahwit.Merge
         public Dictionary<string, string> WardrobeWorn = new Dictionary<string, string>(); // slot → piece
         public Dictionary<int, int> OccasionHearts = new Dictionary<int, int>();           // chapter → hearts, paid once
         public Dictionary<string, RegularState> Regulars = new Dictionary<string, RegularState>();
+        public List<string> RecipesFound = new List<string>();
+        public int RecipeWrongStreak; // wrong pairs in a row; a hint shows after a few (Recipes.RecipeBook)
+        public List<Item> Pan = new List<Item>(); // up to two items waiting in the cooking pan
         public ulong Rng;
     }
 
@@ -89,6 +92,14 @@ namespace Gahwit.Merge
         public int Units;
         public int Coins;
         public int Xp;
+        public string Recipe; // a signature dish asked for by name (SYSTEMS_B.md section 4), or null
+    }
+
+    // A found recipe a customer can ask for: its id and the two items that make it.
+    public sealed class Signature
+    {
+        public string Recipe;
+        public List<OrderLine> Lines;
     }
 
     public sealed class OrderLine

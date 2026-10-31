@@ -1,0 +1,25 @@
+{
+  "$comment": "Teta's recipe book, season 1 (SYSTEMS_B.md section 4, missing/10). Each recipe is two items from different chains, in any order; names are recipe.<id> in the UI table. 'clue' marks the 5 recipes that carry a story clue: the clue texts come with the story bible (missing/11). Pairs and names were proposed on 2026-10-31; 'two_cities' is the spec's own example. Ordered roughly by when both chains are open.",
+  "recipes": [
+    { "id": "coffee_kaak",       "a": ["coffee", 3], "b": ["sweets", 2] },
+    { "id": "coffee_maamoul",    "a": ["coffee", 4], "b": ["sweets", 4] },
+    { "id": "eid_welcome",       "a": ["coffee", 5], "b": ["sweets", 5], "clue": true },
+    { "id": "knafeh_qahwa",      "a": ["coffee", 6], "b": ["sweets", 8] },
+    { "id": "friday_welcome",    "a": ["coffee", 7], "b": ["sweets", 9] },
+    { "id": "tea_kaak",          "a": ["tea", 4],    "b": ["sweets", 3] },
+    { "id": "morning_blend",     "a": ["tea", 3],    "b": ["coffee", 3] },
+    { "id": "afternoon_tea",     "a": ["tea", 6],    "b": ["sweets", 6] },
+    { "id": "winter_evening",    "a": ["tea", 5],    "b": ["sweets", 5], "clue": true },
+    { "id": "two_cities",        "a": ["saudi", 4],  "b": ["coffee", 5], "clue": true },
+    { "id": "cardamom_roast",    "a": ["saudi", 2],  "b": ["coffee", 3] },
+    { "id": "najdi_welcome",     "a": ["saudi", 6],  "b": ["sweets", 7] },
+    { "id": "saffron_tea",       "a": ["saudi", 1],  "b": ["tea", 4] },
+    { "id": "dates_light_coffee","a": ["saudi", 3],  "b": ["sweets", 4] },
+    { "id": "labneh_manousheh",  "a": ["dairy", 2],  "b": ["sweets", 2] },
+    { "id": "nabulsi_knafeh",    "a": ["dairy", 4],  "b": ["sweets", 3], "clue": true },
+    { "id": "quick_breakfast",   "a": ["dairy", 3],  "b": ["tea", 4] },
+    { "id": "coffee_milk",       "a": ["dairy", 1],  "b": ["coffee", 4] },
+    { "id": "family_breakfast",  "a": ["dairy", 6],  "b": ["tea", 6], "clue": true },
+    { "id": "morning_majlis",    "a": ["dairy", 5],  "b": ["saudi", 6] }
+  ]
+}

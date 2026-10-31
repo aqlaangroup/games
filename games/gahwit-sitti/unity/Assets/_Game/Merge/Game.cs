@@ -315,11 +315,16 @@ namespace Gahwit.Merge
             while (State.Orders.Count < slots) State.Orders.Add(NewOrder());
         }
 
+        // Found recipes whose chains are all in the given pool; set by Recipes.RecipeBook.
+        public Func<ICollection<string>, List<Signature>> Signatures;
+
         Order NewOrder()
         {
             // Fairness (GAME_SYSTEMS.md section 6): orders only use chains whose generator the player has.
             var pool = AllPieces.Where(p => p.IsGenerator).Select(p => p.Chain).Distinct().OrderBy(c => c).ToList();
             if (State.EasyOrdersLeft > 0 && pool.Count > 0) return EasyOrder(pool);
+            var signature = Signatures != null && rng.NextDouble() < Config.LevelB.Recipes.SignatureOrderChance ? Signatures(pool) : null;
+            if (signature != null && signature.Count > 0) return SignatureOrder(signature[rng.Range(0, signature.Count)]);
             float size = Config.OrderSizeUnits(State.Level);
             bool twoLines = State.Level >= Config.Orders.TwoItemOrderFromLevel && pool.Count > 1 &&
                             rng.NextDouble() < Config.Orders.TwoItemOrderChance;
@@ -333,6 +338,12 @@ namespace Gahwit.Merge
                 lines.Add(MakeLine(chain, size / lineCount));
             }
 
+            return ForCustomer(lines);
+        }
+
+        // A regular in their hours, or a walk-in.
+        Order ForCustomer(List<OrderLine> lines)
+        {
             var schedule = Config.LevelB.Regulars.Schedule;
             var named = Content.Characters
                 .Where(kv => kv.Value.PlacesOrders && kv.Value.FromChapter <= State.Chapter)
@@ -341,6 +352,16 @@ namespace Gahwit.Merge
             if (named.Count > 0 && rng.NextDouble() < Config.Orders.CharacterOrderChance)
                 return MakeOrder(named[rng.Range(0, named.Count)], true, lines);
             return MakeOrder(null, false, lines);
+        }
+
+        // A signature dish: the recipe's two items, paying signatureCoinMultiplier × a normal order of that size.
+        Order SignatureOrder(Signature signature)
+        {
+            var lines = signature.Lines.Select(l => new OrderLine { Chain = l.Chain, Level = l.Level, Count = l.Count }).ToList();
+            var order = ForCustomer(lines);
+            order.Recipe = signature.Recipe;
+            order.Coins = (int)Math.Round(order.Coins * Config.LevelB.Recipes.SignatureCoinMultiplier);
+            return order;
         }
 
         // Right after the tutorial (COMPLETE_SPEC.md section 1, step 11): one low-level item.

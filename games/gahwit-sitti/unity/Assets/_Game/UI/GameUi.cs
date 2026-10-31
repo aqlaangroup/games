@@ -50,7 +50,8 @@ namespace Gahwit.UI
         public bool ModalOpen => Settings.IsOpen || help.gameObject.activeSelf || confirm.gameObject.activeSelf || CloudChoice.IsOpen
                                  || AgeGate.IsOpen || UpdateRequired.gameObject.activeSelf || Letter.IsOpen || Memory.IsPlaying
                                  || decorShop != null && decorShop.IsOpen || wardrobe != null && wardrobe.IsOpen
-                                 || Prompt.IsOpen || Storage != null && Storage.IsOpen;
+                                 || Prompt.IsOpen || Storage != null && Storage.IsOpen
+                                 || Pan != null && Pan.IsOpen || RecipeBook != null && RecipeBook.IsOpen;
 
         public static GameUi Create(Game game, CafeCamera cafeCamera, CafeRoom room, Func<long> now, Action openDrawer, IAccountUi account,
             TutorialFlow tutorial, bool canSkipTutorial)
@@ -234,6 +235,21 @@ namespace Gahwit.UI
             Storage.Init(game, look, Toast, buyStorageSlot);
             KeepOnTop();
         }
+
+        // Recipes (missing/10): the pan in the kitchen and Teta's recipe book.
+        public void SetRecipes(Gahwit.Recipes.RecipeBook book)
+        {
+            var bookView = UiKit.Rect(transform.Find("SafeArea"), "RecipeBook").Stretch().gameObject.AddComponent<RecipeBookView>();
+            bookView.Init(book, game);
+            Pan = UiKit.Rect(transform.Find("SafeArea"), "Pan").Stretch().gameObject.AddComponent<PanView>();
+            Pan.Init(book, game, look, bookView);
+            RecipeBook = bookView;
+            KeepOnTop();
+            kitchen.SetRecipes(book, Pan);
+        }
+
+        public PanView Pan { get; private set; }
+        public RecipeBookView RecipeBook { get; private set; }
 
         public void SetWardrobe(WardrobeRules rules)
         {

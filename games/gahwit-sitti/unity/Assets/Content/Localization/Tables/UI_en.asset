@@ -1386,6 +1386,188 @@ MonoBehaviour:
     m_Localized: Carry on
     m_Metadata:
       m_Items: []
+  - m_Id: 130574315413504
+    m_Localized: Teta's recipe book
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579328
+    m_Localized: Put two items from different chains in the pan and cook them to
+      find a recipe.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579329
+    m_Localized: Teta's pan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579330
+    m_Localized: Pick an item on the board, then tap the pan. Two items from different
+      chains make a recipe.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579331
+    m_Localized: Empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579332
+    m_Localized: Cook
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579333
+    m_Localized: Recipe book
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579334
+    m_Localized: 'Hint: try {0} with something from {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579335
+    m_Localized: 'You know this one: {0}. Both items are back.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579336
+    m_Localized: Not a recipe. Both items are back; nothing is lost.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579337
+    m_Localized: Pan {0}/2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579338
+    m_Localized: Generators don't go in the pan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579339
+    m_Localized: The pan needs items from two different chains
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579340
+    m_Localized: Teta's recipe book
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579341
+    m_Localized: '{0} of {1} recipes'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579342
+    m_Localized: A blank page
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579343
+    m_Localized: '{0} + {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579344
+    m_Localized: New recipe!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579345
+    m_Localized: Open the book
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579346
+    m_Localized: "\u2605 {0} \xB7 +{1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579347
+    m_Localized: Coffee
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579348
+    m_Localized: Sweets
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579349
+    m_Localized: Tea
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579350
+    m_Localized: Saudi coffee
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579351
+    m_Localized: Dairy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579352
+    m_Localized: Coffee ka'ak
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579353
+    m_Localized: Coffee ma'amoul
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579354
+    m_Localized: Eid welcome
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579355
+    m_Localized: Knafeh and qahwa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579356
+    m_Localized: Friday welcome
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579357
+    m_Localized: Tea and ka'ak
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579358
+    m_Localized: Morning blend
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579359
+    m_Localized: Afternoon tea
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579360
+    m_Localized: Winter evening
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579361
+    m_Localized: Two-city coffee
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579362
+    m_Localized: Cardamom roast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579363
+    m_Localized: Najdi welcome
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579364
+    m_Localized: Saffron tea
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579365
+    m_Localized: Dates and light coffee
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579366
+    m_Localized: Labneh man'oushe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579367
+    m_Localized: Nabulsi knafeh
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579368
+    m_Localized: Quick breakfast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579369
+    m_Localized: Coffee with milk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579370
+    m_Localized: Family breakfast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130574340579371
+    m_Localized: Morning majlis
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

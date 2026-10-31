@@ -9,7 +9,7 @@ namespace Gahwit.Save
     // so a save written by a newer build loses nothing here.
     public sealed class SaveData
     {
-        public const int CurrentSchema = 8;
+        public const int CurrentSchema = 9;
 
         public int SchemaVersion = CurrentSchema;
         public long SaveVersion;
@@ -101,6 +101,7 @@ namespace Gahwit.Save
         public int Xp;
         public string Character; // null for a walk-in
         public long CreatedMs;   // when the customer walked in (trusted time)
+        public string Recipe;    // a signature dish, or null
     }
 
     public sealed class OrderItemSave

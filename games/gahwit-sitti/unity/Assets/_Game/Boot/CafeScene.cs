@@ -94,6 +94,7 @@ namespace Gahwit.Boot
             notifications.Clear();
             WireDecor();
             WireWardrobe();
+            WireRecipes();
             WireCustomers();
             tutorial.StepFinished += OnTutorialStep;
             tutorial.Skipped += () =>
@@ -192,6 +193,22 @@ namespace Gahwit.Boot
             decor.Changed += ShowDecor;
             ui.SetDecor(decor);
             ShowDecor();
+        }
+
+        // Recipes (missing/10): the pan and the book; found recipes come back as signature orders.
+        void WireRecipes()
+        {
+            var book = new Gahwit.Recipes.RecipeBook(game, Gahwit.Recipes.RecipeContent.Load());
+            book.Discovered += recipe =>
+            {
+                Track("recipe_found", "recipe", recipe.Id, "found", book.FoundCount);
+                dirty = true;
+                ui.Prompt.Show(Loc.T("recipes.new"), Loc.T("recipe." + recipe.Id),
+                    Loc.T("recipes.items", game.ItemName(recipe.ChainA, recipe.LevelA), game.ItemName(recipe.ChainB, recipe.LevelB)),
+                    new[] { PromptView.Primary(Loc.T("recipes.openBook"), () => ui.RecipeBook.Show()), PromptView.Quiet(Loc.T("common.close")) },
+                    celebrate: true);
+            };
+            ui.SetRecipes(book);
         }
 
         // Salma's wardrobe (missing/09): she wears her outfit in the café.

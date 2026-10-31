@@ -62,7 +62,8 @@ namespace Gahwit.Save
                 Coins = o.Coins,
                 Xp = o.Xp,
                 Character = o.IsCharacter ? o.Customer : null,
-                CreatedMs = o.CreatedMs
+                CreatedMs = o.CreatedMs,
+                Recipe = o.Recipe
             }).ToList();
 
             into.Story = new StorySave
@@ -79,6 +80,9 @@ namespace Gahwit.Save
             into.Wardrobe["owned"] = new JArray(state.WardrobeOwned);
             into.Wardrobe["worn"] = JObject.FromObject(state.WardrobeWorn);
             into.Wardrobe["occasions"] = new JObject(state.OccasionHearts.Select(o => new JProperty(o.Key.ToString(), o.Value)));
+            into.Recipes["found"] = new JArray(state.RecipesFound);
+            into.Recipes["wrongStreak"] = state.RecipeWrongStreak;
+            into.Recipes["pan"] = new JArray(state.Pan.Select(p => new JObject { ["chain"] = p.Chain, ["level"] = p.Level }));
             into.Cafe.Placed = new JArray(state.PlacedDecor.Select(p => new JObject
                 { ["id"] = p.Id, ["x"] = p.X, ["z"] = p.Z, ["rot"] = p.Rot * 90 }));
             foreach (var regular in state.Regulars)
@@ -120,6 +124,11 @@ namespace Gahwit.Save
                     .ToDictionary(p => p.Name, p => (string)p.Value) ?? new Dictionary<string, string>(),
                 OccasionHearts = (data.Wardrobe["occasions"] as JObject)?.Properties()
                     .ToDictionary(p => int.Parse(p.Name), p => (int)p.Value) ?? new Dictionary<int, int>(),
+                RecipesFound = data.Recipes["found"]?.Values<string>().ToList() ?? new List<string>(),
+                RecipeWrongStreak = data.Recipes.Value<int?>("wrongStreak") ?? 0,
+                Pan = (data.Recipes["pan"] as JArray)?.OfType<JObject>()
+                    .Where(p => p.Value<string>("chain") != null && config.Chains.ContainsKey(p.Value<string>("chain")))
+                    .Select(p => new Item(p.Value<string>("chain"), p.Value<int>("level"))).ToList() ?? new List<Item>(),
                 PlacedDecor = data.Cafe.Placed.OfType<JObject>().Select(p => new PlacedDecor
                 {
                     Id = p.Value<string>("id"),
@@ -170,7 +179,8 @@ namespace Gahwit.Save
                     Units = lines.Sum(l => l.Count * config.ItemUnits(l.Level)),
                     Coins = saved.Coins,
                     Xp = saved.Xp,
-                    CreatedMs = saved.CreatedMs
+                    CreatedMs = saved.CreatedMs,
+                    Recipe = saved.Recipe
                 });
                 state.NextOrderId = Math.Max(state.NextOrderId, id + 1);
             }

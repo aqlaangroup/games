@@ -2,6 +2,7 @@ using System.Linq;
 using System;
 using Gahwit.Core;
 using Gahwit.Merge;
+using Gahwit.Recipes;
 using RTLTMPro;
 using TMPro;
 using UnityEngine;
@@ -22,7 +23,9 @@ namespace Gahwit.UI
         public BoardView Board => board;
         public OrdersView Orders => orders;
         RTLTextMeshPro info, bubbleTimer;
-        Button sell, store, storage, bubble;
+        Button sell, store, storage, bubble, pan;
+        RecipeBook recipes;
+        PanView panView;
         float nextBubbleCheck;
 
         public void Init(Game game, ItemLook look, GameUi ui, Func<long> now, RectTransform dragLayer)
@@ -64,8 +67,42 @@ namespace Gahwit.UI
             bubble.gameObject.SetActive(false);
         }
 
+        // The cooking pan (missing/10), once recipes exist: over the board's other top corner. With an item picked it
+        // goes into the pan; with nothing picked the pan opens.
+        public void SetRecipes(RecipeBook book, PanView view)
+        {
+            recipes = book;
+            panView = view;
+            pan = UiKit.Button(transform, "Pan", "", Palette.Gold, Palette.Ink, 24, ToPan, 75);
+            ((RectTransform)pan.transform).Pin(new Vector2(0, 1), new Vector2(24, -278), new Vector2(150, 150));
+            pan.gameObject.SetActive(false);
+        }
+
+        void ToPan()
+        {
+            int cell = board.Selected;
+            if (cell >= 0 && recipes.PutInPan(cell))
+            {
+                UiSound.Play("ui_tap");
+                Tweens.Instance?.PopOf((RectTransform)pan.transform, 0.2f);
+                board.ClearSelection();
+                if (recipes.Pan.Count == 2) panView.Show();
+            }
+            else if (cell >= 0 && game.ItemAt(cell) != null)
+            {
+                UiSound.Play("ui_error");
+                ui.Toast.Show(Loc.T(game.ItemAt(cell).IsGenerator ? "pan.noGenerator" : "pan.sameChain"));
+            }
+            else panView.Show();
+        }
+
         public void Refresh()
         {
+            if (pan != null)
+            {
+                pan.gameObject.SetActive(recipes.Open);
+                pan.Label().text = Loc.T("pan.button", recipes.Pan.Count);
+            }
             orders.Refresh();
             board.Refresh();
             RefreshInfo();

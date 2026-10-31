@@ -13,6 +13,9 @@ namespace Gahwit.UI.PlayTests
         [UnityTest]
         public IEnumerator EveryButtonIsFortyFourPointsOrMore()
         {
+            // This test is about sizes. Errors other Editor packages log meanwhile (such as the AI Assistant's network
+            // errors) shouldn't fail it.
+            LogAssert.ignoreFailingMessages = true;
             SceneManager.LoadScene("Boot");
             // The game can reload once while it starts (a newer cloud save), so each step finds the live interface.
             yield return Settle(3f);

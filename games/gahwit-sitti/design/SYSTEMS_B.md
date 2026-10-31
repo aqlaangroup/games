@@ -72,6 +72,11 @@ Their numbers live in `balance.json` under `levelB`. They are starting values to
 - **Signature dishes:** customers ask for it by name, paying 1.5× the coins of a normal order of the same size.
 - **Story clues:** 5 recipes carry clues about the family secret.
 - **Example:** Saudi coffee level 4 + coffee level 5 = "قهوة الثنتين", the two-city coffee from chapter 5.
+- **Decided 2026-10-31 (missing/10):**
+  - The 20 recipes are in `unity/Assets/Content/Resources/Content/recipes.json`.
+  - A right pair is used up when it fills its page. Cooking a recipe already found returns both items, like a wrong pair, but doesn't count toward the hint.
+  - The hint names one item of the first recipe not found yet whose chains are open, and the chain of its partner.
+  - Once a recipe is found, `levelB.recipes.signatureOrderChance` (0.2) of new orders ask for one by name. A signature order wants the recipe's two items, one of each.
 
 ## 5. Playable memories
 

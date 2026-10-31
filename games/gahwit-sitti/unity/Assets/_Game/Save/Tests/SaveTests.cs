@@ -199,6 +199,30 @@ namespace Gahwit.Save.Tests
         }
 
         [Test]
+        public void AVersionEightSaveGetsAnEmptyPanAndRecipesRoundTrip()
+        {
+            var time = new TimeService(new FakeClock(), null);
+            var state = PlayedState();
+            state.RecipesFound.Add("coffee_kaak");
+            state.RecipeWrongStreak = 2;
+            state.Pan.Add(new Item("coffee", 3));
+            state.Orders[0].Recipe = "coffee_kaak";
+            var loaded = SaveService.FromJson(WriteJson(state, time), config, content, out _, out _);
+            CollectionAssert.AreEqual(new[] { "coffee_kaak" }, loaded.RecipesFound);
+            Assert.AreEqual(2, loaded.RecipeWrongStreak);
+            Assert.IsTrue(loaded.Pan.Single().Is("coffee", 3));
+            Assert.AreEqual("coffee_kaak", loaded.Orders[0].Recipe);
+
+            var v8 = JObject.Parse(WriteJson(PlayedState(), time));
+            v8["schemaVersion"] = 8;
+            v8["recipes"] = new JObject();
+            SaveService.FromJson(v8.ToString(), config, content, out var data, out _);
+            Assert.AreEqual(SaveData.CurrentSchema, data.SchemaVersion);
+            Assert.AreEqual(0, ((JArray)data.Recipes["pan"]).Count);
+            Assert.AreEqual(0, (int)data.Recipes["wrongStreak"]);
+        }
+
+        [Test]
         public void SectionsTheGameDoesNotUseYetSurviveASave()
         {
             var time = new TimeService(new FakeClock(), null);

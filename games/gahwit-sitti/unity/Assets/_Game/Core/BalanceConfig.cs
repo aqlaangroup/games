@@ -282,6 +282,16 @@ namespace Gahwit.Core
         public WardrobeConfig Wardrobe;
         public RegularsConfig Regulars;
         public MemoriesConfig Memories;
+        public RecipesConfig Recipes;
+    }
+
+    public sealed class RecipesConfig
+    {
+        public int Season1Count;
+        public float SignatureCoinMultiplier;
+        public int HintAfterWrongTries;
+        public int StoryClueRecipes;
+        public float SignatureOrderChance;
     }
 
     public sealed class CafeConfig
