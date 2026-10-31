@@ -11,7 +11,7 @@ Decisions and known gaps. Newest first. Read this at the start of each session (
 - **Weak spots to redo some day:**
   - The dough and the ma'amoul ball are both plain balls, told apart by colour (pale and golden), plus the level badge.
   - The cheese plate is a wooden board.
-- **Still waiting:** the portraits keep Nano Banana Pro for a matching look, so Teta and 15 more wait for its limit.
+- **Teta's portraits:** these are made on Nano Banana 2.1, given young Teta's and Salma's Pro sheets as references. The rendering, proportions, lighting and one-row layout match, and she is clearly young Teta grown old. Her smile closes both eyes in a laugh, like her young self. The other 15 characters follow the same way.
 - **The app icon** is from Flow too (Nano Banana 2.1): Teta's brass dallah pouring into a rose-banded finjan, with a heart of steam rising, on blush and cream.
   - It reads at 60 px, and its corners hold only soft flowers, which iOS rounding can lose.
   - `Editor/AppIconSetup.cs` (Gahwit Sitti > Set app icon) sets it as the default icon, uncompressed at 1024 px. Unity scales it for every iOS and Android size; the simulator build's `AppIcon60x60@2x` is the new icon.

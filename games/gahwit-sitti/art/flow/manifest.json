@@ -1,9 +1,8 @@
 {
   "project": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195",
-  "status": "7 of 23 expression sheets done (Nano Banana Pro, 2026-10-31). All 13 icon sheets done on Nano Banana 2.1 (2026-11-01, finished 2026-11-01 01:16 +03). Nano Banana Pro has shown 'You've reached your usage limit. Please try again later. You have not been charged for this generation.' since about 22:10 on 2026-10-31 (retried 22:38 and 00:05: same message). Portraits stay on Pro to keep their look. App icon done on Nano Banana 2.1 (2026-11-01).",
+  "status": "7 of 23 expression sheets done (Nano Banana Pro, 2026-10-31). All 13 icon sheets done on Nano Banana 2.1 (2026-11-01, finished 2026-11-01 01:16 +03). Nano Banana Pro has shown 'You've reached your usage limit. Please try again later. You have not been charged for this generation.' since about 22:10 on 2026-10-31 (retried 22:38 and 00:05: same message). Portraits stay on Pro to keep their look. App icon done on Nano Banana 2.1 (2026-11-01). Trial: portraits/teta.png made on Nano Banana 2.1 with teta_young and salma as references (2026-11-01).",
   "credits": "Flow showed 'Generating will use 0 credits' for every generation. Download sizes offered: 1K original, 2K upscaled, 4K greyed out ('Learn more').",
   "pending": [
-    "portraits/teta.png (use teta_young as reference)",
     "portraits/fadi_young.png (use abu_fadi as reference)",
     "portraits/karim.png (two earlier options put a beige tile behind each face; regeneration hit the limit)",
     "portraits/faris.png",
@@ -209,6 +208,19 @@
       "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/4c34c8dc-a68b-4a8e-afd5-29ea4d0d23b2",
       "size": "1024x1024",
       "note": "Option A of the first round (one round was enough). Large brass dallah pouring a visible stream into a rose-banded finjan, heart of steam, full-bleed blush-to-cream background; still reads at 60 px. Not perfectly centred: dallah left, cup right, balanced by the steam heart. Only soft blurred lilac flowers sit near the corners. RGB, no alpha. Flow 1K original (JPEG) converted to PNG with sips."
+    },
+    {
+      "path": "portraits/teta.png",
+      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. Warm, heartfelt and inviting, with genuine emotion in the eyes; premium animated-film quality; lovingly detailed fabric, hair and skin; soft cinematic light; balanced composition; nothing cheap, flat or generic. Match the rendering, proportions, lighting and layout of the two reference sheets exactly. Expression sheet of Teta in her late 70s, present day: the same woman as the young woman in the first reference image, now old. Keep her warm round face, eye shape, nose and bright kind eyes from that reference, now with gentle wrinkles, soft cheeks and loving eyes. White headscarf. Five head-and-shoulders portraits of the SAME character side by side in one row, evenly spaced, all the same size, each looking at the viewer: 1 neutral, 2 smiling, 3 sad, 4 surprised, 5 thinking. Plain flat background #FBF5F3. Nothing between or behind them. Only one row of five portraits. The portraits fill the image from the top of the head near the top edge to the chest at the bottom edge. Nothing above or below them: no extra faces, no reflections, no faded copies.",
+      "model": "Nano Banana 2.1 (Google Flow), 16:9, 2 images; trial while Nano Banana Pro was at its usage limit",
+      "references": [
+        "portraits/teta_young.png (Flow item 7cd446cb-edeb-49b6-abc5-6468705f7e3a)",
+        "portraits/salma.png (Flow item f9e1a6e7-6fb3-44e5-9fb8-4d59e1886ae1)"
+      ],
+      "date": "2026-11-01",
+      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/8ee5ce3c-b8aa-47a8-add8-62afe92858de",
+      "size": "1376x768",
+      "note": "Option B of 2. Same face as teta_young (round face, eyes, nose) aged to about 75-80 with grey brows and soft wrinkles; same lilac flowered dress and cream cardigan; cream headscarf tied at the back like her young one, though from the front it reads a little like a cap. One clean row of rounded busts, like the Pro sheets. The 'smiling' frame is a wink, copied from the young Teta reference (both options did it). Wrinkle detail is slightly more realistic than Abu Fadi's. Background blush-cream. Option A had a wrapped hijab but looked closer to 60. Flow 1K original (JPEG) converted to PNG with sips."
     }
   ],
   "models_offered": [
