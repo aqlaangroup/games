@@ -264,6 +264,16 @@ namespace Gahwit.Cafe
             yield return (-W / 2, 1.2f, -3.2f, 3.2f);
         }
 
+        // Where wall decor can't hang (missing/07), along the run of the two walls in metres from the front of the side
+        // wall (Decor.WallLayout): the door, the back room's door, the window, and the sign with its shelf.
+        public static IEnumerable<(float from, float to)> WallKeepClear()
+        {
+            yield return (D / 2 - 2.95f - 0.1f, D / 2 - 1.45f + 0.1f);
+            yield return (D + W / 2 - 3.95f - 0.1f, D + W / 2 - 2.95f + 0.1f);
+            yield return (D + W / 2 - 2.7f, D + W / 2 - 0.5f);
+            yield return (D + W / 2 + 1.4f, D + W / 2 + 4.0f);
+        }
+
         public Vector3 DrawerPosition => drawer.position + new Vector3(0, 0.1f, 0.1f);
 
         // Where customers walk (CafeCustomers): in through the door, to a chair, or to wait by the counter.

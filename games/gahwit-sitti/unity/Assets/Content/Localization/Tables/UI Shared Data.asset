@@ -4035,6 +4035,30 @@ MonoBehaviour:
     m_Key: space.opened
     m_Metadata:
       m_Items: []
+  - m_Id: 416373887983616
+    m_Key: decor.old_hebron_plates
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416373892177920
+    m_Key: decor.old_family_frames
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416373892177921
+    m_Key: decor.modern_wall_clock
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416373892177922
+    m_Key: decor.modern_arch_mirror
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416373892177923
+    m_Key: decor.gulf_sadu_weaving
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416373892177924
+    m_Key: decor.gulf_finjan_shelf
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

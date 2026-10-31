@@ -40,6 +40,7 @@ namespace Gahwit.UI
         public StorageView Storage { get; private set; }
 #if GAHWIT_TOUR
         public Game TourGame => game; // the screen tour plays a few kitchen moves (Boot/ScreenTour.cs)
+        public DecorRules TourDecor { get; private set; } // and hangs the wall pieces
 #endif
         public Action OutOfEnergy;  // set by Boot: opens the out-of-energy card
         public Action BubbleTapped; // set by Boot: opens the bubble offer
@@ -231,6 +232,9 @@ namespace Gahwit.UI
         // Decor comes once its rules exist (Boot.CafeScene): the shop sheet and the café's decor mode.
         public void SetDecor(DecorRules rules)
         {
+#if GAHWIT_TOUR
+            TourDecor = rules;
+#endif
             decorShop = UiKit.Rect(transform.Find("SafeArea"), "DecorShop").Stretch().gameObject.AddComponent<DecorShopView>();
             decorShop.Init(rules, game, Toast);
             KeepOnTop();

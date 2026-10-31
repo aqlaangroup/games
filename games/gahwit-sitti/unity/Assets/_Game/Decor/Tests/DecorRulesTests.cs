@@ -36,7 +36,8 @@ namespace Gahwit.Decor.Tests
         [Test]
         public void TheCatalogHasItsShopPiecesAndARewardForEachMemoryAndRegular()
         {
-            Assert.AreEqual(14, catalog.Pieces.Count(p => p.Source == "coins"), "ring 1's shop");
+            Assert.AreEqual(20, catalog.Pieces.Count(p => p.Source == "coins"), "ring 1's shop and its wall pieces");
+            Assert.AreEqual(6, catalog.Pieces.Count(p => p.Wall), "two wall pieces in each style");
             var content = ChapterContent.Load();
             CollectionAssert.AreEquivalent(content.Memories.Keys, catalog.Pieces.Where(p => p.Source == "memory").Select(p => p.Memory),
                 "one 3-star piece per memory (SYSTEMS_B.md section 5)");
@@ -97,6 +98,74 @@ namespace Gahwit.Decor.Tests
             Assert.AreEqual(0, game.State.Cosiness);
             CollectionAssert.Contains(rules.Stored.Select(p => p.Id).ToList(), "modern_shelf");
             Assert.IsTrue(rules.Place("modern_shelf"));
+        }
+
+        // A café's two walls, 10 × 8 m, in half-metre cells, with the door kept clear on the side wall.
+        static WallLayout Walls() => new WallLayout(10, 8, 0.5f, new[] { (1.0f, 2.6f) });
+
+        [Test]
+        public void WallPiecesHangOnOneWallKeepClearAndNeverOverlap()
+        {
+            var walls = Walls();
+            var plates = catalog.Get("old_hebron_plates");
+            var clock = catalog.Get("modern_wall_clock");
+            var placed = new System.Collections.Generic.List<PlacedDecor>();
+
+            Assert.AreEqual(16, walls.SideCells);
+            Assert.IsTrue(walls.FindSpot(plates, placed, catalog, out int x));
+            Assert.AreEqual(walls.SideCells, x, "the back wall first");
+            Assert.IsFalse(walls.Fits(plates, walls.SideCells - 1, placed, catalog), "never round the corner");
+            Assert.IsFalse(walls.Fits(clock, 3, placed, catalog), "the door");
+            Assert.IsTrue(walls.Fits(clock, 6, placed, catalog));
+
+            placed.Add(new PlacedDecor { Id = plates.Id, X = x });
+            Assert.IsFalse(walls.Fits(clock, x + 2, placed, catalog), "over the plates");
+            Assert.IsTrue(walls.Fits(clock, x + plates.W, placed, catalog), "beside them");
+            placed.Add(new PlacedDecor { Id = "old_rug", X = 0, Z = 0 });
+            Assert.IsTrue(walls.Fits(clock, 0, placed, catalog), "floor pieces don't count on the walls");
+            Assert.IsTrue(Layout().Fits(catalog.Get("basil_pot"), x, 0, 0, placed.GetRange(0, 1), catalog), "nor wall pieces on the floor");
+        }
+
+        [Test]
+        public void AWallPieceSlidesAlongTheNearerWallAndFacesTheRoom()
+        {
+            var walls = Walls();
+            var clock = catalog.Get("modern_wall_clock");
+
+            // A finger behind the back wall, in the middle: the back wall's middle.
+            int back = walls.Snap(0f, -6f, clock);
+            Assert.GreaterOrEqual(back, walls.SideCells);
+            var (bx, bz, facing) = walls.Hang(clock, back);
+            Assert.AreEqual(0f, bx, 0.3f);
+            Assert.AreEqual(-4f, bz, 0.05f);
+            Assert.AreEqual(0, facing);
+
+            // A finger beyond the side wall, near the front: low on the side wall, facing across the room.
+            int side = walls.Snap(-7f, 3f, clock);
+            Assert.Less(side, walls.SideCells);
+            var (sx, sz, sideFacing) = walls.Hang(clock, side);
+            Assert.AreEqual(-5f, sx, 0.05f);
+            Assert.AreEqual(3f, sz, 0.3f);
+            Assert.AreEqual(90, sideFacing);
+        }
+
+        [Test]
+        public void BoughtWallPiecesHangAndDoNotTurn()
+        {
+            var game = NewGame();
+            var rules = new DecorRules(game, catalog, Layout(), Walls());
+            Assert.IsTrue(rules.Buy("old_hebron_plates"));
+            var plates = game.State.PlacedDecor.Single(p => p.Id == "old_hebron_plates");
+            Assert.IsTrue(rules.IsWall(plates.Id));
+            Assert.AreEqual(0, rules.Facing(plates));
+            Assert.IsFalse(rules.Rotate(plates.Id));
+            Assert.IsTrue(rules.MoveTo(plates.Id, -7f, -1f), "slides onto the side wall, behind the door");
+            Assert.AreEqual(90, rules.Facing(plates));
+            Assert.AreEqual(catalog.Get("old_hebron_plates").Cosiness, game.State.Cosiness);
+
+            var noWalls = new DecorRules(NewGame(), catalog, Layout());
+            Assert.IsTrue(noWalls.Buy("modern_wall_clock"));
+            CollectionAssert.Contains(noWalls.Stored.Select(p => p.Id).ToList(), "modern_wall_clock", "no walls: kept in storage");
         }
 
         [Test]

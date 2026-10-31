@@ -196,7 +196,8 @@ namespace Gahwit.Boot
         {
             var keepClear = CafeRoom.KeepClear().Select(a => new DecorLayout.Area(a.minX, a.minZ, a.maxX, a.maxZ));
             var layout = new DecorLayout(CafeRoom.Width, CafeRoom.Depth, game.Config.LevelB.Cafe.GridCellMeters, keepClear);
-            decor = new DecorRules(game, DecorCatalog.Load(), layout);
+            var walls = new WallLayout(CafeRoom.Width, CafeRoom.Depth, game.Config.LevelB.Cafe.WallCellMeters, CafeRoom.WallKeepClear());
+            decor = new DecorRules(game, DecorCatalog.Load(), layout, walls);
             decor.Changed += ShowDecor;
             ui.SetDecor(decor);
             ShowDecor();
@@ -260,7 +261,7 @@ namespace Gahwit.Boot
             {
                 if (decor.Catalog.Get(piece.Id) == null) continue;
                 var (x, z) = decor.Centre(piece);
-                placements.Add(new CafeDecor.Placement { Id = piece.Id, X = x, Z = z, Degrees = piece.Rot * 90 });
+                placements.Add(new CafeDecor.Placement { Id = piece.Id, X = x, Z = z, Degrees = decor.Facing(piece) });
             }
             cafe.Decor.Show(placements, decor.Catalog, game.Config.LevelB.Cafe.GridCellMeters);
             cafe.Apply(done, styles, game.Content.Styles); // a style may have changed

@@ -48,7 +48,7 @@ namespace Gahwit.Decor
                 if (blocked[i, j]) return false;
             foreach (var other in placed)
             {
-                if (other == ignore) continue;
+                if (other == ignore || catalog.Get(other.Id).Wall) continue; // wall pieces hang above the floor
                 var (ow, od) = Footprint(catalog.Get(other.Id), other.Rot);
                 if (x < other.X + ow && other.X < x + w && z < other.Z + od && other.Z < z + d) return false;
             }

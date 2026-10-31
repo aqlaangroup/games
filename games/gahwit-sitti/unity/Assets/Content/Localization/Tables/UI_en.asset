@@ -4137,6 +4137,30 @@ MonoBehaviour:
     m_Localized: "A new space in the caf\xE9: {0}"
     m_Metadata:
       m_Items: []
+  - m_Id: 416373887983616
+    m_Localized: Hebron plates
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416373892177920
+    m_Localized: Family photos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416373892177921
+    m_Localized: Wall clock
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416373892177922
+    m_Localized: Arched mirror
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416373892177923
+    m_Localized: Sadu weaving
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416373892177924
+    m_Localized: Finjan shelf
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

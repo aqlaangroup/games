@@ -12,15 +12,17 @@ namespace Gahwit.Decor
     {
         readonly Game game;
         readonly DecorLayout layout;
+        readonly WallLayout walls; // null: wall pieces stay in storage
 
         public DecorCatalog Catalog { get; }
         public event Action Changed;
 
-        public DecorRules(Game game, DecorCatalog catalog, DecorLayout layout)
+        public DecorRules(Game game, DecorCatalog catalog, DecorLayout layout, WallLayout walls = null)
         {
             this.game = game;
             Catalog = catalog;
             this.layout = layout;
+            this.walls = walls;
             game.Changed += GrantEarnedPieces;
             GrantEarnedPieces();
             Recount();
@@ -33,6 +35,7 @@ namespace Gahwit.Decor
         public int Price(DecorDef def) => def.PriceTier >= 0 ? Cafe.DecorPriceCoinsByTier[def.PriceTier] : 0;
         public bool Owns(string id) => State.OwnedDecor.Contains(id);
         public bool IsPlaced(string id) => State.PlacedDecor.Any(p => p.Id == id);
+        public bool IsWall(string id) => Catalog.Get(id)?.Wall == true;
 
         public IEnumerable<DecorDef> InShop => Catalog.Pieces.Where(p => p.Source == "coins" && p.FromLevel <= State.Level && !Owns(p.Id));
         public IEnumerable<DecorDef> Stored => Catalog.Pieces.Where(p => Owns(p.Id) && !IsPlaced(p.Id));
@@ -52,7 +55,11 @@ namespace Gahwit.Decor
         {
             var def = Catalog.Get(id);
             if (def == null || !Owns(id) || IsPlaced(id)) return false;
-            if (!layout.FindSpot(def, 0, State.PlacedDecor, Catalog, out int x, out int z)) return false;
+            int x = -1, z = 0;
+            bool found = def.Wall
+                ? walls != null && walls.FindSpot(def, State.PlacedDecor, Catalog, out x)
+                : layout.FindSpot(def, 0, State.PlacedDecor, Catalog, out x, out z);
+            if (!found) return false;
             State.PlacedDecor.Add(new PlacedDecor { Id = id, X = x, Z = z });
             Done();
             return true;
@@ -61,33 +68,48 @@ namespace Gahwit.Decor
         public bool Move(string id, int x, int z)
         {
             var piece = State.PlacedDecor.Find(p => p.Id == id);
-            if (piece == null || (piece.X == x && piece.Z == z)) return false;
-            if (!layout.Fits(Catalog.Get(id), x, z, piece.Rot, State.PlacedDecor, Catalog, piece)) return false;
+            if (piece == null) return false;
+            var def = Catalog.Get(id);
+            if (def.Wall) z = 0;
+            if (piece.X == x && piece.Z == z) return false;
+            bool fits = def.Wall ? walls.Fits(def, x, State.PlacedDecor, Catalog, piece) : layout.Fits(def, x, z, piece.Rot, State.PlacedDecor, Catalog, piece);
+            if (!fits) return false;
             piece.X = x;
             piece.Z = z;
             Done();
             return true;
         }
 
-        // Drags a piece to the floor point under a finger, snapped to the grid.
+        // Drags a piece to the floor point under a finger, snapped to the grid; a wall piece slides along the nearer wall.
         public bool MoveTo(string id, float worldX, float worldZ)
         {
             var piece = State.PlacedDecor.Find(p => p.Id == id);
             if (piece == null) return false;
-            var (x, z) = layout.Snap(worldX, worldZ, Catalog.Get(id), piece.Rot);
+            var def = Catalog.Get(id);
+            if (def.Wall) return Move(id, walls.Snap(worldX, worldZ, def), 0);
+            var (x, z) = layout.Snap(worldX, worldZ, def, piece.Rot);
             return Move(id, x, z);
         }
 
         // The cosiness the next walk-in table needs, or -1 at the most tables.
         public int NextTableAt => Cafe.CosinessForExtraTable.Where(t => t > State.Cosiness).DefaultIfEmpty(-1).First();
 
-        public (float x, float z) Centre(PlacedDecor piece) => layout.Centre(Catalog.Get(piece.Id), piece.X, piece.Z, piece.Rot);
+        public (float x, float z) Centre(PlacedDecor piece)
+        {
+            var def = Catalog.Get(piece.Id);
+            if (!def.Wall) return layout.Centre(def, piece.X, piece.Z, piece.Rot);
+            var (x, z, _) = walls.Hang(def, piece.X);
+            return (x, z);
+        }
 
-        // A quarter turn where it stands, if it fits that way.
+        // Which way a piece faces, in degrees about up: its quarter turns, or out from its wall.
+        public int Facing(PlacedDecor piece) => IsWall(piece.Id) ? walls.Hang(Catalog.Get(piece.Id), piece.X).facing : piece.Rot * 90;
+
+        // A quarter turn where it stands, if it fits that way. Wall pieces always face the room.
         public bool Rotate(string id)
         {
             var piece = State.PlacedDecor.Find(p => p.Id == id);
-            if (piece == null) return false;
+            if (piece == null || IsWall(id)) return false;
             int rot = (piece.Rot + 1) % 4;
             if (!layout.Fits(Catalog.Get(id), piece.X, piece.Z, rot, State.PlacedDecor, Catalog, piece)) return false;
             piece.Rot = rot;

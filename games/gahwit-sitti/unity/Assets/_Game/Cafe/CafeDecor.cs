@@ -87,7 +87,24 @@ namespace Gahwit.Cafe
             }
             collider.size = new Vector3(def.W * cellMeters, height, def.D * cellMeters);
             collider.center = new Vector3(0, height / 2f, 0);
+            if (def.Wall) FitToParts(collider, def);
             return root;
+        }
+
+        // A wall piece hangs high and thin: its collider wraps its parts, a little thicker so a finger finds it.
+        static void FitToParts(BoxCollider collider, DecorDef def)
+        {
+            var min = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
+            var max = -min;
+            foreach (var part in def.Parts)
+            {
+                var at = new Vector3(part.At[0], part.At[1], part.At[2]);
+                var half = new Vector3(part.Size[0], part.Size[1], part.Size[2]) / 2f;
+                min = Vector3.Min(min, at - half);
+                max = Vector3.Max(max, at + half);
+            }
+            collider.center = (min + max) / 2f + new Vector3(0, 0, 0.1f);
+            collider.size = max - min + new Vector3(0.1f, 0.1f, 0.2f);
         }
 
         Material MaterialFor(string hex)

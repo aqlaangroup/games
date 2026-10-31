@@ -294,7 +294,8 @@ namespace Gahwit.UI
             // Cosiness ticks up to its new total when a piece goes down (COMPLETE_SPEC.md section 8).
             if (cosinessShown < 0 || cosinessShown > game.State.Cosiness || ReducedMotion()) cosinessShown = game.State.Cosiness;
             WriteCosiness();
-            turn.interactable = store.interactable = selected != null;
+            store.interactable = selected != null;
+            turn.interactable = selected != null && !decor.IsWall(selected); // wall pieces always face the room
         }
 
         void WriteCosiness()

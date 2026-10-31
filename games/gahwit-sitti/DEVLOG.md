@@ -2,6 +2,21 @@
 
 Decisions and known gaps. Newest first. Read this at the start of each session (`/CLAUDE.md`).
 
+## 2026-11-01: wall decor (missing/07)
+
+- **Six wall pieces in the shop**, two per style, so style sets still work:
+  - old: Hebron plates and family photos;
+  - modern: a wall clock and an arched mirror;
+  - gulf: a Sadu weaving and a finjan shelf.
+  - They open from level 3, so the shop still opens with its five pieces at level 2.
+- **How they hang:**
+  - The two walls are one run of half-metre cells (`wallCellMeters`, proposed): up the side wall from the front, then along the back wall.
+  - A piece takes its width in cells on one wall, never round the corner, and keeps clear of the door, the back room's door, the window, and the sign with its shelf (`CafeRoom.WallKeepClear`).
+  - Dragging slides it along the wall nearer the finger. Wall pieces always face the room, so the turn button is off for them.
+  - Floor and wall pieces never block each other.
+- **Save:** unchanged in shape. A wall piece keeps `x` as its first cell along the walls, with `z` and `rot` 0 (`design/save_schema.json`). No saved wall pieces existed, so nothing to migrate.
+- **Disk:** the Mac's disk filled up while building. With the owner's OK, the two Xcode build caches (`Builds/iOS-derived`, `Builds/iOS-Simulator-derived`, about 10 GB) were deleted; they rebuild on demand.
+
 ## 2026-10-31: the café's other spaces (missing/07)
 
 The spec's season has four spaces (SYSTEMS_B.md section 1); only the floor existed. All are built from simple shapes like the floor, until the 3D art arrives:

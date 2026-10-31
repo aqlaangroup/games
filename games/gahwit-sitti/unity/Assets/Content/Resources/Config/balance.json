@@ -1093,6 +1093,7 @@
     "notes": "Level B systems. See SYSTEMS_B.md. Starting values to tune in testing.",
     "cafe": {
       "gridCellMeters": 0.25,
+      "wallCellMeters": 0.5,
       "rotationStepDegrees": 90,
       "decorPiecesSeason1": 60,
       "styles": [
@@ -1132,7 +1133,7 @@
         900,
         2000
       ],
-      "proposed": "Proposed on 2026-10-31 where the specs gave no number (missing/02). Tune in playtests. Applies to afternoon's start hour, tip bonus, decor price tiers and styleSetBonus."
+      "proposed": "Proposed on 2026-10-31 where the specs gave no number (missing/02). Tune in playtests. Applies to afternoon's start hour, tip bonus, decor price tiers, styleSetBonus and wallCellMeters (wall pieces slide along the walls in half-metre steps)."
     },
     "walkIns": {
       "tipCoins": [

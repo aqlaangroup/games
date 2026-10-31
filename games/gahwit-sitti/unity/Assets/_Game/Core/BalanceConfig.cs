@@ -361,6 +361,7 @@ namespace Gahwit.Core
     {
         public Dictionary<string, int> TimeOfDayStartHours; // morning, afternoon, evening, night
         public float GridCellMeters;
+        public float WallCellMeters; // wall pieces slide along the walls in these steps
         public List<string> Styles;
         public int StyleSetBonusAt;
         public int StyleSetBonus;

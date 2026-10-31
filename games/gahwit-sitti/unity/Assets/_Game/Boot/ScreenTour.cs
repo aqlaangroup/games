@@ -47,6 +47,18 @@ namespace Gahwit.Boot
 
             yield return Shot("01_cafe");
 
+            // The wall pieces (missing/07), bought and hung where they go, then taken down again.
+            var hung = new List<string> { "old_hebron_plates", "old_family_frames", "modern_wall_clock", "modern_arch_mirror", "gulf_sadu_weaving", "gulf_finjan_shelf" };
+            var decorRules = ui.TourDecor;
+            if (decorRules != null)
+            {
+                ui.TourGame.State.Coins += 10_000;
+                foreach (var id in hung) decorRules.Buy(id);
+                yield return Wait(1.5f);
+                yield return Shot("01a_wall_decor");
+                foreach (var id in hung) decorRules.Store(id);
+            }
+
             // The café's other spaces (missing/07), then back to the floor.
             var room = FindFirstObjectByType<Gahwit.Cafe.CafeRoom>();
             foreach (var (space, shot) in new[] { ("kitchen", "01b_kitchen_corner"), ("rooftop", "01c_rooftop"), ("backroom", "01d_back_room") })
