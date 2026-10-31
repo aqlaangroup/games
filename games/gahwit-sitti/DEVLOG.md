@@ -2,6 +2,17 @@
 
 Decisions and known gaps. Newest first. Read this at the start of each session (`/CLAUDE.md`).
 
+## 2026-11-01: every item has its picture (missing/13)
+
+- **What's done:** the board, the orders, the notebook and the pan now show drawn items. The 13 icon sheets come from Google Flow on Nano Banana 2.1; Flow's usage limit applies to Nano Banana Pro only. That covers all 44 items in the five chains, and the five generators: Teta's tin, the semolina sack, the tea box, Lana's spice jar and the milk fridge. `tools/art/cut_icons.py` cut them with Vision masks, so they come out whole with no halo.
+- **How they look:**
+  - A drawn item's tile is soft cream tinted toward its chain's colour, edged in that colour. The chain still reads, and the picture carries the look.
+  - The level stays in a badge in the corner, so the chain isn't told by colour alone.
+- **Weak spots to redo some day:**
+  - The dough and the ma'amoul ball are both plain balls, told apart by colour (pale and golden), plus the level badge.
+  - The cheese plate is a wooden board.
+- **Still waiting:** the portraits keep Nano Banana Pro for a matching look, so Teta and 15 more wait for its limit, as does the app icon.
+
 ## 2026-11-01: hosting's last rewards (missing/20)
 
 - **The host's decor piece** (SYSTEMS_B.md section 7):

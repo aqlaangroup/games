@@ -1,6 +1,6 @@
 {
   "project": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195",
-  "status": "Stopped early: Flow returned 'You've reached your usage limit. Please try again later. You have not been charged for this generation.' 7 of 23 expression sheets done; no icon sheets or app icon yet. Retried at 2026-10-31 22:38 +03 (Nawal regeneration with the owner's quality line): same message, so nawal.png and teta_young.png were not regenerated. Retried again at 2026-11-01 00:05 +03 (same Nawal prompt): same usage-limit message.",
+  "status": "7 of 23 expression sheets done (Nano Banana Pro, 2026-10-31). All 13 icon sheets done on Nano Banana 2.1 (2026-11-01, finished 2026-11-01 01:16 +03). Nano Banana Pro has shown 'You've reached your usage limit. Please try again later. You have not been charged for this generation.' since about 22:10 on 2026-10-31 (retried 22:38 and 00:05: same message). Portraits stay on Pro to keep their look. App icon not made yet.",
   "credits": "Flow showed 'Generating will use 0 credits' for every generation. Download sizes offered: 1K original, 2K upscaled, 4K greyed out ('Learn more').",
   "pending": [
     "portraits/teta.png (use teta_young as reference)",
@@ -19,19 +19,6 @@
     "portraits/seller_1974.png",
     "portraits/samira_mother_1974.png",
     "portraits/karim_master_1974.png",
-    "icons/sheet_01.png",
-    "icons/sheet_02.png",
-    "icons/sheet_03.png",
-    "icons/sheet_04.png",
-    "icons/sheet_05.png",
-    "icons/sheet_06.png",
-    "icons/sheet_07.png",
-    "icons/sheet_08.png",
-    "icons/sheet_09.png",
-    "icons/sheet_10.png",
-    "icons/sheet_11.png",
-    "icons/sheet_12.png",
-    "icons/sheet_13.png",
     "app_icon.png"
   ],
   "files": [
@@ -97,6 +84,128 @@
       "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/97df784b-0b9b-4162-9b58-4e333cd0a077",
       "size": "1376x768",
       "note": "Option A of 2 (option B changed hijab colour in every frame). Abayas nearly touch; abaya trim colour varies between frames (sage/gold); looks younger than 49. Flow 1K original (JPEG 1376x768) converted to PNG with sips. Not 2K: Flow's 2K 'Upscaled' download adds a partial or faded duplicate row of faces above the real row (checked on rana: the 1K original is clean, the 2K file has the extra row)."
+    },
+    {
+      "path": "icons/sheet_01.png",
+      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. Warm, heartfelt and inviting, with genuine emotion in the eyes; premium animated-film quality; lovingly detailed fabric, hair and skin; soft cinematic light; balanced composition; nothing cheap, flat or generic. Each icon is a small treasure: rich, appetising, glossy where it should be, with warm highlights; instantly readable at small size. A game icon sheet: four separate icons in a 2×2 grid, evenly spaced, each centred in its own quarter with a gentle soft shadow beneath, soft 3D, matte. Plain flat background #FBF5F3. Nothing between them. Top-left: one green raw coffee bean. Top-right: one glossy roasted coffee bean. Bottom-left: a small handful of roasted coffee beans. Bottom-right: a small blush ceramic bowl of ground coffee. The items are objects only, with no faces or eyes.",
+      "model": "Nano Banana 2.1 (Google Flow), 1:1, 2 images per prompt (Nano Banana Pro was at its usage limit)",
+      "date": "2026-11-01",
+      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/cc4f8182-6c6d-45ac-9c42-da278f89cbc2",
+      "size": "1024x1024",
+      "note": "Option B of 2. Clean 2x2 on cream; glossy roasted bean with warm highlights; the handful is busier than the other option but still reads at small size. Flow 1K original (JPEG) converted to PNG with sips."
+    },
+    {
+      "path": "icons/sheet_02.png",
+      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. Warm, heartfelt and inviting, with genuine emotion in the eyes; premium animated-film quality; lovingly detailed fabric, hair and skin; soft cinematic light; balanced composition; nothing cheap, flat or generic. Each icon is a small treasure: rich, appetising, glossy where it should be, with warm highlights; instantly readable at small size. A game icon sheet: four separate icons in a 2×2 grid, evenly spaced, each centred in its own quarter with a gentle soft shadow beneath, soft 3D, matte. Plain flat background #FBF5F3. Nothing between them. Top-left: a bowl of ground coffee with green cardamom pods. Top-right: a small handleless Arabic coffee cup (finjan) with a rose band and steam. Bottom-left: a small polished brass dallah. Bottom-right: a larger copper dallah. The items are objects only, with no faces or eyes.",
+      "model": "Nano Banana 2.1 (Google Flow), 1:1, 2 images per prompt (Nano Banana Pro was at its usage limit)",
+      "date": "2026-11-01",
+      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/a5f538d1-00d8-4f27-9e14-3618b4ebedc2",
+      "size": "1024x1024",
+      "note": "Option A of 2. Clear rose-band finjan with a stylised steam swirl; small brass dallah visibly smaller than the copper one. Flow 1K original (JPEG) converted to PNG with sips."
+    },
+    {
+      "path": "icons/sheet_03.png",
+      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. Warm, heartfelt and inviting, with genuine emotion in the eyes; premium animated-film quality; lovingly detailed fabric, hair and skin; soft cinematic light; balanced composition; nothing cheap, flat or generic. Each icon is a small treasure: rich, appetising, glossy where it should be, with warm highlights; instantly readable at small size. A game icon sheet: four separate icons in a 2×2 grid, evenly spaced, each centred in its own quarter with a gentle soft shadow beneath, soft 3D, matte. Plain flat background #FBF5F3. Nothing between them. Top-left: a brass tray with a dallah and finjans. Top-right: a full Arab hospitality coffee set: tray, dallah, finjans, dates. Bottom-left: a vintage blush-pink coffee tin with a gold lid. Bottom-right: a burlap sack of semolina. The items are objects only, with no faces or eyes.",
+      "model": "Nano Banana 2.1 (Google Flow), 1:1, 2 images per prompt (Nano Banana Pro was at its usage limit)",
+      "date": "2026-11-01",
+      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/336ecaec-e4e5-4167-b52e-d453251bd061",
+      "size": "1024x1024",
+      "note": "Option A of 2. Brass trays, a vintage blush tin with gold lid, burlap sack with a scoop and a little spilled semolina. Flow 1K original (JPEG) converted to PNG with sips."
+    },
+    {
+      "path": "icons/sheet_04.png",
+      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. Warm, heartfelt and inviting, with genuine emotion in the eyes; premium animated-film quality; lovingly detailed fabric, hair and skin; soft cinematic light; balanced composition; nothing cheap, flat or generic. Each icon is a small treasure: rich, appetising, glossy where it should be, with warm highlights; instantly readable at small size. A game icon sheet: four separate icons in a 2×2 grid, evenly spaced, each centred in its own quarter with a gentle soft shadow beneath, soft 3D, matte. Plain flat background #FBF5F3. Nothing between them. Top-left: a small mound of semolina. Top-right: a small mound of white flour. Bottom-left: a ball of pale dough. Bottom-right: a single round ma'amoul ball before shaping. The items are objects only, with no faces or eyes.",
+      "model": "Nano Banana 2.1 (Google Flow), 1:1, 2 images per prompt (Nano Banana Pro was at its usage limit)",
+      "date": "2026-11-01",
+      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/23a2c824-179a-469c-8878-27044b75b5ed",
+      "size": "1024x1024",
+      "note": "Option B of 2 (option A had a pink-tinted background). Semolina and flour mounds read well; the pale dough ball and the golden ma'amoul ball are simple shapes, so they rely on colour to tell apart. Flow 1K original (JPEG) converted to PNG with sips."
+    },
+    {
+      "path": "icons/sheet_05.png",
+      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. Warm, heartfelt and inviting, with genuine emotion in the eyes; premium animated-film quality; lovingly detailed fabric, hair and skin; soft cinematic light; balanced composition; nothing cheap, flat or generic. Each icon is a small treasure: rich, appetising, glossy where it should be, with warm highlights; instantly readable at small size. A game icon sheet: four separate icons in a 2×2 grid, evenly spaced, each centred in its own quarter with a gentle soft shadow beneath, soft 3D, matte. Plain flat background #FBF5F3. Nothing between them. Top-left: one patterned ma'amoul cookie. Top-right: a plate of ma'amoul cookies. Bottom-left: a gift box of ma'amoul. Bottom-right: a slice of orange knafeh with pistachio. The items are objects only, with no faces or eyes.",
+      "model": "Nano Banana 2.1 (Google Flow), 1:1, 2 images per prompt (Nano Banana Pro was at its usage limit)",
+      "date": "2026-11-01",
+      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/a471d8c6-a42c-4e35-aa47-ccbff9202f03",
+      "size": "1024x1024",
+      "note": "Better of 2. Moulded ma'amoul with a clear pattern, plate of ma'amoul, lilac gift box, and a knafeh slice showing the cheese layer and pistachio. Background is slightly warmer/pinker than the other icon sheets. Flow 1K original (JPEG) converted to PNG with sips."
+    },
+    {
+      "path": "icons/sheet_06.png",
+      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. Warm, heartfelt and inviting, with genuine emotion in the eyes; premium animated-film quality; lovingly detailed fabric, hair and skin; soft cinematic light; balanced composition; nothing cheap, flat or generic. Each icon is a small treasure: rich, appetising, glossy where it should be, with warm highlights; instantly readable at small size. A game icon sheet: four separate icons in a 2×2 grid, evenly spaced, each centred in its own quarter with a gentle soft shadow beneath, soft 3D, matte. Plain flat background #FBF5F3. Nothing between them. Top-left: a round copper tray of knafeh. Top-right: an Eid tray of mixed sweets. Bottom-left: a wooden tea box. Bottom-right: a small glass spice jar with saffron. The items are objects only, with no faces or eyes.",
+      "model": "Nano Banana 2.1 (Google Flow), 1:1, 2 images per prompt (Nano Banana Pro was at its usage limit)",
+      "date": "2026-11-01",
+      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/99fa7b12-a3d7-45e7-8fa9-e426177b400b",
+      "size": "1024x1024",
+      "note": "Better of 2. Copper knafeh tray, rich Eid sweets tray, painted wooden box (reads more as a keepsake box than a tea box), saffron jar with a blank decorative tag. Flow 1K original (JPEG) converted to PNG with sips."
+    },
+    {
+      "path": "icons/sheet_07.png",
+      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. Warm, heartfelt and inviting, with genuine emotion in the eyes; premium animated-film quality; lovingly detailed fabric, hair and skin; soft cinematic light; balanced composition; nothing cheap, flat or generic. Each icon is a small treasure: rich, appetising, glossy where it should be, with warm highlights; instantly readable at small size. A game icon sheet: four separate icons in a 2×2 grid, evenly spaced, each centred in its own quarter with a gentle soft shadow beneath, soft 3D, matte. Plain flat background #FBF5F3. Nothing between them. Top-left: one mint leaf. Top-right: a bunch of fresh mint. Bottom-left: a small heap of loose black tea. Bottom-right: a glass of tea in a tulip glass. The items are objects only, with no faces or eyes.",
+      "model": "Nano Banana 2.1 (Google Flow), 1:1, 2 images per prompt (Nano Banana Pro was at its usage limit)",
+      "date": "2026-11-01",
+      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/6ef6c6ca-c139-4ccf-8785-8e7cbf45ead7",
+      "size": "1024x1024",
+      "note": "Better of 2 (the other had floating shadows). Single mint leaf, tied mint bunch, heap of loose black tea, tulip glass of tea on a gold-rim saucer. Flow 1K original (JPEG) converted to PNG with sips."
+    },
+    {
+      "path": "icons/sheet_08.png",
+      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. Warm, heartfelt and inviting, with genuine emotion in the eyes; premium animated-film quality; lovingly detailed fabric, hair and skin; soft cinematic light; balanced composition; nothing cheap, flat or generic. Each icon is a small treasure: rich, appetising, glossy where it should be, with warm highlights; instantly readable at small size. A game icon sheet: four separate icons in a 2×2 grid, evenly spaced, each centred in its own quarter with a gentle soft shadow beneath, soft 3D, matte. Plain flat background #FBF5F3. Nothing between them. Top-left: a small teapot. Top-right: a teapot with mint sprigs. Bottom-left: a tea tray with glasses. Bottom-right: a tea gathering: teapot, glasses and a small plate of sweets. The items are objects only, with no faces or eyes.",
+      "model": "Nano Banana 2.1 (Google Flow), 1:1, 2 images per prompt (Nano Banana Pro was at its usage limit)",
+      "date": "2026-11-01",
+      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/81696d3f-cf5d-49cc-b5dc-dbb4ca2c1067",
+      "size": "1024x1024",
+      "note": "Better of 2. Pink teapot, sage teapot with mint, tray with three tea glasses, gathering with a lilac teapot, glasses and sweets. Flow 1K original (JPEG) converted to PNG with sips."
+    },
+    {
+      "path": "icons/sheet_09.png",
+      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. Warm, heartfelt and inviting, with genuine emotion in the eyes; premium animated-film quality; lovingly detailed fabric, hair and skin; soft cinematic light; balanced composition; nothing cheap, flat or generic. Each icon is a small treasure: rich, appetising, glossy where it should be, with warm highlights; instantly readable at small size. A game icon sheet: four separate icons in a 2×2 grid, evenly spaced, each centred in its own quarter with a gentle soft shadow beneath, soft 3D, matte. Plain flat background #FBF5F3. Nothing between them. Top-left: a few red saffron threads. Top-right: green cardamom pods. Bottom-left: a small cup of light golden Saudi coffee. Bottom-right: a Saudi finjan cup. The items are objects only, with no faces or eyes.",
+      "model": "Nano Banana 2.1 (Google Flow), 1:1, 2 images per prompt (Nano Banana Pro was at its usage limit)",
+      "date": "2026-11-01",
+      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/7ff8f268-9ef5-479c-b5e7-70a8b4288230",
+      "size": "1024x1024",
+      "note": "Better of 2. Loose saffron threads, cardamom pods (one open), plain cream cup of golden Saudi coffee with faint steam, patterned empty finjan. Flow 1K original (JPEG) converted to PNG with sips."
+    },
+    {
+      "path": "icons/sheet_10.png",
+      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. Warm, heartfelt and inviting, with genuine emotion in the eyes; premium animated-film quality; lovingly detailed fabric, hair and skin; soft cinematic light; balanced composition; nothing cheap, flat or generic. Each icon is a small treasure: rich, appetising, glossy where it should be, with warm highlights; instantly readable at small size. A game icon sheet: four separate icons in a 2×2 grid, evenly spaced, each centred in its own quarter with a gentle soft shadow beneath, soft 3D, matte. Plain flat background #FBF5F3. Nothing between them. Top-left: a tall golden Saudi dallah. Top-right: a Saudi dallah beside a bowl of dates. Bottom-left: a tray of Saudi coffee and dates. Bottom-right: a small coffee majlis set: cushion, dallah, cups, dates. The items are objects only, with no faces or eyes.",
+      "model": "Nano Banana 2.1 (Google Flow), 1:1, 2 images per prompt (Nano Banana Pro was at its usage limit)",
+      "date": "2026-11-01",
+      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/b222f49e-cd95-4071-802e-060bdca81569",
+      "size": "1024x1024",
+      "note": "Better of 2 (the other had a peach-tinted background). Tall golden Saudi dallah, dallah with dates, coffee tray with dates, small majlis set with cushion. Flow 1K original (JPEG) converted to PNG with sips."
+    },
+    {
+      "path": "icons/sheet_11.png",
+      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. Warm, heartfelt and inviting, with genuine emotion in the eyes; premium animated-film quality; lovingly detailed fabric, hair and skin; soft cinematic light; balanced composition; nothing cheap, flat or generic. Each icon is a small treasure: rich, appetising, glossy where it should be, with warm highlights; instantly readable at small size. A game icon sheet: four separate icons in a 2×2 grid, evenly spaced, each centred in its own quarter with a gentle soft shadow beneath, soft 3D, matte. Plain flat background #FBF5F3. Nothing between them. Top-left: a glass bottle of milk. Top-right: a bowl of labneh with olive oil. Bottom-left: a block of white cheese. Bottom-right: a few slices of Nabulsi cheese. The items are objects only, with no faces or eyes.",
+      "model": "Nano Banana 2.1 (Google Flow), 1:1, 2 images per prompt (Nano Banana Pro was at its usage limit)",
+      "date": "2026-11-01",
+      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/a9c02f89-0165-4c46-98df-e1394afdbaea",
+      "size": "1024x1024",
+      "note": "Better of 2. Corked glass milk bottle, labneh with olive oil, white cheese block on a board with olives, Nabulsi slices with nigella seeds on a lilac plate. Flow 1K original (JPEG) converted to PNG with sips."
+    },
+    {
+      "path": "icons/sheet_12.png",
+      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. Warm, heartfelt and inviting, with genuine emotion in the eyes; premium animated-film quality; lovingly detailed fabric, hair and skin; soft cinematic light; balanced composition; nothing cheap, flat or generic. Each icon is a small treasure: rich, appetising, glossy where it should be, with warm highlights; instantly readable at small size. A game icon sheet: four separate icons in a 2×2 grid, evenly spaced, each centred in its own quarter with a gentle soft shadow beneath, soft 3D, matte. Plain flat background #FBF5F3. Nothing between them. Top-left: a cheese plate with olives. Top-right: an Arab breakfast plate: hummus, labneh, olives, bread. Bottom-left: a breakfast tray with tea. Bottom-right: a full Friday breakfast table seen from above. The items are objects only, with no faces or eyes.",
+      "model": "Nano Banana 2.1 (Google Flow), 1:1, 2 images per prompt (Nano Banana Pro was at its usage limit)",
+      "date": "2026-11-01",
+      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/3f20bbba-a334-4c75-8d37-eeec84da324e",
+      "size": "1024x1024",
+      "note": "Better of 2 for small-size readability. The 'cheese plate' came out as a wooden cheese board; the Friday table is a round table with a cloth seen from a high angle, not straight down. The other option had a true top-down table but it read like a tray. Flow 1K original (JPEG) converted to PNG with sips."
+    },
+    {
+      "path": "icons/sheet_13.png",
+      "prompt": "STYLE: stylized 3D animated film look, soft and premium, like a modern feature animation. Matte, slightly clay-like skin and fabric, gentle subsurface glow, big expressive eyes with real emotion, soft rounded shapes. Palette: blush pink, lilac, sage green, warm cream, soft gold accents. Soft even studio light. Elegant, warm and calm. Modest clothing. No text, no letters, no logos, no watermark, no borders. Warm, heartfelt and inviting, with genuine emotion in the eyes; premium animated-film quality; lovingly detailed fabric, hair and skin; soft cinematic light; balanced composition; nothing cheap, flat or generic. Each icon is a small treasure: rich, appetising, glossy where it should be, with warm highlights; instantly readable at small size. A single game icon of a small vintage milk fridge in sage green, centred, gentle shadow beneath, plain flat background #FBF5F3. The fridge is an object only, with no face or eyes.",
+      "model": "Nano Banana 2.1 (Google Flow), 1:1, 2 images per prompt (Nano Banana Pro was at its usage limit)",
+      "date": "2026-11-01",
+      "flow_item": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195/edit/3cd36312-e6fc-4e5a-b62f-ad24e48292f6",
+      "size": "1024x1024",
+      "note": "Better of 2. Single sage vintage milk fridge with brass handle, grille and feet, lit shelves of milk bottles, wire basket on top. Tall shape, so it fills the square vertically more than horizontally. Flow 1K original (JPEG) converted to PNG with sips."
     }
+  ],
+  "models_offered": [
+    "Nano Banana Pro",
+    "Nano Banana 2 Lite",
+    "Nano Banana 2.1"
   ]
 }

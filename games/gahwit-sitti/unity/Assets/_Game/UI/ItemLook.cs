@@ -63,6 +63,7 @@ namespace Gahwit.UI
         readonly RTLTextMeshPro level;
         readonly RTLTextMeshPro name;
         readonly Image icon, badge;
+        readonly Outline edge;
         readonly float levelSize, nameSize;
 
         public ItemTile(Transform parent, string objectName, float levelSize, float nameSize)
@@ -75,6 +76,9 @@ namespace Gahwit.UI
             group = Root.gameObject.AddComponent<CanvasGroup>();
             group.blocksRaycasts = false;
             group.interactable = false;
+            edge = body.gameObject.AddComponent<Outline>();
+            edge.effectDistance = new Vector2(3, -3);
+            edge.enabled = false;
 
             icon = UiKit.Icon(Root, "Icon", null, Color.white, 0);
             icon.rectTransform.Stretch(6, 6, 6, 6);
@@ -109,8 +113,13 @@ namespace Gahwit.UI
             icon.sprite = picture;
             icon.gameObject.SetActive(picture != null);
             badge.gameObject.SetActive(picture != null);
+            edge.enabled = picture != null;
             if (picture != null)
             {
+                // A drawn item sits on soft cream with a hint of its chain's colour, edged in the full colour: the chain
+                // still reads, and the picture carries the look.
+                body.color = Color.Lerp(Palette.Cream, color, item.IsGenerator ? 0.32f : 0.2f);
+                edge.effectColor = new Color(color.r, color.g, color.b, 0.9f);
                 // The picture fills the tile, and the level stays readable in a badge in the corner (not colour alone).
                 var corner = new Vector2(levelSize * 0.9f, levelSize * 0.75f);
                 badge.rectTransform.Pin(new Vector2(0, 1), new Vector2(4, -4), corner);
