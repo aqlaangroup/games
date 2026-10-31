@@ -101,6 +101,8 @@ namespace Gahwit.Pacing.Tests
             ServeReady();
             while (MergeUseful()) ServeReady();
             PayTasks();
+            // The typical player claims the season pass's free track as tiers come (its coins and energy count).
+            for (int tier = 1; tier <= game.PassTier; tier++) game.ClaimPass(Game.FreeTrack, tier);
         }
 
         void ServeReady()

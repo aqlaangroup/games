@@ -93,6 +93,9 @@ namespace Gahwit.Save
             into.Daily["tasksDate"] = state.TasksDate;
             into.Daily["tasks"] = new JArray(state.DailyTasks.Select(t => new JObject { ["id"] = t.Id, ["progress"] = t.Progress, ["claimed"] = t.Claimed }));
             into.Daily["passPoints"] = state.PassPoints;
+            into.Daily["passSeason"] = state.PassSeason;
+            into.Daily["passClaimed"] = new JArray(state.PassClaimed);
+            into.Daily["passPremiumSeason"] = state.PassPremiumSeason;
             into.Daily["pendingRewards"] = new JArray(state.PendingRewards);
             foreach (var old in into.Events.Properties().Where(p => p.Name.StartsWith(MiniBoardKey)).ToList()) old.Remove();
             foreach (var mini in state.MiniBoards)
@@ -161,6 +164,9 @@ namespace Gahwit.Save
                     Id = t.Value<string>("id"), Progress = t.Value<int?>("progress") ?? 0, Claimed = t.Value<bool?>("claimed") ?? false
                 }).Where(t => t.Id != null).ToList() ?? new List<DailyTaskState>(),
                 PassPoints = data.Daily.Value<int?>("passPoints") ?? 0,
+                PassSeason = data.Daily.Value<int?>("passSeason") ?? 0,
+                PassClaimed = data.Daily["passClaimed"]?.Values<string>().ToList() ?? new List<string>(),
+                PassPremiumSeason = data.Daily.Value<int?>("passPremiumSeason") ?? 0,
                 PendingRewards = data.Daily["pendingRewards"]?.Values<string>().ToList() ?? new List<string>(),
                 MiniBoards = data.Events.Properties().Where(p => p.Name.StartsWith(MiniBoardKey) && p.Value is JObject)
                     .ToDictionary(p => p.Name.Substring(MiniBoardKey.Length), p => ReadMiniBoard((JObject)p.Value)),

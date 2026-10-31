@@ -224,6 +224,35 @@ namespace Gahwit.Save.Tests
         }
 
         [Test]
+        public void ThePassSeasonAndItsClaimsAreSavedAndAVersionThirteenSaveGetsThem()
+        {
+            var time = new TimeService(new FakeClock(), null);
+            var state = PlayedState();
+            state.PassPoints = 1200;
+            state.PassSeason = 2;
+            state.PassClaimed.Add("free:1");
+            state.PassClaimed.Add("premium:1");
+            state.PassPremiumSeason = 2;
+            var loaded = SaveService.FromJson(WriteJson(state, time), config, content, out _, out _);
+            Assert.AreEqual(1200, loaded.PassPoints);
+            Assert.AreEqual(2, loaded.PassSeason);
+            CollectionAssert.AreEqual(new[] { "free:1", "premium:1" }, loaded.PassClaimed);
+            Assert.AreEqual(2, loaded.PassPremiumSeason);
+
+            var v13 = JObject.Parse(WriteJson(PlayedState(), time));
+            v13["schemaVersion"] = 13;
+            var daily = (JObject)v13["daily"];
+            daily.Remove("passSeason");
+            daily.Remove("passClaimed");
+            daily.Remove("passPremiumSeason");
+            var old = SaveService.FromJson(v13.ToString(), config, content, out var data, out _);
+            Assert.AreEqual(SaveData.CurrentSchema, data.SchemaVersion);
+            Assert.AreEqual(0, old.PassSeason, "a save from before seasons: its points count toward the season found on the first tick");
+            Assert.AreEqual(0, old.PassClaimed.Count);
+            Assert.AreEqual(0, old.PassPremiumSeason);
+        }
+
+        [Test]
         public void AVersionElevenSaveStartsWithSubtitlesOff()
         {
             var time = new TimeService(new FakeClock(), null);

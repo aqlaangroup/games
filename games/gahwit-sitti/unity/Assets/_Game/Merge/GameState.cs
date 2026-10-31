@@ -48,7 +48,10 @@ namespace Gahwit.Merge
         public string LastGiftDate;   // the local day the last gift was claimed
         public string TasksDate;      // the local day DailyTasks are for
         public List<DailyTaskState> DailyTasks = new List<DailyTaskState>();
-        public int PassPoints;        // from daily tasks, for the season pass (missing/18)
+        public int PassPoints;        // this season's points: energy spent and daily tasks (missing/18)
+        public int PassSeason;        // the season PassPoints and PassClaimed belong to (1 is the first)
+        public List<string> PassClaimed = new List<string>(); // "free:3", "premium:10"
+        public int PassPremiumSeason; // the season the premium pass was bought for; 0 for none
         public List<string> PendingRewards = new List<string>(); // platform reward ids earned in play, not paid yet
         public Dictionary<string, MiniBoardState> MiniBoards = new Dictionary<string, MiniBoardState>(); // by event id
         public ulong Rng;

@@ -9,7 +9,7 @@ namespace Gahwit.Save
     // so a save written by a newer build loses nothing here.
     public sealed class SaveData
     {
-        public const int CurrentSchema = 13;
+        public const int CurrentSchema = 14;
 
         public int SchemaVersion = CurrentSchema;
         public long SaveVersion;

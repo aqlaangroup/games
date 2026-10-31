@@ -2,6 +2,30 @@
 
 Decisions and known gaps. Newest first. Read this at the start of each session (`/CLAUDE.md`).
 
+## 2026-11-01: the season pass (missing/18)
+
+Pass points used to pile up from daily tasks with nothing to spend them on. The pass is now built on both sides:
+- **Rules (`Merge/Game.Pass.cs`):**
+  - Seasons are 28 days from `seasonStart` (proposed: 2026-10-26, a Monday), each with 30 tiers of 400 points.
+  - Points come from energy spent (1 each) and daily tasks (50), from level 6.
+  - A new season starts again from nothing. A save from before seasons keeps its points for the season it first sees.
+  - Coins and energy are paid at once. Gems go to the platform as `pass:<season>:<track>:<tier>`, which pays each once.
+  - The premium track needs this season's premium pass. `gs.pass` is a 28-day product, so a purchase records its season.
+  - Premium items come as entitlements: tier 10 an outfit for Salma (content still to come, missing/13), tier 20 the winter soba, tier 30 the olive basket, almond blossom and Eid swing.
+- **Rewards and pacing:**
+  - The free track pays gems only (1, 2, 2, 3 and 5 for each five tiers, 78 a season).
+  - With the first proposal (100/150 coins, 40/60 energy), chapters 5 to 8 came two days early. Even 20/30 coins alone put chapter 6 a day early. Chapter 6 sits on its limit, since the pass opens at level 6, when chapters still cost little.
+  - The pacing bot now claims the free track as a typical player would. Its gems, like the daily ones, aren't spent in the pacing test.
+  - The premium track is as proposed.
+- **Platform (`LiveRewards`):** a `pass:` claim must be for the season running, with a day's grace either side. The tier must exist. Premium needs a verified purchase of `premiumSku` made in that season. A balance published before the pass existed answers `no_pass_config`.
+- **Screen (`UI/PassView.cs`, from Today):**
+  - The tier, the points into it and the days left, with a progress bar.
+  - 30 rows: the free reward on the start side, the premium one on the other. A reached reward is a claim button; a claimed one says "claimed" in words.
+  - A premium offer from the store.
+- **Remote config:** a config published before item lists (`"10": "outfit"`) still reads, and gives nothing at that tier. The pass is now part of the remote-config check, so a broken pass section falls back to the game's own.
+- **Note:** the simulator's cached remote config still has the old free track (coins and energy). Players get the gems-only one once the new `balance.json` is published on the platform, after the deploy.
+- **Save schema 14** adds `daily.passSeason`, `daily.passClaimed` and `daily.passPremiumSeason`, with a migration and a test.
+
 ## 2026-11-01: the intro, shot in the engine (missing/06 step 2)
 
 The spec allows the 15-second intro to be "from Veo or shot in the engine". Flow's limit is on, so it's built in the engine, and no video player is needed.

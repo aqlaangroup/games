@@ -87,6 +87,24 @@ public class LiveOpsTests(PlatformFactory api)
     }
 
     [Fact]
+    public async Task APassTierPaysOnceInItsSeasonAndPremiumNeedsThisSeasonsPass()
+    {
+        var client = api.Client((await api.Guest()).Str("accessToken"));
+        Task<HttpResponseMessage> Claim(string id) => client.PostAsJsonAsync($"/games/{GameA}/players/me/rewards", new { id });
+
+        Assert.Equal(2, (await (await Claim("pass:1:free:2")).Json()).GetProperty("granted").GetProperty("gems").GetInt64());
+        Assert.True((await (await Claim("pass:1:free:2")).Json()).GetProperty("alreadyClaimed").GetBoolean());
+        Assert.Equal(HttpStatusCode.BadRequest, (await Claim("pass:2:free:1")).StatusCode);   // next season, not yet
+        Assert.Equal(HttpStatusCode.BadRequest, (await Claim("pass:1:free:31")).StatusCode);  // past the last tier
+        Assert.Equal(HttpStatusCode.BadRequest, (await Claim("pass:1:premium:1")).StatusCode); // no premium pass
+
+        var bought = await client.PostAsJsonAsync($"/games/{GameA}/purchases/verify", new { store = "apple", sku = "pass", receipt = $"ok:tx-{Guid.NewGuid():N}" });
+        Assert.Equal(HttpStatusCode.OK, bought.StatusCode);
+        Assert.Equal(10, (await (await Claim("pass:1:premium:1")).Json()).GetProperty("granted").GetProperty("gems").GetInt64());
+        Assert.Equal(0, (await (await Claim("pass:1:premium:2")).Json()).GetProperty("granted").GetProperty("gems").GetInt64());
+    }
+
+    [Fact]
     public async Task AMiniBoardMilestonePaysItsGemsOnce()
     {
         var (_, producer) = await api.Staff(Email("producer"), (GameA, StaffRole.Producer));

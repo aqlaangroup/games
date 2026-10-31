@@ -69,11 +69,14 @@ public class PlatformFactory : WebApplicationFactory<Program>, IAsyncLifetime
               },
               "products": [
                 { "sku": "gems.s", "type": "consumable", "grants": { "gems": 100 } },
-                { "sku": "decor", "type": "non-consumable", "grants": { "decorSet": "eid", "gems": 60 } }
+                { "sku": "decor", "type": "non-consumable", "grants": { "decorSet": "eid", "gems": 60 } },
+                { "sku": "pass", "type": "non-renewing", "grants": { "passPremium": true } }
               ]
             }
             """);
-        File.WriteAllText(Path.Combine(gamesDir, GameA, "balance.json"), """
+        // The pass's first season began three days ago, so season 1 is the one running.
+        string seasonStart = DateTime.UtcNow.AddDays(-3).ToString("yyyy-MM-dd");
+        File.WriteAllText(Path.Combine(gamesDir, GameA, "balance.json"), $$"""
             {
               "formulas": { "levelUpGems": { "base": 5, "levelDivisor": 2 }, "bubbleGems": { "base": 5, "fromLevel": 4 } },
               "board": { "inventorySlotGemCosts": [30, 60] },
@@ -87,7 +90,10 @@ public class PlatformFactory : WebApplicationFactory<Program>, IAsyncLifetime
               },
               "dailyLogin": [ { "day": 1, "energy": 25 }, { "day": 2, "gems": 5 }, { "day": 3, "gems": 20 } ],
               "dailyTasks": { "perDay": 2, "rewardEach": { "gems": 2 }, "list": [ { "id": "serve_10" }, { "id": "merge_30" }, { "id": "sell_5" } ] },
-              "events": { "templates": { "miniBoard": { "milestoneRewards": [ { "coins": 200 }, { "gems": 5 } ] } } },
+              "events": { "templates": {
+                "miniBoard": { "milestoneRewards": [ { "coins": 200 }, { "gems": 5 } ] },
+                "pass": { "durationDays": 28, "tiers": 30, "premiumSku": "pass", "seasonStart": "{{seasonStart}}",
+                  "rewards": { "free": { "cycle": [ { "gems": 1 }, { "gems": 2 } ] }, "premium": { "cycle": [ { "gems": 10 }, { "energy": 100 } ] } } } } },
               "social": { "giftsPerDay": 2, "giftEnergy": 5, "maxFriends": 50 }
             }
             """);

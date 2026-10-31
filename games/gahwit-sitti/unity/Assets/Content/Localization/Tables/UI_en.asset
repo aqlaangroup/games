@@ -1778,7 +1778,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 139309578444807
-    m_Localized: Later
+    m_Localized: Open
     m_Metadata:
       m_Items: []
   - m_Id: 139309578444808
@@ -4231,6 +4231,42 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 421044622974992
     m_Localized: Eid sweets table
+    m_Metadata:
+      m_Items: []
+  - m_Id: 428853544607744
+    m_Localized: Season pass
+    m_Metadata:
+      m_Items: []
+  - m_Id: 428853548802048
+    m_Localized: "Tier {0} of {1} \xB7 {2}/{3} points \xB7 {4} days left"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 428853548802049
+    m_Localized: Free
+    m_Metadata:
+      m_Items: []
+  - m_Id: 428853548802050
+    m_Localized: Premium
+    m_Metadata:
+      m_Items: []
+  - m_Id: 428853548802051
+    m_Localized: "Claim \xB7 {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 428853548802052
+    m_Localized: "Open the premium track \xB7 {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 428853548802053
+    m_Localized: A new outfit for Salma
+    m_Metadata:
+      m_Items: []
+  - m_Id: 428853548802054
+    m_Localized: The season pass opens at level {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 428853548802055
+    m_Localized: "Tier {0} of {1} \xB7 {2} to claim \xB7 {3} days left"
     m_Metadata:
       m_Items: []
   references:

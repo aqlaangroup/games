@@ -871,20 +871,22 @@
         "pointsPerEnergySpent": 1,
         "pointsPerTier": 400,
         "premiumUsd": 7.99,
+        "premiumSku": "gs.pass",
+        "seasonStart": "2026-10-26",
         "rewards": {
           "free": {
             "cycle": [
               {
-                "coins": 100
+                "gems": 1
               },
               {
-                "energy": 40
+                "gems": 2
               },
               {
-                "coins": 150
+                "gems": 2
               },
               {
-                "energy": 60
+                "gems": 3
               },
               {
                 "gems": 5
@@ -910,14 +912,22 @@
               }
             ],
             "itemsAtTiers": {
-              "10": "outfit",
-              "20": "decor",
-              "30": "decor_set"
+              "10": [
+                "outfit:pass_s1"
+              ],
+              "20": [
+                "decor:winter_soba"
+              ],
+              "30": [
+                "decor:olive_harvest_basket",
+                "decor:almond_blossom_vase",
+                "decor:eid_swing"
+              ]
             }
           },
-          "notes": "Each track repeats its 5-tier cycle over the 30 tiers; premium also gives an item at tiers 10, 20 and 30."
+          "notes": "Each track repeats its 5-tier cycle over the 30 tiers; premium also gives an item at tiers 10, 20 and 30: an outfit, a decor piece and a set of three, as entitlements."
         },
-        "proposed": "Proposed on 2026-10-31 where the specs gave no number (missing/02). Tune in playtests. Applies to rewards."
+        "proposed": "Proposed on 2026-10-31 where the specs gave no number (missing/02). Tune in playtests. Applies to rewards. Proposed on 2026-11-01 when the pass was built: seasonStart (a Monday; every season is durationDays from it), premiumSku (the store product, gs.pass, 28 days), and the items at tiers 10, 20 and 30. The free track pays gems only (1, 2, 2, 3 and 5 for each five tiers, 78 a season, through the platform) instead of 100/150 coins and 40/60 energy: the pass opens at level 6, when chapters cost little, and those amounts put chapters 5 to 8 two days early; even 20/30 coins alone put chapter 6 a day early, since it sits on its limit (Pacing tests, where the typical player claims the free track; gems, like the daily ones, aren't spent there)."
       },
       "miniBoard": {
         "ar": "سوق الجمعة",

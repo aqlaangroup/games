@@ -28,6 +28,7 @@ namespace Gahwit.Merge
                         break;
                     case "passPremium":
                         if (!State.Entitlements.Contains(pair.Key)) State.Entitlements.Add(pair.Key);
+                        State.PassPremiumSeason = PassSeason; // the premium track, for this season (the product lasts 28 days)
                         break;
                     default:
                         other?.Invoke(pair.Key, pair.Value);

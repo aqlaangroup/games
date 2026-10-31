@@ -424,8 +424,15 @@ namespace Gahwit.UI
                 MiniBoard.Show(board, info?.Settings.Value<string>(game.English ? "nameEn" : "name") ?? Loc.T("event.miniBoard"));
             });
             cafe.SetToday(() => Today.Show());
+            Pass = UiKit.Rect(safe, "Pass").Stretch().gameObject.AddComponent<PassView>();
+            Pass.Init(game, claimed);
+            if (shopUi != null) Pass.Shop = shopUi;
+            Today.OpenPass = () => Pass.Show();
             KeepOnTop();
         }
+
+        public PassView Pass { get; private set; }
+        IShopUi shopUi;
         Button adOffer;
         float adOfferUntil;
 
@@ -434,6 +441,8 @@ namespace Gahwit.UI
         {
             Shop = UiKit.Rect(transform.Find("SafeArea"), "Shop").Stretch().gameObject.AddComponent<ShopView>();
             Shop.Init(shop, game, Toast);
+            shopUi = shop;
+            if (Pass != null) Pass.Shop = shop;
             hud.GemsTapped = () =>
             {
                 if (game.AdsOpen) Shop.Show();

@@ -7,13 +7,14 @@ using Platform.Domain;
 namespace Platform.Api.Players;
 
 /// <summary>
-/// Gems from daily systems and events (missing/18). These come from play the platform can't see, so it limits them
-/// instead: each id grants once, a day's claims must be near today, and the amounts come from the published
-/// balance.json or the event's own settings.
+/// Gems from daily systems, events and the season pass (missing/18). These come from play the platform can't see, so it
+/// limits them instead: each id grants once, a day's claims must be near today (a pass tier's, in its season), and the
+/// amounts come from the published balance.json or the event's own settings.
 /// </summary>
 public static class LiveRewards
 {
-    public static bool Handles(string rewardId) => rewardId.StartsWith("daily:") || rewardId.StartsWith("task:") || rewardId.StartsWith("event:");
+    public static bool Handles(string rewardId) =>
+        rewardId.StartsWith("daily:") || rewardId.StartsWith("task:") || rewardId.StartsWith("event:") || rewardId.StartsWith("pass:");
 
     public static async Task<(long Gems, string? Error)> RewardAsync(string rewardId, JsonElement balance, PlatformDb db,
         Guid gameId, Guid playerId, DateTimeOffset now, CancellationToken ct)
@@ -52,6 +53,34 @@ public static class LiveRewards
                     ? own : balance.GetProperty("events").GetProperty("templates").GetProperty("miniBoard").GetProperty("milestoneRewards");
                 if (n > rewards.GetArrayLength()) return (0, "unknown_reward");
                 return (rewards[n - 1].TryGetProperty("gems", out var gems) ? gems.GetInt64() : 0, null);
+            }
+            // "pass:<season>:<track>:<tier>": a season pass tier, from the track's 5-tier cycle. The season must be the
+            // one running (a day's grace either side); the premium track needs a verified purchase of its product made
+            // during that season, since the product lasts one season.
+            case "pass" when parts.Length == 4 && int.TryParse(parts[1], out int season) && int.TryParse(parts[3], out int tier):
+            {
+                // A balance published before the pass was built has no seasons: nothing to pay against.
+                if (!balance.TryGetProperty("events", out var events) || !events.TryGetProperty("templates", out var templates)
+                    || !templates.TryGetProperty("pass", out var pass) || !pass.TryGetProperty("seasonStart", out var seasonStart)
+                    || !DateTime.TryParseExact(seasonStart.GetString(), "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var first))
+                    return (0, "no_pass_config");
+                string track = parts[2];
+                if (season < 1 || tier < 1 || tier > pass.GetProperty("tiers").GetInt32() || (track != "free" && track != "premium"))
+                    return (0, "unknown_reward");
+                int length = pass.GetProperty("durationDays").GetInt32();
+                var starts = new DateTimeOffset(first.AddDays((season - 1) * length), TimeSpan.Zero);
+                var ends = starts.AddDays(length);
+                if (now < starts.AddDays(-1) || now > ends.AddDays(1)) return (0, "wrong_season");
+                if (track == "premium")
+                {
+                    if (!pass.TryGetProperty("premiumSku", out var premiumSku) || premiumSku.GetString() is not { } sku) return (0, "no_pass_config");
+                    bool bought = await db.Purchases.AnyAsync(p => p.GameId == gameId && p.PlayerId == playerId && p.Sku == sku
+                        && p.Status == PurchaseStatus.Verified && p.PurchasedAt >= starts.AddDays(-1) && p.PurchasedAt < ends, ct);
+                    if (!bought) return (0, "no_premium_pass");
+                }
+                var cycle = pass.GetProperty("rewards").GetProperty(track).GetProperty("cycle");
+                var reward = cycle[(tier - 1) % cycle.GetArrayLength()];
+                return (reward.TryGetProperty("gems", out var gems) ? gems.GetInt64() : 0, null);
             }
             default:
                 return (0, "unknown_reward");

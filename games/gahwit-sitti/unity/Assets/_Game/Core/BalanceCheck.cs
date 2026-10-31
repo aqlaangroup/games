@@ -51,8 +51,28 @@ namespace Gahwit.Core
                         if (config.Chains == null || !config.Chains.ContainsKey(generator.Chain)) problems.Add("generator " + generator.Id);
                 if (config.Chapters == null || config.Chapters.Count == 0) problems.Add("chapters");
                 if (config.PlayerLevels == null || config.Formulas == null || config.Unlocks == null || config.LevelB == null) problems.Add("sections");
+                if (!PassReads(config)) problems.Add("pass");
             }
             return problems;
+        }
+
+        // The season pass: its seasons, tiers and both tracks' reward cycles.
+        static bool PassReads(BalanceConfig config)
+        {
+            if (!(config.Events?.Templates?["pass"] is JObject)) return false;
+            PassConfig pass;
+            try
+            {
+                pass = config.Pass;
+            }
+            catch (System.Exception e) when (e is JsonException || e is System.ArgumentException)
+            {
+                return false;
+            }
+            return pass.Tiers > 0 && pass.PointsPerTier > 0 && pass.DurationDays > 0
+                && System.DateTime.TryParseExact(pass.SeasonStart, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture,
+                    System.Globalization.DateTimeStyles.None, out _)
+                && pass.Rewards?.Free?.Cycle?.Count > 0 && pass.Rewards.Premium?.Cycle?.Count > 0;
         }
     }
 }

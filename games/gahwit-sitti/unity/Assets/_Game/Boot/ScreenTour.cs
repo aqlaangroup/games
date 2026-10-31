@@ -143,6 +143,12 @@ namespace Gahwit.Boot
             yield return Panel<SettingsView>("06_settings", view => view.Show());
             yield return Panel<JournalView>("07_journal", view => view.Show());
             yield return Panel<TodayView>("08_today", view => view.Show());
+            // The season pass, a few tiers in, with one claimed.
+            var passGame = ui.TourGame;
+            passGame.State.Energy += 3000;
+            passGame.SpendEnergy(game.Config.Pass.PointsPerTier * 4 + 150, passGame.ClockMs);
+            passGame.ClaimPass(Game.FreeTrack, 1);
+            yield return Panel<PassView>("08b_pass", view => view.Show());
             yield return Panel<ShopView>("09_shop", view => view.Show());
             yield return Panel<DecorShopView>("10_decor_shop", view => view.Show());
             yield return Panel<WardrobeView>("11_wardrobe", view => view.Show());

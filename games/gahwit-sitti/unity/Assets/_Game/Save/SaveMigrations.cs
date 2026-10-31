@@ -24,7 +24,8 @@ namespace Gahwit.Save
             [9] = AddPurchases,
             [10] = AddDailyAndEvents,
             [11] = AddSubtitles,
-            [12] = AddKitchen
+            [12] = AddKitchen,
+            [13] = AddPassSeason
         };
 
         public static JObject Upgrade(JObject raw, BalanceConfig config)
@@ -252,6 +253,19 @@ namespace Gahwit.Save
             if (!(story["ordersDone"] is JArray)) story["ordersDone"] = new JArray();
             save["story"] = story;
             save["schemaVersion"] = 13;
+            return save;
+        }
+
+        // 14 (missing/18): the season pass's season, its claimed tiers and the premium pass's season. An old save's pass
+        // points count toward the season the game finds on its first tick.
+        static JObject AddPassSeason(JObject save, BalanceConfig config)
+        {
+            var daily = save["daily"] as JObject ?? new JObject();
+            if (daily["passSeason"] == null) daily["passSeason"] = 0;
+            if (!(daily["passClaimed"] is JArray)) daily["passClaimed"] = new JArray();
+            if (daily["passPremiumSeason"] == null) daily["passPremiumSeason"] = 0;
+            save["daily"] = daily;
+            save["schemaVersion"] = 14;
             return save;
         }
 

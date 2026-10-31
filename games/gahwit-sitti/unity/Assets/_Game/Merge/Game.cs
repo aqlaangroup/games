@@ -120,6 +120,7 @@ namespace Gahwit.Merge
             // Refill starts counting the moment energy drops below the cap.
             if (State.Energy >= EnergyCap && State.Energy - amount < EnergyCap) State.EnergyStampMs = nowMs;
             State.Energy -= amount;
+            AddPassPoints(amount * Config.Pass.PointsPerEnergySpent);
         }
     }
 }

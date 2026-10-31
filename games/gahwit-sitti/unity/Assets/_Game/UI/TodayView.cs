@@ -7,8 +7,8 @@ using UnityEngine.UI;
 
 namespace Gahwit.UI
 {
-    // Today (missing/18): the daily gift, the day's three tasks, and the events running now. Events need a
-    // connection; offline, a gentle line says so.
+    // Today (missing/18): the daily gift, the day's three tasks, the season pass, and the events running now. Events
+    // need a connection; offline, a gentle line says so.
     public sealed class TodayView : MonoBehaviour
     {
         Game game;
@@ -18,6 +18,8 @@ namespace Gahwit.UI
         Action claimed;       // asks the platform for the gems just earned
         Action<string> play;  // opens a mini board
         RectTransform list;
+
+        public Action OpenPass; // the season pass (PassView)
 
         public bool IsOpen => gameObject.activeSelf;
 
@@ -79,6 +81,11 @@ namespace Gahwit.UI
                         if (game.ClaimTask(id, day)) claimed();
                     });
             }
+
+            Section(Loc.T("pass.title"));
+            if (!game.PassOpen) Line(Loc.T("today.passLater", game.Config.Unlocks.Level("season_pass")));
+            else Row(Loc.T("pass.title"), Loc.T("today.passDetail", game.PassTier, game.Config.Pass.Tiers, game.PassToClaim, game.PassDaysLeft),
+                Loc.T("today.open"), OpenPass != null, () => OpenPass?.Invoke());
 
             Section(Loc.T("today.events"));
             if (events.Offline) Line(Loc.T("today.offline"));

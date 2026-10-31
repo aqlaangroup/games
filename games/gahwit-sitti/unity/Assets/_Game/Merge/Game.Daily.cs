@@ -85,7 +85,7 @@ namespace Gahwit.Merge
             var task = State.DailyTasks.Find(t => t.Id == id);
             if (task == null || task.Claimed || !TaskDone(task)) return false;
             task.Claimed = true;
-            State.PassPoints += Config.DailyTasks.RewardEach.PassPoints;
+            AddPassPoints(Config.DailyTasks.RewardEach.PassPoints);
             State.PendingRewards.Add($"task:{today}:{id}");
             Changed?.Invoke();
             return true;

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 using UnityEngine;
 
@@ -40,6 +41,10 @@ namespace Gahwit.Core
                 throw new InvalidOperationException($"Missing Resources/{ResourcePath}.json. Run Gahwit Sitti > Sync balance.json.");
             return Parse(asset.text);
         }
+
+        // The season pass's settings (events.templates.pass), read once.
+        PassConfig pass;
+        public PassConfig Pass => pass ??= Events.Templates["pass"].ToObject<PassConfig>();
 
         public int ItemUnits(int level) => (int)Math.Pow(Formulas.ItemUnits.Base, level - 1);
 
@@ -346,6 +351,45 @@ namespace Gahwit.Core
     public sealed class EventsConfig
     {
         public Newtonsoft.Json.Linq.JObject Templates;
+    }
+
+    // The season pass (events.templates.pass, missing/18): seasons of DurationDays from SeasonStart, each of Tiers tiers.
+    public sealed class PassConfig
+    {
+        public int DurationDays;
+        public int Tiers;
+        public int PointsPerEnergySpent;
+        public int PointsPerTier;
+        public string PremiumSku;  // the store product that opens the premium track for one season
+        public string SeasonStart; // the first season's first day, UTC, yyyy-MM-dd
+        public PassTracks Rewards;
+    }
+
+    public sealed class PassTracks
+    {
+        public PassTrack Free;
+        public PassTrack Premium;
+    }
+
+    public sealed class PassTrack
+    {
+        public List<PassReward> Cycle; // tier n pays Cycle[(n - 1) % Cycle.Count]
+
+        // Premium: entitlements at some tiers (decor:<id>, outfit:<id>). Read loosely, since a config published before
+        // these were lists names only a kind ("outfit"), which gives nothing.
+        public Dictionary<int, Newtonsoft.Json.Linq.JToken> ItemsAtTiers;
+
+        public List<string> ItemsAt(int tier) =>
+            ItemsAtTiers != null && ItemsAtTiers.TryGetValue(tier, out var items) && items is Newtonsoft.Json.Linq.JArray list
+                ? list.Values<string>().Where(item => !string.IsNullOrEmpty(item)).ToList()
+                : new List<string>();
+    }
+
+    public sealed class PassReward
+    {
+        public int Coins;
+        public int Energy;
+        public int Gems;
     }
 
     public sealed class RecipesConfig
