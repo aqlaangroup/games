@@ -49,3 +49,7 @@ crashlytics-build.properties
 .idea/
 .vscode/
 .DS_Store
+
+# Written by the Addressables build each time; not a source file.
+/Assets/AddressableAssetsData/link.xml
+/Assets/AddressableAssetsData/link.xml.meta
