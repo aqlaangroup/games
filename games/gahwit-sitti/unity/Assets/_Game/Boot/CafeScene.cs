@@ -866,10 +866,12 @@ namespace Gahwit.Boot
 #endif
             purchases = new PurchaseService(store, Services.Current.Platform, game, catalogue, (key, value) =>
             {
-                // Decor sets and outfits have no content yet (missing/13): kept as entitlements so nothing is lost.
+                // Kept as entitlements so nothing is lost: a decor set's pieces come from it (DecorRules, on the next
+                // change); outfits have no content yet (missing/13).
                 string entitlement = key + ":" + value;
                 if (!game.State.Entitlements.Contains(entitlement)) game.State.Entitlements.Add(entitlement);
-                Debug.LogWarning($"[Store] {entitlement} is owned but has no content yet.");
+                if (key != "decorSet") Debug.LogWarning($"[Store] {entitlement} is owned but has no content yet.");
+                game.Touch();
             });
             purchases.Finished += (sku, result) => Track("purchase", "sku", sku, "result", result.ToString());
             ui.SetShop(purchases, purchases.Restore);

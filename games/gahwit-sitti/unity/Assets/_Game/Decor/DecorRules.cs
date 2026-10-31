@@ -142,15 +142,21 @@ namespace Gahwit.Decor
             return sum + sets * Cafe.StyleSetBonus;
         }
 
-        // Pieces earned elsewhere: Teta's radio for 3 stars in her pour memory, or a regular's gift at friendship level 10.
+        // Pieces earned elsewhere: Teta's radio for 3 stars in her pour memory, a regular's gift at friendship level 10, an
+        // event's or the weekly gift's reward (the decor:<id> entitlement), or a bought set (decorSet:<set>).
         void GrantEarnedPieces()
         {
             foreach (var def in Catalog.Pieces)
             {
                 if (Owns(def.Id)) continue;
-                bool earned = def.Source == "memory"
-                    ? State.MemoryStars.TryGetValue(def.Memory, out int stars) && stars >= def.MemoryStars
-                    : def.Source == "friendship" && State.Regulars.TryGetValue(def.Regular, out var regular) && regular.Level >= def.FriendshipLevel;
+                bool earned = def.Source switch
+                {
+                    "memory" => State.MemoryStars.TryGetValue(def.Memory, out int stars) && stars >= def.MemoryStars,
+                    "friendship" => State.Regulars.TryGetValue(def.Regular, out var regular) && regular.Level >= def.FriendshipLevel,
+                    "event" => State.Entitlements.Contains("decor:" + def.Id),
+                    "premium" => def.Set != null && State.Entitlements.Contains("decorSet:" + def.Set),
+                    _ => false
+                };
                 if (earned)
                 {
                     State.OwnedDecor.Add(def.Id);

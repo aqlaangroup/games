@@ -4161,6 +4161,78 @@ MonoBehaviour:
     m_Localized: Finjan shelf
     m_Metadata:
       m_Items: []
+  - m_Id: 421044618780672
+    m_Localized: Bird cage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421044622974976
+    m_Localized: Majlis seating
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421044622974977
+    m_Localized: Bookshelf
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421044622974978
+    m_Localized: Brass tray table
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421044622974979
+    m_Localized: Potted palm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421044622974980
+    m_Localized: Weekly cushion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421044622974981
+    m_Localized: Album frame
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421044622974982
+    m_Localized: Friday market stall
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421044622974983
+    m_Localized: Ramadan lantern
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421044622974984
+    m_Localized: Olive harvest basket
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421044622974985
+    m_Localized: Winter heater
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421044622974986
+    m_Localized: Almond blossom
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421044622974987
+    m_Localized: Mother's Day roses
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421044622974988
+    m_Localized: Eid swing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421044622974989
+    m_Localized: Summer jallab
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421044622974990
+    m_Localized: Eid lanterns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421044622974991
+    m_Localized: Eid moon lamp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421044622974992
+    m_Localized: Eid sweets table
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

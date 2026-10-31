@@ -22,11 +22,12 @@ namespace Gahwit.Core
         public int Cosiness;
         public int PriceTier = -1;    // index into levelB.cafe.decorPriceCoinsByTier; -1 when not sold
         public int FromLevel;         // shown in the shop from this player level
-        public string Source = "coins";
+        public string Source = "coins";  // coins, memory, friendship, event (a decor:<id> reward) or premium (a bought set)
         public string Memory;         // source "memory": earned with MemoryStars stars in this memory
         public int MemoryStars;
         public string Regular;        // source "friendship": this regular's gift at FriendshipLevel (SYSTEMS_B.md section 3)
         public int FriendshipLevel;
+        public string Set;            // source "premium": the set a store product grants (decorSet:<set>)
         public int W, D;              // footprint in grid cells; a wall piece's W is in wall cells and D is unused
         public bool Wall;             // hangs on a wall; its parts are in metres from the wall at floor level, +z into the room
         public List<DecorPart> Parts = new List<DecorPart>();

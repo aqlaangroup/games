@@ -82,7 +82,7 @@ namespace Gahwit.Cafe
                 var size = new Vector3(part.Size[0], type == PrimitiveType.Cylinder ? part.Size[1] / 2f : part.Size[1], part.Size[2]);
                 shape.transform.localScale = size;
                 shape.transform.localPosition = new Vector3(part.At[0], part.At[1], part.At[2]);
-                shape.GetComponent<Renderer>().sharedMaterial = MaterialFor(part.Color);
+                shape.GetComponent<Renderer>().sharedMaterial = MaterialFor(part.Color, part.Glow);
                 height = Mathf.Max(height, part.At[1] + part.Size[1] / 2f);
             }
             collider.size = new Vector3(def.W * cellMeters, height, def.D * cellMeters);
@@ -107,12 +107,20 @@ namespace Gahwit.Cafe
             collider.size = max - min + new Vector3(0.1f, 0.1f, 0.2f);
         }
 
-        Material MaterialFor(string hex)
+        // A lantern's glass or a lamp: the part shines in its own colour.
+        Material MaterialFor(string hex, bool glow)
         {
-            if (materials.TryGetValue(hex, out var material)) return material;
+            string key = glow ? "glow/" + hex : hex;
+            if (materials.TryGetValue(key, out var material)) return material;
             material = new Material(template);
-            material.SetColor("_BaseColor", ColorUtility.TryParseHtmlString(hex, out var color) ? color : Color.magenta);
-            return materials[hex] = material;
+            var color = ColorUtility.TryParseHtmlString(hex, out var parsed) ? parsed : Color.magenta;
+            material.SetColor("_BaseColor", color);
+            if (glow)
+            {
+                material.EnableKeyword("_EMISSION");
+                material.SetColor("_EmissionColor", color * 1.4f);
+            }
+            return materials[key] = material;
         }
 
         // The chosen piece lifts a little and bobs, so it's clear what moves.

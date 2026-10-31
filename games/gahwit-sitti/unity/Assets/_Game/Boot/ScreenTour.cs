@@ -57,6 +57,19 @@ namespace Gahwit.Boot
                 yield return Wait(1.5f);
                 yield return Shot("01a_wall_decor");
                 foreach (var id in hung) decorRules.Store(id);
+
+                // The newest pieces: the five shop ones, every event reward and the Eid set, as if all were won.
+                var state = ui.TourGame.State;
+                foreach (var def in decorRules.Catalog.Pieces.Where(p => p.Source == "event"))
+                    state.Entitlements.Add("decor:" + def.Id);
+                state.Entitlements.Add("decorSet:eid_lanterns");
+                var bought = new List<string> { "old_bird_cage", "gulf_majlis_sofa", "modern_bookshelf", "old_brass_tray_table", "gulf_palm_planter" };
+                foreach (var id in bought) decorRules.Buy(id);
+                ui.TourGame.Touch();
+                yield return Wait(1.5f);
+                yield return Shot("01aa_new_decor");
+                foreach (var def in decorRules.Catalog.Pieces.Where(p => p.Source == "event" || p.Source == "premium" || bought.Contains(p.Id)))
+                    decorRules.Store(def.Id);
             }
 
             // The café's other spaces (missing/07), then back to the floor.

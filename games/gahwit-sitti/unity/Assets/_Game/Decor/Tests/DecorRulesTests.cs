@@ -36,8 +36,10 @@ namespace Gahwit.Decor.Tests
         [Test]
         public void TheCatalogHasItsShopPiecesAndARewardForEachMemoryAndRegular()
         {
-            Assert.AreEqual(20, catalog.Pieces.Count(p => p.Source == "coins"), "ring 1's shop and its wall pieces");
-            Assert.AreEqual(6, catalog.Pieces.Count(p => p.Wall), "two wall pieces in each style");
+            Assert.AreEqual(config.LevelB.Cafe.DecorPiecesSeason1, catalog.Pieces.Count, "the season's pieces");
+            Assert.AreEqual(25, catalog.Pieces.Count(p => p.Source == "coins"), "bought with coins (SYSTEMS_B.md section 1)");
+            Assert.AreEqual(10, catalog.Pieces.Count(p => p.Source == "event"), "from events and the weekly gift");
+            Assert.AreEqual(6, catalog.Pieces.Count(p => p.Wall && p.Source == "coins"), "two wall pieces in each style");
             var content = ChapterContent.Load();
             CollectionAssert.AreEquivalent(content.Memories.Keys, catalog.Pieces.Where(p => p.Source == "memory").Select(p => p.Memory),
                 "one 3-star piece per memory (SYSTEMS_B.md section 5)");
@@ -98,6 +100,38 @@ namespace Gahwit.Decor.Tests
             Assert.AreEqual(0, game.State.Cosiness);
             CollectionAssert.Contains(rules.Stored.Select(p => p.Id).ToList(), "modern_shelf");
             Assert.IsTrue(rules.Place("modern_shelf"));
+        }
+
+        [Test]
+        public void EveryDecorRewardTheGamePromisesIsAPiece()
+        {
+            // The weekly gift, the album and the mini board name pieces (decor); store products name sets (decorSet).
+            var balance = Newtonsoft.Json.Linq.JObject.Parse(UnityEngine.Resources.Load<UnityEngine.TextAsset>("Config/balance").text);
+            var rewards = balance.Descendants().OfType<Newtonsoft.Json.Linq.JProperty>()
+                .Where(p => p.Name == "decor" && p.Value.Type == Newtonsoft.Json.Linq.JTokenType.String).Select(p => (string)p.Value).ToList();
+            Assert.IsNotEmpty(rewards);
+            foreach (var id in rewards)
+                Assert.AreEqual("event", catalog.Get(id)?.Source, $"no event piece {id}");
+            var game = Newtonsoft.Json.Linq.JObject.Parse(UnityEngine.Resources.Load<UnityEngine.TextAsset>("Config/game").text);
+            var sets = game["products"].Select(p => (string)p["grants"]?["decorSet"]).Where(s => s != null).ToList();
+            Assert.IsNotEmpty(sets);
+            foreach (var set in sets)
+                Assert.IsTrue(catalog.Pieces.Any(p => p.Source == "premium" && p.Set == set), $"no pieces in set {set}");
+        }
+
+        [Test]
+        public void EventRewardsAndBoughtSetsBecomePiecesInTheCafe()
+        {
+            var game = NewGame();
+            game.State.Entitlements.Add("decor:weekly_cushion");
+            game.State.Entitlements.Add("decorSet:eid_lanterns");
+            var rules = new DecorRules(game, catalog, Layout(), Walls());
+            Assert.IsTrue(rules.IsPlaced("weekly_cushion"));
+            var eid = catalog.Pieces.Where(p => p.Set == "eid_lanterns").Select(p => p.Id).ToList();
+            Assert.AreEqual(3, eid.Count);
+            Assert.IsTrue(eid.All(rules.IsPlaced), "every piece of the set, the lantern string on a wall");
+            Assert.IsFalse(rules.Owns("ramadan_fanous"), "an event piece nobody has won yet");
+            Assert.IsFalse(rules.InShop.Any(p => p.Source != "coins"), "only coin pieces are sold for coins");
         }
 
         // A café's two walls, 10 × 8 m, in half-metre cells, with the door kept clear on the side wall.

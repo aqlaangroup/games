@@ -4059,6 +4059,78 @@ MonoBehaviour:
     m_Key: decor.gulf_finjan_shelf
     m_Metadata:
       m_Items: []
+  - m_Id: 421044618780672
+    m_Key: decor.old_bird_cage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421044622974976
+    m_Key: decor.gulf_majlis_sofa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421044622974977
+    m_Key: decor.modern_bookshelf
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421044622974978
+    m_Key: decor.old_brass_tray_table
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421044622974979
+    m_Key: decor.gulf_palm_planter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421044622974980
+    m_Key: decor.weekly_cushion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421044622974981
+    m_Key: decor.album_frame
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421044622974982
+    m_Key: decor.friday_market_stall
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421044622974983
+    m_Key: decor.ramadan_fanous
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421044622974984
+    m_Key: decor.olive_harvest_basket
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421044622974985
+    m_Key: decor.winter_soba
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421044622974986
+    m_Key: decor.almond_blossom_vase
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421044622974987
+    m_Key: decor.mothers_day_roses
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421044622974988
+    m_Key: decor.eid_swing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421044622974989
+    m_Key: decor.summer_jallab
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421044622974990
+    m_Key: decor.eid_lantern_string
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421044622974991
+    m_Key: decor.eid_moon_lamp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421044622974992
+    m_Key: decor.eid_sweets_table
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

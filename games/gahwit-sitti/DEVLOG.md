@@ -2,6 +2,27 @@
 
 Decisions and known gaps. Newest first. Read this at the start of each session (`/CLAUDE.md`).
 
+## 2026-11-01: the season's 60 decor pieces, and rewards that arrive (missing/07)
+
+- **A bug fixed:**
+  - The weekly gift (`decor:weekly_cushion`), the album (`album_frame`) and the mini board (`friday_market_stall`) granted decor entitlements, and the Eid product granted `decorSet:eid_lanterns`.
+  - None of these pieces existed, and nothing turned an entitlement into a piece. Players would have earned rewards that never appeared.
+  - Now `DecorRules` makes an `event` piece owned with `decor:<id>` and a `premium` piece with `decorSet:<set>`, and places it like a memory reward.
+  - A test reads every decor reward in `balance.json` and every set in the products, and checks each is a piece.
+- **18 new pieces, 60 in all (`decorPiecesSeason1`):**
+  - **Shop (5):** a bird cage, majlis seating, a bookshelf, a brass tray table and a potted palm. That makes 25 for coins (SYSTEMS_B.md section 1); they open from level 5 to 9.
+  - **Events (10):** the three rewards above, and seven seasonal ones staff can give in future events without an app update:
+    - a Ramadan lantern;
+    - an olive-harvest basket;
+    - a winter soba heater with its kettle;
+    - almond blossom;
+    - Mother's Day roses;
+    - an Eid swing;
+    - summer jallab.
+  - **The Eid lantern set (3):** a string of glowing lanterns for the wall, a moon lamp and a table of Eid sweets.
+  - Prop parts can glow, so lanterns, lamps and the soba's fire shine.
+- **Still to do:** the season pass pays nothing at its tiers yet, so its decor items (tiers 20 and 30) have no pieces. The pass's rules and screen are open work in missing/done/18.
+
 ## 2026-11-01: wall decor (missing/07)
 
 - **Six wall pieces in the shop**, two per style, so style sets still work:
