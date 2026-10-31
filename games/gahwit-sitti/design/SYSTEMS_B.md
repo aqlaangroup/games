@@ -122,6 +122,7 @@ One memory per chapter, so 10 in season 1. Each lasts 3–5 minutes and uses one
 
 - **New coin sinks:** decor pieces (50–2,000 coins) and wardrobe pieces (100–1,500 coins). They help with the late-season coin surplus the simulator showed.
 - **New gem sinks:** premium decor sets and outfits at fixed prices, plus skipping a memory retry.
+  - **Memory retry (decided 2026-10-31, missing/12):** right after a memory under 3 stars, another try costs `levelB.memories.skipRetryGems`; the best stars count. Carrying on is always free.
 - **New shop items:**
   - Premium decor sets: 4 per season, about $4.99 each.
   - Outfit bundles: 4 per season, about $2.99–$4.99.

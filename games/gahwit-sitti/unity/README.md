@@ -48,7 +48,7 @@ Assets/
   Art/                models, textures, portraits, icons (by area)
   Audio/              music, ambience, sound effects, voice
   Content/            Ink stories, config copies, localisation tables
-  Scenes/             Boot, Cafe, Memory_Template, Visit
+  Scenes/             Boot, Cafe, Visit (memories play over the café: no scene of their own)
 ```
 
 ## Code rules

@@ -189,6 +189,11 @@ Each line is roughly one Claude Code session (S) or a few sessions (M). Do them 
 
 - **Logic:** EditMode tests for every rule. Port `design/sim/simulate.py` to a C# test that checks chapter pacing stays on target.
 - **Play:** a weekly build on two real phones, one cheap Android (3 GB) and one iPhone.
+- **Building:**
+  - Unity menu **Gahwit Sitti > Build Android (app bundle)** writes `unity/Builds/Android/gahwit-sitti.aab`. The upload key comes from the environment (`GAHWIT_ANDROID_KEYSTORE` and its passwords), never the repo.
+  - **Gahwit Sitti > Build iOS** writes the Xcode project. Then `tools/ios_testflight.sh` archives it and prints its size; `tools/ios_testflight.sh upload` sends it to TestFlight with an App Store Connect API key.
+  - Each build's number is the number of commits, or `BUILD_NUMBER` in CI.
+  - CI (`.github/workflows/gahwit-sitti.yml`) runs the tests on every push and both phone builds every night, once the Unity licence secrets are set.
 - **People:** the ring 1 gate test with 30–50 women in Amman and Riyadh, plus a short survey: would you keep playing, which moment you liked most, which word you didn't understand.
 - **Before every store build:**
   - no crashes in a 30-minute play

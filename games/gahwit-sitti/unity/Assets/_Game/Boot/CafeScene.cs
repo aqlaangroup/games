@@ -108,6 +108,11 @@ namespace Gahwit.Boot
             ApplyLookSettings();
             account.SettingChanged += ApplySoundSettings;
             account.SettingChanged += ApplyLookSettings;
+            gameObject.AddComponent<FrameStats>().Init(game.Config.Ui.Graphics, sample => Track("perf",
+                "fps", Mathf.Round(sample.AverageFps * 10) / 10, "slowShare", Mathf.Round(sample.SlowShare * 1000) / 1000,
+                "worstMs", Mathf.RoundToInt(sample.WorstMs), "memoryMb", SystemInfo.systemMemorySize,
+                "allocatedMb", (int)(UnityEngine.Profiling.Profiler.GetTotalAllocatedMemoryLong() / 1048576),
+                "device", SystemInfo.deviceModel, "highGraphics", UiRules.HighGraphics(account.Quality, PhoneSettings.MemoryMb, game.Config.Ui.Graphics)));
             cafe.Decor.Settled += world => ui.DecorDust(world);
             WireSounds();
             cafeMusic = CafeMusic(timeOfDay);
@@ -425,17 +430,22 @@ namespace Gahwit.Boot
         }
 
         // A playable 1974 memory (SYSTEMS_B.md section 5), then back to today.
-        void PlayMemory(string memoryId)
+        void PlayMemory(string memoryId) => PlayMemory(memoryId, game.Content.Memories[memoryId], true);
+
+        // One of the practice memories, one per game type (Content/memory_practice.json), for trying the games before
+        // their chapters are written (missing/12). Nothing is saved. Editor menu: Gahwit Sitti > Play memory game.
+        public void PracticeMemory(string type)
         {
-            var def = game.Content.Memories[memoryId];
+            var all = Newtonsoft.Json.Linq.JObject.Parse(Resources.Load<TextAsset>("Content/memory_practice").text)["memories"];
+            var def = all["practice_" + type]?.ToObject<MemoryDef>();
+            if (def == null) Debug.LogWarning($"[Memory] No practice memory for '{type}'.");
+            else if (!ui.Dialogue.IsOpen && !ui.Memory.IsPlaying) PlayMemory("practice_" + type, def, false);
+        }
+
+        void PlayMemory(string memoryId, MemoryDef def, bool record)
+        {
             var config = game.Config.LevelB.Memories;
             var story = Story(def.Story);
-            if (def.Type != "pour")
-            {
-                Debug.LogWarning($"[Memory] '{def.Type}' memories aren't built yet; skipping {memoryId}.");
-                return;
-            }
-
             PlayScene(story, def.LeadKnot, () =>
             {
                 // 1974: the café as Teta ran it, in faded film colours. A sepia wash spreads from the last touch.
@@ -447,13 +457,8 @@ namespace Gahwit.Boot
                 cafe.Apply(game.Content.Chapters.SelectMany(c => c.Tasks).Select(t => t.Id).ToList(),
                     new Dictionary<string, string> { ["sign"] = "old", ["chairs"] = "old" }, game.Content.Styles);
                 ui.Memory.ShowBanner(true);
-                // The easy assist (COMPLETE_SPEC.md section 5) widens the target band.
-                PlayScene(story, def.IntroKnot, () => ui.Memory.PlayPour(new PourGame(config, saves.Data.Settings.MemoryAssist), stars =>
+                PlayScene(story, def.IntroKnot, () => PlayMemoryGame(memoryId, def, story, played => AfterMemoryGame(memoryId, def, story, record, played, stars =>
                 {
-                    game.RecordMemory(memoryId, stars);
-                    notifications.AskOnce(); // after the first memory, never at first launch
-                    Track("memory_played", "memory", memoryId, "stars", stars);
-                    ui.Toast.Show(Loc.T("memory.stars", stars, config.Stars[1]));
                     PlayScene(story, stars >= config.Stars[1] ? def.PerfectKnot : def.OkKnot, () =>
                         PlayScene(story, def.OutroKnot, () =>
                         {
@@ -464,11 +469,89 @@ namespace Gahwit.Boot
                             ui.Memory.ShowBanner(false);
                             PlayScene(story, def.ReturnKnot, null);
                         }));
-                }));
+                })));
             });
         }
 
-        // The letter in the counter drawer, Teta's voice note, then the message that arrives (COMPLETE_SPEC.md section 1, step 10).
+        // Records the stars, then offers a retry for more while it's under 3 (SYSTEMS_B.md section 9): paid in gems
+        // through the platform (memoryRetry:<id>, balance.json levelB.memories.skipRetryGems), never required.
+        void AfterMemoryGame(string memoryId, MemoryDef def, StoryPlayer story, bool record, int stars, Action<int> then)
+        {
+            var config = game.Config.LevelB.Memories;
+            if (record)
+            {
+                game.RecordMemory(memoryId, stars);
+                notifications.AskOnce(); // after the first memory, never at first launch
+            }
+            Track(record ? "memory_played" : "memory_practice", "memory", memoryId, "type", def.Type, "stars", stars);
+            int best = record ? game.State.MemoryStars[memoryId] : stars;
+            if (!record || best >= config.Stars[1])
+            {
+                ui.Toast.Show(Loc.T("memory.stars", stars, config.Stars[1]));
+                then(best);
+                return;
+            }
+            ui.Prompt.Show(Loc.T("memory.retryTitle"), Loc.T("memory.stars", best, config.Stars[1]), Loc.T("memory.retryText"), new[]
+            {
+                PromptView.Primary(Loc.T("memory.retry", config.SkipRetryGems), () => Run(async () =>
+                {
+                    var result = await gems.Buy("memoryRetry:" + memoryId);
+                    if (result == ActionResult.Done)
+                        PlayMemoryGame(memoryId, def, story, again => AfterMemoryGame(memoryId, def, story, true, again, then));
+                    else
+                    {
+                        ui.Toast.Show(Loc.T("gems." + result.ToString().ToLowerInvariant()));
+                        then(best);
+                    }
+                })),
+                PromptView.Quiet(Loc.T("memory.carryOn"), () => then(best))
+            });
+        }
+
+        // The game itself, by type (SYSTEMS_B.md section 5). The easy assist (COMPLETE_SPEC.md section 5) widens the
+        // timing games' targets. The seed comes from the memory's id, so a memory looks the same every time.
+        void PlayMemoryGame(string memoryId, MemoryDef def, StoryPlayer story, Action<int> done)
+        {
+            var config = game.Config.LevelB.Memories;
+            bool easy = saves.Data.Settings.MemoryAssist;
+            int seed = 0;
+            foreach (char c in memoryId) seed = seed * 31 + c;
+            switch (def.Type)
+            {
+                case "pour":
+                    ui.Memory.PlayPour(new PourGame(config, easy), done);
+                    break;
+                case "rhythm":
+                    ui.Memory.Rhythm.Play(new RhythmGame(config, easy), done);
+                    break;
+                case "find":
+                    ui.Memory.Find.Play(new FindGame(config, def.Objects), def.Objects, def.Decoys ?? new List<string>(), seed, done);
+                    break;
+                case "restore":
+                    ui.Memory.Restore.Play(new RestoreGame(config, seed), done);
+                    break;
+                case "trace":
+                    var line = def.Line.Select(p => (p[0], p[1])).ToList();
+                    ui.Memory.Trace.Play(new TraceGame(config, line, easy), done);
+                    break;
+                case "tune":
+                    ui.Memory.Tune.Play(new TuneGame(config, seed, easy), done);
+                    break;
+                case "choose":
+                    var choose = new ChooseGame(config, easy);
+                    ui.Dialogue.PlayTimed(story, def.GameKnot, choose, () => done(choose.Stars));
+                    break;
+                case "reassemble":
+                    var strips = story.ReadAll(def.GameKnot).Select(l => l.Text).ToList();
+                    ui.Memory.Reassemble.Play(new ReassembleGame(config, strips.Count, seed), strips, done);
+                    break;
+                default:
+                    Debug.LogWarning($"[Memory] Unknown memory type '{def.Type}' in {memoryId}; the story goes on.");
+                    done(config.Stars[0]);
+                    break;
+            }
+        }
+
         void OpenDrawer()
         {
             string letterId = game.LetterWaiting();
@@ -589,7 +672,7 @@ namespace Gahwit.Boot
 
         void PlayScene(StoryPlayer story, string knot, Action then)
         {
-            if (story == null)
+            if (story == null || string.IsNullOrEmpty(knot))
             {
                 then?.Invoke();
                 return;

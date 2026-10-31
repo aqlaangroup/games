@@ -12,7 +12,7 @@ namespace Gahwit.UI
     // is held, with the line to stop at.
     public sealed class MemoryView : MonoBehaviour
     {
-        const float CupHeight = 330f, LiquidInset = 14f, ResultPauseSeconds = 1.1f, GrainFadeSeconds = 1.2f, GrainAlpha = 0.16f;
+        const float CupHeight = 330f, LiquidInset = 14f, ResultPauseSeconds = 1.1f, GrainFadeSeconds = 1.2f, GrainAlpha = 0.09f;
         const int GrainSize = 128;
 
         GameObject banner, sheet;
@@ -24,7 +24,16 @@ namespace Gahwit.UI
         Action<int> onDone;
         float finishedAt = -1;
 
-        public void Init()
+        public RhythmView Rhythm { get; private set; }
+        public FindView Find { get; private set; }
+        public RestoreView Restore { get; private set; }
+        public TraceView Trace { get; private set; }
+        public TuneView Tune { get; private set; }
+        public ReassembleView Reassemble { get; private set; }
+
+        T Game<T>(string name) where T : MemoryGameView => UiKit.Rect(transform, name).Stretch().gameObject.AddComponent<T>();
+
+        public void Init(MemoriesConfig memories)
         {
             grain = UiKit.Rect(transform, "Grain").Stretch().gameObject.AddComponent<RawImage>();
             grain.texture = GrainTexture();
@@ -77,9 +86,18 @@ namespace Gahwit.UI
             hint = UiKit.Text(card.transform, "Hint", "", 28, Palette.InkSoft, TextAlignmentOptions.Center);
             hint.rectTransform.Bottom(40, 50, 40, 40);
             sheet.SetActive(false);
+
+            // The other memory games (missing/12), each on its own sheet.
+            (Rhythm = Game<RhythmView>("Rhythm")).Init();
+            (Find = Game<FindView>("Find")).Init();
+            (Restore = Game<RestoreView>("Restore")).Init();
+            (Trace = Game<TraceView>("Trace")).Init();
+            (Tune = Game<TuneView>("Tune")).Init(memories.Tune);
+            (Reassemble = Game<ReassembleView>("Reassemble")).Init();
         }
 
-        public bool IsPlaying => pour != null && !pour.Finished;
+        public bool IsPlaying => pour != null && !pour.Finished || Rhythm.IsPlaying || Find.IsPlaying || Restore.IsPlaying
+                                 || Trace.IsPlaying || Tune.IsPlaying || Reassemble.IsPlaying;
 
         // In a memory (COMPLETE_SPEC.md section 8): the banner, and grain fading in over the faded café.
         public void ShowBanner(bool show)

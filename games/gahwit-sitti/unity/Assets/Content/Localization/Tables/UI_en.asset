@@ -1262,6 +1262,130 @@ MonoBehaviour:
     m_Localized: High
     m_Metadata:
       m_Items: []
+  - m_Id: 126310780231680
+    m_Localized: The seller
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126310788620288
+    m_Localized: Shape the ma'amoul to the song
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126310788620289
+    m_Localized: Shape
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126310788620290
+    m_Localized: Perfect!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126310788620291
+    m_Localized: Good
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126310788620292
+    m_Localized: Missed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126310788620293
+    m_Localized: Find the things
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126310788620294
+    m_Localized: Coffee pot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126310788620295
+    m_Localized: Radio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126310788620296
+    m_Localized: Ledger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126310788620297
+    m_Localized: Cup
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126310788620298
+    m_Localized: Key
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126310788620299
+    m_Localized: Photo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126310788620300
+    m_Localized: Prayer beads
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126310788620301
+    m_Localized: Lamp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126310788620302
+    m_Localized: Chair
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126310788620303
+    m_Localized: Clock
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126310788620304
+    m_Localized: Jar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126310788620305
+    m_Localized: Basket
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126310788620306
+    m_Localized: Put the photo back together
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126310788620307
+    m_Localized: Sew along the line
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126310788620308
+    m_Localized: Start at the circle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126310788620309
+    m_Localized: Find the station
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126310788620310
+    m_Localized: Move the dial and listen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126310788620311
+    m_Localized: Found it!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126310788620312
+    m_Localized: Put the torn letter in order
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126310788620313
+    m_Localized: Tap two strips to swap them
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126310788620314
+    m_Localized: Try again?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126310788620315
+    m_Localized: Play the memory again for more stars.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126310788620316
+    m_Localized: Try again ({0} gems)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126310788620317
+    m_Localized: Carry on
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

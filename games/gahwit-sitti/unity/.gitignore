@@ -37,6 +37,9 @@ crashlytics-build.properties
 *.ipa
 *.app
 
+# Temporary files from command-line builds
+/.utmp/
+
 # Addressables build output
 /[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
 /[Ss]erverData/

@@ -335,25 +335,39 @@ namespace Gahwit.UI
                 styleTask = task.Id;
                 chosenStyle = task.Styles[0];
             }
-            if (choosing) BuildStyleChips(task.Styles);
+            if (choosing) ShowStyleChips(task.Id, task.Styles);
         }
 
-        // One chip per style, painted like the sign would look; the chosen one has a thick outline.
-        void BuildStyleChips(System.Collections.Generic.List<string> styles)
+        readonly System.Collections.Generic.List<Button> styleChips = new System.Collections.Generic.List<Button>();
+        string chipsFor;
+
+        // One chip per style, painted like the sign would look; the chosen one has a thick outline. Built once per
+        // task; later refreshes only move the outline.
+        void ShowStyleChips(string taskId, System.Collections.Generic.List<string> styles)
         {
-            UiKit.Clear(styleRow);
-            foreach (var id in styles)
+            if (chipsFor != taskId)
             {
-                string style = id;
-                var def = game.Content.Styles[style];
-                var chip = UiKit.Button(styleRow, "Style " + style, Loc.T("style." + style),
-                    Palette.Hex(def.SignBoard), Palette.Hex(def.SignText), 26, () => { chosenStyle = style; Refresh(); }, 30);
-                chip.gameObject.AddComponent<LayoutElement>().flexibleWidth = 1;
-                var outline = chip.gameObject.AddComponent<Outline>();
-                bool chosen = style == chosenStyle;
+                chipsFor = taskId;
+                UiKit.Clear(styleRow);
+                styleChips.Clear();
+                foreach (var id in styles)
+                {
+                    string style = id;
+                    var def = game.Content.Styles[style];
+                    var chip = UiKit.Button(styleRow, style, Loc.T("style." + style),
+                        Palette.Hex(def.SignBoard), Palette.Hex(def.SignText), 26, () => { chosenStyle = style; Refresh(); }, 30);
+                    chip.gameObject.AddComponent<LayoutElement>().flexibleWidth = 1;
+                    chip.gameObject.AddComponent<Outline>();
+                    styleChips.Add(chip);
+                }
+            }
+            foreach (var chip in styleChips)
+            {
+                bool chosen = chip.name == chosenStyle;
+                var outline = chip.GetComponent<Outline>();
                 outline.effectColor = chosen ? Palette.Rose : new Color(0.23f, 0.15f, 0.19f, 0.25f);
                 outline.effectDistance = chosen ? new Vector2(5, -5) : new Vector2(1.5f, -1.5f);
-                if (chosen) chip.Label().fontStyle = TMPro.FontStyles.Bold;
+                chip.Label().fontStyle = chosen ? TMPro.FontStyles.Bold : TMPro.FontStyles.Normal;
             }
         }
     }

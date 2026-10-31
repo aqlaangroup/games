@@ -101,7 +101,7 @@ namespace Gahwit.UI
 
             var dragLayer = UiKit.Rect(root, "DragLayer").Stretch();
             Memory = UiKit.Rect(root, "Memory").Stretch().gameObject.AddComponent<MemoryView>();
-            Memory.Init();
+            Memory.Init(game.Config.LevelB.Memories);
             Dialogue = UiKit.Rect(root, "Dialogue").Stretch().gameObject.AddComponent<DialogueView>();
             Dialogue.Init(game);
             Letter = UiKit.Rect(root, "Letter").Stretch().gameObject.AddComponent<LetterView>();

@@ -99,6 +99,10 @@ namespace Gahwit.Core
         public string OutroKnot;  // in 1974, after the game
         public string ReturnKnot; // back in the present
         public string Letter;     // a letter the memory leads to, found in the counter drawer
+        public string GameKnot;   // choose: the conversation; reassemble: the torn letter's strips, one per line
+        public List<string> Objects; // find: what to find (memobj.<id>)
+        public List<string> Decoys;  // find: the rest of the room
+        public List<List<float>> Line; // trace: the seam, as [x, y] in centimetres
     }
 
     public sealed class LetterDef

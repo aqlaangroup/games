@@ -506,13 +506,14 @@
     "graphics": {
       "autoLowAtOrBelowMb": 3072,
       "lowFps": 30,
-      "highFps": 60
+      "highFps": 60,
+      "perfSampleSeconds": 120
     },
     "kitchenHints": {
       "lowEnergy": 5,
       "nearlyFullEmptySquares": 8
     },
-    "notes": "COMPLETE_SPEC.md sections 5 and 8; CLAUDE.md for touch targets. kitchenHints say when the kitchen shows 'low energy' and 'board nearly full'. Large text multiplies every size by largeTextScale and lifts anything under minTextPt to it, measured on the narrowest phone (smallestPhoneWidthPt, proposed 2026-10-31). graphics: 'auto' picks low on phones with autoLowAtOrBelowMb of memory or less (the 3 GB phone in CLAUDE.md); low runs at lowFps without shadows, high at highFps with them (CLAUDE.md performance targets)."
+    "notes": "COMPLETE_SPEC.md sections 5 and 8; CLAUDE.md for touch targets. kitchenHints say when the kitchen shows 'low energy' and 'board nearly full'. Large text multiplies every size by largeTextScale and lifts anything under minTextPt to it, measured on the narrowest phone (smallestPhoneWidthPt, proposed 2026-10-31). graphics: 'auto' picks low on phones with autoLowAtOrBelowMb of memory or less (the 3 GB phone in CLAUDE.md); low runs at lowFps without shadows, high at highFps with them (CLAUDE.md performance targets). After perfSampleSeconds of play (proposed) the game sends one 'perf' event: average fps and the share of frames slower than lowFps."
   },
   "chapters": [
     {
@@ -1240,6 +1241,7 @@
         "beatsPerMinute": 84,
         "perfectWindowMs": 90,
         "goodWindowMs": 180,
+      "easyWindowScale": 1.5,
         "beats": 40,
         "starsAtAccuracy": [
           0.5,
@@ -1270,6 +1272,7 @@
       "trace": {
         "pathPoints": 60,
         "toleranceCm": 0.4,
+      "easyToleranceScale": 1.5,
         "starsAtAccuracy": [
           0.5,
           0.75,
@@ -1283,6 +1286,8 @@
         ],
         "targetWidth": 0.4,
         "hintWidth": 2.0,
+      "holdSeconds": 1.0,
+      "easyWidthScale": 2.0,
         "seconds": 60,
         "starsAtSecondsLeft": [
           1,
@@ -1293,6 +1298,7 @@
       "choose": {
         "choices": 6,
         "secondsPerChoice": 8,
+      "easyTimeScale": 1.5,
         "starsAtGoodChoices": [
           2,
           4,
@@ -1308,7 +1314,7 @@
           55
         ]
       },
-      "proposed": "Proposed on 2026-10-31 where the specs gave no number (missing/02). Tune in playtests. Applies to byChapter's chapters 5 and 10, skipRetryGems, and every type except pour."
+      "proposed": "Proposed on 2026-10-31 where the specs gave no number (missing/02). Tune in playtests. Applies to byChapter's chapters 5 and 10, skipRetryGems, and every type except pour. The easy assist (COMPLETE_SPEC.md section 5) multiplies rhythm's windows by easyWindowScale, trace's tolerance by easyToleranceScale, tune's station by easyWidthScale and choose's time by easyTimeScale; tune needs the dial held on the station for holdSeconds (all proposed 2026-10-31, missing/12)."
     },
     "wardrobe": {
       "season1Pieces": 40,

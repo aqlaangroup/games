@@ -251,9 +251,15 @@ namespace Gahwit.Merge
 
         public bool CanServe(Order order) => order.Lines.All(line => CountOnBoard(line.Chain, line.Level) >= line.Count);
 
-        public bool IsWanted(Item item) =>
-            item != null && !item.IsGenerator &&
-            State.Orders.Any(o => o.Lines.Any(line => line.Chain == item.Chain && line.Level == item.Level));
+        // Loops, not LINQ: the board asks this for all 63 squares after every change.
+        public bool IsWanted(Item item)
+        {
+            if (item == null || item.IsGenerator) return false;
+            foreach (var order in State.Orders)
+            foreach (var line in order.Lines)
+                if (line.Chain == item.Chain && line.Level == item.Level) return true;
+            return false;
+        }
 
         // For rule classes outside Game (decor, customers) that change the state: tells everyone it changed.
         public void Touch() => Changed?.Invoke();

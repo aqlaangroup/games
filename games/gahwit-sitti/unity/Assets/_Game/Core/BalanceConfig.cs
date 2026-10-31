@@ -266,6 +266,7 @@ namespace Gahwit.Core
         public int AutoLowAtOrBelowMb;
         public int LowFps;
         public int HighFps;
+        public float PerfSampleSeconds;
     }
 
     public sealed class KitchenHintsConfig
@@ -330,7 +331,76 @@ namespace Gahwit.Core
     public sealed class MemoriesConfig
     {
         public List<int> Stars; // [min, max]
+        public Dictionary<string, string> ByChapter;
+        public int SkipRetryGems;
         public PourConfig Pour;
+        public RhythmConfig Rhythm;
+        public FindConfig Find;
+        public RestoreConfig Restore;
+        public TraceConfig Trace;
+        public TuneConfig Tune;
+        public ChooseConfig Choose;
+        public ReassembleConfig Reassemble;
+    }
+
+    public sealed class RhythmConfig
+    {
+        public float BeatsPerMinute;
+        public float PerfectWindowMs;
+        public float GoodWindowMs;
+        public float EasyWindowScale;
+        public int Beats;
+        public List<float> StarsAtAccuracy;
+    }
+
+    public sealed class FindConfig
+    {
+        public int Objects;
+        public float Seconds;
+        public float HintAfterSeconds;
+        public List<float> StarsAtSecondsLeft;
+    }
+
+    public sealed class RestoreConfig
+    {
+        public int Pieces;
+        public float SnapDistance;
+        public float Seconds;
+        public List<float> StarsAtSecondsLeft;
+    }
+
+    public sealed class TraceConfig
+    {
+        public int PathPoints;
+        public float ToleranceCm;
+        public float EasyToleranceScale;
+        public List<float> StarsAtAccuracy;
+    }
+
+    public sealed class TuneConfig
+    {
+        public List<float> DialRange; // [low, high] MHz
+        public float TargetWidth;
+        public float HintWidth;
+        public float HoldSeconds;
+        public float EasyWidthScale;
+        public float Seconds;
+        public List<float> StarsAtSecondsLeft;
+    }
+
+    public sealed class ChooseConfig
+    {
+        public int Choices;
+        public float SecondsPerChoice;
+        public float EasyTimeScale;
+        public List<float> StarsAtGoodChoices;
+    }
+
+    public sealed class ReassembleConfig
+    {
+        public int Strips;
+        public float Seconds;
+        public List<float> StarsAtSecondsLeft;
     }
 
     public sealed class PourConfig

@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Gahwit.Core;
+using Gahwit.Memories;
 using Gahwit.Merge;
 using Gahwit.Story;
 using RTLTMPro;
@@ -22,6 +24,9 @@ namespace Gahwit.UI
         RectTransform choices;
         Button next;
         bool waitingForChoice;
+        ChooseGame timed;            // a timed-choice memory, while one plays
+        List<string> choiceTags;
+        Image timer;
 
         public bool ShowGlosses { get; set; } = true; // the tap-to-explain setting
 
@@ -43,6 +48,11 @@ namespace Gahwit.UI
             next = UiKit.Button(card.transform, "Next", Loc.T("dialogue.next"), Palette.Rose, Color.white, 30, Advance, 32);
             ((RectTransform)next.transform).Pin(Vector2.zero, new Vector2(32, 28), new Vector2(240, UiKit.MinTouch));
 
+            // The time left for a timed choice: a bar that shrinks, over the choices.
+            timer = UiKit.Panel(transform, "Timer", Palette.Rose, 8);
+            timer.rectTransform.Bottom(1040, 16, 80, 80);
+            timer.gameObject.SetActive(false);
+
             choices = UiKit.Rect(transform, "Choices").Bottom(580, 440, 40, 40);
             var column = choices.gameObject.AddComponent<VerticalLayoutGroup>();
             column.spacing = 16;
@@ -55,6 +65,21 @@ namespace Gahwit.UI
         }
 
         public bool IsOpen => gameObject.activeSelf;
+
+        // A "choose" memory (missing/12): the conversation plays like a scene, but each choice has a timer.
+        public void PlayTimed(StoryPlayer story, string knot, ChooseGame game, Action done)
+        {
+            timed = game;
+            game.TimedOut += TimedOut;
+            Play(story, knot, () =>
+            {
+                game.TimedOut -= TimedOut;
+                game.End();
+                timed = null;
+                timer.gameObject.SetActive(false);
+                done?.Invoke();
+            });
+        }
 
         public void Play(StoryPlayer story, string knot, Action done, Action<string> choiceMade = null)
         {
@@ -87,6 +112,12 @@ namespace Gahwit.UI
             {
                 waitingForChoice = true;
                 next.gameObject.SetActive(false);
+                if (timed != null)
+                {
+                    choiceTags = player.ChoiceTags;
+                    timed.Ask();
+                    timer.gameObject.SetActive(true);
+                }
                 var options = player.Choices;
                 for (int i = 0; i < options.Count; i++)
                 {
@@ -105,9 +136,31 @@ namespace Gahwit.UI
 
         void Choose(int index)
         {
+            if (timed != null)
+            {
+                timed.Answer(choiceTags[index] == "good");
+                timer.gameObject.SetActive(false);
+            }
             string id = player.Choose(index);
             onChoice?.Invoke(id);
             Advance();
+        }
+
+        // The time ran out: the talk moves on with a weak answer.
+        void TimedOut()
+        {
+            timer.gameObject.SetActive(false);
+            int weak = Math.Max(0, choiceTags.FindIndex(tag => tag != "good"));
+            onChoice?.Invoke(player.Choose(weak));
+            Advance();
+        }
+
+        void Update()
+        {
+            if (timed == null || !waitingForChoice) return;
+            timed.Tick(Time.unscaledDeltaTime);
+            if (timed != null && timed.Waiting)
+                timer.rectTransform.localScale = new Vector3(Mathf.Clamp01(timed.SecondsLeft / timed.SecondsPerChoice), 1, 1);
         }
 
         void Show(StoryLine storyLine)

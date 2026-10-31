@@ -6,6 +6,7 @@
         "Gahwit.Merge",
         "Gahwit.Save",
         "Gahwit.UI",
+        "Gahwit.Boot",
         "Unity.Localization",
         "Unity.Localization.Editor"
     ],

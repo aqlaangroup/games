@@ -2,6 +2,47 @@
 
 Decisions and known gaps. Newest first. Read this at the start of each session (`/CLAUDE.md`).
 
+## 2026-10-31: every memory game type (missing/12)
+
+- **Rules** (`_Game/Memories`, plain C#, 12 new tests), numbers in `balance.json` `levelB.memories.<type>`:
+  - **Rhythm:** tap as a ring closes on the dough; perfect counts 1, good half; stars by accuracy.
+  - **Find:** find the listed objects among decoys; a hint after 20 s without a find; stars by time left.
+  - **Restore:** drag the torn photo's 12 pieces; each snaps within `snapDistance` of its place.
+  - **Trace:** follow a dotted seam; points are stitched in order, and a finger that wanders off can rejoin further on. Distances are in centimetres, so the seam feels the same on every phone; a seam too big for the screen is drawn smaller.
+  - **Tune:** drag the radio dial; signal bars rise near the station; holding on it for `holdSeconds` tunes it in.
+  - **Choose:** the conversation is Ink, like every scene; a choice tagged `#good` is the good answer, each choice has a timer, and when time runs out the talk moves on with a weak answer.
+  - **Reassemble:** the letter's strips (one Ink line each) start out of place; tap two to swap.
+  - **Stars** never fall below 1, so nothing blocks the story.
+- **Decisions (proposed numbers, `balance.json`):**
+  - The easy assist widens rhythm's windows ×1.5, trace's tolerance ×1.5 and tune's station ×2, and gives choose ×1.5 time. Find, restore and reassemble are puzzles with a clock, so they have no assist.
+  - Tune needs the dial held on the station for 1 s.
+  - **Retry:** right after a memory under 3 stars, the game offers another try for `skipRetryGems` (10) through the platform (`memoryRetry:<id>`), or carrying on. The best stars count.
+  - **No `Memory_Template` scene.** Memories play over the café, so a new memory is only content: a `memories` entry (`gameKnot`, `objects`, `decoys`, `line`) and its Ink knots.
+- **Practice memories:** chapters 2–9 aren't written yet (missing/11), so `Content/memory_practice.json` and `Story/memory_practice.ink` [draft] hold one of each type. The Editor menu **Gahwit Sitti > Play memory game** plays them in Play mode, without saving.
+- **Still missing:**
+  - Each chapter's own memory content, cutscenes and 1974 sets (11, 13).
+  - A free replay later, which needs a place to replay from, such as a memory album.
+  - A gem retry interrupted by a lost connection is applied by the platform but not replayed by the game.
+
+## 2026-10-31: phone builds, CI, download size and performance data (missing/23)
+
+- **Android:** `BuildTools.BuildAndroid` (menu **Gahwit Sitti > Build Android**) makes an app bundle: IL2CPP, arm64, target API 36 (Google Play's minimum from 31 August 2026).
+  - **Size:** a 44 MB bundle; bundletool puts the download at 45 MB.
+  - **Signing:** the upload key comes from the environment (`GAHWIT_ANDROID_KEYSTORE` and its passwords) and never stays in Player Settings. Without it the bundle is debug-signed, which Google Play refuses. The key doesn't exist yet.
+- **iOS:** `tools/ios_testflight.sh` archives the Xcode project and prints its size: 108 MB installed and a 36 MB compressed `.ipa`, far under the 150 MB limit. With an App Store Connect API key, `upload` sends it to TestFlight.
+  - Xcode's app-thinning step crashes on this Mac (macOS 27), so the script exports without thinning by default (`THIN=1` asks for it).
+- **Build numbers:** each build takes the number of commits, or `BUILD_NUMBER` in CI. Player Settings keep their own numbers, so builds don't change tracked files.
+- **CI** (`.github/workflows/gahwit-sitti.yml`):
+  - The platform's tests run on every push, against a PostgreSQL service.
+  - The Unity EditMode tests run on every push, and PlayMode too at night, through GameCI.
+  - Android and iOS builds run every night or on demand.
+  - The Unity jobs skip themselves until the licence secrets are set.
+- **Performance:**
+  - **The `perf` event:** after two minutes of play (`ui.graphics.perfSampleSeconds`), the game sends average fps, the share of frames slower than 30 fps, the worst frame and memory, once a session. Testers' phones, such as the 3 GB Android, report without anyone watching (`Core/FrameSampler.cs`, tested).
+  - **Fewer allocations per tap:** order cards rebuild only when orders or their readiness change, style chips are built once per task, and `Game.IsWanted` loops instead of LINQ.
+- **Git LFS** rules now cover images, models, audio and video anywhere in the game's folder (`games/gahwit-sitti/.gitattributes`).
+- **Still missing:** the store uploads and the upload key (accounts only the owner can create), the CI secrets, the test on a 3 GB Android, a memory budget from its numbers, and remote content through Addressables.
+
 ## 2026-10-31: touch targets, settings, accessibility and feel (missing/15)
 
 - **Touch targets:** every button is now 44 pt or more on the narrowest phone we support (360 pt wide), which is 132 units on the 1080-unit canvas.

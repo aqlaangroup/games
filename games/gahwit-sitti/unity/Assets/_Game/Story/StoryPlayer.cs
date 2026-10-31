@@ -56,6 +56,18 @@ namespace Gahwit.Story
             }
         }
 
+        // Each current choice's first tag ("" without one), such as "good" in a timed-choice memory.
+        public List<string> ChoiceTags
+        {
+            get
+            {
+                var tags = new List<string>();
+                foreach (var choice in story.currentChoices)
+                    tags.Add(choice.tags != null && choice.tags.Count > 0 ? choice.tags[0].Trim() : "");
+                return tags;
+            }
+        }
+
         // Returns the chosen option's id, or its position when the choice has no tag.
         public string Choose(int index)
         {

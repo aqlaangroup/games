@@ -30,8 +30,15 @@ namespace Gahwit.UI
         // The serve button of one order, for the tutorial's pointer.
         public RectTransform ServeButton(int orderId) => serveButtons.TryGetValue(orderId, out var button) ? button : null;
 
+        int shown = -1;
+
+        // The cards are rebuilt only when the orders or their readiness change, not on every tap.
         public void Refresh()
         {
+            int key = 17;
+            foreach (var order in game.Orders) key = (key * 31 + order.Id) * 2 + (game.CanServe(order) ? 1 : 0);
+            if (key == shown && transform.childCount == game.Orders.Count) return;
+            shown = key;
             UiKit.Clear(transform);
             serveButtons.Clear();
             foreach (var order in game.Orders) Card(order);

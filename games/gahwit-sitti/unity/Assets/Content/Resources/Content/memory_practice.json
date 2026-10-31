@@ -1,0 +1,20 @@
+{
+  "comment": "Practice memories, one per game type (missing/12), played from the Editor menu Gahwit Sitti > Play memory game while chapters 2-9 are not written yet (missing/11). [draft] Same shape as chapters.json memories; object names are memobj.<id> keys. Trace lines are in centimetres.",
+  "memories": {
+    "practice_pour": { "type": "pour" },
+    "practice_rhythm": { "type": "rhythm" },
+    "practice_find": {
+      "type": "find",
+      "objects": ["dallah", "radio", "ledger", "cup", "key", "photo", "rosary", "lamp"],
+      "decoys": ["chair", "clock", "jar", "basket"]
+    },
+    "practice_restore": { "type": "restore" },
+    "practice_trace": {
+      "type": "trace",
+      "line": [[0, 0], [1.2, 0.7], [2.4, 0], [3.6, 0.7], [4.8, 0], [4.8, 1.8], [3.6, 2.5], [2.4, 1.8], [1.2, 2.5], [0, 1.8]]
+    },
+    "practice_tune": { "type": "tune" },
+    "practice_choose": { "type": "choose", "story": "Story/memory_practice", "gameKnot": "practice_choose" },
+    "practice_reassemble": { "type": "reassemble", "story": "Story/memory_practice", "gameKnot": "practice_letter" }
+  }
+}

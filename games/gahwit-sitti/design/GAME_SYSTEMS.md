@@ -247,6 +247,7 @@ These feed the soft-launch gates in `PLAN.md`:
 | `store_view` / `purchase` | product, price tier, country |
 | `event_join` / `event_progress` | event id, milestone |
 | `board_full` | free squares |
+| `perf` | average fps, share of frames under the weakest phone's target, worst frame, phone memory, device, graphics level (once a session, after `ui.graphics.perfSampleSeconds`) |
 
 ## 16. How Unity is organised
 
