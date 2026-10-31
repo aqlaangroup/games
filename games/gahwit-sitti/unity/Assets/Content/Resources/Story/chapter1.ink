@@ -107,3 +107,11 @@
 === lana_notify ===
 وصلت عمّان. أمّي بتقول ما بدها تشوف خالتي… وأنا بدّي أعرف ليش. #lana
 -> END
+
+// [draft] Abu Fadi's first friendship scene (level 3, SYSTEMS_B.md section 3): his lost love. Needs the native writer.
+=== abu_fadi_3 ===
+بتعرفي يا سلمى… أنا كمان كان إلي حدا بستنّاه [[هون:هنا]]. #abu_fadi
+كل جمعة كانت تقعد جنب الشبّاك، وتطلب فنجانها سادة، وما تحكي ولا كلمة. #abu_fadi
+وشو صار يا عمّو؟ #salma
+سافرت سنة 76. وأنا ضلّيت أجي كل جمعة، يمكن ترجع. ستّك كانت تعرف، وما حكت لحدا. #abu_fadi
+-> END

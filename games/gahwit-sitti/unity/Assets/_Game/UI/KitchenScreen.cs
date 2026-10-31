@@ -1,3 +1,4 @@
+using System.Linq;
 using System;
 using Gahwit.Core;
 using Gahwit.Merge;
@@ -34,6 +35,7 @@ namespace Gahwit.UI
 
             board = UiKit.Rect(root, "Board").Stretch(12, 12, 268, 108).gameObject.AddComponent<BoardView>();
             board.Init(game, look, dragLayer, TapGenerator);
+            board.DroppedOnOrder += ServeByDrop;
             board.SelectionChanged += RefreshInfo;
 
             var infoBar = UiKit.Panel(root, "Info", Palette.Card, 28);
@@ -57,6 +59,16 @@ namespace Gahwit.UI
             if (result == TapResult.NoEnergy || result == TapResult.BoardFull) UiSound.Play("ui_error");
             if (result == TapResult.NoEnergy) ui.Toast.Show(Loc.T("kitchen.noEnergy"));
             else if (result == TapResult.BoardFull) ui.Toast.Show(Loc.T("kitchen.boardFull"));
+        }
+
+        // Dragging a finished item onto its customer's card serves the order (COMPLETE_SPEC.md section 1, step 6).
+        void ServeByDrop(int cell, int orderId)
+        {
+            var item = game.ItemAt(cell);
+            var order = game.Orders.FirstOrDefault(o => o.Id == orderId);
+            bool wanted = order != null && item != null && order.Lines.Any(l => l.Chain == item.Chain && l.Level == item.Level);
+            if (wanted && game.CanServe(order)) Serve(order);
+            else UiSound.Play("ui_error");
         }
 
         void Serve(Order order)

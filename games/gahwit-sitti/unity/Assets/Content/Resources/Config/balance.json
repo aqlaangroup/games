@@ -1122,6 +1122,7 @@
       "pointsFavourite": 3,
       "pointsOther": 1,
       "pointsToNext": "10*L",
+      "pointsToNextPerLevel": 10,
       "storyAtLevels": [
         3,
         6,

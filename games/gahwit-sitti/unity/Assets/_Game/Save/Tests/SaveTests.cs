@@ -175,7 +175,7 @@ namespace Gahwit.Save.Tests
 
             var loaded = SaveService.FromJson(v2.ToString(), config, content, out var data, out _);
 
-            Assert.AreEqual(3, data.SchemaVersion);
+            Assert.AreEqual(SaveData.CurrentSchema, data.SchemaVersion);
             Assert.AreEqual(0, loaded.EasyOrdersLeft);
             Assert.AreEqual(state.TutorialStep, loaded.TutorialStep);
         }

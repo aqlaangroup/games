@@ -41,6 +41,7 @@ namespace Gahwit.UI
         {
             bool ready = game.CanServe(order);
             var card = UiKit.Panel(transform, "Order" + order.Id, ready ? Palette.Ready : Palette.Card, 30);
+            card.gameObject.AddComponent<OrderCard>().OrderId = order.Id; // a drop target for dragged items
             card.gameObject.AddComponent<LayoutElement>().flexibleWidth = 1;
 
             string who = Loc.T((order.IsCharacter ? "char." : "walkin.") + order.Customer);
@@ -73,5 +74,11 @@ namespace Gahwit.UI
             ((RectTransform)button.transform).Bottom(10, 56, 14, 14);
             serveButtons[order.Id] = (RectTransform)button.transform;
         }
+    }
+
+    // Marks an order card, so the board can serve by dropping an item on it.
+    public sealed class OrderCard : MonoBehaviour
+    {
+        public int OrderId;
     }
 }

@@ -23,8 +23,15 @@ namespace Gahwit.UI
 
         public RectTransform RestoreButton => restore != null && restore.gameObject.activeInHierarchy ? (RectTransform)restore.transform : null;
 
-        public void Init(Game game, GameUi ui, CafeCamera cafeCamera, CafeRoom room, System.Action openDrawer)
+        // Each seated customer shows what they ordered over their head (SYSTEMS_B.md section 3).
+        readonly System.Collections.Generic.List<(int orderId, ItemTile tile)> bubbles = new System.Collections.Generic.List<(int, ItemTile)>();
+        RectTransform bubbleLayer;
+        ItemLook look;
+        int bubblesFor = -1;
+
+        public void Init(Game game, GameUi ui, CafeCamera cafeCamera, CafeRoom room, System.Action openDrawer, ItemLook look)
         {
+            this.look = look;
             this.game = game;
             this.ui = ui;
             this.room = room;
@@ -33,6 +40,7 @@ namespace Gahwit.UI
             var pad = UiKit.Rect(transform, "OrbitPad").Stretch();
             pad.gameObject.AddComponent<Image>().color = Color.clear;
             pad.gameObject.AddComponent<OrbitPad>().Target = cafeCamera;
+            bubbleLayer = UiKit.Rect(transform, "Bubbles").Stretch();
 
             UiKit.Text(transform, "Hint", Loc.T("cafe.hintOrbit"), 24, Palette.InkSoft, TextAlignmentOptions.Center)
                 .rectTransform.Top(16, 36);
@@ -77,6 +85,7 @@ namespace Gahwit.UI
 
         void Update()
         {
+            PlaceBubbles();
             bool waiting = game.LetterWaiting() != null;
             room.SetDrawerGlow(waiting);
             // Hidden while a scene or the letter itself is on screen, so it can't open twice.
@@ -90,6 +99,41 @@ namespace Gahwit.UI
             var button = (RectTransform)drawer.transform;
             button.anchoredPosition = local + new Vector2(0, 90);
             button.localScale = Vector3.one * (1f + 0.04f * Mathf.Sin(Time.unscaledTime * 3f));
+        }
+
+        // Tiles are rebuilt only when the orders change; each frame only moves them over the figures.
+        void PlaceBubbles()
+        {
+            int signature = 17;
+            foreach (var order in game.Orders) signature = signature * 31 + order.Id;
+            if (signature != bubblesFor)
+            {
+                bubblesFor = signature;
+                UiKit.Clear(bubbleLayer);
+                bubbles.Clear();
+                foreach (var order in game.Orders)
+                {
+                    var bubble = UiKit.Panel(bubbleLayer, "Bubble", Color.white, 40);
+                    bubble.raycastTarget = false;
+                    bubble.rectTransform.sizeDelta = new Vector2(96, 96);
+                    var tile = new ItemTile(bubble.transform, "Wanted", 30, 0);
+                    tile.Root.Stretch(8, 8, 8, 8);
+                    var line = order.Lines[0];
+                    tile.Show(new Item(line.Chain, line.Level), look);
+                    bubbles.Add((order.Id, tile));
+                }
+            }
+            var rect = (RectTransform)bubbleLayer;
+            foreach (var (orderId, tile) in bubbles)
+            {
+                var bubble = (RectTransform)tile.Root.parent;
+                bool shown = room.Customers.TryHead(orderId, out var head);
+                if (bubble.gameObject.activeSelf != shown) bubble.gameObject.SetActive(shown);
+                if (!shown) continue;
+                var screen = RectTransformUtility.WorldToScreenPoint(view, head);
+                RectTransformUtility.ScreenPointToLocalPointInRectangle(rect, screen, null, out var local);
+                bubble.anchoredPosition = local;
+            }
         }
 
         public void Refresh()

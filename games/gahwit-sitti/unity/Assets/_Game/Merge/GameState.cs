@@ -27,6 +27,8 @@ namespace Gahwit.Merge
         public int TutorialStep;   // the last finished step of COMPLETE_SPEC.md section 1
         public bool TutorialDone;
         public int EasyOrdersLeft; // free play starts with a few easy orders
+        public int Cosiness;       // from placed decor (missing/07)
+        public Dictionary<string, RegularState> Regulars = new Dictionary<string, RegularState>();
         public ulong Rng;
     }
 
@@ -54,9 +56,19 @@ namespace Gahwit.Merge
             other != null && other.Generator == Generator && other.Chain == Chain && other.Level == Level;
     }
 
+    // A regular's friendship (SYSTEMS_B.md section 3): points inside the current level, like XP.
+    public sealed class RegularState
+    {
+        public int Points;
+        public int Level = 1;
+        public List<int> StoriesSeen = new List<int>();
+    }
+
+    // Each order is a customer in the café (DEVLOG 2026-10-31).
     public sealed class Order
     {
         public int Id;
+        public long CreatedMs; // trusted time the customer walked in
         public string Customer;
         public bool IsCharacter;
         public List<OrderLine> Lines = new List<OrderLine>();

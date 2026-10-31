@@ -19,6 +19,7 @@ namespace Gahwit.UI
         public int Selected => selected;
         public RectTransform CellRect(int cell) => (RectTransform)cells[cell].transform;
         public event Action SelectionChanged;
+        public event Action<int, int> DroppedOnOrder; // cell, order id
 
         public void Init(Game game, ItemLook look, RectTransform dragLayer, Action<int> tapGenerator)
         {
@@ -142,6 +143,11 @@ namespace Gahwit.UI
             {
                 selected = -1;
                 game.Move(from, target.Index);
+            }
+            else if (target == null && hit != null && hit.GetComponentInParent<OrderCard>() is OrderCard card)
+            {
+                selected = -1;
+                DroppedOnOrder?.Invoke(from, card.OrderId);
             }
             Refresh();
             SelectionChanged?.Invoke();

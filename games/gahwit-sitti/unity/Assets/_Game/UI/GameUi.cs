@@ -114,7 +114,7 @@ namespace Gahwit.UI
             Toast.transform.SetAsLastSibling();
 
             kitchen.Init(game, look, this, now, dragLayer);
-            cafe.Init(game, this, cafeCamera, room, openDrawer);
+            cafe.Init(game, this, cafeCamera, room, openDrawer, look);
 
             game.Changed += Refresh;
             Wallet.Changed += Refresh;

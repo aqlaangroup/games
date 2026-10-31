@@ -2,6 +2,36 @@
 
 Decisions and known gaps. Newest first. Read this at the start of each session (`/CLAUDE.md`).
 
+## 2026-10-31: customers in the café, Abu Fadi as a regular (missing/08)
+
+**Decisions**
+- **Every order card is a customer sitting in the café.** Order slots stay as they were (3 to 5 by level), so pacing keeps its shape.
+- Cosiness sets how many can sit: 2 to 6 seats (`levelB.cafe.walkInTables`, `cosinessForExtraTable`). Before the chairs task nobody sits, and the rest wait standing by the counter.
+- Walk-ins who wait 10 minutes unserved leave without penalty, and a new customer takes the slot. Regulars and the tutorial's first order wait.
+- Abu Fadi's friendship counts from the start, as ring 1's exception. Other regulars' friendship opens at level 6 (`unlocks`).
+- Regulars only order on their schedule (`levelB.regulars.schedule`). Abu Fadi comes mornings and afternoons, so evening and night testers won't see him after his first order. Watch this in the playtest.
+
+**Built**
+- **`CustomerRules`** (`_Game/Customers`, plain C#, 5 tests):
+  - Tips of 2–10 coins from walk-ins, raised by cosiness up to the cap.
+  - Walk-ins leave after 10 minutes.
+  - Friendship: +3 for a regular's favourite item, +1 for any other, and level L needs 10 × L points.
+  - The scene due at levels 3, 6 and 10.
+  - Seats.
+- **`CafeCustomers`** (Cafe): pooled placeholder figures walk in through the door, sit facing a table or wait by the counter, sip when served and walk out.
+  - The door bell rings for each new customer.
+  - Each waiting customer shows what they ordered in a bubble over their head (`CafeScreen`).
+- **Drag to serve:** dropping a finished item on its customer's order card serves it. The serve button still works.
+- **Abu Fadi:** his favourite is a level-3 coffee (`chapters.json`). His level-3 scene, `abu_fadi_3` (his lost love), is a **[draft]** in Amman dialect for the native writer.
+- **Save schema v4:** each order keeps when its customer walked in. The `regulars` section and `cafe.cosiness` are now read and written.
+- **Pacing:** `sim/simulate.py` now adds walk-in tips. With the spec's 2–10 coins, a typical player finishes chapters 4–9 one or two days early, and chapter 10 on target (day 30). With 1–5 coins, about a day early.
+  - The tip range stays as the spec says. Tune it, or task costs, after the playtest.
+
+**Still to do**
+- Real character art and animations (missing/13).
+- The cast list and a regular's profile screen.
+- The other 11 regulars and their scenes (missing/11).
+
 ## 2026-10-31: the first-time tutorial (missing/06)
 
 - **Steps as data:** the 11 steps from COMPLETE_SPEC.md section 1 are in `Content/Resources/Content/tutorial.json`. Each has an `until` (what finishes it), and the hands-on ones have a target, a screen and a text key.

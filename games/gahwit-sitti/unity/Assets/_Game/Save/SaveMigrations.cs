@@ -14,7 +14,8 @@ namespace Gahwit.Save
         {
             [0] = FromFirstPlayable,
             [1] = AddAccount,
-            [2] = AddEasyOrders
+            [2] = AddEasyOrders,
+            [3] = AddArrivalTimes
         };
 
         public static JObject Upgrade(JObject raw, BalanceConfig config)
@@ -120,6 +121,15 @@ namespace Gahwit.Save
             if (tutorial["easyOrdersLeft"] == null) tutorial["easyOrdersLeft"] = 0;
             save["tutorial"] = tutorial;
             save["schemaVersion"] = 3;
+            return save;
+        }
+
+        // Version 4 (2026-10-31) saves when each customer walked in. Older orders get the time at the first tick.
+        static JObject AddArrivalTimes(JObject save, BalanceConfig config)
+        {
+            foreach (var order in (save["orders"] as JArray ?? new JArray()).OfType<JObject>())
+                if (order["createdMs"] == null) order["createdMs"] = 0;
+            save["schemaVersion"] = 4;
             return save;
         }
 

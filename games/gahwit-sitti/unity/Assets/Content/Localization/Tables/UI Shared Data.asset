@@ -687,6 +687,14 @@ MonoBehaviour:
     m_Key: tutorial.skip
     m_Metadata:
       m_Items: []
+  - m_Id: 102070114836480
+    m_Key: toast.tip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 102070119030784
+    m_Key: toast.friendship
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

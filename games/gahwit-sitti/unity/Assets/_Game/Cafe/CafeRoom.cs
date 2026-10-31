@@ -62,9 +62,12 @@ namespace Gahwit.Cafe
         {
             sun = sunLight;
             cam = camera;
+            Customers = new GameObject("Customers").AddComponent<CafeCustomers>();
+            Customers.transform.SetParent(transform, false);
             // The pipeline's default material exists only in the Editor, so the template is a real asset. Its glowing
             // twin (CafeLitEmissive) is never loaded; it keeps the _EMISSION shader variant in phone builds.
             litTemplate = Resources.Load<Material>("Materials/CafeLit");
+            Customers.Init(this);
             brass = Mat("#D9B06C", 0.6f, 0.6f);
             tarnished = Mat("#7D6F62", 0.1f);
 
@@ -129,7 +132,30 @@ namespace Gahwit.Cafe
             if (!glow) drawerMat.SetColor("_EmissionColor", Color.black);
         }
 
+        public CafeCustomers Customers { get; private set; }
+
         public Vector3 DrawerPosition => drawer.position + new Vector3(0, 0.1f, 0.1f);
+
+        // Where customers walk (CafeCustomers): in through the door, to a chair, or to wait by the counter.
+        public static readonly Vector2[] TableSpots = { new Vector2(-2.3f, 0.3f), new Vector2(0.9f, 1.9f), new Vector2(-0.7f, -1.6f) };
+        public Vector3 DoorOutside => new Vector3(-W / 2 - 0.8f, 0, 2.2f);
+        public Vector3 DoorInside => new Vector3(-W / 2 + 0.9f, 0, 2.2f);
+
+        // Two chairs per table, beside it on either side; seat i faces its table.
+        public Vector3 Seat(int i)
+        {
+            var spot = TableSpots[i / 2 % TableSpots.Length];
+            return new Vector3(spot.x + (i % 2 == 0 ? -1.05f : 1.05f), 0, spot.y);
+        }
+
+        public Vector3 TableOf(int seat)
+        {
+            var spot = TableSpots[seat / 2 % TableSpots.Length];
+            return new Vector3(spot.x, 0, spot.y);
+        }
+
+        // In front of the counter, left to right.
+        public Vector3 WaitingSpot(int i) => new Vector3(1.4f + i * 0.75f, 0, -1.9f);
 
         void Update()
         {
@@ -263,7 +289,7 @@ namespace Gahwit.Cafe
             var wood = Mat("#C99E83");
             chairSeatMat = new Material(wood) { name = "Cafe chair seat" };
             chairBackMat = new Material(wood) { name = "Cafe chair back" };
-            foreach (var spot in new[] { new Vector2(-2.3f, 0.3f), new Vector2(0.9f, 1.9f), new Vector2(-0.7f, -1.6f) })
+            foreach (var spot in TableSpots)
             {
                 var table = Group("Table", tables.transform, new Vector3(spot.x, 0, spot.y));
                 Cylinder("Top", table, 0.6f, 0.07f, new Vector3(0, 0.78f, 0), white);

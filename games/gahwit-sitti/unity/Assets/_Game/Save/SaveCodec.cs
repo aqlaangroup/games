@@ -60,7 +60,8 @@ namespace Gahwit.Save
                 Items = o.Lines.SelectMany(l => Enumerable.Repeat(new OrderItemSave { Chain = l.Chain, Level = l.Level }, l.Count)).ToList(),
                 Coins = o.Coins,
                 Xp = o.Xp,
-                Character = o.IsCharacter ? o.Customer : null
+                Character = o.IsCharacter ? o.Customer : null,
+                CreatedMs = o.CreatedMs
             }).ToList();
 
             into.Story = new StorySave
@@ -72,6 +73,15 @@ namespace Gahwit.Save
                 LettersFound = new List<string>(state.LettersFound)
             };
             into.Cafe.TaskStyles = new Dictionary<string, string>(state.TaskStyles);
+            into.Cafe.Cosiness = state.Cosiness;
+            foreach (var regular in state.Regulars)
+            {
+                var entry = into.Regulars[regular.Key] as JObject ?? new JObject();
+                entry["points"] = regular.Value.Points;
+                entry["level"] = regular.Value.Level;
+                entry["storiesSeen"] = new JArray(regular.Value.StoriesSeen);
+                into.Regulars[regular.Key] = entry;
+            }
             foreach (var memory in state.MemoryStars)
             {
                 var entry = into.Memories[memory.Key] as JObject ?? new JObject();
@@ -95,6 +105,7 @@ namespace Gahwit.Save
                 Chapter = data.Story.Chapter,
                 TaskIndex = data.Story.Task,
                 TaskStyles = new Dictionary<string, string>(data.Cafe.TaskStyles),
+                Cosiness = data.Cafe.Cosiness,
                 Choices = new Dictionary<string, string>(data.Story.Choices),
                 ScenesSeen = new List<string>(data.Story.ScenesSeen),
                 LettersFound = new List<string>(data.Story.LettersFound),
@@ -103,6 +114,15 @@ namespace Gahwit.Save
                 EasyOrdersLeft = data.Tutorial.EasyOrdersLeft,
                 Rng = ulong.TryParse(data.Rng, NumberStyles.Integer, CultureInfo.InvariantCulture, out var rng) ? rng : 0
             };
+
+            foreach (var regular in data.Regulars.Properties())
+                if (regular.Value is JObject entry)
+                    state.Regulars[regular.Name] = new RegularState
+                    {
+                        Points = entry.Value<int?>("points") ?? 0,
+                        Level = entry.Value<int?>("level") ?? 1,
+                        StoriesSeen = entry["storiesSeen"]?.Values<int>().ToList() ?? new List<int>()
+                    };
 
             foreach (var memory in data.Memories.Properties())
                 if (memory.Value is JObject entry && entry["stars"] != null) state.MemoryStars[memory.Name] = (int)entry["stars"];
@@ -128,7 +148,8 @@ namespace Gahwit.Save
                     Lines = lines,
                     Units = lines.Sum(l => l.Count * config.ItemUnits(l.Level)),
                     Coins = saved.Coins,
-                    Xp = saved.Xp
+                    Xp = saved.Xp,
+                    CreatedMs = saved.CreatedMs
                 });
                 state.NextOrderId = Math.Max(state.NextOrderId, id + 1);
             }

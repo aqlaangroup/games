@@ -17,6 +17,10 @@ REGEN_PER_HOUR = 3600 / ENERGY["regenSeconds"]
 YIELD = {int(k): v["unitsPerTap"] for k, v in B["generators"]["levelOutput"].items()}
 COINS_PER_UNIT = B["orders"]["coinsPerUnit"]
 XP_PER_UNIT = B["orders"]["xpPerUnit"]
+# Walk-in customers tip when served (SYSTEMS_B.md section 3); regulars and story characters don't.
+# Cosiness raises tips, but decor isn't modelled yet, so this is the tip at cosiness 0.
+WALK_IN_SHARE = 1 - B["orders"]["characterOrderChance"]
+TIP_AVG = sum(B["levelB"]["walkIns"]["tipCoins"]) / 2
 PASS = B["events"]["templates"]["pass"]
 CHAPTERS = B["chapters"]
 GEN_CHAIN = {g["id"]: g["chain"] for g in B["generators"]["list"]}
@@ -98,9 +102,10 @@ def run(profile, days=35):
             energy -= chunk
             spent_today += chunk
             units = chunk * p["eff"] * gens.avg_yield()
-            coins += units * COINS_PER_UNIT
+            orders = units / order_size(level)
+            coins += units * COINS_PER_UNIT + orders * WALK_IN_SHARE * TIP_AVG
             xp += units * XP_PER_UNIT
-            orders_today += units / order_size(level)
+            orders_today += orders
             while xp >= xp_to_next(level):
                 xp -= xp_to_next(level)
                 level += 1

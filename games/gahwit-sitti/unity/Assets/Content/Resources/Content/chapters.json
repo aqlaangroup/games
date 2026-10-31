@@ -54,7 +54,9 @@
     "abu_fadi": {
       "color": "#1D6C67",
       "placesOrders": true,
-      "fromChapter": 1
+      "fromChapter": 1,
+      "favourite": { "chain": "coffee", "level": 3 },
+      "friendshipFromStart": true
     },
     "samira": {
       "color": "#7E2F43",

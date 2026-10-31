@@ -53,6 +53,14 @@ namespace Gahwit.Core
         public string Color;
         public bool PlacesOrders;
         public int FromChapter = 1;
+        public FavouriteItem Favourite;    // a regular's favourite: +3 friendship points (SYSTEMS_B.md section 3)
+        public bool FriendshipFromStart;   // Abu Fadi: friendship counts before level 6 unlocks it for others
+    }
+
+    public sealed class FavouriteItem
+    {
+        public string Chain;
+        public int Level;
     }
 
     public sealed class ChapterTasks

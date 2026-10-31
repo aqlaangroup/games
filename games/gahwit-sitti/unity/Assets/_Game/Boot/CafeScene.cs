@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Gahwit.Cafe;
 using Gahwit.Core;
+using Gahwit.Customers;
 using Gahwit.Memories;
 using Gahwit.Merge;
 using Gahwit.Platform;
@@ -29,6 +30,9 @@ namespace Gahwit.Boot
         AccountService account;
         AudioService audio;
         TutorialFlow tutorial;
+        CustomerRules customers;
+        readonly List<CafeCustomers.Info> present = new List<CafeCustomers.Info>();
+        bool customersShown;
         const string TutorialSeenKey = "gahwit.tutorial.finishedOnThisPhone";
         PlatformAnalytics analytics;
         float sessionStartedAt;
@@ -69,6 +73,7 @@ namespace Gahwit.Boot
 
             analytics = services.Analytics;
             TrackGame();
+            WireCustomers();
             tutorial.StepFinished += OnTutorialStep;
             tutorial.Skipped += () =>
             {
@@ -136,6 +141,58 @@ namespace Gahwit.Boot
                 ui.ShowKitchen();
                 ResumeMemories();
             });
+        }
+
+        // Every order is a customer in the café (DEVLOG 2026-10-31): they walk in, sit, sip when served and leave.
+        void WireCustomers()
+        {
+            customers = new CustomerRules(game);
+            customers.Tipped += (_, coins) => ui.Toast.Show(Loc.T("toast.tip", coins));
+            customers.FriendshipLevelUp += (who, level) =>
+            {
+                ui.Toast.Show(Loc.T("toast.friendship", Loc.T("char." + who), level));
+                Track("friendship_level", "regular", who, "level", level);
+                PlayRegularStory(who);
+            };
+            game.OrderServed += order => cafe.Customers.Serve(order.Id);
+            cafe.Customers.Arrived += _ =>
+            {
+                if (customersShown) audio.Play("door_bell"); // not for the ones already there at launch
+            };
+            game.Changed += ShowCustomers;
+            ShowCustomers();
+            customersShown = true;
+            foreach (var regular in game.State.Regulars.Keys.ToList()) PlayRegularStory(regular);
+        }
+
+        void ShowCustomers()
+        {
+            present.Clear();
+            foreach (var order in game.Orders)
+                present.Add(new CafeCustomers.Info { OrderId = order.Id, Color = CustomerColor(order) });
+            cafe.Customers.Sync(present, customers.Seats(game.CompletedTaskIds().Contains("chairs")));
+        }
+
+        // Regulars wear their own colour; walk-ins one of a few soft colours, picked by order id.
+        static readonly Color[] WalkInColors = { Palette.Lilac, Palette.RoseSoft, Palette.Hex("#A9C7B2"), Palette.Hex("#E7C9A0"), Palette.Hex("#9FB7D6") };
+
+        Color CustomerColor(Order order) =>
+            order.IsCharacter && game.Content.Characters.TryGetValue(order.Customer, out var character)
+                ? Palette.Hex(character.Color)
+                : WalkInColors[order.Id % WalkInColors.Length];
+
+        // A regular's story scene at friendship levels 3, 6 and 10 (SYSTEMS_B.md section 3), after any scene playing.
+        void PlayRegularStory(string who)
+        {
+            string knot = customers.StoryDue(who);
+            if (knot == null) return;
+            void Play() => PlayScene(StoryFor(game.State.Chapter), knot, () =>
+            {
+                customers.StorySeen(who, knot);
+                dirty = true;
+            });
+            if (ui.Dialogue.IsOpen) afterScene.Enqueue(Play);
+            else Play();
         }
 
         void OnTutorialStep(TutorialStep step)
@@ -389,7 +446,9 @@ namespace Gahwit.Boot
             if (Time.unscaledTime >= nextTick)
             {
                 nextTick = Time.unscaledTime + 1f;
+                game.TimeOfDay = CafeRoom.TimeFromClock(DateTime.Now, game.Config.LevelB.Cafe.TimeOfDayStartHours).ToString().ToLowerInvariant();
                 game.Tick(time.NowMs);
+                customers.Tick(time.NowMs);
             }
             if (dirty && Time.unscaledTime >= nextSave) Save();
             if (Time.unscaledTime >= nextSync)

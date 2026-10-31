@@ -27,6 +27,13 @@ namespace Gahwit.Merge
         public event Action<TaskDef> TaskCompleted;
         public event Action<int> ChapterCompleted;
         public event Action Changed;
+        public event Action<Order> OrderDropped;
+
+        // The café's time of day ("morning", "afternoon", "evening", "night"); regulars only order on their schedule.
+        public string TimeOfDay { get; set; } = "morning";
+
+        // The trusted time of the last Tick, which stamps when each customer walked in.
+        public long ClockMs { get; private set; }
 
         public Game(BalanceConfig config, ChapterContent content, GameState state)
         {
@@ -78,6 +85,9 @@ namespace Gahwit.Merge
 
         public void Tick(long nowMs)
         {
+            ClockMs = nowMs;
+            foreach (var order in State.Orders)
+                if (order.CreatedMs == 0) order.CreatedMs = nowMs; // orders from before arrival times were saved
             if (State.Energy >= EnergyCap)
             {
                 State.EnergyStampMs = nowMs;
@@ -250,6 +260,18 @@ namespace Gahwit.Merge
             item != null && !item.IsGenerator &&
             State.Orders.Any(o => o.Lines.Any(line => line.Chain == item.Chain && line.Level == item.Level));
 
+        // A customer who leaves unserved takes the order away; a new customer takes the slot.
+        public bool DropOrder(int orderId)
+        {
+            var order = State.Orders.Find(o => o.Id == orderId);
+            if (order == null) return false;
+            State.Orders.Remove(order);
+            OrderDropped?.Invoke(order);
+            FillOrders();
+            Changed?.Invoke();
+            return true;
+        }
+
         public bool Serve(int orderId)
         {
             var order = State.Orders.Find(o => o.Id == orderId);
@@ -308,8 +330,10 @@ namespace Gahwit.Merge
                 lines.Add(MakeLine(chain, size / lineCount));
             }
 
+            var schedule = Config.LevelB.Regulars.Schedule;
             var named = Content.Characters
                 .Where(kv => kv.Value.PlacesOrders && kv.Value.FromChapter <= State.Chapter)
+                .Where(kv => !schedule.TryGetValue(kv.Key, out var times) || times.Contains(TimeOfDay))
                 .Select(kv => kv.Key).OrderBy(id => id).ToList();
             if (named.Count > 0 && rng.NextDouble() < Config.Orders.CharacterOrderChance)
                 return MakeOrder(named[rng.Range(0, named.Count)], true, lines);
@@ -350,6 +374,7 @@ namespace Gahwit.Merge
             return new Order
             {
                 Id = id,
+                CreatedMs = ClockMs,
                 Customer = isCharacter ? character : Content.WalkIns[id % Content.WalkIns.Count],
                 IsCharacter = isCharacter,
                 Lines = lines,

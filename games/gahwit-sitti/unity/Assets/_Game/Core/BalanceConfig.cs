@@ -19,6 +19,7 @@ namespace Gahwit.Core
         public OrdersConfig Orders;
         public List<ChapterConfig> Chapters;
         public PlayerLevelsConfig PlayerLevels;
+        public UnlocksConfig Unlocks;
         public TutorialConfig Tutorial;
         public SavesConfig Saves;
         public UiConfig Ui;
@@ -174,6 +175,19 @@ namespace Gahwit.Core
         public int Energy; // gems come from Formulas.LevelUpGems
     }
 
+    public sealed class UnlocksConfig
+    {
+        public Dictionary<string, List<string>> ByPlayerLevel;
+
+        // The player level a feature opens at (balance.json unlocks), or 1 when it isn't listed.
+        public int Level(string feature)
+        {
+            foreach (var pair in ByPlayerLevel)
+                if (pair.Value.Contains(feature)) return int.Parse(pair.Key);
+            return 1;
+        }
+    }
+
     public sealed class TutorialConfig
     {
         public int EasyOrdersAfter;
@@ -206,12 +220,40 @@ namespace Gahwit.Core
     public sealed class LevelBConfig
     {
         public CafeConfig Cafe;
+        public WalkInsConfig WalkIns;
+        public RegularsConfig Regulars;
         public MemoriesConfig Memories;
     }
 
     public sealed class CafeConfig
     {
         public Dictionary<string, int> TimeOfDayStartHours; // morning, afternoon, evening, night
+        public MinMax WalkInTables;
+        public List<int> CosinessForExtraTable;
+        public float TipBonusPerCosinessPoint;
+        public float TipBonusMax;
+    }
+
+    public sealed class MinMax
+    {
+        public int Min;
+        public int Max;
+    }
+
+    public sealed class WalkInsConfig
+    {
+        public List<int> TipCoins; // [min, max]
+        public int LeaveAfterMinutes;
+    }
+
+    public sealed class RegularsConfig
+    {
+        public int FriendshipMax;
+        public int PointsFavourite;
+        public int PointsOther;
+        public int PointsToNextPerLevel; // level L needs PointsToNextPerLevel * L points to reach L + 1
+        public List<int> StoryAtLevels;
+        public Dictionary<string, List<string>> Schedule; // times of day each regular visits
     }
 
     public sealed class MemoriesConfig
