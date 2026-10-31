@@ -29,6 +29,14 @@ services:
       - traefik.http.routers.games.tls=true
       - traefik.http.routers.games.middlewares=secure-headers@file,compress@file
       - traefik.http.services.games.loadbalancer.server.port=8080
+      # Staff only: the panel and the admin API answer only the office and VPN IPs (admin-ips-cf); everyone else gets 403.
+      - traefik.http.routers.games-staff.rule=Host(`games.aqlaan.com`) && (PathPrefix(`/staff`) || PathPrefix(`/admin`) || PathRegexp(`^/games/[^/]+/admin(/|$)`))
+      - traefik.http.routers.games-staff.priority=100
+      - traefik.http.routers.games-staff.entrypoints=websecure
+      - traefik.http.routers.games-staff.tls=true
+      - traefik.http.routers.games-staff.middlewares=admin-ips-cf@file,secure-headers@file,compress@file
+      - traefik.http.routers.games-staff.service=games
+      - traefik.http.routers.games.service=games
 
 networks:
   proxy:
