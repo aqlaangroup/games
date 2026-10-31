@@ -6497,38 +6497,76 @@
         {
          "shape": "box",
          "size": [
-          10,
-          0.18,
-          0.22
+          10.0,
+          0.2,
+          0.16
          ],
          "at": [
           0,
           0,
-          -1.6
+          0.08
          ],
          "color": "#A57A62"
         },
         {
          "shape": "box",
          "size": [
-          10,
-          0.18,
-          0.22
+          10.0,
+          0.06,
+          0.2
          ],
          "at": [
           0,
-          0,
-          1.6
+          -0.13,
+          0.1
          ],
-         "color": "#A57A62"
+         "color": "#7A5340"
         }
        ],
        "at": [
         0,
-        4.4,
-        0
+        4.45,
+        -3.88
        ],
        "rot": 0
+      },
+      {
+       "parts": [
+        {
+         "shape": "box",
+         "size": [
+          8.0,
+          0.2,
+          0.16
+         ],
+         "at": [
+          0,
+          0,
+          0.08
+         ],
+         "color": "#A57A62"
+        },
+        {
+         "shape": "box",
+         "size": [
+          8.0,
+          0.06,
+          0.2
+         ],
+         "at": [
+          0,
+          -0.13,
+          0.1
+         ],
+         "color": "#7A5340"
+        }
+       ],
+       "at": [
+        -4.9,
+        4.45,
+        0
+       ],
+       "rot": 90
       }
      ]
     },
@@ -10813,31 +10851,36 @@
    "story": "Story/chapter3",
    "knot": "letter_2",
    "voiceKnot": "voice_2",
-   "notifyKnot": "notify_2"
+   "notifyKnot": "notify_2",
+   "voiceClip": "Voice/Drafts/voice_2_teta"
   },
   "letter_3": {
    "story": "Story/chapter5",
    "knot": "letter_3",
    "voiceKnot": "voice_3",
-   "notifyKnot": "notify_3"
+   "notifyKnot": "notify_3",
+   "voiceClip": "Voice/Drafts/voice_3_teta"
   },
   "letter_4": {
    "story": "Story/chapter7",
    "knot": "letter_4",
    "voiceKnot": "voice_4",
-   "notifyKnot": "notify_4"
+   "notifyKnot": "notify_4",
+   "voiceClip": "Voice/Drafts/voice_4_teta"
   },
   "letter_5": {
    "story": "Story/chapter9",
    "knot": "letter_5",
    "voiceKnot": "voice_5",
-   "notifyKnot": "notify_5"
+   "notifyKnot": "notify_5",
+   "voiceClip": "Voice/Drafts/voice_5_teta"
   },
   "letter_6": {
    "story": "Story/chapter10",
    "knot": "letter_6",
    "voiceKnot": "voice_6",
-   "notifyKnot": "notify_6"
+   "notifyKnot": "notify_6",
+   "voiceClip": "Voice/Drafts/voice_6_teta"
   }
  },
  "styles": {

@@ -101,6 +101,10 @@ namespace Gahwit.Boot
 
             File.WriteAllText(Path.Combine(folder, "done.txt"), DateTime.UtcNow.ToString("o"));
             Debug.Log("[Tour] Done: " + folder);
+
+            // A test message and a test exception for the crash reporter (missing/16), environment "tour" in GlitchTip.
+            Sentry.Unity.SentrySdk.CaptureMessage("Screen tour: crash reporter test message");
+            throw new InvalidOperationException("Screen tour: crash reporter test exception");
         }
 
         IEnumerator Panel<T>(string name, Action<T> show) where T : MonoBehaviour

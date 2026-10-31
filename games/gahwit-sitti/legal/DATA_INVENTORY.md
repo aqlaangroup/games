@@ -17,13 +17,14 @@ What Gahwit Sitti and the platform collect, from the code on 2026-10-31. Use it 
 | Wallet ledger (gem changes and why) | Platform | Platform (`WalletEntries`) | Paid currency, support | Yes |
 | Analytics events (name, fields, time, session id) | Play | Platform (`AnalyticsEvents`) | Improving the game | Yes (player id) |
 | Error reports (message, stack trace) | Unity errors on the phone | Platform, as analytics events | Fixing crashes | Yes |
+| Crash reports (stack trace, device model, OS and app version; no personal data, screenshots or IP storage) | Crashes and errors on the phone | Our own GlitchTip server (errors.aqlaan.com), via the open-source Sentry SDK | Fixing crashes | No |
 | Performance sample (fps, memory) | Phone | Platform, as an analytics event | Performance on low-end phones | Yes |
 | Support message and optional email | Help form | Platform (`SupportTickets`) | Answering the player | Yes |
 | IP address | Network | Memory only, for rate limits | Abuse prevention | No (not stored) |
 
 **Not collected:** location, contacts, photos, microphone, camera, advertising id (IDFA or Google's), push tokens (notifications are local), payment details.
 
-**Third parties:** Apple and Google (purchases, sign-in). No analytics, crash or ad SDKs are in the game today. LevelPlay (ads) will add the device's advertising id and ad events; update this file, the policy, the label and the manifest when it's added.
+**Third parties:** Apple and Google (purchases, sign-in). No third-party analytics or ad SDKs are in the game today. Crash reports use the open-source Sentry SDK, but go to our own GlitchTip server, so no third party receives them. LevelPlay (ads) will add the device's advertising id and ad events; update this file, the policy, the label and the manifest when it's added.
 
 ## Apple privacy label (draft answers)
 
