@@ -55,6 +55,7 @@ namespace Gahwit.Core
         public int FromChapter = 1;
         public FavouriteItem Favourite;    // a regular's favourite: +3 friendship points (SYSTEMS_B.md section 3)
         public bool FriendshipFromStart;   // Abu Fadi: friendship counts before level 6 unlocks it for others
+        public bool Female;                // for Arabic text that agrees with her (وصلت, not وصل)
     }
 
     public sealed class FavouriteItem

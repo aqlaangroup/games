@@ -2,6 +2,27 @@
 
 Decisions and known gaps. Newest first. Read this at the start of each session (`/CLAUDE.md`).
 
+## 2026-10-31: local notifications (missing/19)
+
+- **Package:** Unity's Mobile Notifications (`com.unity.mobile.notifications` 2.5.0), through its unified API.
+- **`NotificationPlan`** (`_Game/Notifications`, plain C#, 4 tests) plans the notes when the app goes to the background. It makes none before the first memory.
+  - **Energy full:** when the bar fills.
+  - **A regular is due:** at the start of their next visit.
+  - **A task is affordable:** 2 hours later (`taskReminderHours`, proposed).
+  - **Away:** after 3 days.
+  - Quiet hours (23:00 to 08:00) move a note to 08:00, and at most 2 come a day, the earliest first. All numbers are in `balance.json` `notifications`.
+- **`NotificationService`** (Boot):
+  - It asks permission once, right after the first memory, never at first launch. The package also handles Android 13's runtime permission.
+  - It schedules on pause and clears everything on return.
+- **One switch per type** in settings: energy full, a regular arrives, a task you can restore, after a break.
+  - Save schema v7 turns `settings.notifications` into one switch per type; each starts as the old single switch was (tested).
+  - Event and hosting switches come with those systems.
+- **Text** is in the café's voice (Amman dialect, decision in missing/02), from COMPLETE_SPEC.md section 3. Characters now carry `female` so the Arabic agrees: «سميرة وصلت».
+- **Still missing:**
+  - The Ramadan-night option, which isn't in the settings design.
+  - The event-ending note (missing/18).
+  - Server push for hosting (missing/20).
+
 ## 2026-10-31: storage, bubbles, energy refill, level and chapter screens, unlock cards, pacing test (missing/05)
 
 - **Storage** (`Merge/Game.Kitchen.cs`, tested):

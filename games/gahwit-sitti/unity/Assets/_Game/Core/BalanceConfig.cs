@@ -23,6 +23,7 @@ namespace Gahwit.Core
         public UnlocksConfig Unlocks;
         public TutorialConfig Tutorial;
         public SavesConfig Saves;
+        public NotificationsConfig Notifications;
         public WeatherConfig Weather;
         public UiConfig Ui;
         public LevelBConfig LevelB;
@@ -231,6 +232,16 @@ namespace Gahwit.Core
         public List<int> WinterMonths;
         public float RainChance;
         public float FogChance;
+    }
+
+    public sealed class NotificationsConfig
+    {
+        public int MaxPerDay;
+        public int QuietHoursStart;
+        public int QuietHoursEnd;
+        public int AwayDays;
+        public int EventEndingHours;
+        public int TaskReminderHours;
     }
 
     public sealed class SavesConfig

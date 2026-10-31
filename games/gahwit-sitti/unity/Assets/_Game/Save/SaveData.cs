@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Gahwit.Core;
 using Newtonsoft.Json.Linq;
 
 namespace Gahwit.Save
@@ -8,7 +9,7 @@ namespace Gahwit.Save
     // so a save written by a newer build loses nothing here.
     public sealed class SaveData
     {
-        public const int CurrentSchema = 6;
+        public const int CurrentSchema = 7;
 
         public int SchemaVersion = CurrentSchema;
         public long SaveVersion;
@@ -131,7 +132,7 @@ namespace Gahwit.Save
         public bool Sound = true;
         public bool Music = true;
         public bool Haptics = true;
-        public bool Notifications = true;
+        public NotificationSwitches Notifications = new NotificationSwitches();
         public bool Glossary = true;
         public bool Voice; // full dialogue voice; off means only the main characters speak (screens/Settings)
         public bool LargeText;

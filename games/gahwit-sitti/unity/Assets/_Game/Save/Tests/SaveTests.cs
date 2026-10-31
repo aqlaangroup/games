@@ -146,7 +146,7 @@ namespace Gahwit.Save.Tests
             v1["schemaVersion"] = 1;
             v1.Remove("account");
             var settings = (JObject)v1["settings"];
-            settings.Remove("notifications");
+            settings["notifications"] = false; // v1 had one switch
             settings.Remove("voice");
             settings["music"] = false;
 
@@ -155,7 +155,8 @@ namespace Gahwit.Save.Tests
             Assert.AreEqual(SaveData.CurrentSchema, data.SchemaVersion);
             Assert.IsNull(data.Account.BirthYear, "the age gate shows again");
             Assert.IsFalse(data.Account.ParentConsent);
-            Assert.IsTrue(data.Settings.Notifications);
+            Assert.IsFalse(data.Settings.Notifications.EnergyFull, "each type starts as the old switch was");
+            Assert.IsFalse(data.Settings.Notifications.Away);
             Assert.IsFalse(data.Settings.Voice);
             Assert.IsFalse(data.Settings.Music, "existing settings are kept");
             Assert.AreEqual("old", state.TaskStyles["sign"]);

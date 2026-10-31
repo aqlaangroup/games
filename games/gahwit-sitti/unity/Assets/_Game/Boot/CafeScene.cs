@@ -33,6 +33,7 @@ namespace Gahwit.Boot
         AudioService audio;
         TutorialFlow tutorial;
         GemShop gems;
+        readonly NotificationService notifications = new NotificationService();
         Unlocks unlocks;
         float nextUnlockCheck;
         CustomerRules customers;
@@ -84,6 +85,7 @@ namespace Gahwit.Boot
 
             analytics = services.Analytics;
             TrackGame();
+            notifications.Clear();
             WireDecor();
             WireWardrobe();
             WireCustomers();
@@ -427,6 +429,7 @@ namespace Gahwit.Boot
                 PlayScene(story, def.IntroKnot, () => ui.Memory.PlayPour(new PourGame(config, easyAssist: false), stars =>
                 {
                     game.RecordMemory(memoryId, stars);
+                    notifications.AskOnce(); // after the first memory, never at first launch
                     Track("memory_played", "memory", memoryId, "stars", stars);
                     ui.Toast.Show(Loc.T("memory.stars", stars, config.Stars[1]));
                     PlayScene(story, stars >= config.Stars[1] ? def.PerfectKnot : def.OkKnot, () =>
@@ -647,9 +650,11 @@ namespace Gahwit.Boot
             {
                 sessionStartedAt = Time.realtimeSinceStartup;
                 Track("session_start", "energy", game.State.Energy, "level", game.State.Level);
+                notifications.Clear();
                 return;
             }
             Track("session_end", "seconds", (int)(Time.realtimeSinceStartup - sessionStartedAt));
+            notifications.Schedule(game, saves.Data.Settings.Notifications, time.NowMs);
             Save();
             Run(analytics.Flush);
             Run(() => account.Sync(false)); // also sent when the app goes to the background

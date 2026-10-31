@@ -59,6 +59,7 @@
       "friendshipFromStart": true
     },
     "samira": {
+      "female": true,
       "color": "#7E2F43",
       "placesOrders": true,
       "fromChapter": 1
@@ -69,6 +70,7 @@
       "fromChapter": 1
     },
     "lana": {
+      "female": true,
       "color": "#4C6B2E",
       "placesOrders": true,
       "fromChapter": 3

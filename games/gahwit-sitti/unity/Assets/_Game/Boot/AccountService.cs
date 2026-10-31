@@ -359,7 +359,10 @@ namespace Gahwit.Boot
                 case "sound": return s.Sound;
                 case "haptics": return s.Haptics;
                 case "music": return s.Music;
-                case "notifications": return s.Notifications;
+                case "notify.energyFull": return s.Notifications.EnergyFull;
+                case "notify.regular": return s.Notifications.Regular;
+                case "notify.task": return s.Notifications.Task;
+                case "notify.away": return s.Notifications.Away;
                 case "glossary": return s.Glossary;
                 case "voice": return s.Voice;
                 case "reducedMotion": return s.ReducedMotion;
@@ -375,7 +378,10 @@ namespace Gahwit.Boot
                 case "sound": s.Sound = on; break;
                 case "haptics": s.Haptics = on; break;
                 case "music": s.Music = on; break;
-                case "notifications": s.Notifications = on; break;
+                case "notify.energyFull": s.Notifications.EnergyFull = on; break;
+                case "notify.regular": s.Notifications.Regular = on; break;
+                case "notify.task": s.Notifications.Task = on; break;
+                case "notify.away": s.Notifications.Away = on; break;
                 case "glossary": s.Glossary = on; break;
                 case "voice": s.Voice = on; break;
             }

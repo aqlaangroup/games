@@ -1151,6 +1151,54 @@ MonoBehaviour:
     m_Key: unlock.chain_dairy.text
     m_Metadata:
       m_Items: []
+  - m_Id: 112597872402432
+    m_Key: notify.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 112597876596736
+    m_Key: notify.channel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 112597876596737
+    m_Key: notify.channelText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 112597876596738
+    m_Key: notify.energyFull
+    m_Metadata:
+      m_Items: []
+  - m_Id: 112597876596739
+    m_Key: notify.regular
+    m_Metadata:
+      m_Items: []
+  - m_Id: 112597876596740
+    m_Key: notify.task
+    m_Metadata:
+      m_Items: []
+  - m_Id: 112597876596741
+    m_Key: notify.away
+    m_Metadata:
+      m_Items: []
+  - m_Id: 112597876596742
+    m_Key: settings.notify.energyFull
+    m_Metadata:
+      m_Items: []
+  - m_Id: 112597876596743
+    m_Key: settings.notify.regular
+    m_Metadata:
+      m_Items: []
+  - m_Id: 112597876596744
+    m_Key: settings.notify.task
+    m_Metadata:
+      m_Items: []
+  - m_Id: 112597876596745
+    m_Key: settings.notify.away
+    m_Metadata:
+      m_Items: []
+  - m_Id: 113273671245824
+    m_Key: notify.regularF
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

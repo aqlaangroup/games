@@ -8,6 +8,8 @@
         "Gahwit.Wardrobe",
         "Gahwit.Memories",
         "Gahwit.Merge",
+        "Gahwit.Notifications",
+        "Unity.Notifications.Unified",
         "Gahwit.Platform",
         "Gahwit.Save",
         "Gahwit.Story",

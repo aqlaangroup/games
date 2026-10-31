@@ -1170,6 +1170,54 @@ MonoBehaviour:
     m_Localized: 'A new chain: Friday breakfast.'
     m_Metadata:
       m_Items: []
+  - m_Id: 112597872402432
+    m_Localized: Gahwit Sitti
+    m_Metadata:
+      m_Items: []
+  - m_Id: 112597876596736
+    m_Localized: "Caf\xE9 alerts"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 112597876596737
+    m_Localized: Energy, regulars and tasks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 112597876596738
+    m_Localized: Energy's full. Abu Fadi is waiting for his cup
+    m_Metadata:
+      m_Items: []
+  - m_Id: 112597876596739
+    m_Localized: "{0} has arrived at the caf\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 112597876596740
+    m_Localized: 'You have enough coins: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 112597876596741
+    m_Localized: "The caf\xE9 misses you"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 112597876596742
+    m_Localized: 'Alert: energy full'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 112597876596743
+    m_Localized: 'Alert: a regular arrives'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 112597876596744
+    m_Localized: 'Alert: a task you can restore'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 112597876596745
+    m_Localized: 'Alert: after a break'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 113273671245824
+    m_Localized: "{0} has arrived at the caf\xE9"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

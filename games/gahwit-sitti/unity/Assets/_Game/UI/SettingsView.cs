@@ -13,8 +13,8 @@ namespace Gahwit.UI
     // account and help rows. Switches show their state by the knob's side as well as the colour.
     public sealed class SettingsView : MonoBehaviour
     {
-        public static readonly string[] Switches = { "sound", "music", "haptics", "notifications", "glossary", "voice" };
-        public static readonly string[] WithSubtitle = { "notifications", "glossary", "voice" };
+        public static readonly string[] Switches = { "sound", "music", "haptics", "notify.energyFull", "notify.regular", "notify.task", "notify.away", "glossary", "voice" };
+        public static readonly string[] WithSubtitle = { "glossary", "voice" };
         public static readonly string[] Languages = { "ar", "en" };
 
         readonly Dictionary<string, (Image track, RectTransform knob)> switches = new Dictionary<string, (Image, RectTransform)>();

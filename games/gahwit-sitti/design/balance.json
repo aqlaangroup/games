@@ -493,8 +493,9 @@
     "quietHoursEnd": 8,
     "awayDays": 3,
     "eventEndingHours": 6,
+    "taskReminderHours": 2,
     "askAfterFirstMemory": true,
-    "notes": "COMPLETE_SPEC.md section 3."
+    "notes": "COMPLETE_SPEC.md section 3. taskReminderHours is proposed (2026-10-31): how long after closing the app the 'you can restore a task' note comes."
   },
   "ui": {
     "largeTextScale": 1.2,

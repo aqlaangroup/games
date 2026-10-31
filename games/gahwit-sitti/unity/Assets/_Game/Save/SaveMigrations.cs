@@ -17,7 +17,8 @@ namespace Gahwit.Save
             [2] = AddEasyOrders,
             [3] = AddArrivalTimes,
             [4] = AddOccasions,
-            [5] = AddUnlockCards
+            [5] = AddUnlockCards,
+            [6] = SplitNotifications
         };
 
         public static JObject Upgrade(JObject raw, BalanceConfig config)
@@ -152,6 +153,23 @@ namespace Gahwit.Save
             if (player["unlocksShown"] == null) player["unlocksShown"] = new JArray();
             save["player"] = player;
             save["schemaVersion"] = 6;
+            return save;
+        }
+
+        // Version 7 (2026-10-31) has one switch per notification type; each starts as the old single switch was.
+        static JObject SplitNotifications(JObject save, BalanceConfig config)
+        {
+            var settings = save["settings"] as JObject ?? new JObject();
+            if (settings["notifications"] is JValue single)
+            {
+                bool on = single.Type != JTokenType.Boolean || (bool)single;
+                settings["notifications"] = new JObject
+                {
+                    ["energyFull"] = on, ["regular"] = on, ["task"] = on, ["event"] = on, ["away"] = on, ["hosting"] = on
+                };
+            }
+            save["settings"] = settings;
+            save["schemaVersion"] = 7;
             return save;
         }
 
