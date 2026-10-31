@@ -2,6 +2,29 @@
 
 Decisions and known gaps. Newest first. Read this at the start of each session (`/CLAUDE.md`).
 
+## 2026-10-31: a kitchen with feeling (the owner's request)
+
+The owner said the kitchen felt like the same steps with no story or feeling. Four things give it a heart; their numbers are in `balance.json` `levelB.kitchen`, all proposed:
+- **Faces and voices:**
+  - Order cards show the regular's portrait, smiling once the order is ready.
+  - A speech bubble over the board says their line when they order and their thanks when served (`bark.<who>.ask/thanks.<n>`; walk-ins too).
+  - Nothing blocks play.
+- **Teta's kitchen notebook:**
+  - The first time the player makes an item, its page opens with Teta's note (`notebook.<chain>_<level>`).
+  - A whole chain gives a little energy.
+  - The journal lists every page found.
+  - Pages are saved (`kitchen.notebook`).
+- **Story orders:**
+  - Two special orders a chapter, from a character in that chapter's story, arrive once enough tasks are done.
+  - Each has its own lines (`storyorder.<id>.ask/thanks`), a rose edge and the words "special order", and pays double.
+  - Served ones are saved (`story.ordersDone`; `orders[].story`).
+- **Streaks:** serving again within 90 seconds builds a streak ("On a roll ×N") with a small extra share of coins.
+- **Pacing kept:**
+  - A flat streak bonus finished chapter 4 on day 1, two days early.
+  - Now the streak pays 1–4% of the order and a notebook page pays no coins: the page is its own reward.
+  - The pacing test passes again, every chapter near its target day.
+- **Save schema 13** adds these, with a migration and a test.
+
 ## 2026-10-31: the whole season written, and the café changes with every task (missing/11, 12)
 
 - **Approved:** the owner approved the story bible and every chapter on 2026-10-31, so the `[draft]` marks are removed from all Ink files. Native writers can still polish the text; change the dialect file first, then `_en` and `_ar` (the parity test checks them).

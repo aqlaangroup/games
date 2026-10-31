@@ -3275,6 +3275,34 @@ MonoBehaviour:
     m_Key: notify.regularP
     m_Metadata:
       m_Items: []
+  - m_Id: 397792030744576
+    m_Key: kitchen.page
+    m_Metadata:
+      m_Items: []
+  - m_Id: 397792039133184
+    m_Key: kitchen.chainDone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 397792039133185
+    m_Key: kitchen.streak
+    m_Metadata:
+      m_Items: []
+  - m_Id: 397792039133186
+    m_Key: kitchen.streakBonus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 397792039133187
+    m_Key: order.story
+    m_Metadata:
+      m_Items: []
+  - m_Id: 397792039133188
+    m_Key: journal.notebook
+    m_Metadata:
+      m_Items: []
+  - m_Id: 397792039133189
+    m_Key: journal.pages
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

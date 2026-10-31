@@ -23,6 +23,8 @@ namespace Gahwit.Merge
         public Dictionary<string, string> Choices = new Dictionary<string, string>();
         public List<string> ScenesSeen = new List<string>();
         public List<string> LettersFound = new List<string>();
+        public List<string> NotebookPages = new List<string>();   // "coffee_6": items made at least once (Teta's notebook)
+        public List<string> StoryOrdersDone = new List<string>(); // story orders served
         public Dictionary<string, int> MemoryStars = new Dictionary<string, int>(); // best stars per memory
         public int TutorialStep;   // the last finished step of COMPLETE_SPEC.md section 1
         public bool TutorialDone;
@@ -104,6 +106,7 @@ namespace Gahwit.Merge
         public int Coins;
         public int Xp;
         public string Recipe; // a signature dish asked for by name (SYSTEMS_B.md section 4), or null
+        public string Story;  // a story order's id (Content.StoryOrders), or null
     }
 
     // One mini board event's progress (missing/18), kept until the event ends.

@@ -64,7 +64,8 @@ namespace Gahwit.Save
                 Xp = o.Xp,
                 Character = o.IsCharacter ? o.Customer : null,
                 CreatedMs = o.CreatedMs,
-                Recipe = o.Recipe
+                Recipe = o.Recipe,
+                Story = o.Story
             }).ToList();
 
             into.Story = new StorySave
@@ -73,8 +74,10 @@ namespace Gahwit.Save
                 Task = state.TaskIndex,
                 Choices = new Dictionary<string, string>(state.Choices),
                 ScenesSeen = new List<string>(state.ScenesSeen),
-                LettersFound = new List<string>(state.LettersFound)
+                LettersFound = new List<string>(state.LettersFound),
+                OrdersDone = new List<string>(state.StoryOrdersDone)
             };
+            into.Kitchen.Notebook = new List<string>(state.NotebookPages);
             into.Cafe.TaskStyles = new Dictionary<string, string>(state.TaskStyles);
             into.Cafe.Cosiness = state.Cosiness;
             into.Cafe.Owned = new List<string>(state.OwnedDecor);
@@ -178,6 +181,8 @@ namespace Gahwit.Save
                 Choices = new Dictionary<string, string>(data.Story.Choices),
                 ScenesSeen = new List<string>(data.Story.ScenesSeen),
                 LettersFound = new List<string>(data.Story.LettersFound),
+                StoryOrdersDone = new List<string>(data.Story.OrdersDone ?? new List<string>()),
+                NotebookPages = new List<string>(data.Kitchen?.Notebook ?? new List<string>()),
                 TutorialStep = data.Tutorial.LastStep,
                 TutorialDone = data.Tutorial.Done,
                 EasyOrdersLeft = data.Tutorial.EasyOrdersLeft,
@@ -219,7 +224,8 @@ namespace Gahwit.Save
                     Coins = saved.Coins,
                     Xp = saved.Xp,
                     CreatedMs = saved.CreatedMs,
-                    Recipe = saved.Recipe
+                    Recipe = saved.Recipe,
+                    Story = saved.Story
                 });
                 state.NextOrderId = Math.Max(state.NextOrderId, id + 1);
             }

@@ -17,6 +17,7 @@ namespace Gahwit.Core
         public List<string> WalkIns;
         public Dictionary<string, List<string>> ChainColors; // [lowest level, top level]
         public List<ChapterTasks> Chapters;
+        public List<StoryOrderDef> StoryOrders = new List<StoryOrderDef>();
         public Dictionary<string, MemoryDef> Memories;
         public Dictionary<string, LetterDef> Letters;
         public Dictionary<string, StyleDef> Styles; // old, modern, gulf (SYSTEMS_B.md section 2)
@@ -118,6 +119,24 @@ namespace Gahwit.Core
         public List<string> Decoys;  // find: the rest of the room
         public List<List<float>> Line; // trace: the seam, as [x, y] in centimetres
         public bool Present;      // played in today's café instead of 1974 (the season's last memory)
+    }
+
+    // A special order tied to a chapter's story (DEVLOG 2026-10-31): it comes once the chapter has AtTask tasks done,
+    // from that character, with their own line (storyorder.<id>.ask and .thanks), and pays more.
+    public sealed class StoryOrderDef
+    {
+        public string Id;
+        public int Chapter;
+        public int AtTask;
+        public string Character;
+        public List<StoryOrderLine> Lines = new List<StoryOrderLine>();
+    }
+
+    public sealed class StoryOrderLine
+    {
+        public string Chain;
+        public int Level;
+        public int Count = 1;
     }
 
     public sealed class LetterDef

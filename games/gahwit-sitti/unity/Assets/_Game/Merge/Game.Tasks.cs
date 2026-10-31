@@ -51,6 +51,7 @@ namespace Gahwit.Merge
             AddXp(Config.TaskXp(State.Chapter));
             TaskCompleted?.Invoke(task);
             if (State.TaskIndex >= ChapterTasks.Tasks.Count) FinishChapter();
+            AddStoryOrders();
             Changed?.Invoke();
             return task;
         }

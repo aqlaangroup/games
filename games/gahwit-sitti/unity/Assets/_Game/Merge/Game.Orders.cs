@@ -57,6 +57,8 @@ namespace Gahwit.Merge
             Progress("serve", 1);
             Progress("earn_coins", LastServedCoins);
             if (order.IsCharacter) Progress("serve_regular", 1);
+            CountStreak();
+            FinishStoryOrder(order);
             OrderServed?.Invoke(order);
             AddXp(order.Xp);
             FillOrders();
@@ -74,7 +76,8 @@ namespace Gahwit.Merge
             }
 
             int slots = Config.OrderSlots(State.Level);
-            while (State.Orders.Count < slots) State.Orders.Add(NewOrder());
+            while (State.Orders.Count(o => o.Story == null) < slots) State.Orders.Add(NewOrder());
+            AddStoryOrders();
         }
 
         // Found recipes whose chains are all in the given pool; set by Recipes.RecipeBook.

@@ -291,6 +291,19 @@ namespace Gahwit.Core
         public MemoriesConfig Memories;
         public RecipesConfig Recipes;
         public SittiWallConfig SittiWall;
+        public KitchenConfig Kitchen;
+    }
+
+    // The kitchen's feeling (DEVLOG 2026-10-31): Teta's notebook, serving streaks and story orders.
+    public sealed class KitchenConfig
+    {
+        public int NotebookCoinsPerPage;     // the first time an item is made, its page opens
+        public int NotebookChainEnergy;      // every page of a chain found
+        public int StreakWindowSeconds;      // serving again within this keeps the streak going
+        public List<int> StreakBonusPercent; // extra coins, as a share of the order's, for the 1st, 2nd, … serve of a streak (the last repeats)
+        public float StoryOrderCoinMultiplier;
+        public float StoryOrderXpMultiplier;
+        public float BarkSeconds;            // how long a customer's line stays on screen
     }
 
     public sealed class SittiWallConfig

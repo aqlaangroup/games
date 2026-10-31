@@ -9,7 +9,7 @@ namespace Gahwit.Save
     // so a save written by a newer build loses nothing here.
     public sealed class SaveData
     {
-        public const int CurrentSchema = 12;
+        public const int CurrentSchema = 13;
 
         public int SchemaVersion = CurrentSchema;
         public long SaveVersion;
@@ -30,7 +30,13 @@ namespace Gahwit.Save
         public JObject Wardrobe = new JObject();
         public JObject Events = new JObject();
         public JObject Daily = new JObject();
+        public KitchenSave Kitchen = new KitchenSave();
         public SettingsSave Settings = new SettingsSave();
+    }
+
+    public sealed class KitchenSave
+    {
+        public List<string> Notebook = new List<string>(); // Teta's notebook: "coffee_6" for every item made at least once
     }
 
     public sealed class ClockSave
@@ -103,6 +109,7 @@ namespace Gahwit.Save
         public string Character; // null for a walk-in
         public long CreatedMs;   // when the customer walked in (trusted time)
         public string Recipe;    // a signature dish, or null
+        public string Story;     // a story order's id, or null
     }
 
     public sealed class OrderItemSave
@@ -118,6 +125,7 @@ namespace Gahwit.Save
         public Dictionary<string, string> Choices = new Dictionary<string, string>();
         public List<string> ScenesSeen = new List<string>();
         public List<string> LettersFound = new List<string>();
+        public List<string> OrdersDone = new List<string>(); // story orders served
     }
 
     public sealed class CafeSave

@@ -23,6 +23,7 @@ namespace Gahwit.Merge
             Progress("spend_energy", cost);
             int level = Math.Min(RollGeneratorOutput(generator.Level), MaxLevel(generator.Chain));
             State.Board[spawnedAt] = new Item(generator.Chain, level);
+            Discover(State.Board[spawnedAt]);
             ItemSpawned?.Invoke(spawnedAt);
             Changed?.Invoke();
             return TapResult.Spawned;
@@ -107,6 +108,7 @@ namespace Gahwit.Merge
             {
                 State.Board[to] = new Item(moving.Chain, moving.Level + 1, moving.Generator);
                 State.Board[from] = null;
+                Discover(State.Board[to]);
                 Progress("merge", 1);
                 if (!moving.IsGenerator && moving.Level + 1 == 5) Progress("make_level5", 1);
                 MaybeBubble(State.Board[to]);

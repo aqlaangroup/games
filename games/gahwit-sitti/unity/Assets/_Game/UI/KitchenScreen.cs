@@ -59,6 +59,9 @@ namespace Gahwit.UI
             ((RectTransform)storage.transform).Pin(new Vector2(0, 0.5f), new Vector2(4, 0), new Vector2(200, UiKit.MinTouch));
             info.rectTransform.Stretch(390, 24, 6, 6);
 
+            // What customers say, Teta's notebook pages and the serving streak, over the board (DEVLOG 2026-10-31).
+            UiKit.Rect(root, "Voices").Stretch().gameObject.AddComponent<KitchenVoices>().Init(game, look, 268, infoHeight + 16);
+
             // A bubble floats over the board's top corner for its last seconds (GAME_SYSTEMS.md section 7).
             bubble = UiKit.Button(root, "Bubble", "", Palette.Lilac, Palette.Ink, 24, () => ui.BubbleTapped?.Invoke(), 75);
             ((RectTransform)bubble.transform).Pin(new Vector2(1, 1), new Vector2(-24, -278), new Vector2(150, 150));

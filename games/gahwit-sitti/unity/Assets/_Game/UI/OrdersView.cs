@@ -56,6 +56,12 @@ namespace Gahwit.UI
                 ? Palette.Hex(character.Color)
                 : Palette.InkSoft;
             UiKit.Text(card.transform, "Who", who, 28, color, TextAlignmentOptions.Center).rectTransform.Top(10, 40, 8, 8);
+            var picture = order.IsCharacter ? Portraits.For(order.Customer, ready ? "smile" : "neutral") : null;
+            if (picture != null)
+            {
+                var portrait = UiKit.Icon(card.transform, "Face", picture, Color.white, 64);
+                portrait.rectTransform.Pin(new Vector2(1, 1), new Vector2(-4, 4), new Vector2(64, 70));
+            }
 
             var items = UiKit.Rect(card.transform, "Items").Top(54, 92, 8, 8);
             var row = UiKit.Row(items.gameObject, 10);
@@ -73,15 +79,17 @@ namespace Gahwit.UI
             }
 
             // A signature dish names its recipe, with a star and a gold edge, so it doesn't rely on colour alone.
-            string reward = order.Recipe != null
-                ? Loc.T("order.signature", Loc.T("recipe." + order.Recipe), order.Coins)
+            // A story order says so in words, with a rose edge (DEVLOG 2026-10-31).
+            string reward = order.Story != null ? Loc.T("order.story", order.Coins)
+                : order.Recipe != null ? Loc.T("order.signature", Loc.T("recipe." + order.Recipe), order.Coins)
                 : Loc.T("order.reward", order.Coins);
-            UiKit.Text(card.transform, "Reward", reward, 24, order.Recipe != null ? Palette.Rose : Palette.InkSoft, TextAlignmentOptions.Center)
+            bool special = order.Recipe != null || order.Story != null;
+            UiKit.Text(card.transform, "Reward", reward, 24, special ? Palette.Rose : Palette.InkSoft, TextAlignmentOptions.Center)
                 .rectTransform.Top(150, 32, 8, 8);
-            if (order.Recipe != null)
+            if (special)
             {
                 var edge = card.gameObject.AddComponent<Outline>();
-                edge.effectColor = Palette.Gold;
+                edge.effectColor = order.Story != null ? Palette.Rose : Palette.Gold;
                 edge.effectDistance = new Vector2(4, -4);
             }
 

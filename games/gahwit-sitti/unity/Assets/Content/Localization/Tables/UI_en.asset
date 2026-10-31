@@ -3304,6 +3304,34 @@ MonoBehaviour:
     m_Localized: "{0} have arrived at the caf\xE9"
     m_Metadata:
       m_Items: []
+  - m_Id: 397792030744576
+    m_Localized: A new page in Teta's notebook
+    m_Metadata:
+      m_Items: []
+  - m_Id: 397792039133184
+    m_Localized: Every {0} page in Teta's notebook
+    m_Metadata:
+      m_Items: []
+  - m_Id: 397792039133185
+    m_Localized: "On a roll \xD7{0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 397792039133186
+    m_Localized: "On a roll \xD7{0} \xB7 +{1} coins"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 397792039133187
+    m_Localized: "Special order \xB7 {0} coins"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 397792039133188
+    m_Localized: Teta's kitchen notebook
+    m_Metadata:
+      m_Items: []
+  - m_Id: 397792039133189
+    m_Localized: '{0} of {1} pages'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

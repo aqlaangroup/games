@@ -23,7 +23,8 @@ namespace Gahwit.Save
             [8] = AddRecipes,
             [9] = AddPurchases,
             [10] = AddDailyAndEvents,
-            [11] = AddSubtitles
+            [11] = AddSubtitles,
+            [12] = AddKitchen
         };
 
         public static JObject Upgrade(JObject raw, BalanceConfig config)
@@ -237,6 +238,20 @@ namespace Gahwit.Save
             if (settings["subtitles"] == null) settings["subtitles"] = false;
             save["settings"] = settings;
             save["schemaVersion"] = 12;
+            return save;
+        }
+
+        // Version 13 (2026-10-31) adds the kitchen's feeling: kitchen.notebook (Teta's notebook pages found) and
+        // story.ordersDone (story orders served). Orders may carry a story order's id (orders[].story).
+        static JObject AddKitchen(JObject save, BalanceConfig config)
+        {
+            var kitchen = save["kitchen"] as JObject ?? new JObject();
+            if (!(kitchen["notebook"] is JArray)) kitchen["notebook"] = new JArray();
+            save["kitchen"] = kitchen;
+            var story = save["story"] as JObject ?? new JObject();
+            if (!(story["ordersDone"] is JArray)) story["ordersDone"] = new JArray();
+            save["story"] = story;
+            save["schemaVersion"] = 13;
             return save;
         }
 

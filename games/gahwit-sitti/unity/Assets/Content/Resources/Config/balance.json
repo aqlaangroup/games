@@ -1202,8 +1202,8 @@
       "signatureCoinMultiplier": 1.5,
       "hintAfterWrongTries": 3,
       "storyClueRecipes": 5,
-    "signatureOrderChance": 0.2,
-    "notes": "SYSTEMS_B.md section 4. The recipes themselves are in Content/Resources/Content/recipes.json. signatureOrderChance (proposed 2026-10-31, missing/10): once a recipe is found, this share of new orders ask for one by name."
+      "signatureOrderChance": 0.2,
+      "notes": "SYSTEMS_B.md section 4. The recipes themselves are in Content/Resources/Content/recipes.json. signatureOrderChance (proposed 2026-10-31, missing/10): once a recipe is found, this share of new orders ask for one by name."
     },
     "memories": {
       "pour": {
@@ -1249,7 +1249,7 @@
         "beatsPerMinute": 84,
         "perfectWindowMs": 90,
         "goodWindowMs": 180,
-      "easyWindowScale": 1.5,
+        "easyWindowScale": 1.5,
         "beats": 40,
         "starsAtAccuracy": [
           0.5,
@@ -1280,7 +1280,7 @@
       "trace": {
         "pathPoints": 60,
         "toleranceCm": 0.4,
-      "easyToleranceScale": 1.5,
+        "easyToleranceScale": 1.5,
         "starsAtAccuracy": [
           0.5,
           0.75,
@@ -1294,8 +1294,8 @@
         ],
         "targetWidth": 0.4,
         "hintWidth": 2.0,
-      "holdSeconds": 1.0,
-      "easyWidthScale": 2.0,
+        "holdSeconds": 1.0,
+        "easyWidthScale": 2.0,
         "seconds": 60,
         "starsAtSecondsLeft": [
           1,
@@ -1306,7 +1306,7 @@
       "choose": {
         "choices": 6,
         "secondsPerChoice": 8,
-      "easyTimeScale": 1.5,
+        "easyTimeScale": 1.5,
         "starsAtGoodChoices": [
           2,
           4,
@@ -1389,6 +1389,22 @@
         2.99,
         4.99
       ]
+    },
+    "kitchen": {
+      "proposed": "Proposed on 2026-10-31, when the owner asked for a kitchen with feeling (DEVLOG): Teta's notebook pages, serving streaks and story orders. These reward with feeling more than money: a notebook page is its own reward, a whole chain gives a little energy, and the streak bonus is a small share of the order's coins, so chapter pacing stays on target (Pacing tests). Tune in playtests.",
+      "notebookCoinsPerPage": 0,
+      "notebookChainEnergy": 20,
+      "streakWindowSeconds": 90,
+      "streakBonusPercent": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "storyOrderCoinMultiplier": 2.0,
+      "storyOrderXpMultiplier": 2.0,
+      "barkSeconds": 4
     }
   },
   "weather": {

@@ -25,7 +25,6 @@ namespace Gahwit.UI
         Action<string> onChoice;
         RTLTextMeshPro speaker, line, subtitle, glosses, meaningText;
         Image meaning, portrait;
-        readonly Dictionary<string, Sprite> portraits = new Dictionary<string, Sprite>();
         RectTransform choices;
         Button next, skip;
         bool waitingForChoice;
@@ -208,22 +207,6 @@ namespace Gahwit.UI
             Advance();
         }
 
-        // Art/Portraits/<speaker>_<expression> (missing/13), or the neutral one when that expression wasn't drawn.
-        Sprite Portrait(string speakerTag, string expression)
-        {
-            if (speakerTag == null) return null;
-            string[] names = { $"{speakerTag}_{expression ?? "neutral"}", speakerTag + "_neutral" };
-            foreach (string name in names)
-            {
-                if (portraits.TryGetValue(name, out var cached)) { if (cached != null) return cached; continue; }
-                var texture = Resources.Load<Texture2D>("Art/Portraits/" + name);
-                var sprite = texture != null ? Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0f)) : null;
-                portraits[name] = sprite;
-                if (sprite != null) return sprite;
-            }
-            return null;
-        }
-
         void Update()
         {
             if (timed == null || !waitingForChoice) return;
@@ -236,7 +219,7 @@ namespace Gahwit.UI
         {
             shown = storyLine;
             bool narrator = storyLine.Speaker == "sys";
-            var face = Portrait(storyLine.Speaker, storyLine.Expression);
+            var face = Portraits.For(storyLine.Speaker, storyLine.Expression);
             portrait.sprite = face;
             portrait.gameObject.SetActive(face != null);
             speaker.text = narrator ? "" : Loc.T("char." + storyLine.Speaker);

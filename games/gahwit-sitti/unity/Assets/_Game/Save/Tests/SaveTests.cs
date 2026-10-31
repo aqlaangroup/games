@@ -200,6 +200,30 @@ namespace Gahwit.Save.Tests
         }
 
         [Test]
+        public void NotebookPagesAndStoryOrdersRoundTripAndAVersionTwelveSaveGetsThem()
+        {
+            var time = new TimeService(new FakeClock(), null);
+            var state = PlayedState();
+            state.NotebookPages.Add("coffee_3");
+            state.StoryOrdersDone.Add("c1_first");
+            state.Orders[0].Story = "c1_second";
+            var loaded = SaveService.FromJson(WriteJson(state, time), config, content, out _, out _);
+            CollectionAssert.AreEqual(state.NotebookPages, loaded.NotebookPages);
+            CollectionAssert.Contains(loaded.NotebookPages, "coffee_3");
+            CollectionAssert.AreEqual(new[] { "c1_first" }, loaded.StoryOrdersDone);
+            Assert.AreEqual("c1_second", loaded.Orders[0].Story);
+
+            var v12 = JObject.Parse(WriteJson(PlayedState(), time));
+            v12["schemaVersion"] = 12;
+            v12.Remove("kitchen");
+            ((JObject)v12["story"]).Remove("ordersDone");
+            SaveService.FromJson(v12.ToString(), config, content, out var data, out _);
+            Assert.AreEqual(SaveData.CurrentSchema, data.SchemaVersion);
+            Assert.AreEqual(0, data.Kitchen.Notebook.Count);
+            Assert.AreEqual(0, data.Story.OrdersDone.Count);
+        }
+
+        [Test]
         public void AVersionElevenSaveStartsWithSubtitlesOff()
         {
             var time = new TimeService(new FakeClock(), null);

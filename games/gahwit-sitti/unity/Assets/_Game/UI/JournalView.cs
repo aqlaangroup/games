@@ -103,6 +103,17 @@ namespace Gahwit.UI
             foreach (string recipe in notes)
                 Row(Loc.T("recipe." + recipe), Loc.T("recipe." + recipe + ".clue"), null, null);
 
+            // Teta's kitchen notebook (DEVLOG 2026-10-31): every page found so far, chain by chain, with her note.
+            var chains = game.Config.Chains.Keys.Where(c => game.PagesFound(c) > 0).ToList();
+            if (chains.Count > 0) Section(Loc.T("journal.notebook"));
+            foreach (string chain in chains)
+            {
+                Row(Loc.T("chain." + chain), Loc.T("journal.pages", game.PagesFound(chain), game.MaxLevel(chain)), null, null);
+                for (int level = 1; level <= game.MaxLevel(chain); level++)
+                    if (game.HasPage(chain, level))
+                        Row(game.ItemName(chain, level), Loc.T("notebook." + Game.PageId(chain, level)), null, null, true);
+            }
+
             // Copied first: finding a choice's text can load its story, which updates old saved choices.
             var choices = game.State.Choices.ToList()
                 .Select(c => (knot: c.Key, text: choiceText(c.Key, c.Value))).Where(c => c.text != null).ToList();
