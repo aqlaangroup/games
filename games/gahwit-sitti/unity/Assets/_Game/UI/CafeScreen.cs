@@ -300,14 +300,7 @@ namespace Gahwit.UI
         Button todayButton, friendsButton, journalButton;
 
         // A round side button keeps its word on one line and shrinks it to fit ("Wardrobe" in English).
-        static void Fit(Button button)
-        {
-            var label = button.Label();
-            label.textWrappingMode = TextWrappingModes.NoWrap;
-            label.enableAutoSizing = true;
-            label.fontSizeMax = label.fontSize;
-            label.fontSizeMin = label.fontSize * 0.6f;
-        }
+        static void Fit(Button button) => button.Label().OneLine();
         System.Func<bool> friendsOpen = () => false;
 
         // Friends (missing/20), under Today, once their level is reached.

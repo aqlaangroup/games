@@ -105,6 +105,16 @@ namespace Gahwit.UI
 
         public static RTLTextMeshPro Label(this Button button) => button.GetComponentInChildren<RTLTextMeshPro>(true);
 
+        // Keeps a short label on one line and shrinks it to fit, down to 60% (English words often run longer).
+        public static T OneLine<T>(this T text) where T : TMPro.TMP_Text
+        {
+            text.textWrappingMode = TextWrappingModes.NoWrap;
+            text.enableAutoSizing = true;
+            text.fontSizeMax = text.fontSize;
+            text.fontSizeMin = text.fontSize * 0.6f;
+            return text;
+        }
+
         public static HorizontalLayoutGroup Row(GameObject go, float spacing)
         {
             var row = go.AddComponent<HorizontalLayoutGroup>();

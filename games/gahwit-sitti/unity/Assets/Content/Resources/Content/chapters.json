@@ -10902,5 +10902,307 @@
    "wood": "#7E2F43",
    "accent": "#E9C99B"
   }
- }
+ },
+ "storyOrders": [
+  {
+   "id": "c1_beans_smell",
+   "chapter": 1,
+   "atTask": 1,
+   "character": "abu_fadi",
+   "lines": [
+    {
+     "chain": "coffee",
+     "level": 3,
+     "count": 1
+    }
+   ]
+  },
+  {
+   "id": "c1_light_on",
+   "chapter": 1,
+   "atTask": 5,
+   "character": "abu_fadi",
+   "lines": [
+    {
+     "chain": "sweets",
+     "level": 4,
+     "count": 1
+    },
+    {
+     "chain": "coffee",
+     "level": 4,
+     "count": 1
+    }
+   ]
+  },
+  {
+   "id": "c2_groom_visit",
+   "chapter": 2,
+   "atTask": 2,
+   "character": "samira",
+   "lines": [
+    {
+     "chain": "sweets",
+     "level": 4,
+     "count": 1
+    },
+    {
+     "chain": "coffee",
+     "level": 4,
+     "count": 1
+    }
+   ]
+  },
+  {
+   "id": "c2_hush_me",
+   "chapter": 2,
+   "atTask": 4,
+   "character": "samira",
+   "lines": [
+    {
+     "chain": "sweets",
+     "level": 4,
+     "count": 2
+    }
+   ]
+  },
+  {
+   "id": "c3_tea_right_way",
+   "chapter": 3,
+   "atTask": 2,
+   "character": "lana",
+   "lines": [
+    {
+     "chain": "tea",
+     "level": 4,
+     "count": 2
+    }
+   ]
+  },
+  {
+   "id": "c3_cardamom_sugar",
+   "chapter": 3,
+   "atTask": 4,
+   "character": "abu_fadi",
+   "lines": [
+    {
+     "chain": "coffee",
+     "level": 5,
+     "count": 1
+    },
+    {
+     "chain": "sweets",
+     "level": 5,
+     "count": 1
+    }
+   ]
+  },
+  {
+   "id": "c4_karim_lunch",
+   "chapter": 4,
+   "atTask": 1,
+   "character": "karim",
+   "lines": [
+    {
+     "chain": "coffee",
+     "level": 5,
+     "count": 1
+    },
+    {
+     "chain": "sweets",
+     "level": 6,
+     "count": 1
+    }
+   ]
+  },
+  {
+   "id": "c4_small_dallah",
+   "chapter": 4,
+   "atTask": 4,
+   "character": "lana",
+   "lines": [
+    {
+     "chain": "coffee",
+     "level": 6,
+     "count": 1
+    }
+   ]
+  },
+  {
+   "id": "c5_two_cities_guest",
+   "chapter": 5,
+   "atTask": 2,
+   "character": "tourist",
+   "lines": [
+    {
+     "chain": "saudi",
+     "level": 4,
+     "count": 1
+    },
+    {
+     "chain": "coffee",
+     "level": 6,
+     "count": 1
+    }
+   ]
+  },
+  {
+   "id": "c5_photo_for_mum",
+   "chapter": 5,
+   "atTask": 4,
+   "character": "lana",
+   "lines": [
+    {
+     "chain": "saudi",
+     "level": 6,
+     "count": 1
+    }
+   ]
+  },
+  {
+   "id": "c6_stairs_tea",
+   "chapter": 6,
+   "atTask": 1,
+   "character": "yazan",
+   "lines": [
+    {
+     "chain": "tea",
+     "level": 5,
+     "count": 1
+    }
+   ]
+  },
+  {
+   "id": "c6_extra_cup",
+   "chapter": 6,
+   "atTask": 5,
+   "character": "abu_fadi",
+   "lines": [
+    {
+     "chain": "coffee",
+     "level": 6,
+     "count": 2
+    },
+    {
+     "chain": "sweets",
+     "level": 6,
+     "count": 1
+    }
+   ]
+  },
+  {
+   "id": "c7_taste_ours",
+   "chapter": 7,
+   "atTask": 2,
+   "character": "um_rami",
+   "lines": [
+    {
+     "chain": "dairy",
+     "level": 5,
+     "count": 1
+    },
+    {
+     "chain": "sweets",
+     "level": 5,
+     "count": 1
+    }
+   ]
+  },
+  {
+   "id": "c7_full_pot",
+   "chapter": 7,
+   "atTask": 3,
+   "character": "postman",
+   "lines": [
+    {
+     "chain": "tea",
+     "level": 6,
+     "count": 1
+    }
+   ]
+  },
+  {
+   "id": "c8_roof_breakfast",
+   "chapter": 8,
+   "atTask": 2,
+   "character": "faris",
+   "lines": [
+    {
+     "chain": "dairy",
+     "level": 7,
+     "count": 1
+    }
+   ]
+  },
+  {
+   "id": "c8_think_tonight",
+   "chapter": 8,
+   "atTask": 5,
+   "character": "lana",
+   "lines": [
+    {
+     "chain": "tea",
+     "level": 7,
+     "count": 1
+    }
+   ]
+  },
+  {
+   "id": "c9_two_cups_window",
+   "chapter": 9,
+   "atTask": 3,
+   "character": "abu_fadi",
+   "lines": [
+    {
+     "chain": "coffee",
+     "level": 6,
+     "count": 2
+    }
+   ]
+  },
+  {
+   "id": "c9_no_answer",
+   "chapter": 9,
+   "atTask": 5,
+   "character": "lana",
+   "lines": [
+    {
+     "chain": "saudi",
+     "level": 5,
+     "count": 1
+    }
+   ]
+  },
+  {
+   "id": "c10_bride_gift",
+   "chapter": 10,
+   "atTask": 1,
+   "character": "samira",
+   "lines": [
+    {
+     "chain": "sweets",
+     "level": 7,
+     "count": 1
+    },
+    {
+     "chain": "coffee",
+     "level": 6,
+     "count": 2
+    }
+   ]
+  },
+  {
+   "id": "c10_family_table",
+   "chapter": 10,
+   "atTask": 4,
+   "character": "abu_fadi",
+   "lines": [
+    {
+     "chain": "sweets",
+     "level": 6,
+     "count": 1
+    }
+   ]
+  }
+ ]
 }

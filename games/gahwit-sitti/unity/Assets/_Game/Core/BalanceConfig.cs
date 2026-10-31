@@ -301,8 +301,7 @@ namespace Gahwit.Core
         public int NotebookChainEnergy;      // every page of a chain found
         public int StreakWindowSeconds;      // serving again within this keeps the streak going
         public List<int> StreakBonusPercent; // extra coins, as a share of the order's, for the 1st, 2nd, … serve of a streak (the last repeats)
-        public float StoryOrderCoinMultiplier;
-        public float StoryOrderXpMultiplier;
+        public int StoryOrderFriendshipPoints; // a story order served: friendship with that regular, instead of the usual points
         public float BarkSeconds;            // how long a customer's line stays on screen
     }
 

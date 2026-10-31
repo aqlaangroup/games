@@ -75,9 +75,9 @@ namespace Gahwit.Merge
                 State.Orders.Add(MakeOrder(first.Customer, true, new List<OrderLine> { line }));
             }
 
+            AddStoryOrders(); // a story's customer takes the free seat first
             int slots = Config.OrderSlots(State.Level);
-            while (State.Orders.Count(o => o.Story == null) < slots) State.Orders.Add(NewOrder());
-            AddStoryOrders();
+            while (State.Orders.Count < slots) State.Orders.Add(NewOrder());
         }
 
         // Found recipes whose chains are all in the given pool; set by Recipes.RecipeBook.
@@ -106,13 +106,14 @@ namespace Gahwit.Merge
             return ForCustomer(lines);
         }
 
-        // A regular in their hours, or a walk-in.
+        // A regular in their hours who isn't already waiting (one order each at a time), or a walk-in.
         Order ForCustomer(List<OrderLine> lines)
         {
             var schedule = Config.LevelB.Regulars.Schedule;
             var named = Content.Characters
                 .Where(kv => kv.Value.PlacesOrders && kv.Value.FromChapter <= State.Chapter)
                 .Where(kv => !schedule.TryGetValue(kv.Key, out var times) || times.Contains(TimeOfDay))
+                .Where(kv => !State.Orders.Any(o => o.Customer == kv.Key))
                 .Select(kv => kv.Key).OrderBy(id => id).ToList();
             if (named.Count > 0 && rng.NextDouble() < Config.Orders.CharacterOrderChance)
                 return MakeOrder(named[rng.Range(0, named.Count)], true, lines);

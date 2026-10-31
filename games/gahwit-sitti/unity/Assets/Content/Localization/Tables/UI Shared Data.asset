@@ -3303,6 +3303,722 @@ MonoBehaviour:
     m_Key: journal.pages
     m_Metadata:
       m_Items: []
+  - m_Id: 399969734352896
+    m_Key: bark.abu_fadi.ask.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547200
+    m_Key: bark.abu_fadi.ask.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547201
+    m_Key: bark.abu_fadi.ask.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547202
+    m_Key: bark.abu_fadi.thanks.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547203
+    m_Key: bark.abu_fadi.thanks.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547204
+    m_Key: bark.abu_fadi.thanks.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547205
+    m_Key: bark.samira.ask.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547206
+    m_Key: bark.samira.ask.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547207
+    m_Key: bark.samira.ask.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547208
+    m_Key: bark.samira.thanks.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547209
+    m_Key: bark.samira.thanks.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547210
+    m_Key: bark.samira.thanks.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547211
+    m_Key: bark.karim.ask.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547212
+    m_Key: bark.karim.ask.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547213
+    m_Key: bark.karim.ask.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547214
+    m_Key: bark.karim.thanks.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547215
+    m_Key: bark.karim.thanks.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547216
+    m_Key: bark.karim.thanks.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547217
+    m_Key: bark.lana.ask.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547218
+    m_Key: bark.lana.ask.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547219
+    m_Key: bark.lana.ask.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547220
+    m_Key: bark.lana.thanks.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547221
+    m_Key: bark.lana.thanks.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547222
+    m_Key: bark.lana.thanks.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547223
+    m_Key: bark.tala.ask.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547224
+    m_Key: bark.tala.ask.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547225
+    m_Key: bark.tala.ask.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547226
+    m_Key: bark.tala.thanks.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547227
+    m_Key: bark.tala.thanks.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547228
+    m_Key: bark.tala.thanks.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547229
+    m_Key: bark.um_rami.ask.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547230
+    m_Key: bark.um_rami.ask.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547231
+    m_Key: bark.um_rami.ask.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547232
+    m_Key: bark.um_rami.thanks.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547233
+    m_Key: bark.um_rami.thanks.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547234
+    m_Key: bark.um_rami.thanks.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547235
+    m_Key: bark.dr_hiba.ask.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547236
+    m_Key: bark.dr_hiba.ask.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547237
+    m_Key: bark.dr_hiba.ask.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547238
+    m_Key: bark.dr_hiba.thanks.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547239
+    m_Key: bark.dr_hiba.thanks.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547240
+    m_Key: bark.dr_hiba.thanks.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547241
+    m_Key: bark.yazan.ask.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547242
+    m_Key: bark.yazan.ask.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547243
+    m_Key: bark.yazan.ask.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547244
+    m_Key: bark.yazan.thanks.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547245
+    m_Key: bark.yazan.thanks.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547246
+    m_Key: bark.yazan.thanks.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547247
+    m_Key: bark.sara_noor.ask.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547248
+    m_Key: bark.sara_noor.ask.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547249
+    m_Key: bark.sara_noor.ask.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547250
+    m_Key: bark.sara_noor.thanks.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547251
+    m_Key: bark.sara_noor.thanks.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547252
+    m_Key: bark.sara_noor.thanks.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547253
+    m_Key: bark.postman.ask.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547254
+    m_Key: bark.postman.ask.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547255
+    m_Key: bark.postman.ask.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547256
+    m_Key: bark.postman.thanks.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547257
+    m_Key: bark.postman.thanks.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547258
+    m_Key: bark.postman.thanks.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547259
+    m_Key: bark.mrs_odeh.ask.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547260
+    m_Key: bark.mrs_odeh.ask.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547261
+    m_Key: bark.mrs_odeh.ask.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547262
+    m_Key: bark.mrs_odeh.thanks.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547263
+    m_Key: bark.mrs_odeh.thanks.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547264
+    m_Key: bark.mrs_odeh.thanks.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547265
+    m_Key: bark.faris.ask.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547266
+    m_Key: bark.faris.ask.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547267
+    m_Key: bark.faris.ask.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547268
+    m_Key: bark.faris.thanks.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547269
+    m_Key: bark.faris.thanks.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547270
+    m_Key: bark.faris.thanks.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547271
+    m_Key: bark.tourist.ask.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547272
+    m_Key: bark.tourist.ask.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547273
+    m_Key: bark.tourist.ask.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547274
+    m_Key: bark.tourist.thanks.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547275
+    m_Key: bark.tourist.thanks.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547276
+    m_Key: bark.tourist.thanks.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547277
+    m_Key: bark.walkin.ask.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547278
+    m_Key: bark.walkin.ask.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547279
+    m_Key: bark.walkin.ask.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547280
+    m_Key: bark.walkin.ask.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547281
+    m_Key: bark.walkin.ask.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547282
+    m_Key: bark.walkin.ask.6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547283
+    m_Key: bark.walkin.thanks.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547284
+    m_Key: bark.walkin.thanks.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547285
+    m_Key: bark.walkin.thanks.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547286
+    m_Key: bark.walkin.thanks.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547287
+    m_Key: bark.walkin.thanks.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547288
+    m_Key: bark.walkin.thanks.6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547289
+    m_Key: notebook.coffee_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547290
+    m_Key: notebook.coffee_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547291
+    m_Key: notebook.coffee_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547292
+    m_Key: notebook.coffee_4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547293
+    m_Key: notebook.coffee_5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547294
+    m_Key: notebook.coffee_6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547295
+    m_Key: notebook.coffee_7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547296
+    m_Key: notebook.coffee_8
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547297
+    m_Key: notebook.coffee_9
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547298
+    m_Key: notebook.coffee_10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547299
+    m_Key: notebook.coffee.done
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547300
+    m_Key: notebook.sweets_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547301
+    m_Key: notebook.sweets_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547302
+    m_Key: notebook.sweets_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547303
+    m_Key: notebook.sweets_4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547304
+    m_Key: notebook.sweets_5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547305
+    m_Key: notebook.sweets_6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547306
+    m_Key: notebook.sweets_7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547307
+    m_Key: notebook.sweets_8
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547308
+    m_Key: notebook.sweets_9
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547309
+    m_Key: notebook.sweets_10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547310
+    m_Key: notebook.sweets.done
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547311
+    m_Key: notebook.tea_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547312
+    m_Key: notebook.tea_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547313
+    m_Key: notebook.tea_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547314
+    m_Key: notebook.tea_4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547315
+    m_Key: notebook.tea_5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547316
+    m_Key: notebook.tea_6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547317
+    m_Key: notebook.tea_7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547318
+    m_Key: notebook.tea_8
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547319
+    m_Key: notebook.tea.done
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547320
+    m_Key: notebook.saudi_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547321
+    m_Key: notebook.saudi_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547322
+    m_Key: notebook.saudi_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547323
+    m_Key: notebook.saudi_4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547324
+    m_Key: notebook.saudi_5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547325
+    m_Key: notebook.saudi_6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547326
+    m_Key: notebook.saudi_7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547327
+    m_Key: notebook.saudi_8
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547328
+    m_Key: notebook.saudi.done
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547329
+    m_Key: notebook.dairy_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547330
+    m_Key: notebook.dairy_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547331
+    m_Key: notebook.dairy_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547332
+    m_Key: notebook.dairy_4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547333
+    m_Key: notebook.dairy_5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547334
+    m_Key: notebook.dairy_6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547335
+    m_Key: notebook.dairy_7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547336
+    m_Key: notebook.dairy_8
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547337
+    m_Key: notebook.dairy.done
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547338
+    m_Key: storyorder.c1_beans_smell.ask
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547339
+    m_Key: storyorder.c1_beans_smell.thanks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547340
+    m_Key: storyorder.c1_light_on.ask
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547341
+    m_Key: storyorder.c1_light_on.thanks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547342
+    m_Key: storyorder.c2_groom_visit.ask
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547343
+    m_Key: storyorder.c2_groom_visit.thanks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547344
+    m_Key: storyorder.c2_hush_me.ask
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547345
+    m_Key: storyorder.c2_hush_me.thanks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547346
+    m_Key: storyorder.c3_tea_right_way.ask
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547347
+    m_Key: storyorder.c3_tea_right_way.thanks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547348
+    m_Key: storyorder.c3_cardamom_sugar.ask
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547349
+    m_Key: storyorder.c3_cardamom_sugar.thanks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547350
+    m_Key: storyorder.c4_karim_lunch.ask
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547351
+    m_Key: storyorder.c4_karim_lunch.thanks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547352
+    m_Key: storyorder.c4_small_dallah.ask
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547353
+    m_Key: storyorder.c4_small_dallah.thanks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547354
+    m_Key: storyorder.c5_two_cities_guest.ask
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547355
+    m_Key: storyorder.c5_two_cities_guest.thanks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547356
+    m_Key: storyorder.c5_photo_for_mum.ask
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547357
+    m_Key: storyorder.c5_photo_for_mum.thanks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547358
+    m_Key: storyorder.c6_stairs_tea.ask
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547359
+    m_Key: storyorder.c6_stairs_tea.thanks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547360
+    m_Key: storyorder.c6_extra_cup.ask
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547361
+    m_Key: storyorder.c6_extra_cup.thanks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547362
+    m_Key: storyorder.c7_taste_ours.ask
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547363
+    m_Key: storyorder.c7_taste_ours.thanks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547364
+    m_Key: storyorder.c7_full_pot.ask
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547365
+    m_Key: storyorder.c7_full_pot.thanks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547366
+    m_Key: storyorder.c8_roof_breakfast.ask
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547367
+    m_Key: storyorder.c8_roof_breakfast.thanks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547368
+    m_Key: storyorder.c8_think_tonight.ask
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547369
+    m_Key: storyorder.c8_think_tonight.thanks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547370
+    m_Key: storyorder.c9_two_cups_window.ask
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547371
+    m_Key: storyorder.c9_two_cups_window.thanks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547372
+    m_Key: storyorder.c9_no_answer.ask
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547373
+    m_Key: storyorder.c9_no_answer.thanks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547374
+    m_Key: storyorder.c10_bride_gift.ask
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547375
+    m_Key: storyorder.c10_bride_gift.thanks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547376
+    m_Key: storyorder.c10_family_table.ask
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399969738547377
+    m_Key: storyorder.c10_family_table.thanks
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

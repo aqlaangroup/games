@@ -28,7 +28,8 @@ namespace Gahwit.Pacing.Tests
         int day, virtualTask;
         long clock;
         long energySpent, orderCoins, tipCoins, sellCoins, unitsServed, unitsMade;
-        int served, sold;
+        int served, sold, storyServed;
+        long storyCoins;
 
         [Test]
         public void TheTypicalPlayerFinishesEachChapterNearItsTargetDay()
@@ -42,6 +43,7 @@ namespace Gahwit.Pacing.Tests
             {
                 served++;
                 orderCoins += order.Coins;
+                if (order.Story != null) { storyServed++; storyCoins += order.Coins; }
                 unitsServed += order.Units;
             };
             game.ItemSpawned += cell => unitsMade += config.ItemUnits(game.ItemAt(cell).Level);
@@ -59,7 +61,8 @@ namespace Gahwit.Pacing.Tests
 
             var report = new StringBuilder($"energy {energySpent}, coins per energy {(orderCoins + tipCoins + sellCoins) / (double)Math.Max(1, energySpent):0.00} " +
                 $"(orders {orderCoins}, tips {tipCoins}, sold {sellCoins}), units served per unit made {unitsServed / (double)Math.Max(1, unitsMade):0.00}, " +
-                $"orders {served}, sold {sold}, level {game.State.Level}\nchapter: target / played\n");
+                $"orders {served} (story {storyServed} of {content.StoryOrders.Count}, {storyCoins} coins), sold {sold}, level {game.State.Level}\n" +
+                "chapter: target / played\n");
             bool ok = true;
             foreach (var chapter in config.Chapters)
             {

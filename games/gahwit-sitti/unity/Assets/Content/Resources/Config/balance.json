@@ -1391,7 +1391,7 @@
       ]
     },
     "kitchen": {
-      "proposed": "Proposed on 2026-10-31, when the owner asked for a kitchen with feeling (DEVLOG): Teta's notebook pages, serving streaks and story orders. These reward with feeling more than money: a notebook page is its own reward, a whole chain gives a little energy, and the streak bonus is a small share of the order's coins, so chapter pacing stays on target (Pacing tests). Tune in playtests.",
+      "proposed": "Proposed on 2026-10-31, when the owner asked for a kitchen with feeling (DEVLOG): Teta's notebook pages, serving streaks and story orders. These reward with feeling more than money: a notebook page is its own reward, a whole chain gives a little energy, and the streak bonus is a small share of the order's coins, so chapter pacing stays on target (Pacing tests). A story order waits for the next free seat and pays like any order; its reward is friendship, storyOrderFriendshipPoints with that regular instead of the usual 1 (3 for a favourite). With double pay and a seat of its own, the typical player finished chapters 5 to 8 two days early. Tune in playtests.",
       "notebookCoinsPerPage": 0,
       "notebookChainEnergy": 20,
       "streakWindowSeconds": 90,
@@ -1402,8 +1402,7 @@
         3,
         4
       ],
-      "storyOrderCoinMultiplier": 2.0,
-      "storyOrderXpMultiplier": 2.0,
+      "storyOrderFriendshipPoints": 5,
       "barkSeconds": 4
     }
   },

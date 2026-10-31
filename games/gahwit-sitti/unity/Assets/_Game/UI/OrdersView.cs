@@ -55,7 +55,7 @@ namespace Gahwit.UI
             var color = order.IsCharacter && game.Content.Characters.TryGetValue(order.Customer, out var character)
                 ? Palette.Hex(character.Color)
                 : Palette.InkSoft;
-            UiKit.Text(card.transform, "Who", who, 28, color, TextAlignmentOptions.Center).rectTransform.Top(10, 40, 8, 8);
+            UiKit.Text(card.transform, "Who", who, 28, color, TextAlignmentOptions.Center).OneLine().rectTransform.Top(10, 40, 8, 8);
             var picture = order.IsCharacter ? Portraits.For(order.Customer, ready ? "smile" : "neutral") : null;
             if (picture != null)
             {
@@ -85,7 +85,7 @@ namespace Gahwit.UI
                 : Loc.T("order.reward", order.Coins);
             bool special = order.Recipe != null || order.Story != null;
             UiKit.Text(card.transform, "Reward", reward, 24, special ? Palette.Rose : Palette.InkSoft, TextAlignmentOptions.Center)
-                .rectTransform.Top(150, 32, 8, 8);
+                .OneLine().rectTransform.Top(150, 32, 8, 8);
             if (special)
             {
                 var edge = card.gameObject.AddComponent<Outline>();

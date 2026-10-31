@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.IO;
 using Gahwit.Core;
+using Gahwit.Merge;
 using Gahwit.Story;
 using Gahwit.UI;
 using UnityEngine;
@@ -46,6 +47,24 @@ namespace Gahwit.Boot
             ui.ShowKitchen();
             yield return Wait(1.5f);
             yield return Shot("02_kitchen");
+
+            // The kitchen's voices: a served customer's thanks, the next customer's line, a streak, a new notebook page.
+            var game = ui.TourGame;
+            float line = game.Config.LevelB.Kitchen.BarkSeconds;
+            ServeFirst(game);
+            yield return Wait(0.8f);
+            yield return Shot("02b_kitchen_thanks");
+            yield return Wait(line);
+            yield return Shot("02c_kitchen_ask");
+            yield return Wait(line);
+            ServeFirst(game);
+            yield return Wait(0.8f);
+            yield return Shot("02d_kitchen_streak");
+            MakeNewItem(game);
+            yield return Wait(0.8f);
+            yield return Shot("02e_kitchen_page");
+            yield return Wait(line * 2);
+
             yield return Panel<StorageView>("03_storage", view => view.Show());
             yield return Panel<PanView>("04_pan", view => view.Show());
             yield return Panel<RecipeBookView>("05_recipe_book", view => view.Show());
@@ -120,6 +139,41 @@ namespace Gahwit.Boot
             yield return Shot(name);
             view.gameObject.SetActive(false);
             yield return Wait(0.3f);
+        }
+
+        // Puts what the first order wants on the board and serves it.
+        static void ServeFirst(Game game)
+        {
+            if (game.Orders.Count == 0) return;
+            var order = game.Orders[0];
+            foreach (var line in order.Lines)
+                for (int n = 0; n < line.Count; n++) Put(game, line.Chain, line.Level);
+            game.Serve(order.Id);
+        }
+
+        // Merges two of the lowest item whose next level has no notebook page yet, so its page opens.
+        static void MakeNewItem(Game game)
+        {
+            foreach (var chain in game.Config.Chains)
+            {
+                if (chain.Value.UnlockChapter > game.State.Chapter) continue;
+                for (int level = 2; level <= game.MaxLevel(chain.Key); level++)
+                {
+                    if (game.HasPage(chain.Key, level)) continue;
+                    int a = Put(game, chain.Key, level - 1), b = Put(game, chain.Key, level - 1);
+                    if (a >= 0 && b >= 0) game.Move(a, b);
+                    return;
+                }
+            }
+        }
+
+        static int Put(Game game, string chain, int level)
+        {
+            int cell = Array.FindIndex(game.State.Board, item => item == null);
+            if (cell < 0) return -1;
+            game.State.Board[cell] = new Item(chain, level);
+            game.Touch();
+            return cell;
         }
 
         static void Next(GameUi ui)

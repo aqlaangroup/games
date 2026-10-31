@@ -86,6 +86,27 @@ namespace Gahwit.Customers.Tests
         }
 
         [Test]
+        public void AStoryOrderBringsMoreFriendshipThanAPlainOne()
+        {
+            var game = NewGame();
+            var rules = new CustomerRules(game);
+            var lines = new System.Collections.Generic.List<OrderLine> { new OrderLine { Chain = "coffee", Level = 1, Count = 1 } };
+
+            var plain = game.MakeOrder("abu_fadi", true, lines);
+            game.State.Orders.Add(plain);
+            Prepare(game, plain);
+            game.Serve(plain.Id);
+            Assert.AreEqual(config.LevelB.Regulars.PointsOther, rules.Regular("abu_fadi").Points);
+
+            var story = game.MakeOrder("abu_fadi", true, lines);
+            story.Story = "test_story";
+            game.State.Orders.Add(story);
+            Prepare(game, story);
+            game.Serve(story.Id);
+            Assert.AreEqual(config.LevelB.Regulars.PointsOther + config.LevelB.Kitchen.StoryOrderFriendshipPoints, rules.Regular("abu_fadi").Points);
+        }
+
+        [Test]
         public void AbuFadiGainsFriendshipAndReachesHisFirstStory()
         {
             var game = NewGame();

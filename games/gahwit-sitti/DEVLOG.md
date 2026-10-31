@@ -16,7 +16,7 @@ The cutters now live in the repo: `tools/art/cut_portraits.py` and `tools/art/cu
 The owner said the kitchen felt like the same steps with no story or feeling. Four things give it a heart; their numbers are in `balance.json` `levelB.kitchen`, all proposed:
 - **Faces and voices:**
   - Order cards show the regular's portrait, smiling once the order is ready.
-  - A speech bubble over the board says their line when they order and their thanks when served (`bark.<who>.ask/thanks.<n>`; walk-ins too).
+  - A speech bubble over the board says their line when they order and their thanks when served (`bark.<who>.ask/thanks.<n>`; walk-ins too). It is solid cream with a soft shadow, a tail up from the speaker's face and a short pop as it appears; a story order's line has the rose edge its card has.
   - Nothing blocks play.
 - **Teta's kitchen notebook:**
   - The first time the player makes an item, its page opens with Teta's note (`notebook.<chain>_<level>`).
@@ -25,7 +25,11 @@ The owner said the kitchen felt like the same steps with no story or feeling. Fo
   - Pages are saved (`kitchen.notebook`).
 - **Story orders:**
   - Two special orders a chapter, from a character in that chapter's story, arrive once enough tasks are done.
-  - Each has its own lines (`storyorder.<id>.ask/thanks`), a rose edge and the words "special order", and pays double.
+  - Each has its own lines (`storyorder.<id>.ask/thanks`), a rose edge and the words "special order".
+  - The story's customer takes the next free seat, before anyone else. The order pays like any other; its reward is friendship: `storyOrderFriendshipPoints` (5) with that regular, instead of the usual 1 (3 for a favourite).
+  - Every customer has one order waiting at a time. The first screen tour showed Abu Fadi on three cards at once, two of them story orders; a story order now waits until its character's other order is served.
+  - One that missed its chapter (the chapter ended before a seat came free) comes early in the next. Older ones don't, so a save from before story orders isn't flooded with the whole season's.
+  - First tried: double pay and a seat of their own. With the season's 20 story orders in, the typical player finished chapters 5 to 8 two days early. Even at normal pay, the extra seat put chapter 6 a day early, so the seat went too. Now pacing matches the run without story orders, and the bot serves all 20.
   - Served ones are saved (`story.ordersDone`; `orders[].story`).
 - **Streaks:** serving again within 90 seconds builds a streak ("On a roll ×N") with a small extra share of coins.
 - **Pacing kept:**
@@ -33,6 +37,11 @@ The owner said the kitchen felt like the same steps with no story or feeling. Fo
   - Now the streak pays 1–4% of the order and a notebook page pays no coins: the page is its own reward.
   - The pacing test passes again, every chapter near its target day.
 - **Save schema 13** adds these, with a migration and a test.
+- **The words (UI table, 179 lines in Arabic and English):**
+  - Every regular who orders has three asks and three thanks (`bark.<tag>.*`); walk-ins share six of each. Lines never name an item, since the order card shows it, and walk-in lines don't show the speaker's gender.
+  - Teta's notebook has a note for each of the 44 items and one for each finished chain. It hints at the family story (Nawal's mint, Rana's sage, a recipe kept "somewhere safer") but never tells it.
+  - The 20 story orders (`chapters.json` `storyOrders`) each come just after the scene that sets them up, such as Samira's groom coming at five. A test checks every one can be made when it comes: the character places orders and is in the café, the chains are open, the levels exist.
+  - These lines are drafts until a native writer checks them, especially Lana's Najdi (بيالتين شاهي، مو شين، وش عندك يسوى), the tourist's Hejazi, Faris's English loanwords and Teta's old Amman words in the notebook.
 
 ## 2026-10-31: the whole season written, and the café changes with every task (missing/11, 12)
 

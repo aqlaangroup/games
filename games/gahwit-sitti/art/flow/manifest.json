@@ -1,6 +1,6 @@
 {
   "project": "https://flow.google.com/project/eedf32a5-56c5-45b9-9685-dd24ae7b6195",
-  "status": "Stopped early: Flow returned 'You've reached your usage limit. Please try again later. You have not been charged for this generation.' 7 of 23 expression sheets done; no icon sheets or app icon yet.",
+  "status": "Stopped early: Flow returned 'You've reached your usage limit. Please try again later. You have not been charged for this generation.' 7 of 23 expression sheets done; no icon sheets or app icon yet. Retried at 2026-10-31 22:38 +03 (Nawal regeneration with the owner's quality line): same message, so nawal.png and teta_young.png were not regenerated.",
   "credits": "Flow showed 'Generating will use 0 credits' for every generation. Download sizes offered: 1K original, 2K upscaled, 4K greyed out ('Learn more').",
   "pending": [
     "portraits/teta.png (use teta_young as reference)",

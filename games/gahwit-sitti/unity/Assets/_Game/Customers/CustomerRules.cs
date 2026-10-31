@@ -85,7 +85,8 @@ namespace Gahwit.Customers
             if (regular.Level >= rules.FriendshipMax) return;
             var favourite = game.Content.Characters[order.Customer].Favourite;
             bool loved = favourite != null && order.Lines.Any(l => l.Chain == favourite.Chain && l.Level == favourite.Level);
-            regular.Points += loved ? rules.PointsFavourite : rules.PointsOther;
+            regular.Points += order.Story != null ? Config.LevelB.Kitchen.StoryOrderFriendshipPoints
+                : loved ? rules.PointsFavourite : rules.PointsOther;
             while (regular.Level < rules.FriendshipMax && regular.Points >= PointsToNext(regular.Level))
             {
                 regular.Points -= PointsToNext(regular.Level);

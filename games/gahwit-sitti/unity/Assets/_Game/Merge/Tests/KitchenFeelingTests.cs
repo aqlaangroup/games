@@ -107,22 +107,58 @@ namespace Gahwit.Merge.Tests
         }
 
         [Test]
-        public void AStoryOrderComesOnCuePaysMoreAndNeverReturns()
+        public void EveryStoryOrderInTheSeasonCanBeMadeWhenItComes()
+        {
+            Assert.IsNotEmpty(content.StoryOrders);
+            var ids = new HashSet<string>();
+            foreach (var def in content.StoryOrders)
+            {
+                Assert.IsTrue(ids.Add(def.Id), $"{def.Id}: the id is used twice");
+                Assert.That(def.Chapter, Is.InRange(1, content.Chapters.Count), def.Id);
+                Assert.That(def.AtTask, Is.InRange(1, content.Chapters[def.Chapter - 1].Tasks.Count), $"{def.Id}: no such task");
+                Assert.IsTrue(content.Characters.TryGetValue(def.Character, out var who), $"{def.Id}: no character {def.Character}");
+                Assert.IsTrue(who.PlacesOrders, $"{def.Id}: {def.Character} doesn't place orders");
+                Assert.LessOrEqual(who.FromChapter, def.Chapter, $"{def.Id}: {def.Character} isn't in the café yet");
+                Assert.IsNotEmpty(def.Lines, def.Id);
+                foreach (var line in def.Lines)
+                {
+                    Assert.IsTrue(config.Chains.TryGetValue(line.Chain, out var chain), $"{def.Id}: no chain {line.Chain}");
+                    Assert.LessOrEqual(chain.UnlockChapter, def.Chapter, $"{def.Id}: {line.Chain} isn't open yet");
+                    Assert.That(line.Level, Is.InRange(1, chain.Items.Count), $"{def.Id}: {line.Chain} has no level {line.Level}");
+                    Assert.GreaterOrEqual(line.Count, 1, def.Id);
+                }
+            }
+        }
+
+        [Test]
+        public void AStoryOrderTakesTheNextFreeSeatAndNeverReturns()
         {
             content.StoryOrders = new List<StoryOrderDef>
             {
                 new StoryOrderDef { Id = "test_story", Chapter = 1, AtTask = 1, Character = "abu_fadi",
-                    Lines = { new StoryOrderLine { Chain = "coffee", Level = 2, Count = 1 } } }
+                    Lines = { new StoryOrderLine { Chain = "coffee", Level = 2, Count = 1 } } },
+                new StoryOrderDef { Id = "test_story_2", Chapter = 1, AtTask = 1, Character = "abu_fadi",
+                    Lines = { new StoryOrderLine { Chain = "coffee", Level = 1, Count = 1 } } }
             };
             var game = NewGame();
-            Assert.IsFalse(game.State.Orders.Any(o => o.Story != null), "not before its task");
+            int seats = config.OrderSlots(game.State.Level);
+            WalkInsInEverySeat(game);
 
             game.State.Coins = 10_000;
             game.CompleteTask();
-            var story = game.State.Orders.Single(o => o.Story == "test_story");
+            Assert.IsFalse(game.State.Orders.Any(o => o.Story != null), "every seat is taken: the story's customer waits");
+
+            // A seat frees up: the story's customer takes it before anyone else, and the café stays at its seats.
+            ServeFirst(game);
+            var story = game.State.Orders.Single(o => o.Story != null);
+            Assert.AreEqual("test_story", story.Story);
             Assert.AreEqual("abu_fadi", story.Customer);
+            Assert.AreEqual(seats, game.State.Orders.Count);
             var plain = game.MakeOrder("abu_fadi", true, new List<OrderLine> { new OrderLine { Chain = "coffee", Level = 2, Count = 1 } });
-            Assert.AreEqual((int)System.Math.Round(plain.Coins * config.LevelB.Kitchen.StoryOrderCoinMultiplier), story.Coins);
+            Assert.AreEqual(plain.Coins, story.Coins, "it pays like any order; its reward is friendship");
+
+            ServeFirst(game);
+            Assert.IsFalse(game.State.Orders.Any(o => o.Story == "test_story_2"), "Abu Fadi has one order at a time");
 
             Order served = null;
             game.StoryOrderServed += o => served = o;
@@ -131,6 +167,56 @@ namespace Gahwit.Merge.Tests
             Assert.AreSame(story, served);
             CollectionAssert.Contains(game.State.StoryOrdersDone, "test_story");
             Assert.IsFalse(game.State.Orders.Any(o => o.Story == "test_story"), "served once, gone for good");
+            Assert.IsTrue(game.State.Orders.Any(o => o.Story == "test_story_2"), "his next one takes the seat he left");
+        }
+
+        [Test]
+        public void AStoryOrderThatMissedItsChapterComesInTheNextOnly()
+        {
+            content.StoryOrders = new List<StoryOrderDef>
+            {
+                new StoryOrderDef { Id = "older", Chapter = 1, AtTask = 1, Character = "samira",
+                    Lines = { new StoryOrderLine { Chain = "coffee", Level = 1, Count = 1 } } },
+                new StoryOrderDef { Id = "missed", Chapter = 2, AtTask = 6, Character = "abu_fadi",
+                    Lines = { new StoryOrderLine { Chain = "coffee", Level = 1, Count = 1 } } }
+            };
+            var game = NewGame();
+            game.State.Chapter = 3;
+            game.State.TaskIndex = 0;
+            WalkInsInEverySeat(game);
+
+            ServeFirst(game);
+            Assert.IsTrue(game.State.Orders.Any(o => o.Story == "missed"), "the last chapter's comes at the first free seat");
+            Assert.IsFalse(game.State.Orders.Any(o => o.Story == "older"), "two chapters back: gone");
+        }
+
+        [Test]
+        public void NoCustomerEverHasTwoOrdersWaiting()
+        {
+            var game = NewGame();
+            for (int n = 0; n < 300; n++)
+            {
+                var waiting = game.State.Orders.Where(o => o.IsCharacter).Select(o => o.Customer).ToList();
+                CollectionAssert.AllItemsAreUnique(waiting, $"after {n} served");
+                ServeFirst(game);
+            }
+        }
+
+        // Walk-ins in every seat, so a test doesn't depend on who the seed sent.
+        static void WalkInsInEverySeat(Game game)
+        {
+            game.State.Orders.Clear();
+            while (game.State.Orders.Count < game.Config.OrderSlots(game.State.Level))
+                game.State.Orders.Add(game.MakeOrder(null, false, new List<OrderLine> { new OrderLine { Chain = "sweets", Level = 1, Count = 1 } }));
+        }
+
+        // Puts what the first order wants on the board and serves it.
+        static void ServeFirst(Game game)
+        {
+            var order = game.State.Orders[0];
+            foreach (var line in order.Lines)
+                for (int n = 0; n < line.Count; n++) game.State.Board[Empty(game)] = new Item(line.Chain, line.Level);
+            Assert.IsTrue(game.Serve(order.Id));
         }
     }
 }

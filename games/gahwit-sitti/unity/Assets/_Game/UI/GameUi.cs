@@ -38,6 +38,9 @@ namespace Gahwit.UI
         public TutorialView Tutorial { get; private set; }
         public PromptView Prompt { get; private set; }
         public StorageView Storage { get; private set; }
+#if GAHWIT_TOUR
+        public Game TourGame => game; // the screen tour plays a few kitchen moves (Boot/ScreenTour.cs)
+#endif
         public Action OutOfEnergy;  // set by Boot: opens the out-of-energy card
         public Action BubbleTapped; // set by Boot: opens the bubble offer
         ItemLook look;
