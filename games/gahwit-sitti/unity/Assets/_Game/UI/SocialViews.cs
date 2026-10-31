@@ -195,7 +195,11 @@ namespace Gahwit.UI
             if (mine != null && (string)mine["status"] == "open") Order(mine, true, friendsReply?.Data?["friends"] as JArray);
             else
             {
-                if (mine != null) Social.Line(list, Loc.T((string)mine["status"] == "done" ? "hosting.lastDone" : "hosting.lastExpired"));
+                if (mine != null && (string)mine["status"] == "done")
+                    SharedPostcard(mine["decor"]?.Type == JTokenType.String
+                        ? Loc.T("hosting.lastDoneDecor", Loc.T("decor." + (string)mine["decor"]))
+                        : Loc.T("hosting.lastDone"), ((JArray)mine["helpers"]).Count);
+                else if (mine != null) Social.Line(list, Loc.T("hosting.lastExpired"));
                 bool canStart = reply.Data.Value<bool>("canStart");
                 var start = Social.Row(list, 150);
                 UiKit.Text(start.transform, "Text", Loc.T(canStart ? "hosting.startText" : "hosting.waitText"), 26, Palette.Ink).rectTransform.Stretch(280, 28, 20, 20);
@@ -207,6 +211,17 @@ namespace Gahwit.UI
                 });
             }
             foreach (var helping in ((JArray)reply.Data["helping"]).OfType<JObject>()) Order(helping, false, null);
+            foreach (var helped in (reply.Data["helped"] as JArray ?? new JArray()).OfType<JObject>())
+                SharedPostcard(Loc.T("hosting.helpedDone"), helped.Value<int>("helpers"));
+        }
+
+        // Everyone who hosted a finished order makes the same postcard (SYSTEMS_B.md section 7).
+        void SharedPostcard(string text, int helpers)
+        {
+            var row = Social.Row(list, 150);
+            UiKit.Text(row.transform, "Text", text, 26, Palette.Ink).rectTransform.Stretch(280, 28, 20, 20);
+            string line = helpers > 0 ? Loc.T("hosting.postcardLine", helpers) : Loc.T("hosting.postcardLineSolo");
+            Social.Button(row.transform, Loc.T("hosting.postcard"), Palette.Rose, () => social.Postcard(line));
         }
 
         void Order(JObject order, bool mine, JArray friends)

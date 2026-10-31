@@ -4167,6 +4167,26 @@ MonoBehaviour:
     m_Key: today.passDetail
     m_Metadata:
       m_Items: []
+  - m_Id: 434036454449152
+    m_Key: hosting.postcard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 434036462837760
+    m_Key: hosting.postcardLine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 434036462837761
+    m_Key: hosting.postcardLineSolo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 434036462837762
+    m_Key: hosting.helpedDone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 434573237280768
+    m_Key: hosting.lastDoneDecor
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

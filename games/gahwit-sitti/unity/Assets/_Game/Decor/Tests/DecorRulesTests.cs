@@ -107,8 +107,12 @@ namespace Gahwit.Decor.Tests
         {
             // The weekly gift, the album and the mini board name pieces (decor); store products name sets (decorSet).
             var balance = Newtonsoft.Json.Linq.JObject.Parse(UnityEngine.Resources.Load<UnityEngine.TextAsset>("Config/balance").text);
-            var rewards = balance.Descendants().OfType<Newtonsoft.Json.Linq.JProperty>()
-                .Where(p => p.Name == "decor" && p.Value.Type == Newtonsoft.Json.Linq.JTokenType.String).Select(p => (string)p.Value).ToList();
+            var properties = balance.Descendants().OfType<Newtonsoft.Json.Linq.JProperty>().ToList();
+            var rewards = properties.Where(p => p.Name == "decor" && p.Value.Type == Newtonsoft.Json.Linq.JTokenType.String).Select(p => (string)p.Value)
+                .Concat(properties.Where(p => p.Name == "hostDecor").SelectMany(p => p.Value.Values<string>()))
+                .Concat(balance.Descendants().OfType<Newtonsoft.Json.Linq.JValue>().Select(v => v.Value as string)
+                    .Where(v => v != null && v.StartsWith("decor:")).Select(v => v.Substring(6)))
+                .ToList();
             Assert.IsNotEmpty(rewards);
             foreach (var id in rewards)
                 Assert.AreEqual("event", catalog.Get(id)?.Source, $"no event piece {id}");

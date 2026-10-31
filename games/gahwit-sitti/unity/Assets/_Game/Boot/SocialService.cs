@@ -15,9 +15,9 @@ namespace Gahwit.Boot
         readonly Game game;
         readonly Func<bool> allowed;
         readonly Action<string> visit;
-        readonly Action postcard;
+        readonly Action<string> postcard;
 
-        public SocialService(PlatformClient client, Game game, Func<bool> allowed, Action<string> visit, Action postcard)
+        public SocialService(PlatformClient client, Game game, Func<bool> allowed, Action<string> visit, Action<string> postcard)
         {
             this.client = client;
             this.game = game;
@@ -53,7 +53,14 @@ namespace Gahwit.Boot
             return reply;
         }
 
-        public Task<SocialReply> Hosting() => Call(client.Hosting);
+        // The host's finished order may bring a decor piece (levelB.hosting.rewards.hostDecor); the platform names it.
+        public async Task<SocialReply> Hosting()
+        {
+            var reply = await Call(client.Hosting);
+            if (reply.Ok && reply.Data?["mine"] is JObject mine && (string)mine["status"] == "done" && mine["decor"]?.Type == JTokenType.String)
+                game.GrantDecorReward((string)mine["decor"]);
+            return reply;
+        }
         public Task<SocialReply> StartHosting() => Call(client.StartHosting);
         public Task<SocialReply> Invite(string orderId, string friendId) => Call(() => client.InviteToHosting(orderId, friendId));
 
@@ -72,6 +79,6 @@ namespace Gahwit.Boot
         public Task<SocialReply> Post(string text) => Call(() => client.PostToWall(text));
         public Task<SocialReply> WallAction(string postId, string action) => Call(() => client.WallAction(postId, action));
         public void Visit(string friendId) => visit(friendId);
-        public void Postcard() => postcard();
+        public void Postcard(string line = null) => postcard(line);
     }
 }

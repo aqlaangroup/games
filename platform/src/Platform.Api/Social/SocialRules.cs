@@ -25,6 +25,17 @@ public static class SocialRules
         return node.ValueKind == JsonValueKind.Number ? node.GetDouble() : fallback;
     }
 
+    // A list of strings from the balance, or none when the path or the list is missing.
+    public static IReadOnlyList<string> Strings(JsonElement balance, params string[] path)
+    {
+        var node = balance;
+        foreach (var key in path)
+            if (node.ValueKind != JsonValueKind.Object || !node.TryGetProperty(key, out node)) return [];
+        return node.ValueKind == JsonValueKind.Array
+            ? node.EnumerateArray().Where(e => e.ValueKind == JsonValueKind.String).Select(e => e.GetString()!).ToList()
+            : [];
+    }
+
     // Easy to read aloud and type: no 0/O, 1/I/L.
     const string CodeLetters = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
 

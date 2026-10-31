@@ -2,6 +2,13 @@
 
 Decisions and known gaps. Newest first. Read this at the start of each session (`/CLAUDE.md`).
 
+## 2026-11-01: hosting's last rewards (missing/20)
+
+- **The host's decor piece** (SYSTEMS_B.md section 7):
+  - The host's first, second and third finished orders give the summer jallab, the Ramadan lantern and the Mother's Day roses (`levelB.hosting.rewards.hostDecor`, proposed). After that, gems only.
+  - The platform names the piece in the order's reply (`mine.decor`), so it can't be given twice. The game owns it through a `decor:<id>` entitlement and places it.
+- **The shared postcard:** a finished order offers "Make our postcard" to the host and to every helper. The platform now lists the orders a player helped finish this week (`helped`). The postcard is the café's usual one, with a line about hosting together, and the number of friends or the neighbours.
+
 ## 2026-11-01: the season pass (missing/18)
 
 Pass points used to pile up from daily tasks with nothing to spend them on. The pass is now built on both sides:

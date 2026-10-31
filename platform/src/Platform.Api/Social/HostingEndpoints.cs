@@ -43,7 +43,7 @@ public static class HostingEndpoints
     }
 
     sealed record Numbers(int PerWeek, int Hours, int Items, int MaxHelpers, int Friendship, int Presets, int HostGems, int HelperGems,
-        double SoloShare, double BotShare)
+        double SoloShare, double BotShare, IReadOnlyList<string> HostDecor)
     {
         public static Numbers From(JsonElement b) => new(
             (int)SocialRules.Number(b, 2, "levelB", "hosting", "perWeek"),
@@ -55,7 +55,8 @@ public static class HostingEndpoints
             (int)SocialRules.Number(b, 15, "levelB", "hosting", "rewards", "hostGems"),
             (int)SocialRules.Number(b, 5, "levelB", "hosting", "rewards", "helperGems"),
             SocialRules.Number(b, 0.5, "levelB", "hosting", "rewards", "soloBotRewardShare"),
-            SocialRules.Number(b, 0.5, "levelB", "hosting", "botShareOfOrder"));
+            SocialRules.Number(b, 0.5, "levelB", "hosting", "botShareOfOrder"),
+            SocialRules.Strings(b, "levelB", "hosting", "rewards", "hostDecor"));
     }
 
     static async Task<Numbers> NumbersAsync(PlatformDb db, Guid gameId, CancellationToken ct)
@@ -73,8 +74,10 @@ public static class HostingEndpoints
         return (int)Math.Floor(order.ItemsNeeded * n.BotShare * share);
     }
 
-    static object Dto(HostingOrder order, IReadOnlyList<HostingHelper> helpers, int bots) => new
+    // decor: the piece a host's finished order gives (the host's n-th finished order gives hostDecor's n-th), or null.
+    static object Dto(HostingOrder order, IReadOnlyList<HostingHelper> helpers, int bots, string? decor = null) => new
     {
+        decor,
         id = order.Id,
         hostId = order.HostId,
         startedAt = order.StartedAt,
@@ -120,7 +123,7 @@ public static class HostingEndpoints
         return (order, helpers, bots);
     }
 
-    // The player's own order (the newest), and open orders they were invited to help.
+    // The player's own order (the newest), open orders they were invited to help, and those they helped finish.
     static async Task<IResult> List(HttpContext http, PlatformDb db, WalletService wallets, TimeProvider clock, CancellationToken ct)
     {
         var game = http.Game();
@@ -132,7 +135,13 @@ public static class HostingEndpoints
         if (own is not null)
         {
             var (order, helpers, bots) = await RefreshAsync(db, wallets, game.Id, own, n, now, ct);
-            mine = Dto(order, helpers, bots);
+            string? decor = null;
+            if (order.Status == HostingStatus.Done)
+            {
+                int nth = await db.HostingOrders.CountAsync(o => o.HostId == me && o.Status == HostingStatus.Done && o.FinishedAt <= order.FinishedAt, ct);
+                if (nth >= 1 && nth <= n.HostDecor.Count) decor = n.HostDecor[nth - 1];
+            }
+            mine = Dto(order, helpers, bots, decor);
         }
         var invited = await db.HostingHelpers.Where(h => h.PlayerId == me).Select(h => h.OrderId).ToListAsync(ct);
         var helping = new List<object>();
@@ -141,8 +150,14 @@ public static class HostingEndpoints
             var (o, helpers, bots) = await RefreshAsync(db, wallets, game.Id, order, n, now, ct);
             if (o.Status == HostingStatus.Open) helping.Add(Dto(o, helpers, bots));
         }
+        // Orders they helped finish this week: each helper makes the shared postcard too (SYSTEMS_B.md section 7).
+        var helped = await db.HostingOrders.AsNoTracking()
+            .Where(o => invited.Contains(o.Id) && o.Status == HostingStatus.Done && o.FinishedAt > now.AddDays(-7))
+            .OrderByDescending(o => o.FinishedAt)
+            .Select(o => new { id = o.Id, finishedAt = o.FinishedAt, helpers = db.HostingHelpers.Count(h => h.OrderId == o.Id) })
+            .ToListAsync(ct);
         int startedThisWeek = await db.HostingOrders.CountAsync(o => o.HostId == me && o.StartedAt > now.AddDays(-7), ct);
-        return Results.Ok(new { mine, helping, canStart = startedThisWeek < n.PerWeek && (own is null || own.Status != HostingStatus.Open) });
+        return Results.Ok(new { mine, helping, helped, canStart = startedThisWeek < n.PerWeek && (own is null || own.Status != HostingStatus.Open) });
     }
 
     static async Task<IResult> Start(HttpContext http, PlatformDb db, TimeProvider clock, CancellationToken ct)

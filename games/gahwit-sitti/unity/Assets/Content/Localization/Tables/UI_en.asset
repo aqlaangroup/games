@@ -4269,6 +4269,26 @@ MonoBehaviour:
     m_Localized: "Tier {0} of {1} \xB7 {2} to claim \xB7 {3} days left"
     m_Metadata:
       m_Items: []
+  - m_Id: 434036454449152
+    m_Localized: Make our postcard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 434036462837760
+    m_Localized: "We hosted together \xB7 {0} friends"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 434036462837761
+    m_Localized: We hosted with the neighbours
+    m_Metadata:
+      m_Items: []
+  - m_Id: 434036462837762
+    m_Localized: An order you helped is done
+    m_Metadata:
+      m_Items: []
+  - m_Id: 434573237280768
+    m_Localized: 'Your last order is done, and here is your gift: {0}'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

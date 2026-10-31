@@ -69,6 +69,16 @@ namespace Gahwit.Merge.Tests
         }
 
         [Test]
+        public void AHostsDecorRewardIsOwnedOnce()
+        {
+            var game = NewGame();
+            Assert.IsTrue(game.GrantDecorReward("summer_jallab"));
+            Assert.IsFalse(game.GrantDecorReward("summer_jallab"), "the same piece twice is still one");
+            CollectionAssert.Contains(game.State.Entitlements, "decor:summer_jallab");
+            Assert.IsFalse(game.GrantDecorReward(null));
+        }
+
+        [Test]
         public void HostingTakesTheLowestPieceNoOrderWantsAndNeverAGenerator()
         {
             var game = NewGame();

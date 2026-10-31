@@ -1377,10 +1377,15 @@
       "rewards": {
         "hostGems": 15,
         "helperGems": 5,
-        "soloBotRewardShare": 0.5
+        "soloBotRewardShare": 0.5,
+        "hostDecor": [
+          "summer_jallab",
+          "ramadan_fanous",
+          "mothers_day_roses"
+        ]
       },
       "botShareOfOrder": 0.5,
-      "proposed": "Proposed on 2026-10-31 where the specs gave no number (missing/02). Tune in playtests. Applies to rewards and botShareOfOrder (bots fill that share of a solo host's order over its time, missing/20)."
+      "proposed": "Proposed on 2026-10-31 where the specs gave no number (missing/02). Tune in playtests. Applies to rewards and botShareOfOrder (bots fill that share of a solo host's order over its time, missing/20). hostDecor proposed on 2026-11-01: the host's first, second and third finished orders give these event pieces; after that, gems only."
     },
     "sittiWall": {
       "maxChars": 140,

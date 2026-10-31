@@ -86,7 +86,14 @@ public class SocialTests(PlatformFactory api)
         Assert.Equal(5, Gems(await (await helper.GetAsync($"/games/{GameA}/players/me/wallet")).Json()));
         var friends = await (await host.GetAsync($"/games/{GameA}/players/me/social")).Json();
         Assert.Equal(10, friends.GetProperty("friends")[0].GetProperty("points").GetInt32());
-        Assert.False((await (await host.GetAsync($"/games/{GameA}/players/me/hosting")).Json()).GetProperty("canStart").GetBoolean(), "once a week here");
+        var hosting = await (await host.GetAsync($"/games/{GameA}/players/me/hosting")).Json();
+        Assert.False(hosting.GetProperty("canStart").GetBoolean(), "once a week here");
+        Assert.Equal("jallab", hosting.GetProperty("mine").Str("decor")); // the host's first finished order: the first piece
+
+        // The helper sees the finished order too, for the shared postcard.
+        var helped = (await (await helper.GetAsync($"/games/{GameA}/players/me/hosting")).Json()).GetProperty("helped");
+        Assert.Equal(id, helped[0].Str("id"));
+        Assert.Equal(1, helped[0].GetProperty("helpers").GetInt32());
     }
 
     [Fact]

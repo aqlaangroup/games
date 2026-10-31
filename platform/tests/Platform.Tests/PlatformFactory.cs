@@ -85,7 +85,7 @@ public class PlatformFactory : WebApplicationFactory<Program>, IAsyncLifetime
               "levelB": {
                 "memories": { "skipRetryGems": 10 },
                 "hosting": { "perWeek": 1, "durationHours": 48, "itemsNeeded": 6, "maxHelpers": 1, "helperFriendship": 10, "presetMessages": 12,
-                  "rewards": { "hostGems": 15, "helperGems": 5, "soloBotRewardShare": 0.5 }, "botShareOfOrder": 0.5 },
+                  "rewards": { "hostGems": 15, "helperGems": 5, "soloBotRewardShare": 0.5, "hostDecor": ["jallab"] }, "botShareOfOrder": 0.5 },
                 "sittiWall": { "maxChars": 140, "postsPerDay": 1, "reportsToReview": 2 }
               },
               "dailyLogin": [ { "day": 1, "energy": 25 }, { "day": 2, "gems": 5 }, { "day": 3, "gems": 20 } ],

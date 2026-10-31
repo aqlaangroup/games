@@ -28,6 +28,6 @@ namespace Gahwit.UI
         Task<SocialReply> Post(string text);
         Task<SocialReply> WallAction(string postId, string action); // like, report, block
         void Visit(string friendId);
-        void Postcard();
+        void Postcard(string line = null); // a postcard of the café; line replaces the usual one (a hosting order's)
     }
 }

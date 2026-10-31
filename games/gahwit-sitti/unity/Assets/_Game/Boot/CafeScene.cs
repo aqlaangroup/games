@@ -793,8 +793,9 @@ namespace Gahwit.Boot
             ui.HideVisit();
         }
 
-        // A postcard of the café, shared through the phone's share sheet with a line about the game.
-        void Postcard() => ui.TakePostcard(path =>
+        // A postcard of the café, shared through the phone's share sheet with a line about the game. A finished hosting
+        // order's postcard says who hosted together.
+        void Postcard(string line) => ui.TakePostcard(line, path =>
         {
             Track("postcard");
             string link = Services.Current.PlatformConfig.StoreUrl;

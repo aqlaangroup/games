@@ -355,9 +355,9 @@ namespace Gahwit.UI
         }
 
         // A postcard (SYSTEMS_B.md section 8): the café as it is, with Salma, in a soft frame with the game's name.
-        public void TakePostcard(Action<string> saved) => StartCoroutine(Postcard(saved));
+        public void TakePostcard(string line, Action<string> saved) => StartCoroutine(Postcard(line ?? Loc.T("postcard.line"), saved));
 
-        System.Collections.IEnumerator Postcard(Action<string> saved)
+        System.Collections.IEnumerator Postcard(string line, Action<string> saved)
         {
             ShowCafe();
             var safe = transform.Find("SafeArea");
@@ -385,7 +385,7 @@ namespace Gahwit.UI
             var name = UiKit.Text(frame, "Name", Loc.T("postcard.name"), 64, Palette.Rose, TMPro.TextAlignmentOptions.Center);
             name.fontStyle = TMPro.FontStyles.Bold;
             name.rectTransform.Bottom(150, 100);
-            UiKit.Text(frame, "Line", Loc.T("postcard.line"), 32, Palette.InkSoft, TMPro.TextAlignmentOptions.Center).rectTransform.Bottom(70, 70);
+            UiKit.Text(frame, "Line", line, 32, Palette.InkSoft, TMPro.TextAlignmentOptions.Center).rectTransform.Bottom(70, 70);
             yield return new WaitForEndOfFrame();
             var shot = ScreenCapture.CaptureScreenshotAsTexture();
             Destroy(frame.gameObject);

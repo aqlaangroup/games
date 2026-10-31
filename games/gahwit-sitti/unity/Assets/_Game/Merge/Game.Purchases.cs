@@ -38,5 +38,14 @@ namespace Gahwit.Merge
             Changed?.Invoke();
             return true;
         }
+
+        // A decor piece earned outside the shop (a host's finished order): owned through its decor:<id> entitlement, once.
+        public bool GrantDecorReward(string id)
+        {
+            if (string.IsNullOrEmpty(id) || State.Entitlements.Contains("decor:" + id)) return false;
+            State.Entitlements.Add("decor:" + id);
+            Changed?.Invoke();
+            return true;
+        }
     }
 }
