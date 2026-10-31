@@ -4121,6 +4121,22 @@ MonoBehaviour:
     m_Localized: I put it in the middle of the table. The rest is up to them.
     m_Metadata:
       m_Items: []
+  - m_Id: 409733914681344
+    m_Localized: "Caf\xE9 floor"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 409733923069952
+    m_Localized: Kitchen corner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 409733923069953
+    m_Localized: Rooftop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 409733923069954
+    m_Localized: "A new space in the caf\xE9: {0}"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

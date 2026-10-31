@@ -4019,6 +4019,22 @@ MonoBehaviour:
     m_Key: storyorder.c10_family_table.thanks
     m_Metadata:
       m_Items: []
+  - m_Id: 409733914681344
+    m_Key: space.floor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 409733923069952
+    m_Key: space.kitchen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 409733923069953
+    m_Key: space.rooftop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 409733923069954
+    m_Key: space.opened
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

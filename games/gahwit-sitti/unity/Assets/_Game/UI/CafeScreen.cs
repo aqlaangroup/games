@@ -45,6 +45,12 @@ namespace Gahwit.UI
         int cosinessShown = -1;
         float nextCosinessTick;
 
+        // The café's spaces (missing/07): chips over the task card to move between the floor, the kitchen corner and,
+        // from chapter 6, the rooftop.
+        RectTransform spaceRow;
+        string spacesShown, spaceShownFor;
+        int spacesOpen = -1;
+
         // With reduced motion the camera cuts instead of gliding (COMPLETE_SPEC.md section 5).
         public System.Func<bool> ReducedMotion = () => false;
 
@@ -111,6 +117,10 @@ namespace Gahwit.UI
             toKitchen = UiKit.Button(card.transform, "ToKitchen", Loc.T("cafe.toKitchen"), Palette.SageDark, Color.white, 30, ui.ShowKitchen, 34);
             ((RectTransform)toKitchen.transform).Bottom(24, UiKit.MinTouch, 32, 32);
 
+            spaceRow = UiKit.Rect(transform, "Spaces").Bottom(552, UiKit.MinTouch + 8, 40, 40);
+            var spaceLayout = UiKit.Row(spaceRow.gameObject, 14);
+            spaceLayout.childForceExpandWidth = false;
+
             // Floats over the counter's drawer while a letter waits in it.
             drawer = UiKit.Button(transform, "OpenDrawer", Loc.T("drawer.open"), Palette.Rose, Color.white, 30, () => openDrawer(), 40);
             ((RectTransform)drawer.transform).Pin(new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(300, UiKit.MinTouch));
@@ -120,11 +130,15 @@ namespace Gahwit.UI
         void Update()
         {
             TickCosiness();
-            PlaceBubbles();
+            // Order bubbles and the drawer button sit over the floor, so they show only there.
+            bool onFloor = room.Space == ChapterContent.FloorSpace;
+            if (bubbleLayer.gameObject.activeSelf != onFloor) bubbleLayer.gameObject.SetActive(onFloor);
+            if (onFloor) PlaceBubbles();
+            if (spaceShownFor != room.Space) RefreshSpaces(); // a memory moved the camera
             bool waiting = game.LetterWaiting() != null;
             room.SetDrawerGlow(waiting);
             // Hidden while a scene or the letter itself is on screen, so it can't open twice.
-            bool show = waiting && !ui.Dialogue.IsOpen && !ui.Letter.IsOpen;
+            bool show = waiting && onFloor && !ui.Dialogue.IsOpen && !ui.Letter.IsOpen;
             drawer.gameObject.SetActive(show);
             if (!show) return;
 
@@ -218,6 +232,7 @@ namespace Gahwit.UI
 
         void EnterDecor()
         {
+            ShowSpace(ChapterContent.FloorSpace); // decor stands on the floor
             decorMode = true;
             pad.PressPiece = PressPiece;
             pad.DragPiece = DragPiece;
@@ -328,8 +343,44 @@ namespace Gahwit.UI
             ((RectTransform)todayButton.transform).Pin(new Vector2(0, 1), new Vector2(20, -444), new Vector2(UiKit.MinTouch, UiKit.MinTouch));
         }
 
+        void ShowSpace(string id)
+        {
+            if (room.Space == id) return;
+            room.ShowSpace(id, ReducedMotion());
+            RefreshSpaces();
+        }
+
+        // One chip per open space; the one shown is filled, bold and underlined, so it doesn't rely on colour. A newly
+        // opened space (the rooftop) is announced once.
+        void RefreshSpaces()
+        {
+            spaceShownFor = room.Space;
+            var open = game.Content.OpenSpaces(game.CompletedTaskIds());
+            spaceRow.gameObject.SetActive(!decorMode && open.Count > 1);
+            if (spacesOpen >= 0 && open.Count > spacesOpen)
+                ui.Toast.Show(Loc.T("space.opened", Loc.T("space." + open[open.Count - 1])));
+            spacesOpen = open.Count;
+            string key = string.Join(",", open) + "|" + room.Space;
+            if (key == spacesShown) return;
+            spacesShown = key;
+            UiKit.Clear(spaceRow);
+            foreach (var id in open)
+            {
+                bool shown = id == room.Space;
+                string space = id;
+                var chip = UiKit.Button(spaceRow, id, Loc.T("space." + id), shown ? Palette.Rose : Palette.Card, shown ? Color.white : Palette.Ink,
+                    26, () => ShowSpace(space), 32);
+                var label = chip.Label().OneLine();
+                if (shown) label.fontStyle = FontStyles.Bold | FontStyles.Underline;
+                var size = chip.gameObject.AddComponent<LayoutElement>();
+                size.preferredWidth = 230;
+                size.preferredHeight = UiKit.MinTouch;
+            }
+        }
+
         public void Refresh()
         {
+            RefreshSpaces();
             if (todayButton != null) todayButton.gameObject.SetActive(!decorMode);
             if (friendsButton != null) friendsButton.gameObject.SetActive(!decorMode && friendsOpen());
             if (journalButton != null) journalButton.gameObject.SetActive(!decorMode);
@@ -339,7 +390,7 @@ namespace Gahwit.UI
             wardrobeButton.gameObject.SetActive(wardrobe != null && wardrobe.Open && !decorMode);
             if (decorMode) RefreshDecor();
             var config = game.Config.Chapter(game.State.Chapter);
-            chapter.text = config != null ? Loc.T("cafe.chapter", game.State.Chapter, config.Ar) : "";
+            chapter.text = config != null ? Loc.T("cafe.chapter", game.State.Chapter, game.English ? config.En : config.Ar) : "";
 
             var task = game.CurrentTask;
             if (task == null)

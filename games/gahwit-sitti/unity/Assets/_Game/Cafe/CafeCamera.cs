@@ -18,8 +18,9 @@ namespace Gahwit.Cafe
 
         Camera cam;
         float theta = HomeTheta, phi = HomePhi, radius, thetaGoal = HomeTheta, phiGoal = HomePhi, radiusGoal;
-        float lastPinch, homeRadius;
-        Vector3 target = Home, targetGoal = Home;
+        float lastPinch, homeRadius, floorRadius;
+        Vector3 home = Home, target = Home, targetGoal = Home;
+        int spaceMask = ~0;
         bool visible = true;
         public bool Focused { get; private set; }
 
@@ -28,15 +29,34 @@ namespace Gahwit.Cafe
             cam = GetComponent<Camera>();
             bool portrait = cam.aspect < 0.75f;
             cam.fieldOfView = portrait ? 46f : 34f;
-            radius = radiusGoal = homeRadius = portrait ? 28f : 17f;
+            radius = radiusGoal = homeRadius = floorRadius = portrait ? 28f : 17f;
             Place();
+        }
+
+        // Another space of the café (CafeRoom.ShowSpace): look at it from its own angle and distance, and draw only its
+        // layer.
+        public void GoTo(Vector3 lookAt, float zoom, float homePhi, int mask, bool cut)
+        {
+            home = targetGoal = lookAt;
+            homeRadius = radiusGoal = floorRadius * zoom;
+            thetaGoal = HomeTheta;
+            phiGoal = Mathf.Clamp(homePhi, PhiMin, PhiMax);
+            Focused = false;
+            spaceMask = mask;
+            if (visible) cam.cullingMask = mask;
+            if (cut)
+            {
+                theta = thetaGoal;
+                phi = phiGoal;
+                Snap();
+            }
         }
 
         // While the kitchen covers the screen the café draws nothing, which saves the phone's GPU.
         public void SetVisible(bool show)
         {
             visible = show;
-            cam.cullingMask = show ? ~0 : 0;
+            cam.cullingMask = show ? spaceMask : 0;
             cam.GetUniversalAdditionalCameraData().renderPostProcessing = show;
         }
 
@@ -51,7 +71,7 @@ namespace Gahwit.Cafe
         // Double-tap a table to look closer (SYSTEMS_B.md section 2); with reduced motion the camera cuts there.
         public void Focus(Vector3 point, bool cut)
         {
-            targetGoal = new Vector3(point.x, Home.y, point.z);
+            targetGoal = new Vector3(point.x, home.y, point.z);
             radiusGoal = FocusRadius;
             Focused = true;
             if (cut) Snap();
@@ -59,7 +79,7 @@ namespace Gahwit.Cafe
 
         public void Unfocus(bool cut)
         {
-            targetGoal = Home;
+            targetGoal = home;
             radiusGoal = homeRadius;
             Focused = false;
             if (cut) Snap();

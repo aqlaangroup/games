@@ -38,5 +38,6 @@ namespace Gahwit.Core
         public float[] Size;
         public float[] At;
         public string Color;
+        public bool Glow; // a light: it shines, brighter at night
     }
 }

@@ -18,6 +18,7 @@ namespace Gahwit.Core
         public Dictionary<string, List<string>> ChainColors; // [lowest level, top level]
         public List<ChapterTasks> Chapters;
         public List<StoryOrderDef> StoryOrders = new List<StoryOrderDef>();
+        public Dictionary<string, SpaceDef> Spaces = new Dictionary<string, SpaceDef>(); // in the order the switcher shows them
         public Dictionary<string, MemoryDef> Memories;
         public Dictionary<string, LetterDef> Letters;
         public Dictionary<string, StyleDef> Styles; // old, modern, gulf (SYSTEMS_B.md section 2)
@@ -30,6 +31,19 @@ namespace Gahwit.Core
         }
 
         public ChapterTasks ForChapter(int n) => Chapters.Find(c => c.N == n);
+
+        public const string FloorSpace = "floor";
+
+        // The spaces the player can move between on the café screen, in order: those open from the start and those
+        // whose task is done. Memories-only spaces never show.
+        public List<string> OpenSpaces(ICollection<string> doneTasks)
+        {
+            var open = new List<string>();
+            foreach (var pair in Spaces)
+                if (!pair.Value.MemoriesOnly && (pair.Value.OpensWith == null || doneTasks.Contains(pair.Value.OpensWith)))
+                    open.Add(pair.Key);
+            return open;
+        }
     }
 
     public sealed class StartingItem
@@ -92,6 +106,14 @@ namespace Gahwit.Core
         public float[] At;   // metres from the room's centre: x (right), y (up), z (towards the camera); the back wall is z = -4
         public float Rot;    // degrees around y
         public string Style; // only when the player chose this style for the task, if set
+        public string Space; // the space it stands in (Spaces); none: the café floor
+    }
+
+    // A space of the café (SYSTEMS_B.md section 1): the floor, the kitchen corner, the rooftop, Teta's back room.
+    public sealed class SpaceDef
+    {
+        public string OpensWith;  // the task that opens it; none: open from the start
+        public bool MemoriesOnly; // seen only in 1974 memories, never from the switcher
     }
 
     public sealed class StyleDef
@@ -106,6 +128,7 @@ namespace Gahwit.Core
     public sealed class MemoryDef
     {
         public string Type;       // pour, rhythm, find, ...
+        public string Space;      // where in the café it happens (Spaces); none: the floor
         public string Story;      // Resources path of the Ink story
         public string LeadKnot;   // in the present, before the sepia transition
         public string IntroKnot;  // in 1974, before the game

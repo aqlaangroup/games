@@ -495,6 +495,8 @@ namespace Gahwit.Boot
                     // Teta ran it in the old Levantine style, before anything later chapters added.
                     cafe.Apply(game.Content.ForChapter(1).Tasks.Select(t => t.Id).ToList(),
                         new Dictionary<string, string> { ["sign"] = "old", ["chairs"] = "old" }, game.Content.Styles);
+                    // Some memories happen in another room: the back room (3), the kitchen corner (5).
+                    cafe.ShowSpace(def.Space, true);
                     ui.Memory.ShowBanner(true);
                 }
                 PlayScene(story, def.IntroKnot, () => PlayMemoryGame(memoryId, def, story, played => AfterMemoryGame(memoryId, def, story, record, played, stars =>
@@ -503,6 +505,7 @@ namespace Gahwit.Boot
                         PlayScene(story, def.OutroKnot, () =>
                         {
                             cafe.SetPast(false);
+                            cafe.ShowSpace(ChapterContent.FloorSpace, true);
                             inMemory = false;
                             audio.PlayMusic(cafeMusic);
                             cafe.Apply(game.CompletedTaskIds(), game.State.TaskStyles, game.Content.Styles);

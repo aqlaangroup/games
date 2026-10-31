@@ -13,7 +13,7 @@ namespace Gahwit.Cafe
 
     // The café room built from simple shapes, ported from cafe-3d/index.html, until the 3D art arrives.
     // Each chapter 1 task changes one part of the room; Apply() shows the room for the tasks finished so far.
-    public sealed class CafeRoom : MonoBehaviour
+    public sealed partial class CafeRoom : MonoBehaviour
     {
         const float W = 10f, D = 8f, H = 4.6f;
 
@@ -85,12 +85,14 @@ namespace Gahwit.Cafe
             BuildTables();
             BuildLights();
             BuildPostProcessing();
+            BuildSpaces();
         }
 
         // ---------- Task states ----------
 
         // Tasks with a style choice (sign, chairs) take their colours from the chosen style.
-        // Chapters 2–10 change the café through their tasks' props (chapters.json), built once and shown when done.
+        // Chapters 2–10 change the café through their tasks' props (chapters.json), built once and shown when done, in the
+        // space each names (the rooftop's lights and bunting stand on the rooftop).
         public void SetTaskProps(IEnumerable<TaskDef> tasks)
         {
             foreach (var task in tasks)
@@ -99,14 +101,15 @@ namespace Gahwit.Cafe
                 var built = new List<(TaskProp, GameObject)>();
                 foreach (var prop in task.Props)
                 {
-                    var root = Group("Prop " + task.Id, transform, new Vector3(prop.At[0], prop.At[1], prop.At[2]), prop.Rot);
+                    var root = Group("Prop " + task.Id, SpaceRoot(prop.Space), new Vector3(prop.At[0], prop.At[1], prop.At[2]), prop.Rot);
                     foreach (var part in prop.Parts)
                     {
                         var type = part.Shape == "sphere" ? PrimitiveType.Sphere : part.Shape == "cylinder" ? PrimitiveType.Cylinder : PrimitiveType.Cube;
                         // Unity's cylinder is 2 units tall, so its height scale is halved.
                         var size = new Vector3(part.Size[0], type == PrimitiveType.Cylinder ? part.Size[1] / 2f : part.Size[1], part.Size[2]);
-                        Shape(type, part.Shape, root, new Vector3(part.At[0], part.At[1], part.At[2]), size, Mat(part.Color), true);
+                        Shape(type, part.Shape, root, new Vector3(part.At[0], part.At[1], part.At[2]), size, part.Glow ? Glow(part.Color) : Mat(part.Color), !part.Glow);
                     }
+                    SetLayer(root, LayerOf(prop.Space));
                     root.gameObject.SetActive(false);
                     built.Add((prop, root.gameObject));
                 }
@@ -312,6 +315,7 @@ namespace Gahwit.Cafe
             foreach (var lamp in lampLights) lamp.intensity = warm;
             counterLight.intensity = Mathf.Max(0.6f, warm);
             bulbMat.SetColor("_EmissionColor", Hex("#FFCF7A") * time.Bulbs);
+            ApplySpaceTime();
         }
 
         // ---------- Room ----------

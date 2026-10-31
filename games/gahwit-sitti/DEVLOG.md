@@ -2,6 +2,20 @@
 
 Decisions and known gaps. Newest first. Read this at the start of each session (`/CLAUDE.md`).
 
+## 2026-10-31: the café's other spaces (missing/07)
+
+The spec's season has four spaces (SYSTEMS_B.md section 1); only the floor existed. All are built from simple shapes like the floor, until the 3D art arrives:
+- **Teta's kitchen corner:** checkered floor, sage cupboards, the enamel stove with the dallah on its flame and the roasting pan, jars of spices and her two big coffee jars (memory 5's "one for later"), copper pots, the coffee mortar. Open from the start.
+- **The rooftop:** stone floor and parapets, black water tanks and a solar heater, a jalsa of floor cushions around a tray of tea, a lantern, bougainvillea over the stairwell door, a clothesline, herbs in olive-oil tins. Beyond it Amman: the street's roofs, a valley of houses, hills of white houses facing us, a minaret and dome, the Citadel's columns. Windows light up at dusk. It opens with chapter 6's `rooftop_stairs`; that chapter's string lights (now glowing) and bunting moved up to it.
+- **Teta's back room:** shelves of boxes and cloth, her radio, an old photo, the locked tin box up high, the trunk, rolled carpets, the sewing machine. Memories only: memory 3 plays here.
+- **How it works:**
+  - Each space stands far from the others on a layer of its own (20 to 22), and the camera draws one at a time.
+  - Chips over the task card switch spaces (one at a time, filled, bold and underlined); a toast announces the rooftop.
+  - Decor mode returns to the floor. Order bubbles and the drawer button show only on the floor.
+  - The rooftop's camera sits lower, so the sky and the hills show.
+- **Content:** `chapters.json` has `spaces` (which task opens each, or memories only), `memories[].space` and `props[].space`, and prop parts can `glow`. Tests check every named space and task exists.
+- **Also fixed:** in English, the task card's chapter line showed the Arabic title backwards; it now uses the English title.
+
 ## 2026-10-31: cleaner portrait cut-outs
 
 The owner asked that every image feel well designed. Three flaws in the portrait cut-outs are fixed:

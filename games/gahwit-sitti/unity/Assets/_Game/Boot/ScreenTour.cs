@@ -1,7 +1,9 @@
 #if GAHWIT_TOUR
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Gahwit.Core;
 using Gahwit.Merge;
 using Gahwit.Story;
@@ -44,6 +46,35 @@ namespace Gahwit.Boot
             string language = UiKit.LeftToRight ? "en" : "ar";
 
             yield return Shot("01_cafe");
+
+            // The café's other spaces (missing/07), then back to the floor.
+            var room = FindFirstObjectByType<Gahwit.Cafe.CafeRoom>();
+            foreach (var (space, shot) in new[] { ("kitchen", "01b_kitchen_corner"), ("rooftop", "01c_rooftop"), ("backroom", "01d_back_room") })
+            {
+                room.ShowSpace(space, true);
+                yield return Wait(1.2f);
+                yield return Shot(shot);
+            }
+            // The rooftop as it looks once chapter 6 is done: its string of lights and the opening night's bunting.
+            var tourGame = ui.TourGame;
+            room.Apply(tourGame.Content.Chapters.SelectMany(c => c.Tasks).Select(t => t.Id).ToList(),
+                new Dictionary<string, string> { ["sign"] = "old", ["chairs"] = "old", ["rooftop_lights"] = "old" }, tourGame.Content.Styles);
+            room.ShowSpace("rooftop", true);
+            yield return Wait(1.2f);
+            yield return Shot("01e_rooftop_finished");
+
+            // The same spaces on a morning, whatever the clock says now.
+            room.SetTimeOfDay(Gahwit.Cafe.TimeOfDay.Morning);
+            foreach (var (space, shot) in new[] { ("kitchen", "01f_kitchen_morning"), ("rooftop", "01g_rooftop_morning"), ("backroom", "01h_back_room_morning") })
+            {
+                room.ShowSpace(space, true);
+                yield return Wait(1.2f);
+                yield return Shot(shot);
+            }
+            room.SetTimeOfDay(Gahwit.Cafe.CafeRoom.TimeFromClock(DateTime.Now, tourGame.Config.LevelB.Cafe.TimeOfDayStartHours));
+            room.Apply(tourGame.CompletedTaskIds(), tourGame.State.TaskStyles, tourGame.Content.Styles);
+            room.ShowSpace(ChapterContent.FloorSpace, true);
+            yield return Wait(0.5f);
             ui.ShowKitchen();
             yield return Wait(1.5f);
             yield return Shot("02_kitchen");
