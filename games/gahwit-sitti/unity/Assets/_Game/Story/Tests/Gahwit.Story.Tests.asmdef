@@ -1,0 +1,26 @@
+{
+    "name": "Gahwit.Story.Tests",
+    "rootNamespace": "Gahwit.Story.Tests",
+    "references": [
+        "Gahwit.Story",
+        "Ink",
+        "Ink-Libraries",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

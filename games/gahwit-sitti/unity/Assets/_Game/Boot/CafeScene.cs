@@ -97,6 +97,7 @@ namespace Gahwit.Boot
             WireWardrobe();
             WireRecipes();
             WireCustomers();
+            WireJournal();
             tutorial.StepFinished += OnTutorialStep;
             tutorial.Skipped += () =>
             {
@@ -110,6 +111,7 @@ namespace Gahwit.Boot
             ApplyLookSettings();
             account.SettingChanged += ApplySoundSettings;
             account.SettingChanged += ApplyLookSettings;
+            account.SettingChanged += stories.Clear; // the subtitles switch changes which files a story plays
             gameObject.AddComponent<FrameStats>().Init(game.Config.Ui.Graphics, sample => Track("perf",
                 "fps", Mathf.Round(sample.AverageFps * 10) / 10, "slowShare", Mathf.Round(sample.SlowShare * 1000) / 1000,
                 "worstMs", Mathf.RoundToInt(sample.WorstMs), "memoryMb", SystemInfo.systemMemorySize,
@@ -200,15 +202,19 @@ namespace Gahwit.Boot
         }
 
         // Recipes (missing/10): the pan and the book; found recipes come back as signature orders.
+        Gahwit.Recipes.RecipeBook recipeBook;
+
         void WireRecipes()
         {
-            var book = new Gahwit.Recipes.RecipeBook(game, Gahwit.Recipes.RecipeContent.Load());
+            var book = recipeBook = new Gahwit.Recipes.RecipeBook(game, Gahwit.Recipes.RecipeContent.Load());
             book.Discovered += recipe =>
             {
                 Track("recipe_found", "recipe", recipe.Id, "found", book.FoundCount);
                 dirty = true;
-                ui.Prompt.Show(Loc.T("recipes.new"), Loc.T("recipe." + recipe.Id),
-                    Loc.T("recipes.items", game.ItemName(recipe.ChainA, recipe.LevelA), game.ItemName(recipe.ChainB, recipe.LevelB)),
+                // Five recipes carry a note in Teta's hand about the family's secret (STORY_BIBLE.md section 7).
+                string items = Loc.T("recipes.items", game.ItemName(recipe.ChainA, recipe.LevelA), game.ItemName(recipe.ChainB, recipe.LevelB));
+                if (recipe.Clue) items += "\n\n" + Loc.T("recipes.clue", Loc.T("recipe." + recipe.Id + ".clue"));
+                ui.Prompt.Show(Loc.T("recipes.new"), Loc.T("recipe." + recipe.Id), items,
                     new[] { PromptView.Primary(Loc.T("recipes.openBook"), () => ui.RecipeBook.Show()), PromptView.Quiet(Loc.T("common.close")) },
                     celebrate: true);
             };
@@ -302,7 +308,7 @@ namespace Gahwit.Boot
         {
             string knot = customers.StoryDue(who);
             if (knot == null) return;
-            void Play() => PlayScene(StoryFor(game.State.Chapter), knot, () =>
+            void Play() => PlayScene(StoryWith(knot), knot, () =>
             {
                 customers.StorySeen(who, knot);
                 dirty = true;
@@ -586,12 +592,7 @@ namespace Gahwit.Boot
             if (letterId == null || ui.Dialogue.IsOpen) return;
             audio.Play("drawer_open");
             var def = game.Content.Letters[letterId];
-            var story = Story(def.Story);
-            var letter = story.ReadAll(def.Knot);
-            var voice = story.ReadAll(def.VoiceKnot)[0];
-            var message = story.ReadAll(def.NotifyKnot)[0];
-            var recording = def.VoiceClip != null ? Resources.Load<AudioClip>(def.VoiceClip) : null;
-            ui.Letter.Play(letter, voice, recording, message, Loc.T("char." + message.Speaker), () =>
+            ShowLetter(letterId, () =>
             {
                 foreach (var knot in new[] { def.Knot, def.VoiceKnot, def.NotifyKnot })
                     if (!game.State.ScenesSeen.Contains(knot)) game.State.ScenesSeen.Add(knot);
@@ -599,6 +600,58 @@ namespace Gahwit.Boot
                 Track("letter_found", "letter", letterId);
             });
         }
+
+        // A letter with Teta's voice note and the message after it. The journal opens found letters again.
+        void ShowLetter(string letterId, Action done)
+        {
+            var def = game.Content.Letters[letterId];
+            var story = Story(def.Story);
+            var letter = story.ReadAll(def.Knot);
+            var voice = story.ReadAll(def.VoiceKnot)[0];
+            var message = story.ReadAll(def.NotifyKnot)[0];
+            var recording = def.VoiceClip != null ? Resources.Load<AudioClip>(def.VoiceClip) : null;
+            ui.Letter.Play(letter, voice, recording, message, Loc.T("char." + message.Speaker), done);
+        }
+
+        // The story journal (missing/11). A scene played again doesn't change the saved choices.
+        void WireJournal()
+        {
+            ui.SetJournal((knot, id) => StoryWith(knot)?.ChoiceText(knot, id), ReplayScene, letterId =>
+            {
+                ui.Journal.gameObject.SetActive(false);
+                ShowLetter(letterId, ui.Journal.Show);
+            }, () => recipeBook.Content.Recipes.Where(r => r.Clue && recipeBook.Found(r.Id)).Select(r => r.Id).ToList());
+        }
+
+        void ReplayScene(string knot)
+        {
+            var story = StoryWith(knot);
+            if (story == null || ui.Dialogue.IsOpen) return;
+            ui.Journal.gameObject.SetActive(false);
+            float startedAt = Time.realtimeSinceStartup;
+            ui.Dialogue.Play(story, knot, () =>
+            {
+                Track(ui.Dialogue.Skipped ? "scene_skipped" : "scene_viewed", "scene", knot,
+                    "seconds", (int)(Time.realtimeSinceStartup - startedAt), "replay", true);
+                ui.Journal.Show();
+            });
+        }
+
+        // The file that has a knot: the regulars' scenes are in Story/regulars, everything else in its chapter.
+        StoryPlayer StoryWith(string knot)
+        {
+            var files = new List<string> { RegularsStory };
+            files.AddRange(game.Content.Chapters.Select(c => c.Story));
+            foreach (var path in files)
+            {
+                if (!StoryPlayer.Exists(path)) continue;
+                var story = Story(path);
+                if (story.Knots.Contains(knot)) return story;
+            }
+            return null;
+        }
+
+        const string RegularsStory = "Story/regulars";
 
         void OnChapterCompleted(int chapter)
         {
@@ -761,7 +814,7 @@ namespace Gahwit.Boot
             if (giftOffered || !game.State.TutorialDone || !game.GiftDue(Today) || ui.ModalOpen || ui.Dialogue.IsOpen) return;
             giftOffered = true;
             var gift = game.GiftToday;
-            ui.Prompt.Show(Loc.T("today.giftDay", game.GiftDay), null, Loc.T("today.giftText"), new[]
+            ui.Prompt.Show(Loc.T("today.giftDay", game.GiftDay), TodayView.Describe(gift), Loc.T("today.giftText"), new[]
             {
                 PromptView.Primary(Loc.T("today.take"), () =>
                 {
@@ -892,7 +945,8 @@ namespace Gahwit.Boot
             ui.Dialogue.Play(story, knot,
                 () =>
                 {
-                    Track("scene_viewed", "scene", knot, "seconds", (int)(Time.realtimeSinceStartup - startedAt));
+                    Track(ui.Dialogue.Skipped ? "scene_skipped" : "scene_viewed", "scene", knot,
+                        "seconds", (int)(Time.realtimeSinceStartup - startedAt));
                     if (!game.State.ScenesSeen.Contains(knot)) game.State.ScenesSeen.Add(knot);
                     tutorial.Check();
                     dirty = true;
@@ -908,10 +962,23 @@ namespace Gahwit.Boot
 
         StoryPlayer StoryFor(int chapter) => Story(game.Content.ForChapter(chapter)?.Story);
 
+        // Each language has its own Ink file (missing/11); a file not translated yet plays in the dialect. Ink reads the
+        // saved choices back, and [[word]] meanings come from the Glossary table.
         StoryPlayer Story(string path)
         {
             if (string.IsNullOrEmpty(path)) return null;
-            if (!stories.TryGetValue(path, out var story)) stories[path] = story = StoryPlayer.FromResources(path);
+            if (stories.TryGetValue(path, out var story)) return story;
+            string translated = StoryPlayer.PathFor(path, account.Language);
+            story = StoryPlayer.FromResources(StoryPlayer.Exists(translated) ? translated : path);
+            string subtitles = StoryPlayer.SubtitlesPath(path);
+            if (account.Language != "en" && saves.Data.Settings.Subtitles && StoryPlayer.Exists(subtitles))
+                story.Subtitles = StoryPlayer.FromResources(subtitles);
+            story.Chosen = knot => game.State.Choices.TryGetValue(knot, out var id) ? id : "";
+            story.Glossary = Loc.Gloss;
+            var knots = new HashSet<string>(story.Knots);
+            foreach (var saved in game.State.Choices.Where(c => knots.Contains(c.Key)).ToList())
+                game.State.Choices[saved.Key] = story.ChoiceId(saved.Key, saved.Value);
+            stories[path] = story;
             return story;
         }
 

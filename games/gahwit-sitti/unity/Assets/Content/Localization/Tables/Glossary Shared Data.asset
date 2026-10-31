@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Glossary Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: Glossary
+  m_TableCollectionNameGuidString: 406c15be6d3354466a28eff25a135bc6
+  m_Entries:
+  - m_Id: 1731190784
+    m_Key: "\u0647\u0648\u0646"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1735385088
+    m_Key: "\u0639\u0644\u0649 \u0623\u0635\u0648\u0644\u0647\u0627"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1735385089
+    m_Key: "\u0645\u062D\u062C\u0648\u0632\u0629"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1735385090
+    m_Key: "\u0645\u0632\u0628\u0648\u0637"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1739579392
+    m_Key: Teta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1739579393
+    m_Key: dallah
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1739579394
+    m_Key: Knafeh
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 7067431656889253888
+  references:
+    version: 2
+    RefIds:
+    - rid: 7067431656889253888
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1793440463013

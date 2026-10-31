@@ -72,9 +72,12 @@ namespace Gahwit.UI
             UiKit.Icon(settings.transform, "Gear", UiSprites.Gear, Palette.InkSoft, 76).rectTransform.Pin(new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(76, 76));
 
             decorButton = UiKit.Button(transform, "Decor", Loc.T("decor.button"), Palette.Card, Palette.Ink, 26, EnterDecor, 60);
+
+            Fit(decorButton);
             ((RectTransform)decorButton.transform).Pin(new Vector2(0, 1), new Vector2(20, -156), new Vector2(UiKit.MinTouch, UiKit.MinTouch));
             decorButton.gameObject.SetActive(false);
             wardrobeButton = UiKit.Button(transform, "Wardrobe", Loc.T("wardrobe.button"), Palette.Card, Palette.Ink, 24, null, 60);
+            Fit(wardrobeButton);
             ((RectTransform)wardrobeButton.transform).Pin(new Vector2(0, 1), new Vector2(20, -300), new Vector2(UiKit.MinTouch, UiKit.MinTouch));
             wardrobeButton.gameObject.SetActive(false);
             BuildDecorBar();
@@ -294,7 +297,17 @@ namespace Gahwit.UI
             Tweens.Instance?.PopOf(cosiness.rectTransform, 0.12f);
         }
 
-        Button todayButton, friendsButton;
+        Button todayButton, friendsButton, journalButton;
+
+        // A round side button keeps its word on one line and shrinks it to fit ("Wardrobe" in English).
+        static void Fit(Button button)
+        {
+            var label = button.Label();
+            label.textWrappingMode = TextWrappingModes.NoWrap;
+            label.enableAutoSizing = true;
+            label.fontSizeMax = label.fontSize;
+            label.fontSizeMin = label.fontSize * 0.6f;
+        }
         System.Func<bool> friendsOpen = () => false;
 
         // Friends (missing/20), under Today, once their level is reached.
@@ -302,13 +315,23 @@ namespace Gahwit.UI
         {
             friendsOpen = isOpen;
             friendsButton = UiKit.Button(transform, "Friends", Loc.T("friends.button"), Palette.Card, Palette.Ink, 24, () => open(), 60);
+            Fit(friendsButton);
             ((RectTransform)friendsButton.transform).Pin(new Vector2(0, 1), new Vector2(20, -588), new Vector2(UiKit.MinTouch, UiKit.MinTouch));
+        }
+
+        // The story journal (missing/11), under Friends.
+        public void SetJournal(System.Action open)
+        {
+            journalButton = UiKit.Button(transform, "Journal", Loc.T("journal.button"), Palette.Card, Palette.Ink, 24, () => open(), 60);
+            Fit(journalButton);
+            ((RectTransform)journalButton.transform).Pin(new Vector2(0, 1), new Vector2(20, -732), new Vector2(UiKit.MinTouch, UiKit.MinTouch));
         }
 
         // Today's gift, tasks and events (missing/18), under the side buttons.
         public void SetToday(System.Action open)
         {
             todayButton = UiKit.Button(transform, "Today", Loc.T("today.button"), Palette.Gold, Palette.Ink, 24, () => open(), 60);
+            Fit(todayButton);
             ((RectTransform)todayButton.transform).Pin(new Vector2(0, 1), new Vector2(20, -444), new Vector2(UiKit.MinTouch, UiKit.MinTouch));
         }
 
@@ -316,6 +339,7 @@ namespace Gahwit.UI
         {
             if (todayButton != null) todayButton.gameObject.SetActive(!decorMode);
             if (friendsButton != null) friendsButton.gameObject.SetActive(!decorMode && friendsOpen());
+            if (journalButton != null) journalButton.gameObject.SetActive(!decorMode);
             taskCard.SetActive(!decorMode);
             decorBar.SetActive(decorMode);
             decorButton.gameObject.SetActive(decor != null && decor.ShopOpen && !decorMode);

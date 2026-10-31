@@ -112,6 +112,21 @@ namespace Gahwit.Customers.Tests
         }
 
         [Test]
+        public void AFriendshipSceneWaitsForItsChapter()
+        {
+            var game = NewGame();
+            var rules = new CustomerRules(game);
+            content.Characters["abu_fadi"].StoryFromChapter = new System.Collections.Generic.Dictionary<int, int> { [3] = 2 };
+            rules.Regular("abu_fadi").Level = 6;
+
+            Assert.IsNull(rules.StoryDue("abu_fadi"), "level 3's scene waits for chapter 2, and level 6's waits behind it");
+            game.State.Chapter = 2;
+            Assert.AreEqual("abu_fadi_3", rules.StoryDue("abu_fadi"));
+            rules.StorySeen("abu_fadi", "abu_fadi_3");
+            Assert.AreEqual("abu_fadi_6", rules.StoryDue("abu_fadi"));
+        }
+
+        [Test]
         public void SeatsGrowWithCosinessOnceTheChairsAreBack()
         {
             var game = NewGame();

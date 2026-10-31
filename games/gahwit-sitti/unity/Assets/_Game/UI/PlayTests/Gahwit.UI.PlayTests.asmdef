@@ -3,6 +3,7 @@
     "rootNamespace": "Gahwit.UI.PlayTests",
     "references": [
         "Gahwit.UI",
+        "Gahwit.Story",
         "Gahwit.Core",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner"

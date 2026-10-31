@@ -15,6 +15,7 @@ namespace Gahwit.EditorTools
     public static class BuildTools
     {
         public const string IosPath = "Builds/iOS";
+        public const string IosSimulatorPath = "Builds/iOS-Simulator";
         public const string AndroidPath = "Builds/Android/gahwit-sitti.aab";
 
         // Google Play's minimum target for new apps and updates from 31 August 2026.
@@ -34,6 +35,26 @@ namespace Gahwit.EditorTools
             finally
             {
                 PlayerSettings.iOS.buildNumber = before;
+            }
+        }
+
+        // An Xcode project for the iOS Simulator on Apple silicon, with the screen tour (Boot/ScreenTour.cs) built in
+        // to screenshot every screen. For checking by eye only, never for the store.
+        [MenuItem("Gahwit Sitti/Build iOS Simulator (screen tour)")]
+        public static void BuildIosSimulator()
+        {
+            var sdk = PlayerSettings.iOS.sdkVersion;
+            var architecture = PlayerSettings.iOS.simulatorSdkArchitecture;
+            try
+            {
+                PlayerSettings.iOS.sdkVersion = iOSSdkVersion.SimulatorSDK;
+                PlayerSettings.iOS.simulatorSdkArchitecture = AppleMobileArchitectureSimulator.ARM64;
+                Build(BuildTarget.iOS, BuildTargetGroup.iOS, IosSimulatorPath, "GAHWIT_TOUR");
+            }
+            finally
+            {
+                PlayerSettings.iOS.sdkVersion = sdk;
+                PlayerSettings.iOS.simulatorSdkArchitecture = architecture;
             }
         }
 
@@ -82,7 +103,7 @@ namespace Gahwit.EditorTools
             }
         }
 
-        static void Build(BuildTarget target, BuildTargetGroup group, string path)
+        static void Build(BuildTarget target, BuildTargetGroup group, string path, params string[] defines)
         {
             var options = new BuildPlayerOptions
             {
@@ -91,6 +112,7 @@ namespace Gahwit.EditorTools
                 target = target,
                 targetGroup = group,
                 options = BuildOptions.None,
+                extraScriptingDefines = defines,
             };
             var summary = BuildPipeline.BuildPlayer(options).summary;
             if (summary.result != BuildResult.Succeeded)

@@ -70,6 +70,14 @@ namespace Gahwit.UI
                 ((RectTransform)back.transform).Pin(new Vector2(0, 0.5f), new Vector2(20, 0), new Vector2(300, UiKit.MinTouch));
             }
 
+            for (int i = game.State.Storage.Count; i < game.StorageCapacity; i++)
+            {
+                var slot = UiKit.Panel(list, "Empty", Palette.Muted, 28);
+                Sheet.Sized(slot, UiKit.MinTouch + 16);
+                UiKit.Text(slot.transform, "Text", Loc.T("storage.empty"), 26, Palette.InkSoft, TextAlignmentOptions.Center)
+                    .rectTransform.Stretch(28, 28, 8, 8);
+            }
+
             int next = game.NextStorageSlot;
             if (next < 0) return;
             int gems = game.Config.Board.InventorySlotGemCosts[next - 1];

@@ -26,6 +26,7 @@ namespace Gahwit.UI
         Button sell, store, storage, bubble, pan;
         RecipeBook recipes;
         PanView panView;
+        RectTransform infoBar;
         float nextBubbleCheck;
 
         public void Init(Game game, ItemLook look, GameUi ui, Func<long> now, RectTransform dragLayer)
@@ -45,8 +46,8 @@ namespace Gahwit.UI
             board.DroppedOnOrder += ServeByDrop;
             board.SelectionChanged += RefreshInfo;
 
-            var infoBar = UiKit.Panel(root, "Info", Palette.Card, 28);
-            infoBar.rectTransform.Bottom(8, infoHeight, 24, 24);
+            infoBar = UiKit.Panel(root, "Info", Palette.Card, 28).rectTransform;
+            infoBar.Bottom(8, infoHeight, 24, 24);
             info = UiKit.Text(infoBar.transform, "Text", "", 26, Palette.Ink);
             info.rectTransform.Stretch(232, 24, 6, 6);
             sell = UiKit.Button(infoBar.transform, "Sell", "", Palette.Gold, Palette.Ink, 26, Sell, 24);
@@ -67,14 +68,14 @@ namespace Gahwit.UI
             bubble.gameObject.SetActive(false);
         }
 
-        // The cooking pan (missing/10), once recipes exist: over the board's other top corner. With an item picked it
-        // goes into the pan; with nothing picked the pan opens.
+        // The cooking pan (missing/10), once recipes exist: in the info bar beside storage, so it never covers a board
+        // square. With an item picked it goes into the pan; with nothing picked the pan opens.
         public void SetRecipes(RecipeBook book, PanView view)
         {
             recipes = book;
             panView = view;
-            pan = UiKit.Button(transform, "Pan", "", Palette.Gold, Palette.Ink, 24, ToPan, 75);
-            ((RectTransform)pan.transform).Pin(new Vector2(0, 1), new Vector2(24, -278), new Vector2(150, 150));
+            pan = UiKit.Button(infoBar, "Pan", "", Palette.Gold, Palette.Ink, 24, ToPan, 24);
+            ((RectTransform)pan.transform).Pin(new Vector2(0, 0.5f), new Vector2(370, 0), new Vector2(UiKit.MinTouch + 18, UiKit.MinTouch));
             pan.gameObject.SetActive(false);
         }
 
@@ -102,6 +103,7 @@ namespace Gahwit.UI
             {
                 pan.gameObject.SetActive(recipes.Open);
                 pan.Label().text = Loc.T("pan.button", recipes.Pan.Count);
+                info.rectTransform.Stretch(recipes.Open ? 530 : 390, 24, 6, 6);
             }
             orders.Refresh();
             board.Refresh();

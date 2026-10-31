@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Gahwit.Cafe;
 using Gahwit.Core;
@@ -55,7 +56,8 @@ namespace Gahwit.UI
                                  || Pan != null && Pan.IsOpen || RecipeBook != null && RecipeBook.IsOpen || Shop != null && Shop.IsOpen
                                  || Today != null && Today.IsOpen || MiniBoard != null && MiniBoard.IsOpen
                                  || Friends != null && Friends.IsOpen || hostingView != null && hostingView.IsOpen
-                                 || wallView != null && wallView.IsOpen || visitBar != null;
+                                 || wallView != null && wallView.IsOpen || visitBar != null
+                                 || Journal != null && Journal.IsOpen;
 
         public static GameUi Create(Game game, CafeCamera cafeCamera, CafeRoom room, Func<long> now, Action openDrawer, IAccountUi account,
             TutorialFlow tutorial, bool canSkipTutorial)
@@ -353,6 +355,17 @@ namespace Gahwit.UI
             saved(path);
         }
         public MiniBoardView MiniBoard { get; private set; }
+        public JournalView Journal { get; private set; }
+
+        // The story journal (missing/11), from the café's side buttons.
+        public void SetJournal(Func<string, string, string> choiceText, Action<string> replay, Action<string> reread,
+            Func<List<string>> clues)
+        {
+            Journal = UiKit.Rect(transform.Find("SafeArea"), "Journal").Stretch().gameObject.AddComponent<JournalView>();
+            Journal.Init(game, choiceText, replay, reread, clues);
+            cafe.SetJournal(() => Journal.Show());
+            KeepOnTop();
+        }
 
         // Today and the events (missing/18): the daily gift and tasks, and the mini board.
         public void SetLiveOps(ILiveEventsUi events, Func<string> today, Func<long> now, Action claimed, Action<MiniBoard> paid)

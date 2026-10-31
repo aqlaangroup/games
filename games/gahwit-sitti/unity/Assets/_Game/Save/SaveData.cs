@@ -9,7 +9,7 @@ namespace Gahwit.Save
     // so a save written by a newer build loses nothing here.
     public sealed class SaveData
     {
-        public const int CurrentSchema = 11;
+        public const int CurrentSchema = 12;
 
         public int SchemaVersion = CurrentSchema;
         public long SaveVersion;
@@ -141,6 +141,7 @@ namespace Gahwit.Save
         public string Quality = "auto";
         public bool ReducedMotion;
         public bool MemoryAssist; // the memory games' easy assist: a wider target (COMPLETE_SPEC.md section 5)
+        public bool Subtitles;    // neutral-Arabic subtitles under the dialect lines (COMPLETE_SPEC.md section 4)
         public string Language = "ar";
     }
 }

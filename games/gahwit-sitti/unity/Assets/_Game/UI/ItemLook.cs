@@ -51,9 +51,11 @@ namespace Gahwit.UI
         readonly CanvasGroup group;
         readonly RTLTextMeshPro level;
         readonly RTLTextMeshPro name;
+        readonly float levelSize;
 
         public ItemTile(Transform parent, string objectName, float levelSize, float nameSize)
         {
+            this.levelSize = levelSize;
             body = UiKit.Panel(parent, objectName, Color.white, 24);
             body.raycastTarget = false;
             Root = body.rectTransform;
@@ -84,6 +86,9 @@ namespace Gahwit.UI
             body.color = color;
             var text = Palette.TextOn(color);
             level.text = item.IsGenerator ? look.GeneratorName(item.Generator) : item.Level.ToString();
+            // A generator shows its two-word name where an item shows a number: smaller, with tighter lines.
+            level.fontSizeMax = item.IsGenerator ? levelSize * 0.55f : levelSize;
+            level.lineSpacing = item.IsGenerator ? -24 : 0;
             level.color = text;
             if (name == null) return;
             name.text = item.IsGenerator ? Loc.T("gen.level", item.Level) : look.ShortName(item.Chain, item.Level);

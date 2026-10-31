@@ -22,7 +22,8 @@ namespace Gahwit.Save
             [7] = AddMemoryAssist,
             [8] = AddRecipes,
             [9] = AddPurchases,
-            [10] = AddDailyAndEvents
+            [10] = AddDailyAndEvents,
+            [11] = AddSubtitles
         };
 
         public static JObject Upgrade(JObject raw, BalanceConfig config)
@@ -225,6 +226,17 @@ namespace Gahwit.Save
             save["daily"] = daily;
             if (!(save["events"] is JObject)) save["events"] = new JObject();
             save["schemaVersion"] = 11;
+            return save;
+        }
+
+        // Version 12 (2026-10-31) adds settings.subtitles: neutral-Arabic subtitles under the dialect lines, off at
+        // first (missing/11).
+        static JObject AddSubtitles(JObject save, BalanceConfig config)
+        {
+            var settings = save["settings"] as JObject ?? new JObject();
+            if (settings["subtitles"] == null) settings["subtitles"] = false;
+            save["settings"] = settings;
+            save["schemaVersion"] = 12;
             return save;
         }
 

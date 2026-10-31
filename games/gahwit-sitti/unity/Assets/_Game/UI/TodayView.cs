@@ -59,7 +59,7 @@ namespace Gahwit.UI
             Section(Loc.T("today.gift"));
             if (!game.GiftOpen) Line(Loc.T("today.giftLater", game.Config.Unlocks.Level("daily_gift")));
             else if (game.GiftDue(day))
-                Row(Loc.T("today.giftDay", game.GiftDay), Gift(game.GiftToday), Loc.T("today.take"), true, () =>
+                Row(Loc.T("today.giftDay", game.GiftDay), Describe(game.GiftToday), Loc.T("today.take"), true, () =>
                 {
                     game.ClaimGift(day);
                     claimed();
@@ -95,7 +95,8 @@ namespace Gahwit.UI
             }
         }
 
-        string Gift(DailyGiftDef gift)
+        // What a day's gift holds: "+20 energy · 50 coins".
+        public static string Describe(DailyGiftDef gift)
         {
             var parts = new System.Collections.Generic.List<string>();
             if (gift.Energy > 0) parts.Add(Loc.T("shop.energy", gift.Energy));

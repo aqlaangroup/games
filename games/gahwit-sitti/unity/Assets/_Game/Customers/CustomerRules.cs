@@ -94,14 +94,22 @@ namespace Gahwit.Customers
             }
         }
 
-        // The story scene due at this level, if any, and not seen yet: "abu_fadi_3".
+        // The story scene due at this level, if any, and not seen yet: "abu_fadi_3". A scene that waits for a later
+        // chapter holds back the ones after it too, so they keep their order.
         public string StoryDue(string id)
         {
             var regular = Regular(id);
             foreach (int level in Config.LevelB.Regulars.StoryAtLevels)
-                if (regular.Level >= level && !regular.StoriesSeen.Contains(level)) return id + "_" + level;
+            {
+                if (regular.Level < level || regular.StoriesSeen.Contains(level)) continue;
+                return WaitsForChapter(id, level) ? null : id + "_" + level;
+            }
             return null;
         }
+
+        bool WaitsForChapter(string id, int level) =>
+            game.Content.Characters.TryGetValue(id, out var character) && character.StoryFromChapter != null &&
+            character.StoryFromChapter.TryGetValue(level, out int chapter) && game.State.Chapter < chapter;
 
         public void StorySeen(string id, string knot)
         {

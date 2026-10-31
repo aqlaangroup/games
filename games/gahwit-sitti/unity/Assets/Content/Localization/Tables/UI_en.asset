@@ -2380,6 +2380,138 @@ MonoBehaviour:
     m_Localized: Twice a week, fill a big order with your friends.
     m_Metadata:
       m_Items: []
+  - m_Id: 251161675292672
+    m_Localized: Skip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681280
+    m_Localized: Standard Arabic subtitles
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681281
+    m_Localized: A Standard Arabic line under each line of dialect
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681282
+    m_Localized: Story
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681283
+    m_Localized: Story journal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681284
+    m_Localized: "Season 1 \xB7 {0} of {1} chapters finished"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681285
+    m_Localized: "Chapter {0} \xB7 {1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681286
+    m_Localized: Locked chapter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681287
+    m_Localized: Opens when you finish the one before
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681288
+    m_Localized: Coming soon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681289
+    m_Localized: '{0} of {1} scenes'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681290
+    m_Localized: Show
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681291
+    m_Localized: Hide
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681292
+    m_Localized: A scene you haven't seen yet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681293
+    m_Localized: Play again
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681294
+    m_Localized: The regulars' stories
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681295
+    m_Localized: Friendship level {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681296
+    m_Localized: Teta's letters
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681297
+    m_Localized: Letter {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681298
+    m_Localized: Read again
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681299
+    m_Localized: Your choices
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681300
+    m_Localized: A scene
+    m_Metadata:
+      m_Items: []
+  - m_Id: 262709701500928
+    m_Localized: Empty slot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 262709705695232
+    m_Localized: Page {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 264818794684416
+    m_Localized: Not available now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 264818798878720
+    m_Localized: Try again
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266214013132800
+    m_Localized: "In Teta's hand, in the margin: \u201C{0}\u201D"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266214017327104
+    m_Localized: Teta's notes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266214017327105
+    m_Localized: Eid 2005, the last one with both girls here.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266214017327106
+    m_Localized: Rana's favourite. Nawal says she doesn't like it, and drinks two.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266214017327107
+    m_Localized: For Nawal's wedding, 1997. Two coffees in one cup.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266214017327108
+    m_Localized: Not THE knafeh. That page is with someone I trust.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266214017327109
+    m_Localized: 'Fridays before 2006: everyone was here. Bring them back.'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

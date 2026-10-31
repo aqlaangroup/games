@@ -13,9 +13,9 @@ namespace Gahwit.UI
     // account and help rows. Switches show their state by the knob's side as well as the colour.
     public sealed class SettingsView : MonoBehaviour
     {
-        public static readonly string[] Switches = { "sound", "music", "haptics", "notify.energyFull", "notify.regular", "notify.task", "notify.away", "glossary", "voice" };
+        public static readonly string[] Switches = { "sound", "music", "haptics", "notify.energyFull", "notify.regular", "notify.task", "notify.away", "glossary", "subtitles", "voice" };
         public static readonly string[] AccessSwitches = { "largeText", "reducedMotion", "memoryAssist" };
-        public static readonly string[] WithSubtitle = { "glossary", "voice", "largeText", "reducedMotion", "memoryAssist" };
+        public static readonly string[] WithSubtitle = { "glossary", "subtitles", "voice", "largeText", "reducedMotion", "memoryAssist" };
         public static readonly string[] Qualities = UiRules.Qualities;
         public static readonly string[] Languages = { "ar", "en" };
 
@@ -53,7 +53,8 @@ namespace Gahwit.UI
 
             var column = Sheet.Column(card, 268, 110, 14);
             Section(column, Loc.T("settings.play"));
-            foreach (var id in Switches) SwitchRow(column, id);
+            // Subtitles are neutral Arabic under the dialect; English dialogue doesn't need them.
+            foreach (var id in Switches.Where(id => id != "subtitles" || account.Language != "en")) SwitchRow(column, id);
 
             Section(column, Loc.T("settings.access"));
             foreach (var id in AccessSwitches) SwitchRow(column, id);

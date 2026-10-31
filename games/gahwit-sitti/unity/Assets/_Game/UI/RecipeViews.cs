@@ -32,7 +32,7 @@ namespace Gahwit.UI
             this.bookView = bookView;
             var card = Sheet.Card(transform, 920, 1180);
             Sheet.Title(card, Loc.T("pan.title"), Close);
-            UiKit.Text(card, "Hint", Loc.T("pan.how"), 26, Palette.InkSoft).rectTransform.Top(130, 80, 48, 48);
+            UiKit.Text(card, "Hint", Loc.T("pan.how"), 26, Palette.InkSoft).rectTransform.Top(156, 84, 48, 48);
             for (int i = 0; i < 2; i++)
             {
                 int index = i;
@@ -153,18 +153,28 @@ namespace Gahwit.UI
         {
             UiKit.Clear(list);
             count.text = Loc.T("recipes.count", book.FoundCount, book.Content.Recipes.Count);
-            foreach (var recipe in book.Content.Recipes)
+            RectTransform row = null;
+            for (int i = 0; i < book.Content.Recipes.Count; i++)
             {
+                var recipe = book.Content.Recipes[i];
+                if (i % 2 == 0)
+                {
+                    row = UiKit.Rect(list, "Pages");
+                    Sheet.Sized(row, 200);
+                    var pages = UiKit.Row(row.gameObject, 12);
+                    pages.childForceExpandWidth = pages.childForceExpandHeight = true;
+                }
                 bool found = book.Found(recipe.Id);
-                var row = UiKit.Panel(list, recipe.Id, found ? Color.white : Palette.Muted, 24);
-                Sheet.Sized(row, 120);
-                var name = UiKit.Text(row.transform, "Name", found ? Loc.T("recipe." + recipe.Id) : Loc.T("recipes.blank"), 30,
-                    found ? Palette.Ink : Palette.InkSoft);
-                name.fontStyle = found ? FontStyles.Bold : FontStyles.Italic;
-                name.rectTransform.Stretch(28, 28, 12, 60);
+                var page = UiKit.Panel(row, recipe.Id, found ? Color.white : Palette.Muted, 24);
+                page.gameObject.AddComponent<LayoutElement>().flexibleWidth = 1;
+                UiKit.Text(page.transform, "Number", Loc.T("recipes.page", i + 1), 22, Palette.InkSoft).rectTransform.Top(14, 34, 24, 24);
+                var name = UiKit.Text(page.transform, "Name", found ? Loc.T("recipe." + recipe.Id) : "?", found ? 28 : 56,
+                    found ? Palette.Ink : Palette.InkSoft, TextAlignmentOptions.Center);
+                name.fontStyle = FontStyles.Bold;
+                name.rectTransform.Stretch(20, 20, 50, found ? 64 : 20);
                 if (!found) continue;
-                UiKit.Text(row.transform, "Items", Loc.T("recipes.items", game.ItemName(recipe.ChainA, recipe.LevelA), game.ItemName(recipe.ChainB, recipe.LevelB)),
-                    24, Palette.InkSoft).rectTransform.Stretch(28, 28, 62, 12);
+                UiKit.Text(page.transform, "Items", Loc.T("recipes.items", game.ItemName(recipe.ChainA, recipe.LevelA), game.ItemName(recipe.ChainB, recipe.LevelB)),
+                    22, Palette.InkSoft, TextAlignmentOptions.Center).rectTransform.Stretch(16, 16, 136, 12);
             }
         }
     }

@@ -200,6 +200,23 @@ namespace Gahwit.Save.Tests
         }
 
         [Test]
+        public void AVersionElevenSaveStartsWithSubtitlesOff()
+        {
+            var time = new TimeService(new FakeClock(), null);
+            var v11 = JObject.Parse(WriteJson(PlayedState(), time));
+            v11["schemaVersion"] = 11;
+            var settings = (JObject)v11["settings"];
+            settings.Remove("subtitles");
+            settings["glossary"] = false;
+
+            SaveService.FromJson(v11.ToString(), config, content, out var data, out _);
+
+            Assert.AreEqual(SaveData.CurrentSchema, data.SchemaVersion);
+            Assert.IsFalse(data.Settings.Subtitles);
+            Assert.IsFalse(data.Settings.Glossary, "existing settings are kept");
+        }
+
+        [Test]
         public void AVersionEightSaveGetsAnEmptyPanAndRecipesRoundTrip()
         {
             var time = new TimeService(new FakeClock(), null);

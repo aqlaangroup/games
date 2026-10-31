@@ -2351,6 +2351,138 @@ MonoBehaviour:
     m_Key: unlock.hosting.text
     m_Metadata:
       m_Items: []
+  - m_Id: 251161675292672
+    m_Key: dialogue.skip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681280
+    m_Key: settings.subtitles
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681281
+    m_Key: settings.subtitles.sub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681282
+    m_Key: journal.button
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681283
+    m_Key: journal.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681284
+    m_Key: journal.progress
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681285
+    m_Key: journal.chapter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681286
+    m_Key: journal.lockedName
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681287
+    m_Key: journal.locked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681288
+    m_Key: journal.soon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681289
+    m_Key: journal.scenes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681290
+    m_Key: journal.show
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681291
+    m_Key: journal.hide
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681292
+    m_Key: journal.sceneLocked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681293
+    m_Key: journal.replay
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681294
+    m_Key: journal.regulars
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681295
+    m_Key: journal.friendship
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681296
+    m_Key: journal.letters
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681297
+    m_Key: journal.letter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681298
+    m_Key: journal.reread
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681299
+    m_Key: journal.choices
+    m_Metadata:
+      m_Items: []
+  - m_Id: 251161683681300
+    m_Key: journal.scene
+    m_Metadata:
+      m_Items: []
+  - m_Id: 262709701500928
+    m_Key: storage.empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 262709705695232
+    m_Key: recipes.page
+    m_Metadata:
+      m_Items: []
+  - m_Id: 264818794684416
+    m_Key: shop.unavailable
+    m_Metadata:
+      m_Items: []
+  - m_Id: 264818798878720
+    m_Key: common.retry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266214013132800
+    m_Key: recipes.clue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266214017327104
+    m_Key: journal.clues
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266214017327105
+    m_Key: recipe.eid_welcome.clue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266214017327106
+    m_Key: recipe.winter_evening.clue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266214017327107
+    m_Key: recipe.two_cities.clue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266214017327108
+    m_Key: recipe.nabulsi_knafeh.clue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266214017327109
+    m_Key: recipe.family_breakfast.clue
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

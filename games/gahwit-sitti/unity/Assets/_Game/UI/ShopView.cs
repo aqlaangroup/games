@@ -80,8 +80,11 @@ namespace Gahwit.UI
             name.rectTransform.Stretch(290, 28, 22, 110);
             UiKit.Text(row.transform, "Contents", Contents(product), 24, Palette.InkSoft).rectTransform.Stretch(290, 28, 80, 16);
 
-            string label = owned ? Loc.T("shop.owned") : shop.Price(product.Sku) ?? Loc.T("shop.loading");
-            var buy = UiKit.Button(row.transform, "Buy", label, owned ? Palette.Muted : Palette.Rose, owned ? Palette.Ink : Color.white, 30, () =>
+            // Without a store (offline, or no store on this device) the price can't come, so say so instead of waiting.
+            bool available = owned || shop.Ready;
+            string label = owned ? Loc.T("shop.owned") : !shop.Ready ? Loc.T("shop.unavailable") : shop.Price(product.Sku) ?? Loc.T("shop.loading");
+            var color = available && !owned ? Palette.Rose : Palette.Muted;
+            var buy = UiKit.Button(row.transform, "Buy", label, color, Palette.TextOn(color), 30, () =>
             {
                 if (!shop.Ready) toast.Show(Loc.T("shop.notReady"));
                 else shop.Buy(product.Sku);

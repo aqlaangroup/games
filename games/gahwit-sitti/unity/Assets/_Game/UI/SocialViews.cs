@@ -75,7 +75,7 @@ namespace Gahwit.UI
             if (!IsOpen) return;
             if (!reply.Ok)
             {
-                Social.Line(list, Loc.T(reply.Result == ActionResult.Offline ? "friends.offline" : "friends.failed"));
+                Social.Problem(list, reply.Result, Build);
                 return;
             }
             var data = reply.Data;
@@ -187,7 +187,7 @@ namespace Gahwit.UI
             if (!IsOpen) return;
             if (!reply.Ok)
             {
-                Social.Line(list, Loc.T(reply.Result == ActionResult.Offline ? "friends.offline" : "friends.failed"));
+                Social.Problem(list, reply.Result, Build);
                 return;
             }
             Social.Line(list, Loc.T("hosting.how"));
@@ -326,7 +326,7 @@ namespace Gahwit.UI
             if (!IsOpen) return;
             if (!reply.Ok)
             {
-                Social.Line(list, Loc.T(reply.Result == ActionResult.Offline ? "friends.offline" : "friends.failed"));
+                Social.Problem(list, reply.Result, Build);
                 return;
             }
             foreach (var mine in ((JArray)reply.Data["mine"]).OfType<JObject>().Where(m => (string)m["status"] != "approved").Take(3))
@@ -385,9 +385,20 @@ namespace Gahwit.UI
             ((RectTransform)button.transform).Pin(new Vector2(0, 0.5f), new Vector2(24, 0), new Vector2(230, UiKit.MinTouch));
         }
 
+        // An offline or failed reply: what happened, and a way to try again.
+        public static void Problem(RectTransform list, ActionResult result, System.Action retry)
+        {
+            var box = UiKit.Panel(list, "Problem", Palette.Muted, 28);
+            Sheet.Sized(box, 320);
+            UiKit.Text(box.transform, "Text", Loc.T(result == ActionResult.Offline ? "friends.offline" : "friends.failed"), 28, Palette.Ink,
+                TextAlignmentOptions.Center).rectTransform.Stretch(32, 32, 32, 170);
+            var button = UiKit.Button(box.transform, "Retry", Loc.T("common.retry"), Palette.Rose, Color.white, 28, () => retry(), 32);
+            ((RectTransform)button.transform).Pin(new Vector2(0.5f, 0), new Vector2(0, 28), new Vector2(340, UiKit.MinTouch));
+        }
+
         public static void Chip(RectTransform row, string label, UnityEngine.Events.UnityAction act, bool enabled = true)
         {
-            var chip = UiKit.Button(row, label, label, enabled ? Palette.Cream : Palette.Muted, Palette.Ink, 24, act, 24);
+            var chip = UiKit.Button(row, label, label, enabled ? Palette.RoseSoft : Palette.Muted, Palette.Ink, 24, act, 24);
             chip.interactable = enabled;
             chip.gameObject.AddComponent<LayoutElement>().flexibleWidth = 1;
         }

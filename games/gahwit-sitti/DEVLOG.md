@@ -2,6 +2,31 @@
 
 Decisions and known gaps. Newest first. Read this at the start of each session (`/CLAUDE.md`).
 
+## 2026-10-31: story systems, the journal, and a screen-by-screen pass (missing/10, 11, 15)
+
+- **Languages for dialogue (decided):** one Ink file per language. `chapter1.ink` is the Amman dialect source; `chapter1_en.ink` is English; `chapter1_ar.ink` is neutral Arabic, played in step under the dialect as subtitles. `StoryTests` walks every path through every knot and fails if the files differ in knots, lines, speakers or choices. The game loads the player's language and falls back to the dialect file.
+- **Bug fixed: choice ids.** In Ink a tag after a choice's `]` belongs to the next line, so `* [text] #ask` never gave the choice its id. Saves held positions ("0", "1"), and the timed haggling memory counted every answer as weak. Every file now writes `* [text #ask]`. Old positional saves are turned into ids when a story loads.
+- **Choices read back:** Ink calls `chose("knot")` (bound by `StoryPlayer`). Choices change a line later, never the plot (STORY_BIBLE.md section 8). Chapter 1's counter scene remembers the dallahs choice.
+- **Glossary table:** `[[word]]` takes its meaning from the new Glossary string table in the interface language; `[[word:meaning]]` still works. Tapping a highlighted word shows its meaning; the list under the line stays for anyone who can't hit a small word.
+- **Subtitles switch:** "Standard Arabic subtitles" in Settings (Arabic only). Save schema 12 adds `settings.subtitles`, with a migration and a test.
+- **Skip and analytics:** Skip runs a scene to its next choice or its end and logs `scene_skipped` with seconds instead of `scene_viewed`.
+- **Journal** (`UI/JournalView.cs`, the Story button): chapters, each task's scene with Play again, the regulars' scenes, letters (Read again), Teta's recipe notes, and the choices made. A replay doesn't change saved choices. Fixed a crash: listing choices could load a story that rewrote the same choices mid-list.
+- **Recipe clues (missing/10):** the 5 clue recipes show Teta's note when found and in the journal.
+- **Regulars' scenes:** they move to `Story/regulars.ink`. A character can hold a scene until a chapter (`storyFromChapter`, for Faris's later scenes), tested.
+- **Story bible:** `design/STORY_BIBLE.md` [draft]. The owner asked us to write the whole season ourselves; chapters 2–10 and the 36 regular scenes are being written from it.
+- **Screen tour:** `BuildTools.BuildIosSimulator` builds for the iOS Simulator with `Boot/ScreenTour.cs` (only in that build), which opens every screen and saves screenshots. It found, and we fixed:
+  - the daily gift card didn't say what the gift was;
+  - storage showed an empty card instead of its free slots;
+  - the pan button covered a board square (now in the info bar);
+  - the pan's description ran into Close;
+  - the recipe book was 20 identical lines (now numbered pages);
+  - the shop showed "…" forever without a store (now "Not available now");
+  - the offline social screens were a single grey line (now a box with Try again);
+  - the friends tabs were invisible on the card;
+  - generator names spilled over their level;
+  - Skip covered the level badge;
+  - "Wardrobe" broke mid-word in English.
+
 ## 2026-10-31: the shared Unity package (missing/24)
 
 - **`unity-shared/com.aqlaan.cozykit`** is a local package. The game adds it in `Packages/manifest.json` with a `file:` path and lists it under `testables`.

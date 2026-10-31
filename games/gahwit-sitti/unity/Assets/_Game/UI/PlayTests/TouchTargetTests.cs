@@ -1,4 +1,5 @@
 using System.Collections;
+using Gahwit.Story;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -46,6 +47,18 @@ namespace Gahwit.UI.PlayTests
             yield return Settle(0.6f);
             Check("storage");
             current.Storage.gameObject.SetActive(false);
+
+            yield return Live();
+            current.ShowCafe();
+            current.Journal.Show();
+            yield return Settle(0.6f);
+            Check("journal");
+            current.Journal.gameObject.SetActive(false);
+
+            yield return Live();
+            current.Dialogue.Play(StoryPlayer.FromResources("Story/chapter1"), "dallahs", null);
+            yield return Settle(0.6f);
+            Check("dialogue");
         }
 
         GameUi current;

@@ -376,6 +376,7 @@ namespace Gahwit.Boot
                 case "notify.task": return s.Notifications.Task;
                 case "notify.away": return s.Notifications.Away;
                 case "glossary": return s.Glossary;
+                case "subtitles": return s.Subtitles;
                 case "voice": return s.Voice;
                 case "largeText": return s.LargeText;
                 case "reducedMotion": return s.ReducedMotion || PhoneSettings.ReduceMotion; // the phone's setting wins
@@ -397,6 +398,7 @@ namespace Gahwit.Boot
                 case "notify.task": s.Notifications.Task = on; break;
                 case "notify.away": s.Notifications.Away = on; break;
                 case "glossary": s.Glossary = on; break;
+                case "subtitles": s.Subtitles = on; break;
                 case "voice": s.Voice = on; break;
                 case "reducedMotion": s.ReducedMotion = on; break;
                 case "memoryAssist": s.MemoryAssist = on; break;
