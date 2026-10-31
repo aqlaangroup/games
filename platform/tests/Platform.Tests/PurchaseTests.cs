@@ -1,5 +1,6 @@
 using System.Net;
 using System.Net.Http.Json;
+using Platform.Api.Auth;
 using static Platform.Tests.PlatformFactory;
 
 namespace Platform.Tests;
@@ -126,5 +127,27 @@ public class RateLimitTests(RateLimitedFactory api) : IClassFixture<RateLimitedF
         for (int i = 0; i < 4; i++)
             codes.Add((await api.Client().PostAsJsonAsync($"/games/{GameA}/players/guest", new { device = "x" })).StatusCode);
         Assert.Equal([HttpStatusCode.OK, HttpStatusCode.OK, HttpStatusCode.OK, HttpStatusCode.TooManyRequests], codes);
+    }
+
+    // Production traffic comes through Cloudflare and Traefik: the limit is per CF-Connecting-IP (Auth/ClientIp.cs).
+    [Fact]
+    public async Task TheLimitFollowsTheCloudflareClientAddress()
+    {
+        async Task<HttpStatusCode> GuestFrom(string ip)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Post, $"/games/{GameA}/players/guest")
+            {
+                Content = JsonContent.Create(new { device = "x" }),
+            };
+            request.Headers.Add(ClientIp.Header, ip);
+            return (await api.Client().SendAsync(request)).StatusCode;
+        }
+
+        var codes = new List<HttpStatusCode>();
+        for (int i = 0; i < 4; i++) codes.Add(await GuestFrom("203.0.113.7"));
+        Assert.Equal([HttpStatusCode.OK, HttpStatusCode.OK, HttpStatusCode.OK, HttpStatusCode.TooManyRequests], codes);
+
+        // Another player: every request reaches the app from the same proxy, yet they keep their own limit.
+        Assert.Equal(HttpStatusCode.OK, await GuestFrom("198.51.100.20"));
     }
 }

@@ -21,6 +21,33 @@ dotnet run --project src/Platform.Api     # http://localhost:5080
 - **Outside Development**, set `ConnectionStrings:Platform` and `Auth:SigningKey` (32+ bytes) from a secret store, and `Database:MigrateOnStartup=true` or run `dotnet ef database update`. The app refuses to start without the signing key.
 - **In Development without a signing key**, each run makes a random one. Access tokens die on restart; the game's refresh token gets a new one. To keep one, use `dotnet user-secrets set Auth:SigningKey ...` in `src/Platform.Api`.
 
+## Deploy
+
+The platform runs on the team's Docker host (s1) behind Cloudflare and Traefik, at `https://games.aqlaan.com`. It follows the servers' deploy standard (the `aqlaan-deploy` skill in `~/Desktop/projects/servers`).
+
+- **Image:** `ghcr.io/aqlaangroup/games-platform:X.Y.Z`, linux/amd64, from `Dockerfile`. The build context is the repo root. `Dockerfile.dockerignore` lets in only `platform/src` and the game files the platform reads: each `game.json`, its `design/balance.json` and its `legal/*.html`. The Unity projects never enter it.
+- **Container:** non-root (uid 1654), plain HTTP on 8080, read-only with `/tmp` as tmpfs. No ports; Traefik routes to it.
+- **Health:** `GET /healthz` returns `{ "version": "X.Y.Z" }`, the version the image was built with (`APP_VERSION`). `GET /health` stays.
+- **Client IP:** the auth rate limit counts per `CF-Connecting-IP`, or the connection's address without it (`Auth/ClientIp.cs`). Use that helper for anything that logs or limits by IP.
+- **Two database logins** on the shared PostgreSQL, database `games`:
+  - `games_app` runs the app (`ConnectionStrings:Platform`). It may only read and write rows. Pool size 10.
+  - `games_owner` owns the tables and runs the migrations at startup (`ConnectionStrings:PlatformMigrations`, with `Database:MigrateOnStartup=true`). Its default privileges give `games_app` access to new tables, so migrations need no GRANT.
+  - Without `PlatformMigrations` (Development, tests), the `Platform` login migrates.
+- **Settings:** `docker-compose.yml` builds the settings from `.env` (git-ignored, `chmod 600`; names in `.env.example`): `GAMES_VERSION`, `GAMES_DB_APP_PASSWORD`, `GAMES_DB_OWNER_PASSWORD`, `GAMES_SIGNING_KEY`. `databaseip` comes from the servers' `.env`. Onboarding writes the two database passwords, so leave them empty until then.
+- **Data protection:** nothing uses it, so its keys live in memory only (`UseEphemeralDataProtectionProvider`). A feature that needs it must keep its keys in the database.
+
+**How a release works.** Run the servers' release script from `platform/`:
+
+```sh
+~/Desktop/projects/servers/tools/release.sh --dry-run --yes   # tests and a local image build; nothing leaves the Mac
+~/Desktop/projects/servers/tools/release.sh --plan            # what a release would do
+~/Desktop/projects/servers/tools/release.sh --yes             # the next patch version
+```
+
+A release reads `deploy.conf`. It needs the `SOURCES` there committed on `BRANCH`. It runs `deploy/checks.sh` (`dotnet test`), builds and pushes the image, tags git `games-vX.Y.Z`, deploys the Portainer stack `games` and waits until `/healthz` reports the new version. Roll back with `release.sh --deploy <previous X.Y.Z>`.
+
+The first deploy needs onboarding first (roles, database and `.env` passwords). The servers team does it with `app_onboard.py games --pool 10 --domain games.aqlaan.com`.
+
 ## Tests
 
 ```sh
@@ -59,7 +86,7 @@ The phone never decides it has been paid. Only the platform does.
 - **Deleting an account** (required by both stores) is immediate for the player: every session ends and the Apple or Google id is released, so it can start a new account. The data is purged within `Accounts:DeletionGraceDays` (30, never more). The purge removes the save, wallet, ledger, sessions, support messages and the player. **Purchases stay** for accounting and tax, with the player link removed.
 - **Cloud save.** Each upload names the version it was based on. If another phone uploaded since, the platform answers `409 conflict` with that save's level, chapter, time and device. The game asks "keep this phone or the other one?" and sends `force: true` to keep this one.
 - **Sanity check** (COMPLETE_SPEC.md section 11). Uploads that gain levels, chapters or coins faster than `Saves:Sanity` allows are flagged for staff. They are never rejected. The limits are starting values to tune from real play data.
-- **Rate limits.** Guest creation, sign-in, refresh and staff sign-in are limited per IP (`RateLimits:AuthPerMinute`, 30).
+- **Rate limits.** Guest creation, sign-in, refresh and staff sign-in are limited per IP (`RateLimits:AuthPerMinute`, 30). Behind Cloudflare the IP is `CF-Connecting-IP`.
 
 ## Staff
 
@@ -113,6 +140,7 @@ All JSON is camelCase. Errors look like `{ "error": "code" }`. Every game route 
 | Method and route | Job |
 |---|---|
 | `GET /health` | Health check |
+| `GET /healthz` | `{ version }`: the release version, for the release script |
 | `GET /games/{slug}/time` | `{ now, nowMs }`: server time, so energy can't be cheated by changing the phone clock |
 | `GET /games/{slug}/config` | The active balance settings, with its version in the `X-Config-Version` header. A game's `balance.json` (game.json `balanceConfig`) is published as version 1 when none exists; in Development a changed file is published again. Staff publish new versions (below) |
 | `GET /games/{slug}/version` | `{ minVersion }` from game.json `minGameVersion`; older games show "update required" |

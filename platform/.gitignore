@@ -7,3 +7,8 @@ TestResults/
 *.user
 *.suo
 .vs/
+
+# Deploy secrets: .env stays on this Mac (deploy.conf, docker-compose.yml).
+# .env.example is committed; the repo root ignores .env.* as well.
+.env
+!.env.example

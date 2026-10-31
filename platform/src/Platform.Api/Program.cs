@@ -2,6 +2,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
 using Platform.Api;
 using Platform.Api.Admin;
@@ -57,6 +58,11 @@ static IStoreVerifier DevReceipts(IServiceProvider sp, IStoreVerifier verifier) 
         : verifier;
 services.AddScoped<Refunds>();
 
+// Nothing uses ASP.NET data protection: tokens are JWTs signed with Auth:SigningKey, and there are no cookies,
+// antiforgery or sessions. Its keys live in memory only, which suits the server's read-only file system. A feature
+// that needs it must keep the keys in the database instead.
+services.AddDataProtection().UseEphemeralDataProtectionProvider();
+
 // Two kinds of access token: players (one game each) and staff.
 services.AddAuthentication().AddJwtBearer(AuthSchemes.Player).AddJwtBearer(AuthSchemes.Admin);
 foreach (var scheme in new[] { AuthSchemes.Player, AuthSchemes.Admin })
@@ -77,9 +83,9 @@ app.Services.GetRequiredService<SigningKeys>();
 
 await using (var scope = app.Services.CreateAsyncScope())
 {
-    var db = scope.ServiceProvider.GetRequiredService<PlatformDb>();
+    // As the owner login (ConnectionStrings:PlatformMigrations) when it is set; see Migrator.
     if (app.Environment.IsDevelopment() || app.Configuration.GetValue<bool>("Database:MigrateOnStartup") || args is ["create-owner", ..])
-        await db.Database.MigrateAsync();
+        await Migrator.MigrateAsync(scope.ServiceProvider);
     await scope.ServiceProvider.GetRequiredService<GameRegistry>().SyncAsync();
 
     // dotnet run -- create-owner someone@example.com
@@ -116,6 +122,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapGet("/health", () => Results.Ok(new { status = "ok" }));
+// The release script waits until this reports the version it just built (deploy.conf HEALTH_PATH).
+app.MapGet("/healthz", (IConfiguration config) => Results.Ok(new { version = AppVersion.Get(config) }));
 AdminEndpoints.MapStaff(app);
 
 var games = app.MapGroup("/games/{slug}").AddEndpointFilter<GameFilter>();

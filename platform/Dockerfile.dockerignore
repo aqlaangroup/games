@@ -1,0 +1,14 @@
+# platform/Dockerfile builds from the repo root. BuildKit reads this file instead of a .dockerignore there.
+# Everything is left out except the platform's sources and the game files it reads at runtime.
+# A game whose game.json names another balanceConfig path: add that file here and to deploy.conf SOURCES.
+*
+!platform/src/
+!games/*/game.json
+!games/*/design/balance.json
+!games/*/legal/*.html
+
+# Build output and editor files inside the platform sources.
+platform/src/**/bin/
+platform/src/**/obj/
+**/*.user
+**/.DS_Store

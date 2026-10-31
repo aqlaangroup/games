@@ -25,4 +25,9 @@
     <InternalsVisibleTo Include="Platform.Tests" />
   </ItemGroup>
 
+  <!-- Desk settings (dev receipts, local database) never ship in a published build or the server image. -->
+  <ItemGroup>
+    <Content Update="appsettings.Development.json" CopyToPublishDirectory="Never" />
+  </ItemGroup>
+
 </Project>

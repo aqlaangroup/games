@@ -1,0 +1,35 @@
+# Aqlaan platform (every game's API) on s1: Portainer stack "games", deployed only by ~/Desktop/projects/servers/tools/release.sh.
+# Variables resolve from this folder's .env first, then ~/Desktop/projects/servers/.env (databaseip). Secrets stay in .env.
+# Two database logins: the app runs as games_app (rows only, pool 10) and migrates at startup as games_owner.
+# No RabbitMQ or Redis, so the only network is proxy.
+services:
+  games:
+    image: ghcr.io/aqlaangroup/games-platform:${GAMES_VERSION:?set GAMES_VERSION}
+    container_name: games
+    restart: always
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__Platform: Host=${databaseip:?};Port=5432;Database=games;Username=games_app;Password=${GAMES_DB_APP_PASSWORD:?};SSL Mode=Require;GSS Encryption Mode=Disable;Maximum Pool Size=10
+      ConnectionStrings__PlatformMigrations: Host=${databaseip:?};Port=5432;Database=games;Username=games_owner;Password=${GAMES_DB_OWNER_PASSWORD:?};SSL Mode=Require;GSS Encryption Mode=Disable;Pooling=false
+      Database__MigrateOnStartup: "true"
+      Games__Path: /app/games
+      Auth__SigningKey: ${GAMES_SIGNING_KEY:?}
+    networks: [proxy]
+    read_only: true
+    tmpfs: [/tmp]
+    security_opt: ["no-new-privileges:true"]
+    mem_limit: 512m
+    logging:
+      driver: json-file
+      options: { max-size: "20m", max-file: "5" }
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.games.rule=Host(`games.aqlaan.com`)
+      - traefik.http.routers.games.entrypoints=websecure
+      - traefik.http.routers.games.tls=true
+      - traefik.http.routers.games.middlewares=secure-headers@file,compress@file
+      - traefik.http.services.games.loadbalancer.server.port=8080
+
+networks:
+  proxy:
+    external: true
