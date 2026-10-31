@@ -3,7 +3,8 @@
     "rootNamespace": "Gahwit.Save",
     "references": [
         "Gahwit.Core",
-        "Gahwit.Merge"
+        "Gahwit.Merge",
+        "Aqlaan.CozyKit.Core"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

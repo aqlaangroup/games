@@ -6,8 +6,8 @@ using UnityEditor.iOS.Xcode;
 
 namespace Gahwit.EditorTools
 {
-    // Adds what the iOS plugins need to the Xcode project: Sign in with Apple (Plugins/iOS/GahwitAppleSignIn.mm), and
-    // the photo-library reason for the postcard share sheet (Plugins/iOS/GahwitShare.mm).
+    // Adds what the iOS plugins need to the Xcode project: Sign in with Apple (CozyKitAppleSignIn.mm in the shared
+    // package), and the photo-library reason for the postcard share sheet (Plugins/iOS/GahwitShare.mm).
     public static class IosPostBuild
     {
         const string Entitlements = "Unity-iPhone/GahwitSitti.entitlements";

@@ -30,3 +30,14 @@ Art, story, item chains, recipes, characters, balance numbers, scenes and the ga
 ## Rule
 
 A system moves here only once it works in one game. Don't build it here first and guess.
+
+## What has moved so far
+
+- **Core:** the time service, device clock, save slots and the analytics interface (from Gahwit Sitti, 2026-10-31).
+- **Platform client:** the platform client, cloud sync, device secrets and Sign in with Apple (from Gahwit Sitti, 2026-10-31).
+
+The package's own `README.md` lists the files. The other modules in the table above still live in Gahwit Sitti; `games/gahwit-sitti/missing/24.md` says when each one is ready to move.
+
+## Tests
+
+The package's EditMode tests are in `Tests/Editor`. A game that lists the package under `testables` in its manifest runs them with its own tests. To run them on their own, use an empty Unity project whose manifest has only this package and `com.unity.test-framework`.

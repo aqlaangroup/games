@@ -1,5 +1,13 @@
 {
   "dependencies": {
+    "com.aqlaan.cozykit": {
+      "version": "file:../../../../unity-shared/com.aqlaan.cozykit",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {
+        "com.unity.nuget.newtonsoft-json": "3.2.1"
+      }
+    },
     "com.inkle.ink-unity-integration": {
       "version": "https://github.com/inkle/ink-unity-integration.git#upm",
       "depth": 0,

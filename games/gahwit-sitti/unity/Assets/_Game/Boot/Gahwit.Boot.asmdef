@@ -17,7 +17,9 @@
         "Gahwit.Tutorial",
         "Gahwit.Cafe",
         "Gahwit.UI",
-        "Unity.Purchasing"
+        "Unity.Purchasing",
+        "Aqlaan.CozyKit.Core",
+        "Aqlaan.CozyKit.Platform"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -8,7 +8,8 @@
         "Gahwit.UI",
         "Gahwit.Boot",
         "Unity.Localization",
-        "Unity.Localization.Editor"
+        "Unity.Localization.Editor",
+        "Aqlaan.CozyKit.Core"
     ],
     "includePlatforms": [
         "Editor"

@@ -2,6 +2,17 @@
 
 Decisions and known gaps. Newest first. Read this at the start of each session (`/CLAUDE.md`).
 
+## 2026-10-31: the shared Unity package (missing/24)
+
+- **`unity-shared/com.aqlaan.cozykit`** is a local package. The game adds it in `Packages/manifest.json` with a `file:` path and lists it under `testables`.
+  - **Core** (`Aqlaan.CozyKit.Core`, namespace `Aqlaan.CozyKit`): `TimeService`, `DeviceClock`, `SaveStore`, `IAnalytics`.
+  - **Platform** (`Aqlaan.CozyKit.Platform`, namespace `Aqlaan.CozyKit.Platform`): `PlatformClient`, its HTTP layer and models, `CloudSync`, `DeviceSecrets`, `AppleSignIn`, `PlatformAnalytics`, `PlatformConfig`.
+  - **Tests** (`Tests/Editor`, 22): the time service, platform client, cloud sync and analytics tests moved with their code. They pass in the game (145 in all, the same as before) and in an empty project with only the package and the test framework.
+- **iOS plugins** are renamed `CozyKitUptime.mm`, `CozyKitKeychain.mm` and `CozyKitAppleSignIn.mm` and moved into the package. The Keychain now stores items under the app's bundle id plus `.platform`. It still reads and clears the old fixed name `com.aqlaan.gahwit.platform`, so a phone that already has an account keeps it.
+- **`EarnedRewards`** stays in the game (`Gahwit.Platform`): it reads this game's balance numbers.
+- **Still in the game:** the save migration runner and `Loc` (both tied to this game's schema and string tables), Story, Memories and Merge. `missing/24.md` says when each can move.
+- **`Game.cs` is split** into `Game.Board.cs` (generators, merging, selling), `Game.Orders.cs`, `Game.Progression.cs` (levels, finishing a chapter) and `Game.Tasks.cs` (café tasks, memories and letters, which stay in this game). `Game.cs` keeps the state, events and energy. No rule changed.
+
 ## 2026-10-31: friends, gifts, visits, hosting, the Sitti wall and postcards (missing/20)
 
 - **Platform** (`platform/src/Platform.Api/Social`, 10 new tests, 76 in all; migration `Social`):

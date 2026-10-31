@@ -1369,7 +1369,7 @@
         "soloBotRewardShare": 0.5
       },
       "botShareOfOrder": 0.5,
-      "proposed": "Proposed on 2026-10-31 where the specs gave no number (missing/02). Tune in playtests. Applies to rewards."
+      "proposed": "Proposed on 2026-10-31 where the specs gave no number (missing/02). Tune in playtests. Applies to rewards and botShareOfOrder (bots fill that share of a solo host's order over its time, missing/20)."
     },
     "sittiWall": {
       "maxChars": 140,

@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.aqlaan.cozykit": "file:../../../../unity-shared/com.aqlaan.cozykit",
     "com.inkle.ink-unity-integration": "https://github.com/inkle/ink-unity-integration.git#upm",
     "com.nosuchstudio.rtltmpro": "https://github.com/hk1ll3r/RTLTMPro.git?path=/UPMPackage",
     "com.unity.addressables": "4.1.2",
@@ -10,11 +11,6 @@
     "com.unity.inputsystem": "1.20.1",
     "com.unity.localization": "1.5.13",
     "com.unity.mobile.notifications": "2.5.0",
-    "com.unity.pipeline": "0.9.1-exp.1",
-    "com.unity.render-pipelines.universal": "17.3.0",
-    "com.unity.test-framework": "1.6.0",
-    "com.unity.timeline": "1.8.13",
-    "com.unity.ugui": "2.0.0",
     "com.unity.modules.accessibility": "1.0.0",
     "com.unity.modules.adaptiveperformance": "1.0.0",
     "com.unity.modules.ai": "1.0.0",
@@ -48,6 +44,14 @@
     "com.unity.modules.video": "1.0.0",
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
-    "com.unity.modules.xr": "1.0.0"
-  }
+    "com.unity.modules.xr": "1.0.0",
+    "com.unity.pipeline": "0.9.1-exp.1",
+    "com.unity.render-pipelines.universal": "17.3.0",
+    "com.unity.test-framework": "1.6.0",
+    "com.unity.timeline": "1.8.13",
+    "com.unity.ugui": "2.0.0"
+  },
+  "testables": [
+    "com.aqlaan.cozykit"
+  ]
 }

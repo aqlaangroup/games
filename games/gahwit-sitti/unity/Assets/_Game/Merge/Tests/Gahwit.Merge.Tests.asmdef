@@ -5,7 +5,8 @@
         "Gahwit.Core",
         "Gahwit.Merge",
         "UnityEngine.TestRunner",
-        "UnityEditor.TestRunner"
+        "UnityEditor.TestRunner",
+        "Aqlaan.CozyKit.Core"
     ],
     "includePlatforms": [
         "Editor"

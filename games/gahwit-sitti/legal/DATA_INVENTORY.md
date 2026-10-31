@@ -51,6 +51,6 @@ What Gahwit Sitti and the platform collect, from the code on 2026-10-31. Use it 
 ## iOS privacy manifest
 
 `unity/Assets/Plugins/iOS/PrivacyInfo.xcprivacy` declares the types above, no tracking, and one API with a required reason:
-- **System boot time** (`GahwitUptime.mm` reads the uptime clock): reason `35F9.1`, to measure time between events in the app (trusted time for energy and events).
+- **System boot time** (`CozyKitUptime.mm` in the shared package `unity-shared/com.aqlaan.cozykit` reads the uptime clock): reason `35F9.1`, to measure time between events in the app (trusted time for energy and events).
 
 Unity's engine and packages ship their own manifests for what they use (for example user defaults for PlayerPrefs).

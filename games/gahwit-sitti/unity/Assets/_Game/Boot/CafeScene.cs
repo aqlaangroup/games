@@ -2,13 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Aqlaan.CozyKit;
+using Aqlaan.CozyKit.Platform;
 using Gahwit.Cafe;
 using Gahwit.Core;
 using Gahwit.Customers;
 using Gahwit.Decor;
 using Gahwit.Memories;
 using Gahwit.Merge;
-using Gahwit.Platform;
 using Gahwit.Save;
 using Gahwit.Story;
 using Gahwit.Tutorial;
@@ -681,7 +682,7 @@ namespace Gahwit.Boot
             var reply = await Services.Current.Platform.FriendCafe(friendId);
             if (!reply.Ok)
             {
-                ui.Toast.Show(Loc.T(reply.Outcome == Gahwit.Platform.Outcome.Offline ? "friends.offline" : "visit.noCafe"));
+                ui.Toast.Show(Loc.T(reply.Outcome == Aqlaan.CozyKit.Platform.Outcome.Offline ? "friends.offline" : "visit.noCafe"));
                 return;
             }
             var friend = reply.Value;
@@ -721,7 +722,7 @@ namespace Gahwit.Boot
         {
             Track("postcard");
             string link = Services.Current.PlatformConfig.StoreUrl;
-            string text = Loc.T("postcard.share") + (Gahwit.Platform.PlatformConfig.IsSet(link) ? " " + link : "");
+            string text = Loc.T("postcard.share") + (Aqlaan.CozyKit.Platform.PlatformConfig.IsSet(link) ? " " + link : "");
             if (!ShareSheet.Share(path, text)) ui.Toast.Show(Loc.T("postcard.saved"));
         });
 

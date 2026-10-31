@@ -1,0 +1,16 @@
+{
+    "name": "Aqlaan.CozyKit.Platform",
+    "rootNamespace": "Aqlaan.CozyKit.Platform",
+    "references": [
+        "Aqlaan.CozyKit.Core"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

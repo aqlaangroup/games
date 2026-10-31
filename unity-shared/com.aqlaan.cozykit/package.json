@@ -1,0 +1,10 @@
+{
+  "name": "com.aqlaan.cozykit",
+  "version": "0.1.0",
+  "displayName": "Aqlaan Cozy Kit",
+  "description": "Systems Aqlaan's cozy games share: trusted time, small saves, analytics, and the client for the shared Aqlaan platform (sign-in, cloud save, rewards, purchases, events, social).",
+  "unity": "6000.3",
+  "dependencies": {
+    "com.unity.nuget.newtonsoft-json": "3.2.1"
+  }
+}
