@@ -9,6 +9,7 @@ using Platform.Api.Auth;
 using Platform.Api.Data;
 using Platform.Api.Games;
 using Platform.Api.Players;
+using Platform.Api.Social;
 using Platform.Api.Stores;
 using Platform.Domain;
 
@@ -153,10 +154,14 @@ SaveEndpoints.Map(me);
 SupportEndpoints.Map(me);
 RewardEndpoints.Map(me);
 EventEndpoints.Map(me);
+SocialEndpoints.Map(me);
+HostingEndpoints.Map(me);
+WallEndpoints.Map(me);
 PurchaseEndpoints.Map(signedIn);
 AdminEndpoints.MapGame(games);
 LiveOpsEndpoints.Map(games);
 AdminInsights.Map(games);
+WallEndpoints.MapAdmin(games);
 StoreNotificationEndpoints.Map(games);
 LegalPages.Map(games);
 

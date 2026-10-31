@@ -68,6 +68,10 @@ public class Player
     public Guid Id { get; set; } = Guid.NewGuid();
     public Guid GameId { get; set; }
     public int? BirthYear { get; set; }
+    /// <summary>A parent agreed to social features for a player under 13 or of unknown age (games/*/missing/04, 21).</summary>
+    public bool ParentConsent { get; set; }
+    /// <summary>What friends type to add this player. Unique within the game; made on first use.</summary>
+    public string? FriendCode { get; set; }
     public string? Country { get; set; }
     public string? Language { get; set; }
     public string? CreatedDevice { get; set; }
@@ -221,6 +225,97 @@ public class LiveEvent
     public DateTimeOffset StartsAt { get; set; }
     public DateTimeOffset EndsAt { get; set; }
     public required string SettingsJson { get; set; }
+}
+
+/// <summary>One side of a friendship: each friendship is two rows, one per player. Points come from hosting.</summary>
+public class Friendship
+{
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid GameId { get; set; }
+    public Guid PlayerId { get; set; }
+    public Guid FriendId { get; set; }
+    public int Points { get; set; }
+    public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
+}
+
+/// <summary>An energy gift from one friend to another, one per pair per day (the sender's day, UTC).</summary>
+public class Gift
+{
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid GameId { get; set; }
+    public Guid FromPlayerId { get; set; }
+    public Guid ToPlayerId { get; set; }
+    public required string Day { get; set; } // "2026-10-31"
+    public int Energy { get; set; }
+    public DateTimeOffset SentAt { get; set; } = DateTimeOffset.UtcNow;
+    public DateTimeOffset? ClaimedAt { get; set; }
+}
+
+public enum HostingStatus { Open, Done, Expired }
+
+/// <summary>A big hosting order (SYSTEMS_B.md section 7): friends fill it together within its time.</summary>
+public class HostingOrder
+{
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid GameId { get; set; }
+    public Guid HostId { get; set; }
+    public DateTimeOffset StartedAt { get; set; }
+    public DateTimeOffset EndsAt { get; set; }
+    public int ItemsNeeded { get; set; }
+    public int ItemsGiven { get; set; } // by the host and helpers; bots are worked out from time
+    public HostingStatus Status { get; set; }
+    public DateTimeOffset? FinishedAt { get; set; }
+    /// <summary>Preset messages sent on this order, as JSON [{ playerId, preset, at }].</summary>
+    public string MessagesJson { get; set; } = "[]";
+}
+
+/// <summary>A friend invited to help a hosting order, and how many items they gave.</summary>
+public class HostingHelper
+{
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid OrderId { get; set; }
+    public Guid PlayerId { get; set; }
+    public int Given { get; set; }
+    public DateTimeOffset InvitedAt { get; set; } = DateTimeOffset.UtcNow;
+}
+
+public enum WallStatus { Pending, Approved, Rejected }
+
+/// <summary>A Sitti wall post: a grandmother's saying or recipe. Seen only once a person approves it; shown without names.</summary>
+public class WallPost
+{
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid GameId { get; set; }
+    public Guid PlayerId { get; set; }
+    public required string Text { get; set; }
+    public WallStatus Status { get; set; }
+    public string? AutoReason { get; set; } // why the automatic filter refused it, or sent it to a person
+    public int Likes { get; set; }
+    public int Reports { get; set; }
+    public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
+    public DateTimeOffset? ReviewedAt { get; set; }
+    public Guid? ReviewedBy { get; set; }
+}
+
+/// <summary>A like, a report or a block on the Sitti wall, by one player.</summary>
+public class WallReaction
+{
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid GameId { get; set; }
+    public Guid PlayerId { get; set; }
+    public Guid PostId { get; set; }
+    public required string Kind { get; set; } // like, report
+    public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
+}
+
+/// <summary>A player who blocked another: the blocked player's posts no longer show to them.</summary>
+public class PlayerBlock
+{
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid GameId { get; set; }
+    public Guid PlayerId { get; set; }
+    public Guid BlockedId { get; set; }
+    public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
 }
 
 /// <summary>A staff account. Staff work across games, so this table has no GameId; access is per game in <see cref="AdminRole"/>.</summary>

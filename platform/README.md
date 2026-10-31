@@ -167,6 +167,29 @@ All JSON is camelCase. Errors look like `{ "error": "code" }`. Every game route 
 | `POST /games/{slug}/admin/events` | producer | `{ template, startsAt, endsAt, settings }`: `miniBoard`, `frenzy`, `pass`, `album` or `hospitality`, up to 60 days. `settings` lay over the template's numbers in balance.json (a mini board's `chain`, `milestoneTokens`, `milestoneRewards`, `name`, `nameEn`) |
 | `DELETE /games/{slug}/admin/events/{id}` | producer | Cancel an event |
 
+**Social** (`Authorization: Bearer <player accessToken>`; games/gahwit-sitti/missing/20). Players under 13 or of unknown age get `403 parent_needed` until a parent agrees (`Players.ParentConsent`). Numbers come from the published balance.json (`social`, `levelB.hosting`, `levelB.sittiWall`).
+
+| Method and route | Job |
+|---|---|
+| `GET /games/{slug}/players/me/social` | `{ friendCode, friends: [{ playerId, code, points, since, giftSentToday }], giftsWaiting, giftsLeftToday }`. The code is made on first use |
+| `POST /games/{slug}/players/me/friends` | `{ code }`: both become friends at once; there's no chat. `404 unknown_code`, `400 own_code`, `already_friends`, `too_many_friends` |
+| `DELETE /games/{slug}/players/me/friends/{id}` | Unfriend, both ways |
+| `POST /games/{slug}/players/me/gifts` | `{ to }`: one energy gift per friend a day, `social.giftsPerDay` a day. `400 not_friends`, `daily_limit`, `already_sent_today` |
+| `POST /games/{slug}/players/me/gifts/claim` | `{ gifts, energy }`: every gift waiting; the game adds the energy |
+| `GET /games/{slug}/players/me/friends/{id}/cafe` | A friend's café from their latest cloud save, read-only: placed decor, styles, cosiness, chapter and task, Salma's outfit. Nothing else from the save |
+| `GET /games/{slug}/players/me/hosting` | `{ mine, helping, canStart }`: the player's newest hosting order and open orders they help. Each: `{ id, hostId, startedAt, endsAt, needed, progress, bots, status, helpers, messages }` |
+| `POST /games/{slug}/players/me/hosting` | Start one (`levelB.hosting.perWeek` a week, one at a time) |
+| `POST /games/{slug}/players/me/hosting/{id}/invite` | `{ friendId }`, up to `maxHelpers` |
+| `POST /games/{slug}/players/me/hosting/{id}/give` | `{ count }` items from the giver's board. When the order fills, the platform pays once: the host `hostGems` (× `soloBotRewardShare` if nobody helped), each helper who gave `helperGems` and `helperFriendship` points both ways. Alone, neighbour bots fill `botShareOfOrder` of it over its time |
+| `POST /games/{slug}/players/me/hosting/{id}/message` | `{ preset }`: one of the game's preset messages |
+| `GET /games/{slug}/players/me/wall` | `{ posts: [{ id, text, likes, liked, mine }], mine }`: approved posts without names, minus ones the player reported or by players they blocked |
+| `POST /games/{slug}/players/me/wall` | `{ text }` up to `maxChars`, `postsPerDay`. The automatic check refuses links, emails, phone numbers (Arabic digits too) and listed words (`400 refused_<reason>`); everything else waits for a person |
+| `POST /games/{slug}/players/me/wall/{id}/like` / `report` / `block` | Like toggles. A report hides the post from the reporter, and `reportsToReview` reports send it back to a person. Block hides everything by that writer |
+| `GET /games/{slug}/admin/wall?status=pending` | support: the review queue |
+| `POST /games/{slug}/admin/wall/{id}/approve` / `reject` | support, audited |
+
+The wall's word list starts short and is extended in configuration (`Wall:BlockedWords`).
+
 **Store notifications** (anonymous; always `200` once read, so the stores stop retrying):
 - `POST /games/{slug}/stores/apple/notifications`: App Store Server Notifications v2. The platform reads the transaction id from the notification, asks Apple for that transaction with its own key, and refunds it when Apple says it's revoked.
 - `POST /games/{slug}/stores/google/notifications?token=<Stores:Google:PushToken>`: Google Play real-time developer notifications through a Pub/Sub push subscription. A voided purchase is refunded by its order id. A wrong token gets `401`.
@@ -195,6 +218,7 @@ Pages, shown by role:
 - **Revenue** (viewer): store sales by day, currency and product. Google's records carry no price; ad revenue arrives with the ad network.
 - **Config** (viewer; producer publishes): published versions, comparing a new `balance.json` with the active one, publishing, and going back.
 - **Events** (viewer; producer schedules): scheduled events, scheduling and cancelling.
+- **Sitti wall** (support): the review queue; approve or reject, and see the writer.
 - **Deletions** (support): accounts waiting for the purge.
 - **Metrics** (viewer), **Game** (viewer: what game.json registered), **Staff** and **Audit** (owner), **My account** (password, two-factor).
 
@@ -211,4 +235,4 @@ Routes the panel added:
 | `GET /games/{slug}/admin/deletions` | support | Accounts waiting for the purge |
 | `GET /games/{slug}/admin/config/{version}` | viewer | A published config's text |
 
-Still to come: the Sitti wall moderation queue (with social, games/gahwit-sitti/missing/20), imported ad revenue, and requiring two-factor for every staff member.
+Still to come: imported ad revenue, and requiring two-factor for every staff member.

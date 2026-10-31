@@ -10,6 +10,7 @@ const TABS = [
   ["revenue", "Revenue", "viewer"],
   ["config", "Config", "viewer"],
   ["events", "Events", "viewer"],
+  ["wall", "Sitti wall", "support"],
   ["deletions", "Deletions", "support"],
   ["metrics", "Metrics", "viewer"],
   ["game", "Game", "viewer"],
@@ -274,6 +275,26 @@ const PAGES = {
         el("button", { class: "primary", type: "submit" }, "Schedule"), status)));
     }
     view.replaceChildren(...parts);
+  },
+
+  // Posts wait here until a person approves them; reports send approved posts back.
+  async wall() {
+    const status = el("select", {}, ...["pending", "approved", "rejected"].map((s) => el("option", { value: s }, s)));
+    const list = el("div", {});
+    const load = async () => {
+      const posts = await api("GET", game(`/wall?status=${status.value}`));
+      list.replaceChildren(...posts.map((p) => el("section", { class: "card" },
+        el("p", { dir: "auto" }, p.text),
+        el("p", { class: "note" }, `${p.createdAt} · likes ${p.likes} · reports ${p.reports}${p.autoReason ? " · " + p.autoReason : ""}`),
+        el("div", { class: "row" },
+          p.status !== "approved" ? el("button", { class: "primary", type: "button", onclick: async () => { await api("POST", game(`/wall/${p.id}/approve`)); load(); } }, "Approve") : null,
+          p.status !== "rejected" ? el("button", { type: "button", onclick: async () => { await api("POST", game(`/wall/${p.id}/reject`)); load(); } }, "Reject") : null,
+          el("button", { type: "button", onclick: () => player(p.playerId) }, "Player")))));
+      if (posts.length === 0) list.replaceChildren(el("p", { class: "note" }, "Nothing waiting."));
+    };
+    status.onchange = load;
+    view.replaceChildren(card("Sitti wall", el("p", { class: "note" }, "Nothing shows to players until it's approved here. Posts carry no names in the game."), el("div", { class: "row" }, status), list));
+    await load();
   },
 
   async deletions() {

@@ -31,6 +31,17 @@ public sealed class AccountPurger(PlatformDb db, ILogger<AccountPurger> log)
             await db.Sessions.Where(x => x.PlayerId == id).ExecuteDeleteAsync(ct);
             await db.Identities.Where(x => x.PlayerId == id).ExecuteDeleteAsync(ct);
             await db.SupportTickets.Where(x => x.PlayerId == id).ExecuteDeleteAsync(ct);
+            await db.Friendships.Where(x => x.PlayerId == id || x.FriendId == id).ExecuteDeleteAsync(ct);
+            await db.Gifts.Where(x => x.FromPlayerId == id || x.ToPlayerId == id).ExecuteDeleteAsync(ct);
+            await db.HostingHelpers.Where(x => x.PlayerId == id).ExecuteDeleteAsync(ct);
+            var hosted = db.HostingOrders.Where(x => x.HostId == id).Select(x => x.Id);
+            await db.HostingHelpers.Where(x => hosted.Contains(x.OrderId)).ExecuteDeleteAsync(ct);
+            await db.HostingOrders.Where(x => x.HostId == id).ExecuteDeleteAsync(ct);
+            await db.WallReactions.Where(x => x.PlayerId == id).ExecuteDeleteAsync(ct);
+            var posts = db.WallPosts.Where(x => x.PlayerId == id).Select(x => x.Id);
+            await db.WallReactions.Where(x => posts.Contains(x.PostId)).ExecuteDeleteAsync(ct);
+            await db.WallPosts.Where(x => x.PlayerId == id).ExecuteDeleteAsync(ct);
+            await db.Blocks.Where(x => x.PlayerId == id || x.BlockedId == id).ExecuteDeleteAsync(ct);
             await db.Purchases.Where(x => x.PlayerId == id)
                 .ExecuteUpdateAsync(u => u.SetProperty(p => p.PlayerId, (Guid?)null), ct);
             await db.Players.Where(x => x.Id == id).ExecuteDeleteAsync(ct);

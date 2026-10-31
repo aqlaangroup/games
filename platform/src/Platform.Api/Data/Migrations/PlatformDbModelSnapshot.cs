@@ -187,6 +187,35 @@ namespace Platform.Api.Data.Migrations
                     b.ToTable("Configs");
                 });
 
+            modelBuilder.Entity("Platform.Domain.Friendship", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("FriendId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("GameId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("PlayerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Points")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlayerId", "FriendId")
+                        .IsUnique();
+
+                    b.ToTable("Friendships");
+                });
+
             modelBuilder.Entity("Platform.Domain.Game", b =>
                 {
                     b.Property<Guid>("Id")
@@ -266,6 +295,111 @@ namespace Platform.Api.Data.Migrations
                     b.ToTable("GemSpends");
                 });
 
+            modelBuilder.Entity("Platform.Domain.Gift", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset?>("ClaimedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Day")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Energy")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("FromPlayerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("GameId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("SentAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("ToPlayerId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ToPlayerId");
+
+                    b.HasIndex("FromPlayerId", "ToPlayerId", "Day")
+                        .IsUnique();
+
+                    b.ToTable("Gifts");
+                });
+
+            modelBuilder.Entity("Platform.Domain.HostingHelper", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Given")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTimeOffset>("InvitedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("PlayerId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId", "PlayerId")
+                        .IsUnique();
+
+                    b.ToTable("HostingHelpers");
+                });
+
+            modelBuilder.Entity("Platform.Domain.HostingOrder", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("EndsAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTimeOffset?>("FinishedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("GameId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("HostId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("ItemsGiven")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ItemsNeeded")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("MessagesJson")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset>("StartedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HostId", "Status");
+
+                    b.ToTable("HostingOrders");
+                });
+
             modelBuilder.Entity("Platform.Domain.LiveEvent", b =>
                 {
                     b.Property<Guid>("Id")
@@ -320,6 +454,9 @@ namespace Platform.Api.Data.Migrations
                     b.Property<DateTimeOffset?>("DeletionRequestedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("FriendCode")
+                        .HasColumnType("text");
+
                     b.Property<Guid>("GameId")
                         .HasColumnType("uuid");
 
@@ -329,13 +466,46 @@ namespace Platform.Api.Data.Migrations
                     b.Property<DateTimeOffset>("LastSeenAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<bool>("ParentConsent")
+                        .HasColumnType("boolean");
+
                     b.HasKey("Id");
 
                     b.HasIndex("DeleteBy");
 
                     b.HasIndex("GameId");
 
+                    b.HasIndex("GameId", "FriendCode")
+                        .IsUnique()
+                        .HasFilter("\"FriendCode\" IS NOT NULL");
+
                     b.ToTable("Players");
+                });
+
+            modelBuilder.Entity("Platform.Domain.PlayerBlock", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("BlockedId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("GameId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("PlayerId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlayerId", "BlockedId")
+                        .IsUnique();
+
+                    b.ToTable("Blocks");
                 });
 
             modelBuilder.Entity("Platform.Domain.PlayerIdentity", b =>
@@ -651,6 +821,80 @@ namespace Platform.Api.Data.Migrations
                     b.HasIndex("GameId", "Status");
 
                     b.ToTable("SupportTickets");
+                });
+
+            modelBuilder.Entity("Platform.Domain.WallPost", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("AutoReason")
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("GameId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Likes")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("PlayerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Reports")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTimeOffset?>("ReviewedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("ReviewedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GameId", "Status");
+
+                    b.ToTable("WallPosts");
+                });
+
+            modelBuilder.Entity("Platform.Domain.WallReaction", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("GameId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Kind")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("PlayerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("PostId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlayerId", "PostId", "Kind")
+                        .IsUnique();
+
+                    b.ToTable("WallReactions");
                 });
 
             modelBuilder.Entity("Platform.Domain.WalletBalance", b =>

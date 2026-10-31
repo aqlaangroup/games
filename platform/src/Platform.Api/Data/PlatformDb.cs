@@ -27,6 +27,13 @@ public class PlatformDb(DbContextOptions<PlatformDb> options) : DbContext(option
     public DbSet<AdminUser> AdminUsers => Set<AdminUser>();
     public DbSet<AdminRole> AdminRoles => Set<AdminRole>();
     public DbSet<AuditEntry> Audit => Set<AuditEntry>();
+    public DbSet<Friendship> Friendships => Set<Friendship>();
+    public DbSet<Gift> Gifts => Set<Gift>();
+    public DbSet<HostingOrder> HostingOrders => Set<HostingOrder>();
+    public DbSet<HostingHelper> HostingHelpers => Set<HostingHelper>();
+    public DbSet<WallPost> WallPosts => Set<WallPost>();
+    public DbSet<WallReaction> WallReactions => Set<WallReaction>();
+    public DbSet<PlayerBlock> Blocks => Set<PlayerBlock>();
 
     protected override void OnModelCreating(ModelBuilder model)
     {
@@ -76,6 +83,20 @@ public class PlatformDb(DbContextOptions<PlatformDb> options) : DbContext(option
 
         // Each reward grants once, and each spend request spends once.
         model.Entity<RewardClaim>(e => e.HasIndex(r => new { r.PlayerId, r.RewardId }).IsUnique());
+
+        // Social (missing/20): one friendship row each way, one gift per pair a day, one reaction of a kind.
+        model.Entity<Player>(e => e.HasIndex(p => new { p.GameId, p.FriendCode }).IsUnique().HasFilter("\"FriendCode\" IS NOT NULL"));
+        model.Entity<Friendship>(e => e.HasIndex(f => new { f.PlayerId, f.FriendId }).IsUnique());
+        model.Entity<Gift>(e =>
+        {
+            e.HasIndex(g => new { g.FromPlayerId, g.ToPlayerId, g.Day }).IsUnique();
+            e.HasIndex(g => g.ToPlayerId);
+        });
+        model.Entity<HostingOrder>(e => e.HasIndex(h => new { h.HostId, h.Status }));
+        model.Entity<HostingHelper>(e => e.HasIndex(h => new { h.OrderId, h.PlayerId }).IsUnique());
+        model.Entity<WallPost>(e => e.HasIndex(w => new { w.GameId, w.Status }));
+        model.Entity<WallReaction>(e => e.HasIndex(r => new { r.PlayerId, r.PostId, r.Kind }).IsUnique());
+        model.Entity<PlayerBlock>(e => e.HasIndex(b => new { b.PlayerId, b.BlockedId }).IsUnique());
         model.Entity<AnalyticsEvent>(e =>
         {
             e.HasIndex(a => new { a.GameId, a.Name, a.ClientTime });
