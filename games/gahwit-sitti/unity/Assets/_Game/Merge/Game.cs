@@ -452,13 +452,16 @@ namespace Gahwit.Merge
         public bool CanAffordTask => CurrentTask != null && State.Coins >= CurrentTaskCost;
 
         // Every task finished so far, worked out from the chapter and task position.
-        public List<string> CompletedTaskIds()
+        public List<string> CompletedTaskIds() => CompletedTaskIds(State.Chapter, State.TaskIndex);
+
+        // The tasks done at a chapter and task, such as a friend's (missing/20).
+        public List<string> CompletedTaskIds(int atChapter, int atTask)
         {
             var done = new List<string>();
             foreach (var chapter in Content.Chapters)
             {
-                if (chapter.N < State.Chapter) done.AddRange(chapter.Tasks.Select(t => t.Id));
-                else if (chapter.N == State.Chapter) done.AddRange(chapter.Tasks.Take(State.TaskIndex).Select(t => t.Id));
+                if (chapter.N < atChapter) done.AddRange(chapter.Tasks.Select(t => t.Id));
+                else if (chapter.N == atChapter) done.AddRange(chapter.Tasks.Take(atTask).Select(t => t.Id));
             }
             return done;
         }

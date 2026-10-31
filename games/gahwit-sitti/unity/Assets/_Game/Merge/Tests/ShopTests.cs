@@ -67,5 +67,23 @@ namespace Gahwit.Merge.Tests
             CollectionAssert.AreEqual(new[] { "decorSet" }, other);
             CollectionAssert.Contains(game.State.Entitlements, "passPremium");
         }
+
+        [Test]
+        public void HostingTakesTheLowestPieceNoOrderWantsAndNeverAGenerator()
+        {
+            var game = NewGame();
+            for (int i = 0; i < game.CellCount; i++)
+                if (game.State.Board[i] != null && !game.State.Board[i].IsGenerator) game.State.Board[i] = null;
+            Assert.AreEqual(-1, game.SparePiece());
+            var wanted = game.State.Orders[0].Lines[0];
+            int free() => System.Array.FindIndex(game.State.Board, i => i == null);
+            int a = free(); game.State.Board[a] = new Item(wanted.Chain, wanted.Level);
+            int b = free(); game.State.Board[b] = new Item("coffee", 3);
+            int c = free(); game.State.Board[c] = new Item("sweets", 2);
+            int expected = game.IsWanted(game.State.Board[c]) ? b : c;
+            Assert.AreEqual(expected, game.SparePiece());
+            Assert.IsTrue(game.GivePiece(expected));
+            Assert.IsNull(game.State.Board[expected]);
+        }
     }
 }

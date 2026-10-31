@@ -1953,6 +1953,433 @@ MonoBehaviour:
       or English, and turn on Large text for bigger text."
     m_Metadata:
       m_Items: []
+  - m_Id: 241736403116032
+    m_Localized: Friends
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310336
+    m_Localized: Friends
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310337
+    m_Localized: Friends and visits need a parent's OK for players under 13.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310338
+    m_Localized: This needs a connection.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310339
+    m_Localized: Couldn't load. Try again later.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310340
+    m_Localized: Your code
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310341
+    m_Localized: Copy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310342
+    m_Localized: Code copied
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310343
+    m_Localized: Add a friend by code
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310344
+    m_Localized: Code
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310345
+    m_Localized: Add
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310346
+    m_Localized: You're friends now!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310347
+    m_Localized: '{0} energy gifts waiting'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310348
+    m_Localized: Take them
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310349
+    m_Localized: +{0} energy from your friends
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310350
+    m_Localized: "Your friends ({0}) \xB7 gifts left today: {1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310351
+    m_Localized: No friends yet. Share your code.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310352
+    m_Localized: Friendship {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310353
+    m_Localized: Send energy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310354
+    m_Localized: Sent today
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310355
+    m_Localized: Gift sent
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310356
+    m_Localized: Visit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310357
+    m_Localized: No one has that code
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310358
+    m_Localized: That's your own code
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310359
+    m_Localized: You're already friends
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310360
+    m_Localized: You've reached the friends limit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310361
+    m_Localized: You're not friends
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310362
+    m_Localized: You've sent all of today's gifts
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310363
+    m_Localized: You already sent her a gift today
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310364
+    m_Localized: A parent's OK is needed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310365
+    m_Localized: That didn't work. Try again later.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310366
+    m_Localized: No piece to give right now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310367
+    m_Localized: You've hosted enough this week
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310368
+    m_Localized: You're already hosting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310369
+    m_Localized: You've invited the most friends
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310370
+    m_Localized: Already invited
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310371
+    m_Localized: This gathering is over
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310372
+    m_Localized: The order is nearly full
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310373
+    m_Localized: Gathering not found
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310374
+    m_Localized: You're not invited to this one
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310375
+    m_Localized: Hosting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310376
+    m_Localized: A big order friends fill together. Every piece counts; alone, the
+      neighbours help for a smaller reward.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310377
+    m_Localized: Your last gathering was a success!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310378
+    m_Localized: Your last gathering ran out of time.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310379
+    m_Localized: Start a big gathering and invite friends
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310380
+    m_Localized: The next gathering comes later this week
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310381
+    m_Localized: Start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310382
+    m_Localized: Your gathering
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310383
+    m_Localized: A friend's gathering
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310384
+    m_Localized: '{0} of {1} pieces'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310385
+    m_Localized: '{0}:{1:00} left'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310386
+    m_Localized: Neighbours gave {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310387
+    m_Localized: Give a piece
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310388
+    m_Localized: Piece given
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310389
+    m_Localized: Invite
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310390
+    m_Localized: Invited
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310391
+    m_Localized: "Your caf\xE9 is amazing"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310392
+    m_Localized: Bless your hands
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310393
+    m_Localized: Coming to help!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310394
+    m_Localized: Almost there!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310395
+    m_Localized: Thank you, well done
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310396
+    m_Localized: God bless you
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310397
+    m_Localized: I can smell the cardamom from here
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310398
+    m_Localized: A wonderful gathering
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310399
+    m_Localized: Thank you from the heart
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310400
+    m_Localized: I'll send more tomorrow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310401
+    m_Localized: Come visit me
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310402
+    m_Localized: So good to see you
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310403
+    m_Localized: Sitti wall
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310404
+    m_Localized: Share a saying or recipe from your grandmother, up to {0} characters.
+      It shows after our team reads it, without your name.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310405
+    m_Localized: "My grandmother used to say\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310406
+    m_Localized: Send
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310407
+    m_Localized: Sent; it shows after review
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310408
+    m_Localized: Nothing on the wall yet.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310409
+    m_Localized: Report
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310410
+    m_Localized: Thanks. It's hidden and we'll review it
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310411
+    m_Localized: Block
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310412
+    m_Localized: You won't see her posts any more
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310413
+    m_Localized: Waiting for review
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310414
+    m_Localized: Not posted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310415
+    m_Localized: Write something first
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310416
+    m_Localized: That's too long
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310417
+    m_Localized: One post a day
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310418
+    m_Localized: No links on the wall
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310419
+    m_Localized: No email addresses on the wall
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310420
+    m_Localized: No phone numbers on the wall
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310421
+    m_Localized: It has a word that doesn't suit the wall
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310422
+    m_Localized: A parent's OK is needed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310423
+    m_Localized: That didn't work. Try again later.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310424
+    m_Localized: "Visiting a friend's caf\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310425
+    m_Localized: Leave a gift
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310426
+    m_Localized: "Back to your caf\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310427
+    m_Localized: "Her caf\xE9 isn't saved to the cloud yet"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310428
+    m_Localized: Postcard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310429
+    m_Localized: Gahwit Sitti
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310430
+    m_Localized: "From my caf\xE9 in Jabal Amman"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310431
+    m_Localized: "My caf\xE9 in Gahwit Sitti"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310432
+    m_Localized: Postcard saved
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310433
+    m_Localized: Friends
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310434
+    m_Localized: "Add friends by code, send them energy every day, and visit their
+      caf\xE9s."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310435
+    m_Localized: "Caf\xE9 postcards"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310436
+    m_Localized: "Make a postcard of your caf\xE9 with Salma and share it."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310437
+    m_Localized: The Sitti wall
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310438
+    m_Localized: Pin a saying or recipe from your grandmother for everyone to read.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310439
+    m_Localized: Hosting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310440
+    m_Localized: Twice a week, fill a big order with your friends.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

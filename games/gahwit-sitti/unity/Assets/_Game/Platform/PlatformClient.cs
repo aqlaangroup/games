@@ -192,6 +192,25 @@ namespace Gahwit.Platform
         // This player's purchases with their items, for restoring after a reinstall and hiding once-only offers.
         public Task<Reply<JArray>> Purchases() => Call<JArray>("GET", "/players/me/purchases", null);
 
+        // ---------- Social (missing/20); 403 parent_needed for children without a parent's consent ----------
+
+        public Task<Reply<JObject>> Social() => Call<JObject>("GET", "/players/me/social", null);
+        public Task<Reply<JObject>> AddFriend(string code) => Call<JObject>("POST", "/players/me/friends", new JObject { ["code"] = code });
+        public Task<Reply<JObject>> SendGift(string friendId) => Call<JObject>("POST", "/players/me/gifts", new JObject { ["to"] = friendId });
+        public Task<Reply<JObject>> ClaimGifts() => Call<JObject>("POST", "/players/me/gifts/claim", new JObject());
+        public Task<Reply<JObject>> FriendCafe(string friendId) => Call<JObject>("GET", $"/players/me/friends/{friendId}/cafe", null);
+        public Task<Reply<JObject>> Hosting() => Call<JObject>("GET", "/players/me/hosting", null);
+        public Task<Reply<JObject>> StartHosting() => Call<JObject>("POST", "/players/me/hosting", new JObject());
+        public Task<Reply<JObject>> InviteToHosting(string orderId, string friendId) =>
+            Call<JObject>("POST", $"/players/me/hosting/{orderId}/invite", new JObject { ["friendId"] = friendId });
+        public Task<Reply<JObject>> GiveToHosting(string orderId, int count) =>
+            Call<JObject>("POST", $"/players/me/hosting/{orderId}/give", new JObject { ["count"] = count });
+        public Task<Reply<JObject>> HostingMessage(string orderId, int preset) =>
+            Call<JObject>("POST", $"/players/me/hosting/{orderId}/message", new JObject { ["preset"] = preset });
+        public Task<Reply<JObject>> Wall() => Call<JObject>("GET", "/players/me/wall", null);
+        public Task<Reply<JObject>> PostToWall(string text) => Call<JObject>("POST", "/players/me/wall", new JObject { ["text"] = text });
+        public Task<Reply<JObject>> WallAction(string postId, string action) => Call<JObject>("POST", $"/players/me/wall/{postId}/{action}", new JObject());
+
         public Task<Reply<JObject>> SendEvents(JArray events) =>
             Call<JObject>("POST", "/players/me/events", new JObject
             {

@@ -1079,6 +1079,10 @@
     ]
   },
   "social": {
+    "giftsPerDay": 5,
+    "giftEnergy": 5,
+    "maxFriends": 50,
+    "proposed": "Proposed on 2026-10-31 (missing/20): each gift is giftEnergy energy, giftsPerDay may be sent a day (one per friend), and a player can have up to maxFriends friends.",
     "features": [
       "send 5 energy gifts per day",
       "visit a friend's café",
@@ -1364,10 +1368,14 @@
         "helperGems": 5,
         "soloBotRewardShare": 0.5
       },
+      "botShareOfOrder": 0.5,
       "proposed": "Proposed on 2026-10-31 where the specs gave no number (missing/02). Tune in playtests. Applies to rewards."
     },
     "sittiWall": {
       "maxChars": 140,
+      "postsPerDay": 1,
+      "reportsToReview": 3,
+      "proposed": "Proposed on 2026-10-31 (missing/20): one post a day per player; a post with reportsToReview reports goes back to a person for review.",
       "moderation": [
         "automatic",
         "human"

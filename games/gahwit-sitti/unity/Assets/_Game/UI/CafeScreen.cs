@@ -294,7 +294,16 @@ namespace Gahwit.UI
             Tweens.Instance?.PopOf(cosiness.rectTransform, 0.12f);
         }
 
-        Button todayButton;
+        Button todayButton, friendsButton;
+        System.Func<bool> friendsOpen = () => false;
+
+        // Friends (missing/20), under Today, once their level is reached.
+        public void SetFriends(System.Action open, System.Func<bool> isOpen)
+        {
+            friendsOpen = isOpen;
+            friendsButton = UiKit.Button(transform, "Friends", Loc.T("friends.button"), Palette.Card, Palette.Ink, 24, () => open(), 60);
+            ((RectTransform)friendsButton.transform).Pin(new Vector2(0, 1), new Vector2(20, -588), new Vector2(UiKit.MinTouch, UiKit.MinTouch));
+        }
 
         // Today's gift, tasks and events (missing/18), under the side buttons.
         public void SetToday(System.Action open)
@@ -306,6 +315,7 @@ namespace Gahwit.UI
         public void Refresh()
         {
             if (todayButton != null) todayButton.gameObject.SetActive(!decorMode);
+            if (friendsButton != null) friendsButton.gameObject.SetActive(!decorMode && friendsOpen());
             taskCard.SetActive(!decorMode);
             decorBar.SetActive(decorMode);
             decorButton.gameObject.SetActive(decor != null && decor.ShopOpen && !decorMode);

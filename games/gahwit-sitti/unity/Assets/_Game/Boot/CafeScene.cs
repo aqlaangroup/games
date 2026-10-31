@@ -134,6 +134,7 @@ namespace Gahwit.Boot
             ui.SetGems(() => gems.Buy("storageSlot:" + game.NextStorageSlot));
             WireShopAndAds();
             WireLiveOps();
+            WireSocial();
             ui.OutOfEnergy = ShowOutOfEnergy;
             ui.BubbleTapped = ShowBubble;
             unlocks = new Unlocks(game, Newtonsoft.Json.Linq.JObject.Parse(Resources.Load<TextAsset>("Content/unlock_cards").text)["cards"]
@@ -225,29 +226,36 @@ namespace Gahwit.Boot
         // Her own clothes show where no wardrobe piece is worn.
         static readonly Color BaseTop = Palette.Hex("#F7EFE6"), BaseBottom = Palette.Hex("#6B5B73");
 
-        void DressSalma()
+        void DressSalma() => DressSalma(wardrobe.Worn);
+
+        // worn: the piece in each slot, the player's own or a visited friend's.
+        void DressSalma(Func<string, string> worn)
         {
-            Color? Worn(string slot) => wardrobe.Worn(slot) is string id ? Palette.Hex(wardrobe.Content.Get(id).Color) : (Color?)null;
+            var pieces = new Func<string, WardrobePiece>(slot => worn(slot) is string id ? wardrobe.Content.Get(id) : null);
+            Color? Worn(string slot) => pieces(slot) is WardrobePiece piece ? Palette.Hex(piece.Color) : (Color?)null;
             cafe.Salma.Dress(new CafeSalma.Outfit
             {
                 Top = Worn("top") ?? BaseTop,
                 Bottom = Worn("bottom_or_dress") ?? BaseBottom,
                 Outer = Worn("outer"),
                 Hijab = Worn("hijab_optional"),
-                Dress = wardrobe.Worn("bottom_or_dress") is string bottom && wardrobe.Content.Get(bottom).Dress
+                Dress = pieces("bottom_or_dress") is WardrobePiece bottom && bottom.Dress
             });
         }
 
-        void ShowDecor()
+        void ShowDecor() => ShowDecor(game.State.PlacedDecor, game.CompletedTaskIds(), game.State.TaskStyles);
+
+        void ShowDecor(IEnumerable<PlacedDecor> placed, List<string> done, Dictionary<string, string> styles)
         {
             placements.Clear();
-            foreach (var piece in game.State.PlacedDecor)
+            foreach (var piece in placed)
             {
+                if (decor.Catalog.Get(piece.Id) == null) continue;
                 var (x, z) = decor.Centre(piece);
                 placements.Add(new CafeDecor.Placement { Id = piece.Id, X = x, Z = z, Degrees = piece.Rot * 90 });
             }
             cafe.Decor.Show(placements, decor.Catalog, game.Config.LevelB.Cafe.GridCellMeters);
-            cafe.Apply(game.CompletedTaskIds(), game.State.TaskStyles, game.Content.Styles); // a style may have changed
+            cafe.Apply(done, styles, game.Content.Styles); // a style may have changed
         }
 
         // Every order is a customer in the café (DEVLOG 2026-10-31): they walk in, sit, sip when served and leave.
@@ -656,6 +664,66 @@ namespace Gahwit.Boot
                 PromptView.Quiet(Loc.T("bubble.no"), game.LetBubbleGo)
             });
         }
+
+        // ---------- Friends, visits, hosting, the Sitti wall and postcards (missing/20) ----------
+
+        SocialService social;
+        bool visiting;
+
+        void WireSocial()
+        {
+            social = new SocialService(Services.Current.Platform, game, () => account.SocialAllowed, Visit, Postcard);
+            ui.SetSocial(social, () => time.NowMs);
+        }
+
+        void Visit(string friendId) => Run(async () =>
+        {
+            var reply = await Services.Current.Platform.FriendCafe(friendId);
+            if (!reply.Ok)
+            {
+                ui.Toast.Show(Loc.T(reply.Outcome == Gahwit.Platform.Outcome.Offline ? "friends.offline" : "visit.noCafe"));
+                return;
+            }
+            var friend = reply.Value;
+            visiting = true;
+            Track("cafe_visit");
+            // Their café: their tasks, styles and decor, and Salma in their outfit. Their customers aren't here.
+            var placed = (friend["cafe"]?["placed"] as Newtonsoft.Json.Linq.JArray)?.OfType<Newtonsoft.Json.Linq.JObject>()
+                .Select(p => new PlacedDecor { Id = (string)p["id"], X = p.Value<int>("x"), Z = p.Value<int>("z"), Rot = p.Value<int>("rot") / 90 })
+                .ToList() ?? new List<PlacedDecor>();
+            var styles = (friend["cafe"]?["taskStyles"] as Newtonsoft.Json.Linq.JObject)?.Properties()
+                .ToDictionary(p => p.Name, p => (string)p.Value) ?? new Dictionary<string, string>();
+            var done = game.CompletedTaskIds(friend["story"]?.Value<int?>("chapter") ?? 1, friend["story"]?.Value<int?>("task") ?? 0);
+            var worn = (friend["wardrobe"]?["worn"] as Newtonsoft.Json.Linq.JObject)?.Properties()
+                .ToDictionary(p => p.Name, p => (string)p.Value) ?? new Dictionary<string, string>();
+            cafe.Customers.gameObject.SetActive(false);
+            ShowDecor(placed, done, styles);
+            DressSalma(slot => worn.TryGetValue(slot, out var id) ? id : null);
+            ui.ShowVisit(() => Run(async () =>
+            {
+                var gift = await social.Gift(friendId);
+                ui.Toast.Show(gift.Ok ? Loc.T("friends.giftDone") : Loc.T("friends.error." + (gift.Error ?? "failed")));
+            }), EndVisit);
+        });
+
+        void EndVisit()
+        {
+            if (!visiting) return;
+            visiting = false;
+            cafe.Customers.gameObject.SetActive(true);
+            ShowDecor();
+            DressSalma();
+            ui.HideVisit();
+        }
+
+        // A postcard of the café, shared through the phone's share sheet with a line about the game.
+        void Postcard() => ui.TakePostcard(path =>
+        {
+            Track("postcard");
+            string link = Services.Current.PlatformConfig.StoreUrl;
+            string text = Loc.T("postcard.share") + (Gahwit.Platform.PlatformConfig.IsSet(link) ? " " + link : "");
+            if (!ShareSheet.Share(path, text)) ui.Toast.Show(Loc.T("postcard.saved"));
+        });
 
         // ---------- Daily systems and events (missing/18) ----------
 

@@ -2,6 +2,24 @@
 
 Decisions and known gaps. Newest first. Read this at the start of each session (`/CLAUDE.md`).
 
+## 2026-10-31: friends, gifts, visits, hosting, the Sitti wall and postcards (missing/20)
+
+- **Platform** (`platform/src/Platform.Api/Social`, 10 new tests, 76 in all; migration `Social`):
+  - **Friends** add each other by an 8-letter code (no 0/O or 1/I/L), both ways at once. There is nothing to accept and no chat.
+  - **Gifts:** one energy gift per friend a day, up to `social.giftsPerDay`, each `giftEnergy`. The receiver takes them all at once and the game adds the energy.
+  - **Visits** read a friend's latest cloud save, but only what the café shows: placed decor, styles, cosiness, chapter and task, and Salma's outfit. No story choices or letters.
+  - **Hosting:** `perWeek` orders a week, one at a time, `itemsNeeded` items in `durationHours`, up to `maxHelpers` invited friends. A host with no helper giving gets neighbour bots that fill `botShareOfOrder` (0.5, proposed) of it over its time, for `soloBotRewardShare` of the reward. The platform pays once when the order fills: the host's and helpers' gems, and friendship points both ways. 12 preset messages, no chat.
+  - **Sitti wall:** posts up to `maxChars`, one a day (proposed). An automatic check refuses links, emails, phone numbers (Arabic and Persian digits too) and listed words. It folds harakat, tatweel and alef, ya and ta marbuta forms first. Everything else waits for a person in the staff panel's new Sitti wall page. Posts show without names; players can like, report (hides it for them; `reportsToReview` reports send it back to a person) and block a writer.
+  - **Age:** players under 13 or of unknown age get `403 parent_needed` on everything social until a parent agrees (`Players.ParentConsent`; the consent flow waits on the legal review, missing/21).
+  - A deleted account's social rows go with the purge.
+- **Game:**
+  - `SocialService` over the platform, and three screens: Friends (your code, add by code, gifts, visit, and the ways to hosting, the wall and postcards), Hosting and the Sitti wall. A Friends button joins the café's side buttons from level 10.
+  - **A visit** turns the café into the friend's: their decor, styles and Salma's outfit, without their customers. A bar offers "leave a gift" and "back to your café".
+  - **Hosting gives** the piece the player needs least: the lowest level no order wants, never a generator (`Game.SparePiece`, tested). It leaves the board only after the platform counted it.
+  - **Postcards:** the café with Salma, in a cream frame with the game's name, captured from the screen and shared through the phone's own share sheet. iOS uses `Plugins/iOS/GahwitShare.mm`, and Info.plist gets the photo-library reason for "Save Image". Android puts the image in MediaStore and shares it, which needs no permission from Android 10. In the Editor it's saved to disk.
+- **Not checked on screen:** the Editor quit cleanly twice as Play mode started (it looked like a manual quit), so the social screens were compiled and unit-tested but not seen. Two accounts on two phones should try them.
+- **Still missing:** the parent-consent flow, the "friend needs help" push, the shared postcard when a hosting order finishes, and the store link in postcards.
+
 ## 2026-10-31: the staff panel (missing/22)
 
 - **Decision, the stack:** plain HTML and JavaScript at `/staff/`, served by the platform over its staff API (`platform/src/Platform.Api/wwwroot/staff`). There's no build step and no framework to keep up, and one deploy covers both. It's served with a strict content security policy. Every value from the API is set as text, never HTML, because players write support messages.

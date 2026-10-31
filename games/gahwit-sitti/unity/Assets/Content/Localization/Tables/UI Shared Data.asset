@@ -1927,6 +1927,430 @@ MonoBehaviour:
     m_Key: help.a7
     m_Metadata:
       m_Items: []
+  - m_Id: 241736403116032
+    m_Key: friends.button
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310336
+    m_Key: friends.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310337
+    m_Key: friends.parent
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310338
+    m_Key: friends.offline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310339
+    m_Key: friends.failed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310340
+    m_Key: friends.yourCode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310341
+    m_Key: friends.copy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310342
+    m_Key: friends.copied
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310343
+    m_Key: friends.add
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310344
+    m_Key: friends.codeHint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310345
+    m_Key: friends.addButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310346
+    m_Key: friends.added
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310347
+    m_Key: friends.giftsWaiting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310348
+    m_Key: friends.take
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310349
+    m_Key: friends.gotEnergy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310350
+    m_Key: friends.list
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310351
+    m_Key: friends.none
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310352
+    m_Key: friends.points
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310353
+    m_Key: friends.gift
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310354
+    m_Key: friends.giftSent
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310355
+    m_Key: friends.giftDone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310356
+    m_Key: friends.visit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310357
+    m_Key: friends.error.unknown_code
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310358
+    m_Key: friends.error.own_code
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310359
+    m_Key: friends.error.already_friends
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310360
+    m_Key: friends.error.too_many_friends
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310361
+    m_Key: friends.error.not_friends
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310362
+    m_Key: friends.error.daily_limit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310363
+    m_Key: friends.error.already_sent_today
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310364
+    m_Key: friends.error.parent_needed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310365
+    m_Key: friends.error.failed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310366
+    m_Key: friends.error.nothing_to_give
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310367
+    m_Key: friends.error.weekly_limit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310368
+    m_Key: friends.error.already_hosting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310369
+    m_Key: friends.error.too_many_helpers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310370
+    m_Key: friends.error.already_invited
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310371
+    m_Key: friends.error.order_closed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310372
+    m_Key: friends.error.invalid_count
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310373
+    m_Key: friends.error.unknown_order
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310374
+    m_Key: friends.error.not_invited
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310375
+    m_Key: hosting.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310376
+    m_Key: hosting.how
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310377
+    m_Key: hosting.lastDone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310378
+    m_Key: hosting.lastExpired
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310379
+    m_Key: hosting.startText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310380
+    m_Key: hosting.waitText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310381
+    m_Key: hosting.start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310382
+    m_Key: hosting.yours
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310383
+    m_Key: hosting.friends
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310384
+    m_Key: hosting.progress
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310385
+    m_Key: hosting.left
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310386
+    m_Key: hosting.bots
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310387
+    m_Key: hosting.give
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310388
+    m_Key: hosting.given
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310389
+    m_Key: hosting.invite
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310390
+    m_Key: hosting.invited
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310391
+    m_Key: hosting.preset1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310392
+    m_Key: hosting.preset2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310393
+    m_Key: hosting.preset3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310394
+    m_Key: hosting.preset4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310395
+    m_Key: hosting.preset5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310396
+    m_Key: hosting.preset6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310397
+    m_Key: hosting.preset7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310398
+    m_Key: hosting.preset8
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310399
+    m_Key: hosting.preset9
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310400
+    m_Key: hosting.preset10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310401
+    m_Key: hosting.preset11
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310402
+    m_Key: hosting.preset12
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310403
+    m_Key: wall.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310404
+    m_Key: wall.how
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310405
+    m_Key: wall.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310406
+    m_Key: wall.post
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310407
+    m_Key: wall.sent
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310408
+    m_Key: wall.empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310409
+    m_Key: wall.report
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310410
+    m_Key: wall.reported
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310411
+    m_Key: wall.block
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310412
+    m_Key: wall.blocked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310413
+    m_Key: wall.yours.pending
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310414
+    m_Key: wall.yours.rejected
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310415
+    m_Key: wall.error.empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310416
+    m_Key: wall.error.too_long
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310417
+    m_Key: wall.error.daily_limit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310418
+    m_Key: wall.error.refused_link
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310419
+    m_Key: wall.error.refused_email
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310420
+    m_Key: wall.error.refused_phone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310421
+    m_Key: wall.error.refused_word
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310422
+    m_Key: wall.error.parent_needed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310423
+    m_Key: wall.error.failed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310424
+    m_Key: visit.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310425
+    m_Key: visit.gift
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310426
+    m_Key: visit.home
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310427
+    m_Key: visit.noCafe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310428
+    m_Key: postcard.make
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310429
+    m_Key: postcard.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310430
+    m_Key: postcard.line
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310431
+    m_Key: postcard.share
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310432
+    m_Key: postcard.saved
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310433
+    m_Key: unlock.friends.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310434
+    m_Key: unlock.friends.text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310435
+    m_Key: unlock.postcards.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310436
+    m_Key: unlock.postcards.text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310437
+    m_Key: unlock.sitti_wall.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310438
+    m_Key: unlock.sitti_wall.text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310439
+    m_Key: unlock.hosting.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 241736407310440
+    m_Key: unlock.hosting.text
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

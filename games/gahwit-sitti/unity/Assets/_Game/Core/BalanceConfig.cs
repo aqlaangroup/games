@@ -290,6 +290,14 @@ namespace Gahwit.Core
         public RegularsConfig Regulars;
         public MemoriesConfig Memories;
         public RecipesConfig Recipes;
+        public SittiWallConfig SittiWall;
+    }
+
+    public sealed class SittiWallConfig
+    {
+        public int MaxChars;
+        public int PostsPerDay;
+        public int ReportsToReview;
     }
 
     public sealed class DailyGiftDef

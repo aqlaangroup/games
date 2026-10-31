@@ -1,4 +1,4 @@
 {
-  "$comment": "Features that get an unlock card (COMPLETE_SPEC.md section 2): only ones that exist in this build. Add a feature here when its system is built, with unlock.<feature>.title and .text in the UI table.",
-  "cards": ["storage", "decor_shop", "wardrobe", "order_slot_4", "order_slot_5", "regular_friendship", "chain_tea", "chain_saudi", "chain_dairy", "recipes", "shop", "daily_gift", "mini_board_event"]
+  "$comment": "Hosting preset messages (hosting.preset1-12) are [draft] dialogue in the Amman dialect, waiting for the native writers. Features that get an unlock card (COMPLETE_SPEC.md section 2): only ones that exist in this build. Add a feature here when its system is built, with unlock.<feature>.title and .text in the UI table.",
+  "cards": ["storage", "decor_shop", "wardrobe", "order_slot_4", "order_slot_5", "regular_friendship", "chain_tea", "chain_saudi", "chain_dairy", "recipes", "shop", "daily_gift", "mini_board_event", "friends", "postcards", "sitti_wall", "hosting"]
 }

@@ -53,7 +53,9 @@ namespace Gahwit.UI
                                  || decorShop != null && decorShop.IsOpen || wardrobe != null && wardrobe.IsOpen
                                  || Prompt.IsOpen || Storage != null && Storage.IsOpen
                                  || Pan != null && Pan.IsOpen || RecipeBook != null && RecipeBook.IsOpen || Shop != null && Shop.IsOpen
-                                 || Today != null && Today.IsOpen || MiniBoard != null && MiniBoard.IsOpen;
+                                 || Today != null && Today.IsOpen || MiniBoard != null && MiniBoard.IsOpen
+                                 || Friends != null && Friends.IsOpen || hostingView != null && hostingView.IsOpen
+                                 || wallView != null && wallView.IsOpen || visitBar != null;
 
         public static GameUi Create(Game game, CafeCamera cafeCamera, CafeRoom room, Func<long> now, Action openDrawer, IAccountUi account,
             TutorialFlow tutorial, bool canSkipTutorial)
@@ -253,6 +255,103 @@ namespace Gahwit.UI
         public PanView Pan { get; private set; }
         public ShopView Shop { get; private set; }
         public TodayView Today { get; private set; }
+        public FriendsView Friends { get; private set; }
+        HostingView hostingView;
+        WallView wallView;
+        GameObject visitBar;
+
+        // Friends, hosting and the Sitti wall (missing/20).
+        public void SetSocial(ISocialUi social, Func<long> now)
+        {
+            var safe = transform.Find("SafeArea");
+            hostingView = UiKit.Rect(safe, "Hosting").Stretch().gameObject.AddComponent<HostingView>();
+            hostingView.Init(social, Toast, now);
+            wallView = UiKit.Rect(safe, "Wall").Stretch().gameObject.AddComponent<WallView>();
+            wallView.Init(social, game, Toast);
+            Friends = UiKit.Rect(safe, "Friends").Stretch().gameObject.AddComponent<FriendsView>();
+            Friends.Init(social, game, Toast, hostingView, wallView);
+            cafe.SetFriends(() => Friends.Show(), () => game.State.Level >= game.Config.Unlocks.Level("friends"));
+            KeepOnTop();
+        }
+
+        // Visiting a friend's café: the café shows theirs, with only a way to leave a gift and go home.
+        public void ShowVisit(Action gift, Action home)
+        {
+            if (visitBar != null) Destroy(visitBar);
+            var bar = UiKit.Panel(transform.Find("SafeArea"), "Visit", Palette.Card, 0);
+            bar.rectTransform.Bottom(0, 260);
+            visitBar = bar.gameObject;
+            UiKit.Text(bar.transform, "Text", Loc.T("visit.title"), 32, Palette.Ink, TMPro.TextAlignmentOptions.Center).rectTransform.Top(16, 60);
+            var row = UiKit.Rect(bar.transform, "Buttons").Bottom(24, UiKit.MinTouch, 40, 40);
+            var layout = UiKit.Row(row.gameObject, 20);
+            layout.childForceExpandWidth = layout.childForceExpandHeight = true;
+            UiKit.Button(row, "Gift", Loc.T("visit.gift"), Palette.Rose, Color.white, 30, () => gift(), 36);
+            UiKit.Button(row, "Home", Loc.T("visit.home"), Palette.Muted, Palette.Ink, 30, () => home(), 36);
+            hud.gameObject.SetActive(false);
+            transform.Find("SafeArea/Tabs").gameObject.SetActive(false);
+            cafe.gameObject.SetActive(false);
+            // Dragging turns the camera around their café, as at home.
+            var pad = UiKit.Rect(transform.Find("SafeArea"), "VisitPad").Stretch(0, 0, 0, 260);
+            pad.gameObject.AddComponent<Image>().color = Color.clear;
+            pad.gameObject.AddComponent<OrbitPad>().Target = cafeCamera;
+            pad.SetSiblingIndex(bar.transform.GetSiblingIndex());
+            visitPad = pad.gameObject;
+        }
+
+        GameObject visitPad;
+
+        public void HideVisit()
+        {
+            if (visitBar != null) Destroy(visitBar);
+            if (visitPad != null) Destroy(visitPad);
+            visitBar = visitPad = null;
+            hud.gameObject.SetActive(true);
+            transform.Find("SafeArea/Tabs").gameObject.SetActive(true);
+            ShowCafe();
+        }
+
+        // A postcard (SYSTEMS_B.md section 8): the café as it is, with Salma, in a soft frame with the game's name.
+        public void TakePostcard(Action<string> saved) => StartCoroutine(Postcard(saved));
+
+        System.Collections.IEnumerator Postcard(Action<string> saved)
+        {
+            ShowCafe();
+            var safe = transform.Find("SafeArea");
+            var hidden = new System.Collections.Generic.List<GameObject>();
+            foreach (Transform child in safe)
+                if (child.gameObject.activeSelf)
+                {
+                    hidden.Add(child.gameObject);
+                    child.gameObject.SetActive(false);
+                }
+            var frame = UiKit.Rect(safe, "Postcard").Stretch();
+            foreach (var (anchorMin, anchorMax, size) in new[]
+                     {
+                         (new Vector2(0, 0), new Vector2(1, 0), new Vector2(0, 300)), (new Vector2(0, 1), new Vector2(1, 1), new Vector2(0, 40)),
+                         (new Vector2(0, 0), new Vector2(0, 1), new Vector2(40, 0)), (new Vector2(1, 0), new Vector2(1, 1), new Vector2(40, 0))
+                     })
+            {
+                var edge = UiKit.Panel(frame, "Edge", Palette.Cream, 0);
+                edge.rectTransform.anchorMin = anchorMin;
+                edge.rectTransform.anchorMax = anchorMax;
+                edge.rectTransform.pivot = new Vector2(anchorMin.x == anchorMax.x ? anchorMin.x : 0.5f, anchorMin.y == anchorMax.y ? anchorMin.y : 0.5f);
+                edge.rectTransform.sizeDelta = size;
+                edge.rectTransform.anchoredPosition = Vector2.zero;
+            }
+            var name = UiKit.Text(frame, "Name", Loc.T("postcard.name"), 64, Palette.Rose, TMPro.TextAlignmentOptions.Center);
+            name.fontStyle = TMPro.FontStyles.Bold;
+            name.rectTransform.Bottom(150, 100);
+            UiKit.Text(frame, "Line", Loc.T("postcard.line"), 32, Palette.InkSoft, TMPro.TextAlignmentOptions.Center).rectTransform.Bottom(70, 70);
+            yield return new WaitForEndOfFrame();
+            var shot = ScreenCapture.CaptureScreenshotAsTexture();
+            Destroy(frame.gameObject);
+            foreach (var go in hidden) go.SetActive(true);
+            string path = System.IO.Path.Combine(Application.persistentDataPath, "gahwit-postcard.png");
+            System.IO.File.WriteAllBytes(path, shot.EncodeToPNG());
+            Destroy(shot);
+            UiSound.Play("ui_coin");
+            saved(path);
+        }
         public MiniBoardView MiniBoard { get; private set; }
 
         // Today and the events (missing/18): the daily gift and tasks, and the mini board.
