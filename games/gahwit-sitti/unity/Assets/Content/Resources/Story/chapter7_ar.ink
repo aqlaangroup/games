@@ -1,11 +1,10 @@
 // Chapter 7 in neutral Arabic, shown as subtitles under the dialect lines when the player turns them on
-// (COMPLETE_SPEC.md section 4). [draft] Written by Claude Code from chapter7.ink; it follows that file line for line
+// (COMPLETE_SPEC.md section 4). Written by Claude Code from chapter7.ink; it follows that file line for line
 // (the parity test in Story/Tests checks it). Change the dialect file first, then this one. No glossary marks: the
 // subtitle is the explanation. Teta's song in memory 7 is invented for the game: no real song is named or quoted.
 
 EXTERNAL chose(knot)
 
-// [draft]
 === long_table ===
 طاولة واحدة طويلة، من الباب إلى المنضدة. والحيّ كله يريد الكرسي نفسه. #sys
 سأجلس هنا، قرب النافذة. هذا مكاني منذ كنت صغيرة. #samira
@@ -15,7 +14,6 @@ EXTERNAL chose(knot)
 لا قرعة ولا غيرها. كانت جدّتي تقول: الطاولة الطويلة ليس لها رأس. #salma #smile
 -> END
 
-// [draft]
 === breakfast_counter ===
 صباح الخير يا بنات! أحضرت لكنّ من مطبخي: طماطم مقلية بالثوم، ومكدوسًا، وفولًا بالليمون. #um_rami #smile
 تذوّقن قبل أن تتكلّمن. وإن لم يعجبكنّ، تكلّمن بعد ذلك. #um_rami
@@ -24,7 +22,6 @@ EXTERNAL chose(knot)
 يا أم رامي، إن كان الأمر هكذا، فلن يكتمل فطور الجمعة من دون صينيّتك. #salma #smile
 -> END
 
-// [draft]
 === street_tables ===
 خرجت الطاولات إلى الرصيف، وجلس ساعي البريد إلى إحداها. إنها أول مرة يجلس فيها. #sys
 عادةً أضع الرسائل وأمضي. لكن اليوم… الشاي طيّب. #postman #smile
@@ -33,7 +30,6 @@ EXTERNAL chose(knot)
 هناك حكاية يجب أن أحكيها لكِ يا ابنتي… لكن ليس اليوم. #postman #sad
 -> END
 
-// [draft]
 === radio_shelf ===
 وجدته تحت المنضدة، ملفوفًا بشرشف. هل ما زال يعمل يا عمّ؟ #salma
 جرّبي. كانت تستمع إليه كل جمعة، من أول الصباح حتى صلاة الجمعة. #abu_fadi
@@ -43,7 +39,6 @@ EXTERNAL chose(knot)
 ستعرفينها حين تسمعينها يا ابنتي. #abu_fadi
 -> END
 
-// [draft]
 === bread_basket ===
 أتعرفين؟ كنت كل ليلة أفتح تطبيق الطيران، وأنظر في رحلات الرياض. #lana
 والآن؟ #salma
@@ -52,7 +47,6 @@ EXTERNAL chose(knot)
 لا تكبّري الأمر. فقط أعطيني كعكًا من الذي بالسمسم. #lana #smile
 -> END
 
-// [draft]
 === friday_breakfast ===
 أول فطور جمعة. الطاولة الطويلة ممتلئة، والراديو يعمل على رفّه. #sys
 هكذا كانت الجمعة قديمًا. الجميع، وحياةِ أولادي، الجميع. #samira #smile
@@ -61,13 +55,11 @@ EXTERNAL chose(knot)
 الفطور طويل يا ابنتي. هناك وقت. #abu_fadi
 -> END
 
-// [draft]
 === m7_lead ===
 كانت تقف هنا، أمام الراديو، وتدير الزرّ ببطء… كأنها تصبّ القهوة. #abu_fadi
 وإن وجدت أغنيتها، يسكت المقهى كله. حتى أنا. #abu_fadi #smile
 -> END
 
-// [draft]
 === m7_intro ===
 يا فادي، أضاع الراديو المحطة مرة أخرى! والأغنية تبدأ الآن. #teta_young #surprised
 أعطيني إيّاه يا أم خليل، سألتقطها. #fadi_young
@@ -75,31 +67,26 @@ EXTERNAL chose(knot)
 ببطء… الراديو مثل الدلّة، إن استعجلته غضب. #teta_young
 -> END
 
-// [draft]
 === m7_perfect ===
 صافية! اسمع… «يا هيل الصباح، قل للغائب: الفنجان ينتظرك…» #teta_young #smile
 -> END
 
-// [draft]
 === m7_ok ===
 ليست صافية… لا بأس، أنا أحفظ الكلمات. سأكمل عنها. #teta_young #smile
 -> END
 
-// [draft]
 === m7_outro ===
 الحيّ كله يسكت حين تغنّين يا أم خليل. #fadi_young
 هذه أغنيتي. سأغنّيها كل جمعة، حتى يأتي أولادي ويغنّوها معي. #teta_young #smile
 وكل جمعة، لسنين، بقي الراديو على الرفّ نفسه. وفي ظهره، خبّأت جدّتي ورقة مطويّة. #sys
 -> END
 
-// [draft]
 === m7_return ===
 يا سلمى، هناك شيء ملصق بظهر الراديو. ورقة مطويّة، مكتوب عليها اسمي واسمك. #lana #surprised
 خطّ جدّتي! #salma #surprised
 كانت تخبّئ أغلى أشيائها خلف الأشياء التي تحبّها. #abu_fadi #smile
 -> END
 
-// [draft]
 === letter_4 ===
 إلى سلمى ولانا، ابنتَي ابنتيّ: #letter
 أبو فادي: فنجانه بالهيل، وطاولته قرب النافذة. ويوم الجمعة، اتركاه لصمته. #letter
@@ -113,12 +100,10 @@ EXTERNAL chose(knot)
 — جدّتكما #letter_signature
 -> END
 
-// [draft]
 === voice_4 ===
 يا بناتي، يا حبيباتي… فطور الجمعة للجميع. ومن لا يأتي، ضعا له صحنًا. سيأتي. #teta
 -> END
 
-// [draft]
 === notify_4 ===
 أرسلت لي سميرة صورة الفطور. كانت جدّتك تضع الزيت والزعتر في وسط الطاولة، لا على طرفها. #rana
 -> END

@@ -1,7 +1,7 @@
-// The memory games' practice content in neutral Arabic, for subtitles. [draft] Written by Claude Code from
+// The memory games' practice content in neutral Arabic, for subtitles. Written by Claude Code from
 // memory_practice.ink; it follows that file line for line (the parity test in Story/Tests checks it).
 
-// [draft] Choose: young Teta buys cardamom at the souk in 1974 and haggles.
+// Choose: young Teta buys cardamom at the souk in 1974 and haggles.
 === practice_choose ===
 صباح الخير يا عمّ. بكم كيلو الهيل اليوم؟ #teta_young
 بخمس ليرات يا سيدتي، هيل من الدرجة الأولى. #seller_1974
@@ -42,7 +42,7 @@
 -
 -> END
 
-// [draft] Reassemble: the strips of a torn note, in their right order. Each line is one strip.
+// Reassemble: the strips of a torn note, in their right order. Each line is one strip.
 === practice_letter ===
 يا أمّي، #letter
 افتُتح المقهى اليوم، وامتلأت الكراسي كلها. #letter

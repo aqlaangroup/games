@@ -1,11 +1,10 @@
 // Chapter 5 in neutral Arabic, shown as subtitles under the dialect lines when the player turns them on
-// (COMPLETE_SPEC.md section 4). [draft] Written by Claude Code from chapter5.ink; it follows that file line for line
+// (COMPLETE_SPEC.md section 4). Written by Claude Code from chapter5.ink; it follows that file line for line
 // (the parity test in Story/Tests checks it). Change the dialect file first, then this one. No glossary marks: the
 // subtitle is the explanation.
 
 EXTERNAL chose(knot)
 
-// [draft]
 === saudi_station ===
 هذه القهوة السعودية: بنّ فاتح، وهيل، وزعفران. انظري وتعلّمي. #lana
 لانا… هذه قهوة أم شاي بالحليب؟ لونها أصفر! #salma #smile
@@ -14,7 +13,6 @@ EXTERNAL chose(knot)
 لم أقل شيئًا. وجهي هو الذي قال. #lana #smile
 -> END
 
-// [draft]
 === majlis_bench ===
 يا سلام… كأنني في بيت أمّي في جدّة. هكذا كانت الجلسة تمامًا. #tourist #smile
 حيّاكِ الله يا خالة. أأصبّ لكِ قهوة سعودية؟ #lana
@@ -22,7 +20,6 @@ EXTERNAL chose(knot)
 وهذه النافذة… ما زالت كما هي. #tourist #thinking
 -> END
 
-// [draft]
 === menu_board ===
 حسنًا، اجتماع سريع… أقصد، جلسة. ماذا نكتب أولًا على اللوح؟ #salma #thinking
 السعودية. حتى في الأبجدية، السين قبل العين. #lana #smile
@@ -34,7 +31,6 @@ EXTERNAL chose(knot)
 يا بنات، اللوح لا يشرب. المهمّ ما في الفنجان. #abu_fadi
 -> END
 
-// [draft]
 === dates_bowl ===
 أمّي أرسلت لي. #lana #surprised
 طمئنيني، هل المقهى بخير؟ هل ما زالت الدلال على الرفّ؟ ولا تخبري أحدًا أنني سألت. #nawal
@@ -43,7 +39,6 @@ EXTERNAL chose(knot)
 وسأقول لها إنكِ وضعتِ التمر على كل طاولة، على طريقتنا. #lana #smile
 -> END
 
-// [draft]
 === cardamom_jars ===
 مرطبان للهيل، ومرطبان للزعفران… هل كانت جدّتي تكتب على كل شيء؟ #lana
 على كل شيء، إلا على ما في قلبها. #salma #sad
@@ -52,7 +47,6 @@ EXTERNAL chose(knot)
 هيّا نملأ المرطبانات. على الأقل هذه يمكن ملؤها. #salma
 -> END
 
-// [draft]
 === two_cups ===
 فنجانان متشابهان على المنضدة. واحد لي، وواحد لكِ. #salma #smile
 وبعد ذلك؟ نقسم الفناجين نصفين مثل الدفتر؟ #lana
@@ -62,30 +56,25 @@ EXTERNAL chose(knot)
 عرس أمّي؟ صنعت لها جدّتي قهوة من مدينتين… #lana #surprised
 -> END
 
-// [draft]
 === m5_lead ===
 كانت جدّتكما تحمّص البنّ بيدها، في المطبخ الخلفي. كانت رائحته تصل إلى آخر الحيّ. #abu_fadi
 وكان عندها مرطبانان. واحد تفتحه كل يوم… والآخر لم أرها تفتحه قطّ. #abu_fadi #thinking
 -> END
 
-// [draft]
 === m5_intro ===
 يا أم سميرة، أول تحميصة في مقهاي! لكن المطبخ ما زال مقلوبًا رأسًا على عقب. #teta_young #smile
 لا بأس، سأبحث معكِ. ماذا تحتاجين الآن؟ #samira_mother_1974
 كل شيء! بسرعة يا حبيبتي، قبل أن يحترق البنّ. #teta_young
 -> END
 
-// [draft]
 === m5_perfect ===
 سلمت يداكِ! لم تحترق حبّة واحدة. #teta_young #smile
 -> END
 
-// [draft]
 === m5_ok ===
 احترق قليلًا؟ لا بأس. التحميص مثل التربية: نار هادئة وصبر. #teta_young
 -> END
 
-// [draft]
 === m5_outro ===
 لماذا مرطبانان يا أم خليل؟ البنّ واحد. #samira_mother_1974
 هذا للبيت، كل يوم. وهذا سأكتب عليه: «لما بعد». #teta_young
@@ -93,14 +82,12 @@ EXTERNAL chose(knot)
 في اليوم الذي لا يُقال فيه الكلام. في ذلك اليوم، يتكلّم الفنجان. #teta_young
 -> END
 
-// [draft]
 === m5_return ===
 وجدته! في آخر الرفّ: «لما بعد»، بخطّ جدّتي. #salma #surprised
 ليس فيه قهوة… فيه ورقة مطويّة، مكتوب عليها اسمي. #lana #surprised
 أمسكت لانا الورقة قليلًا، ثم وضعتها في درج المنضدة، بجانب رسالة جدّتي الأولى. #sys
 -> END
 
-// [draft]
 === letter_3 ===
 يا لانا يا حبيبتي، يا ابنة نوال، #letter
 كانت أمّك وهي صغيرة أهدأ من في البيت. تجلس خلف المنضدة، تسمع كل شيء، ولا تتكلّم. #letter
@@ -111,12 +98,10 @@ EXTERNAL chose(knot)
 — جدّتك #letter_signature
 -> END
 
-// [draft]
 === voice_3 ===
 يا لانا يا حبيبتي… إن وجدتِ رسالتي، فلا تسألي أمّك ماذا حدث. اسأليها عن حالها، وستحدّثك من تلقاء نفسها. #teta
 -> END
 
-// [draft]
 === notify_3 ===
 سألت أمّي عن حالها، كما قالت جدّتي. صمتت قليلًا… ثم سألت عن خالتي رنا. #lana
 -> END

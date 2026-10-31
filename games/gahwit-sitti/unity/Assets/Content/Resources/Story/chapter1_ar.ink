@@ -1,5 +1,5 @@
 // Chapter 1 in neutral Arabic, shown as subtitles under the dialect lines when the player turns them on
-// (COMPLETE_SPEC.md section 4). [draft] Written by Claude Code from chapter1.ink; it follows that file line for line
+// (COMPLETE_SPEC.md section 4). Written by Claude Code from chapter1.ink; it follows that file line for line
 // (the parity test in Story/Tests checks it). Change the dialect file first, then this one. No glossary marks: the
 // subtitle is the explanation.
 
@@ -20,19 +20,16 @@ EXTERNAL chose(knot)
 كانت تقول: الفنجان الأول للضيف، والثاني للحديث، والثالث للمحبة. تعالي كل يوم، وسأحدّثك. #abu_fadi
 -> END
 
-// [draft]
 === floor ===
 انظر إلى هذا البلاط! كانت جدّتي تقول إنه أقدم من الحيّ كله. #salma
 لكل بلاطة حكاية. هنا كسرت أول فنجان وأنا صغير، ولم تُغضبني جدّتك ولو بكلمة. #abu_fadi
 -> END
 
-// [draft]
 === chairs ===
 هذه طاولتي. أجلس عليها منذ ثلاثين سنة، مقابل النافذة. #abu_fadi
 انتهى الأمر يا عمّ، من اليوم هذه الطاولة مخصّصة لك. #salma
 -> END
 
-// [draft]
 === dallahs ===
 تلمع كأنها جديدة… كانت جدّتي تلمّعها كل جمعة. #salma
 والدلّة الصغيرة؟ كانت لها وحدها. لا يصبّ منها أحد غيرها. #abu_fadi
@@ -42,13 +39,11 @@ EXTERNAL chose(knot)
     غدًا… إن جاء الفنجان كما يجب. #abu_fadi
 - -> END
 
-// [draft]
 === lights ===
 أضاء المقهى! حتى الجيران أطلّوا من النوافذ. #salma
 المقهى الذي تشتعل أضواؤه لا يبقى فارغًا. سترين غدًا. #abu_fadi
 -> END
 
-// [draft]
 === counter ===
 تفضّل يا عمّ أبو فادي. أول فنجان من الدلّة الصغيرة. #salma
 هكذا كانت تصنعها… بالهيل، ومن دون عجلة. رحمها الله. #abu_fadi

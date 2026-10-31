@@ -4,6 +4,7 @@ Decisions and known gaps. Newest first. Read this at the start of each session (
 
 ## 2026-10-31: the whole season written, and the café changes with every task (missing/11, 12)
 
+- **Approved:** the owner approved the story bible and every chapter on 2026-10-31, so the `[draft]` marks are removed from all Ink files. Native writers can still polish the text; change the dialect file first, then `_en` and `_ar` (the parity test checks them).
 - **The owner asked us to write the story ourselves.** Chapters 2–10 (54 task scenes, memories 2–10, letters 2–6 with voice notes) and the 36 regulars' scenes (`Story/regulars.ink`) are written in the three files each: dialect, English and neutral Arabic. All `[draft]`. Lana speaks Najdi everywhere, including chapter 1's message.
 - **Callbacks read the knot,** because the game saves a choice under the knot it was made in: `chose("basil_pots")`, `chose("menu_board")`, `chose("faris_table")`. The parity test now walks every file with every choice id of the season, and a new test checks that every knot the content names exists and every speaker has a character entry.
 - **Story details settled while writing** (STORY_BIBLE.md still holds the outline):

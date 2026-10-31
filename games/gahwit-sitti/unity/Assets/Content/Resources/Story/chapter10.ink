@@ -1,5 +1,5 @@
 // Chapter 10: عرس بالحارة · A wedding in the neighbourhood
-// [draft] Every knot here was drafted by Claude Code from STORY_BIBLE.md (sections 3–8) and waits for the Amman and
+// Every knot here was drafted by Claude Code from STORY_BIBLE.md (sections 3–8) and waits for the Amman and
 // Najdi dialect writers (CLAUDE.md, writing style). The speaker is the first tag on a line; the second is the expression.
 // [[word]] marks a tap-to-explain word; its meaning is in the Glossary table.
 // chapter10_en.ink (English) and chapter10_ar.ink (neutral-Arabic subtitles) follow this file line for line
@@ -10,7 +10,7 @@
 // The saved choice for a knot ("" before it's made), bound by the game (STORY_BIBLE.md section 8).
 EXTERNAL chose(knot)
 
-// [draft] The callback for c2_groom, chosen in chapter 2's basil_pots. The game saves a choice under the knot it was
+// The callback for c2_groom, chosen in chapter 2's basil_pots. The game saves a choice under the knot it was
 // made in (CafeScene.PlayScene), so it reads chose("basil_pots"); the ids are honest and polite (STORY_BIBLE.md 8).
 === wedding_lights ===
 شايفين الأضواء؟ مش قلتلكم إنه ابن حلال؟ أنا جبته عالقهوة، يعني أنا زوّجته للدكتورة هبة! #samira #smile
@@ -24,7 +24,6 @@ EXTERNAL chose(knot)
 طبعًا! ووحياة ولادي، العرس الجاي عرسك. #samira
 -> END
 
-// [draft]
 === street_arch ===
 قوس الورد صار على باب القهوة، وأم رامي وصلت بأول قِدر. #sys
 طلبيّة العرس كلها عليّ: [[منسف]] للحارة كلها. أول طلبيّة كبيرة إلي. #um_rami #smile
@@ -33,7 +32,7 @@ EXTERNAL chose(knot)
 تحت قوس ورد، ومنسف أم رامي… ستّي كانت رقصت. #salma #smile
 -> END
 
-// [draft] The page's recipe (chapter 9, m9_page), made right at last; Abu Fadi tasted the first tray in 1974.
+// The page's recipe (chapter 9, m9_page), made right at last; Abu Fadi tasted the first tray in 1974.
 === dessert_table ===
 عمّو، دوق. وقلّي الحقيقة، مش مجاملة. #salma
 أبو فادي أكل لقمة، وسكت. وأكل التانية. #sys
@@ -41,7 +40,7 @@ EXTERNAL chose(knot)
 يعني ضبطت؟ أخيرًا! #lana #smile
 -> END
 
-// [draft] Nawal: Amman grammar with Najdi words. Rana: formal when hurt, warm when she forgets (voice sheets).
+// Nawal: Amman grammar with Najdi words. Rana: formal when hurt, warm when she forgets (voice sheets).
 === family_table ===
 نوال وصلت من الرياض قبل المغرب. #sys
 سلمى؟ يا الله… بتشبهي أمّي [[مرّة]]. #nawal #smile
@@ -51,7 +50,7 @@ EXTERNAL chose(knot)
 بعرف. ستّك كانت تبعتلي صورك كل عيد. #rana #sad
 -> END
 
-// [draft] "The first cup is for the guest, the second for talk" (chapter 1, sign).
+// "The first cup is for the guest, the second for talk" (chapter 1, sign).
 === two_chairs ===
 كرسيين جنب بعض. قعدت نوال، وبعد شوي قعدت رنا. ولا وحدة حكت. #sys
 أمّك قرت الصفحة؟ #lana
@@ -60,7 +59,7 @@ EXTERNAL chose(knot)
 ولا إشي. ستّي كانت تقول: الفنجان الأول للضيف، والتاني للحكي. #salma
 -> END
 
-// [draft] The cousins stay partners and plan a café in Riyadh. The last two lines are the season 2 teaser: a letter
+// The cousins stay partners and plan a café in Riyadh. The last two lines are the season 2 teaser: a letter
 // from Jeddah for Abu Fadi (the woman he waited for left Amman in 1976; STORY_BIBLE.md sections 2 and 9). The task's
 // scene plays before memory 10, so Abu Fadi pockets the letter and m10_lead picks it up.
 === wedding_night ===
@@ -75,30 +74,28 @@ EXTERNAL chose(knot)
 // Memory 10 (pour): in the present, not 1974 (STORY_BIBLE.md section 6). Salma and Lana make the two cups Teta's
 // voice note asked for (voice_1), and each carries one to the other's mother.
 
-// [draft]
 === m10_lead ===
 الرسالة بتستنّى. الليلة إلها شغل تاني. #abu_fadi
 ستّكم وصّت على فنجانين. يلّا يا بنات، جيبوا الدلّة الصغيرة. #abu_fadi #smile
 -> END
 
-// [draft]
 === m10_intro ===
 فنجانين، متل ما وصّت ستّي: واحد إلي، وواحد إلك. #salma
 لا. إنتِ تصبّين لأمّي، وأنا أصبّ لأمّك. #lana
 متل الضيوف. الفنجان الأول للضيف. #salma #smile
 -> END
 
-// [draft] Echoes m1_perfect.
+// Echoes m1_perfect.
 === m10_perfect ===
 هيك بالضبط. صبر وإيد ثابتة… متلها. #abu_fadi #smile
 -> END
 
-// [draft] Echoes m1_ok.
+// Echoes m1_ok.
 === m10_ok ===
 ستّي كانت تقول: القهوة بتسامح، متل الناس الطيبين. #salma #smile
 -> END
 
-// [draft] No speeches: one question that isn't a question, two words, and a hand.
+// No speeches: one question that isn't a question, two words, and a hand.
 === m10_outro ===
 سلمى حطّت الفنجان قدّام خالتها نوال، ولانا قدّام خالتها رنا. #sys
 عشرين سنة يا نوال… #rana #sad
@@ -106,13 +103,13 @@ EXTERNAL chose(knot)
 رنا ما ردّت. مدّت إيدها عالطاولة، ومسكت إيد أختها. #sys
 -> END
 
-// [draft] Letter 6 is Abu Fadi's to give; he leaves it in the counter drawer, where the game finds letters.
+// Letter 6 is Abu Fadi's to give; he leaves it in the counter drawer, where the game finds letters.
 === m10_return ===
 ستّكم قالتلي: ما رح يقعدوا سوا إلا بعرس. ولمّا يقعدوا، أعطيهم هاي. #abu_fadi
 حطّيتها بالدرج يا بنات، مطرح أول رسالة. #abu_fadi #smile
 -> END
 
-// [draft] Letter 6, to Salma and Lana: the café was always meant to carry her girls' names (memory 1, m1_outro). They
+// Letter 6, to Salma and Lana: the café was always meant to carry her girls' names (memory 1, m1_outro). They
 // add «رنا ونوال» under Teta's sign; notify_6 shows it done.
 === letter_6 ===
 لسلمى ولانا، #letter
@@ -124,12 +121,12 @@ EXTERNAL chose(knot)
 — ستّكم #letter_signature
 -> END
 
-// [draft] Teta's voice note after letter 6: a blessing for the wedding. Needs the voice actor (missing/14).
+// Teta's voice note after letter 6: a blessing for the wedding. Needs the voice actor (missing/14).
 === voice_6 ===
 يا روحي، الأعراس بتلمّ اللي فرّقه الزعل. ألف مبروك للعرسان، مين ما كانوا. #teta
 -> END
 
-// [draft] The season's last line. Salma sent her mother a photo of the sign.
+// The season's last line. Salma sent her mother a photo of the sign.
 === notify_6 ===
 وصلتني الصورة: اسمي واسم أختي تحت آرمة أمّي. بكرا الصبح بفوت. #rana
 -> END

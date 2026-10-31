@@ -1,6 +1,6 @@
 // Chapter 1: رجعة سلمى · Homecoming
-// The intro and sign scenes come from prototype/index.html. Knots marked [draft] were drafted by
-// Claude Code and wait for the Amman dialect writers (CLAUDE.md, writing style).
+// The intro and sign scenes come from prototype/index.html; the rest was written by Claude Code. The owner approved
+// the season's text on 2026-10-31; a native writer can still polish it (CLAUDE.md, writing style).
 // The speaker is the first tag on a line. [[word]] marks a tap-to-explain word; its meaning is in the Glossary table.
 // chapter1_en.ink (English) and chapter1_ar.ink (neutral-Arabic subtitles) follow this file line for line
 // (missing/11; the parity test in Story/Tests checks it).
@@ -25,19 +25,16 @@ EXTERNAL chose(knot)
 كانت تقول: الفنجان الأول للضيف، والتاني للحكي، والتالت للمحبة. تعالي كل يوم، وأنا بحكيلك. #abu_fadi
 -> END
 
-// [draft]
 === floor ===
 شوف هالبلاط! ستّي كانت تقول إنه أقدم من الحارة كلها. #salma
 كل بلاطة إلها حكاية. هون كسرت أول فنجان وأنا صغير، وستّك ما زعّلتني ولا بكلمة. #abu_fadi
 -> END
 
-// [draft]
 === chairs ===
 هاي طاولتي. من ثلاثين سنة وأنا بقعد عليها، مقابل الشبّاك. #abu_fadi
 خلص يا عمّو، من اليوم هاي الطاولة [[محجوزة]] إلك. #salma
 -> END
 
-// [draft]
 === dallahs ===
 بتلمع كأنها جديدة… ستّي كانت تلمّعها كل جمعة. #salma
 والدلّة الصغيرة؟ كانت إلها لحالها. ما حدا يصبّ منها غيرها. #abu_fadi
@@ -47,17 +44,15 @@ EXTERNAL chose(knot)
     بكرا… إذا طلع الفنجان [[مزبوط]]. #abu_fadi
 - -> END
 
-// [draft]
 === lights ===
 ضوّت القهوة! حتى الجيران طلّوا من الشبابيك. #salma
 القهوة اللي ضوّها مولّع ما بتضل فاضية. بكرا بتشوفي. #abu_fadi
 -> END
 
-// [draft]
 === counter ===
 تفضّل يا عمّو أبو فادي. أول فنجان من الدلّة الصغيرة. #salma
 هيك كانت تعملها… بالهيل، ومن غير استعجال. الله يرحمها. #abu_fadi
-// [draft] The callback for the choice in dallahs (STORY_BIBLE.md section 8).
+// The callback for the choice in dallahs (STORY_BIBLE.md section 8).
 {
 - chose("dallahs") == "ask":
     سألتيني عنها، وأنا ما جاوبت. هي هيك كانت: تحكي بالفنجان أكتر من الكلام. #abu_fadi
@@ -115,7 +110,7 @@ EXTERNAL chose(knot)
 سلمى يا روحي… إذا لقيتي الرسالة، اعملي فنجانين. واحد إلك، وواحد للانا. #teta
 -> END
 
-// [draft] Lana speaks Najdi (CLAUDE.md).
+// Lana speaks Najdi (CLAUDE.md).
 === lana_notify ===
 وصلت عمّان. أمي تقول ما تبغى تشوف خالتي… وأنا أبغى أعرف ليش. #lana
 -> END

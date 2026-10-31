@@ -1,11 +1,10 @@
 // Chapter 8 in neutral Arabic, shown as subtitles under the dialect lines when the player turns them on
-// (COMPLETE_SPEC.md section 4). [draft] Written by Claude Code from chapter8.ink; it follows that file line for line
+// (COMPLETE_SPEC.md section 4). Written by Claude Code from chapter8.ink; it follows that file line for line
 // (the parity test in Story/Tests checks it). Change the dialect file first, then this one. No glossary marks: the
 // subtitle is the explanation.
 
 EXTERNAL chose(knot)
 
-// [draft]
 === accounts_desk ===
 حسبتها ثلاث مرات على المكتب الجديد. يحتاج السقف إلى ضعف ما معنا. #lana #thinking
 السقف متعب يا بنات. الأخشاب عطشى، ومع أول شتاء سيتسرّب الماء على المنضدة. #karim
@@ -14,7 +13,6 @@ EXTERNAL chose(knot)
 سأبدأ غدًا، والحساب فيما بعد. لم تكن الحاجّة تترك سقفًا ينتظر المال. #karim
 -> END
 
-// [draft]
 === roof_repair ===
 انتهى السقف. صادقت الأخشاب الجديدة القديمة، ولم يعد الماء يتسرّب. #karim #smile
 مبارك السقف يا جماعة! الحساب كله عليّ اليوم… اعتبروه استثمارًا في الحيّ. #faris #smile
@@ -23,7 +21,7 @@ EXTERNAL chose(knot)
 سؤال صغير فقط: الكنافة… لماذا ليست في القائمة؟ #faris
 -> END
 
-// [draft] The choice c8_offer, saved under this knot (see chapter8.ink).
+// The choice c8_offer, saved under this knot (see chapter8.ink).
 === faris_table ===
 دعوني أكن صريحًا معكم: أنا فارس. العلامة التجارية الموجودة في كل مركز تجاري في عمّان لأبي. #faris
 ولديّ عرض لشراء المبنى كله. سعر ممتاز، نقدًا، وتبقى اللافتة كما هي. #faris
@@ -35,7 +33,6 @@ EXTERNAL chose(knot)
 - ترك فارس ورقة صغيرة عليها رقم. ولم ترفع لانا عينيها عنها. #sys
 -> END
 
-// [draft]
 === family_photos ===
 يا سلمى، اسمعيني فقط. بماله نصلح كل شيء، ونبدأ في مكان آخر. #lana #thinking
 في مكان آخر؟ انظري إلى الصورة يا لانا: أمّي وأمّك على الكرسي نفسه، هنا. #salma #angry
@@ -44,7 +41,6 @@ EXTERNAL chose(knot)
 لا تسكتي. يكفيني سكوت أمّي. #lana #sad
 -> END
 
-// [draft]
 === knafeh_sign ===
 هنا كانت لوحة الكنافة. كنت آتي مع أبي كل جمعة، وأنا صغير. #faris
 ولماذا أُنزلت اللوحة؟ #salma
@@ -53,7 +49,6 @@ EXTERNAL chose(knot)
 هذا ما لا أعرفه. كلما سألت أبي يقول: كانت صفقة. ثم يسكت. #faris #thinking
 -> END
 
-// [draft]
 === decision_table ===
 قبل أن تجلس، عدّلت لانا الصورة التي عدّلتها سلمى مرتين. #sys
 حسنًا. ماذا نقرّر؟ #lana
@@ -64,20 +59,18 @@ EXTERNAL chose(knot)
 
 // Memory 8 (choose): young Teta haggles at the souk for her first dallah, 1974.
 
-// [draft]
 === m8_lead ===
 جدّتكم؟ لم تدفع أول سعر قطّ. ولا مرة في حياتها. #abu_fadi #smile
 اشترت أول دلّة لها من وسط البلد قبل أن تفتح بشهر. حكت لي القصة مئة مرة… وفي كل مرة ينزل السعر. #abu_fadi
 -> END
 
-// [draft]
 === m8_intro ===
 يا عمّ، هذه الدلّة التي في الواجهة… بكم؟ #teta_young
 نحاس أصلي، صنعة يد. بعشر ليرات يا سيدتي، ولا قرش أقل. #seller_1974
 ولا قرش؟ حسنًا. لنتحدّث. #teta_young #smile
 -> END
 
-// [draft] The timed conversation: six rounds, each a good and a weak answer.
+// The timed conversation: six rounds, each a good and a weak answer.
 === m8_game ===
 انظري إلى النقش يا سيدتي. لا مثيل لها في السوق كله. #seller_1974
 * [«النقش جميل… لكن منقارها مائل قليلًا.» #good]
@@ -117,24 +110,20 @@ EXTERNAL chose(knot)
 -
 -> END
 
-// [draft]
 === m8_perfect ===
 والله لم أخفّض لأحد بهذا القدر في حياتي. مباركة الدلّة يا سيدتي. #seller_1974
 -> END
 
-// [draft]
 === m8_ok ===
 أنتِ صعبة يا سيدتي… أعان الله زوجك. #seller_1974 #smile
 -> END
 
-// [draft]
 === m8_outro ===
 أول دلّة لي. منها سأصبّ لأول زبون… ولأولادي، إن رزقني الله. #teta_young #smile
 وإن رزقكِ، فلا تعلّميهم المساومة. لقد أفسدتِ سوقي. #seller_1974
 لا تخف. سأعلّمهم شيئًا أصعب: أن هناك أشياء لا ثمن لها. #teta_young
 -> END
 
-// [draft]
 === m8_return ===
 «هناك أشياء لا ثمن لها»… لكن جدّتي نفسها باعت شيئًا لأبي فارس. #lana #thinking
 يا عمّ أبو فادي… هل تعرف ماذا باعت؟ #salma

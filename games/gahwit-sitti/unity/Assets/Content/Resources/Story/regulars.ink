@@ -1,6 +1,6 @@
 // The regulars' friendship scenes: 12 regulars × friendship levels 3, 6 and 10 (STORY_BIBLE.md section 9;
 // SYSTEMS_B.md section 3). The game plays "<regular>_<level>" when a regular reaches that level (CustomerRules.StoryDue).
-// [draft] Written by Claude Code; every knot waits for the Amman dialect writer (and the Najdi writer for Lana's lines).
+// Written by Claude Code; every knot waits for the Amman dialect writer (and the Najdi writer for Lana's lines).
 // Level 3 scenes can play from chapter 1, so they mention no later plot. Level 6 assumes chapter 4 or later, level 10
 // chapter 7 or later. Faris's 6 and 10 wait for chapters 9 and 10 (chapters.json storyFromChapter). Each level 10 scene
 // ends with the regular's decor gift. The speaker is the first tag on a line; [[word]] marks a tap-to-explain word whose
@@ -10,7 +10,7 @@
 // regular scene reads one yet.
 EXTERNAL chose(knot)
 
-// [draft] Level 3: his lost love. Copied from chapter1.ink, where it was first written.
+// Level 3: his lost love. Copied from chapter1.ink, where it was first written.
 === abu_fadi_3 ===
 بتعرفي يا سلمى… أنا كمان كان إلي حدا بستنّاه [[هون]]. #abu_fadi
 كل جمعة كانت تقعد جنب الشبّاك، وتطلب فنجانها سادة، وما تحكي ولا كلمة. #abu_fadi
@@ -18,7 +18,7 @@ EXTERNAL chose(knot)
 سافرت سنة 76. وأنا ضلّيت أجي كل جمعة، يمكن ترجع. ستّك كانت تعرف، وما حكت لحدا. #abu_fadi
 -> END
 
-// [draft] Level 6: the photo he never shows anyone.
+// Level 6: the photo he never shows anyone.
 === abu_fadi_6 ===
 تعالي يا سلمى، اقعدي. بدّي [[أفرجيك]] إشي عمري ما فرّجته لحدا. #abu_fadi
 طلّع أبو فادي من جيبته صورة صغيرة، أبيض وأسود: صبيّة قاعدة جنب هالشبّاك، وعيونها عالشارع. #sys
@@ -26,7 +26,7 @@ EXTERNAL chose(knot)
 الصورة بتكفّي اليوم يا بنتي. الاسم… خلّيه لبعدين. #abu_fadi #sad
 -> END
 
-// [draft] Level 10: her name, and that Teta knew. Gives the window clock.
+// Level 10: her name, and that Teta knew. Gives the window clock.
 === abu_fadi_10 ===
 اسمها نجوى. خمسين سنة وأنا ما قلته بصوت عالي. #abu_fadi
 نجوى… وستّي كانت تعرف؟ #salma #surprised
@@ -34,7 +34,7 @@ EXTERNAL chose(knot)
 خدي هالساعة يا بنتي، ساعة الشبّاك. خمسين سنة وأنا أعدّ عليها دقايق الجمعة… بس [[هسّا]] ما عاد بدّي أعدّ. #abu_fadi #smile
 -> END
 
-// [draft] Level 3: Tawjihi in three months; home is loud.
+// Level 3: Tawjihi in three months; home is loud.
 === tala_3 ===
 بتسمحيلي أدرس [[هون]]؟ بالبيت إخواني الأربعة بيصرّخوا، وما بقدر أركّز. #tala
 أكيد! شو بتدرسي؟ #salma
@@ -42,7 +42,7 @@ EXTERNAL chose(knot)
 خلص، الزاوية الهادية إلك. وكل ما تخلّصي فصل، كرة معمول على حسابي. #salma #smile
 -> END
 
-// [draft] Level 6: she fails a mock exam and wants to quit.
+// Level 6: she fails a mock exam and wants to quit.
 === tala_6 ===
 تالا قاعدة بالزاوية، وقدّامها ورقة امتحان عليها علامة حمرا كبيرة. #sys
 رسبت بالتجريبي. خلص، أنا مش إلها. بدّي أترك المدرسة. #tala #sad
@@ -50,14 +50,14 @@ EXTERNAL chose(knot)
 التجريبي عشان تعرفي وين الغلط، مش عشان تتركي. يلّا، من أول سؤال. #salma
 -> END
 
-// [draft] Level 10: results day; she passes and wants pharmacy. Gives her study lamp.
+// Level 10: results day; she passes and wants pharmacy. Gives her study lamp.
 === tala_10 ===
 طلعت النتايج! نجحت، ومعدّلي بيدخّلني صيدلة! #tala #smile
 ألف مبروك يا تالا! لو ستّي هون، كانت وزّعت معمول عالحارة كلها. #salma #smile
 خدي لمبة الدراسة اللي سهرت عليها كل السنة. خلّيها بالزاوية، لأي حدا بعدي بدّو يدرس [[هون]]. #tala
 -> END
 
-// [draft] Level 3: a young widow who cooks for her son; cards by the till.
+// Level 3: a young widow who cooks for her son; cards by the till.
 === um_rami_3 ===
 صباح الخير يا سلمى. بتسمحيلي أحط كروتي جنب الصندوق؟ #um_rami
 كروت؟ شو بتشتغلي يا أم رامي؟ #salma
@@ -65,7 +65,7 @@ EXTERNAL chose(knot)
 حطّيهم قدّام، جنب الدلّة. وأول طلبية، من عندي. #salma #smile
 -> END
 
-// [draft] Level 6: her first catering order goes wrong; the cousins help.
+// Level 6: her first catering order goes wrong; the cousins help.
 === um_rami_6 ===
 خمسين صحن مقلوبة، والطنجرة الكبيرة احترقت، والعزومة بعد ساعتين! #um_rami #sad
 [[لا تحاتين]]! أنا أقطّع، وسلمى تطبخ، وإنتي بس قولي لنا وش نسوّي. #lana
@@ -74,7 +74,7 @@ EXTERNAL chose(knot)
 والله ما بنساها إلكم. لا أنا، ولا رامي. #um_rami #smile
 -> END
 
-// [draft] Level 10: the big order for the wedding. Gives her painted plate.
+// Level 10: the big order for the wedding. Gives her painted plate.
 === um_rami_10 ===
 سلمى! إجتني أكبر طلبية بحياتي: عرس الدكتورة هبة. ميتين صحن! #um_rami #surprised
 ميتين؟! يا أم رامي، هاد مش مطبخ بيت، هاد مطعم! #salma #surprised
@@ -82,7 +82,7 @@ EXTERNAL chose(knot)
 خدي هالصحن الفخّار المزخرف، أول إشي اشتريته من [[مصاري]] الطبخ. علّقيه عالحيط، عشان نتذكّر إنّا بدينا سوا. #um_rami #smile
 -> END
 
-// [draft] Level 3: his master built the counter in 1974.
+// Level 3: his master built the counter in 1974.
 === karim_3 ===
 هالكاونتر عمله معلّمي، الله يرحمه، سنة 74. أكتر من خمسين سنة، وما اشتكى ولا مرة. #karim
 يعني إنت بتعرف ستّي من زمان، عمّو كريم؟ #salma #surprised
@@ -90,7 +90,7 @@ EXTERNAL chose(knot)
 وكانت تقول: الخشب متل القهوة، بدّو صبر. ومعلّمي يضحك، لأنه هاد كلامه هو. #karim #smile
 -> END
 
-// [draft] Level 6: he never married; the workshop is his family.
+// Level 6: he never married; the workshop is his family.
 === karim_6 ===
 عم كريم، ليه ما تزوّجت؟ #lana
 تزوّجت الورشة. فيها خمس مناشير وتلات مطارق، وكلهم بيسمعوا الكلام. #karim #smile
@@ -99,7 +99,7 @@ EXTERNAL chose(knot)
 والكاونتر أكبرهم. وإنتو التنتين… صرتوا من العيلة كمان. #karim
 -> END
 
-// [draft] Level 10: a sign for a café in Riyadh, for the day it opens. Gives the sign.
+// Level 10: a sign for a café in Riyadh, for the day it opens. Gives the sign.
 === karim_10 ===
 يا لانا، كل يوم بتقولي إنه الرياض ما فيها قهوة متل هاي. #karim
 وأقولها بعد! وش فيه؟ #lana
@@ -107,7 +107,7 @@ EXTERNAL chose(knot)
 آرمة صغيرة من خشب الزيتون: «قهوة ستّي · الرياض». علّقيها هون لحد ما ييجي يومها. الخشب بيعرف قبل الناس. #karim #smile
 -> END
 
-// [draft] Level 3: she brags about her husband in the Gulf.
+// Level 3: she brags about her husband in the Gulf.
 === samira_3 ===
 جوزي بدبي يا سلمى. أكيد شفتيه هناك! الكل بيعرفه. #samira
 خالتو، دبي فيها تلات مليون إنسان. #salma
@@ -115,7 +115,7 @@ EXTERNAL chose(knot)
 هالسنة تأخّرت شوي… أكيد الإسوارة كبيرة، وما [[فاتت]] بالظرف. #samira #smile
 -> END
 
-// [draft] Level 6: he hasn't visited in two years; she admits it.
+// Level 6: he hasn't visited in two years; she admits it.
 === samira_6 ===
 سلمى، بدّك الصدق؟ جوزي إله سنتين ما إجا. ولا مرة. #samira #sad
 سنتين يا خالتو؟ وإنتِ كل يوم بتحكي عنه… #salma
@@ -123,7 +123,7 @@ EXTERNAL chose(knot)
 بس ولا كلمة لحدا! وحياة ولادي، إذا انحكت، بجيبلك عريس كل خميس. #samira #smile
 -> END
 
-// [draft] Level 10: he comes home for the wedding; she is quiet for once. Gives her embroidered cushion.
+// Level 10: he comes home for the wedding; she is quiet for once. Gives her embroidered cushion.
 === samira_10 ===
 [[فاتت]] خالتو سميرة ساكتة، ووراها رجّال شعره أبيض، وبإيده شنطة سفر. #sys
 هاد… جوزي. إجا عشان عرس الدكتورة هبة. قال: عرس إنتِ مرتّبيته، ما بفوّته. #samira
@@ -132,7 +132,7 @@ EXTERNAL chose(knot)
 خدي هالمخدّة المطرّزة. طرّزتها بالليالي اللي كنت أستنّاه فيها، و[[هسّا]] صار في حدا يقعد جنبي. #samira #smile
 -> END
 
-// [draft] Level 3: night shifts; the café stays open late for her.
+// Level 3: night shifts; the café stays open late for her.
 === dr_hiba_3 ===
 الساعة تنتين بالليل، وإنتِ لسّا فاتحة؟ الله يخلّيكِ. #dr_hiba #surprised
 ولمين بدّي أسكّر؟ إنتِ كل ليلة بتطلّي علينا بعد المستشفى. #salma
@@ -140,7 +140,7 @@ EXTERNAL chose(knot)
 خلص، الضو بيضل مولّع. إلك، ولكل اللي بيشتغلوا والناس نايمة. #salma #smile
 -> END
 
-// [draft] Level 6: at 2 am she meets the pharmacist from chapter 2.
+// Level 6: at 2 am she meets the pharmacist from chapter 2.
 === dr_hiba_6 ===
 الساعة تنتين بالليل. عالطاولة اللي جنب د. هبة، قاعد الصيدلي اللي جابته خالتو سميرة. #sys
 سلمى، مين هاد؟ بيعرف كل دوا بكتبه، وبيقرا خطّي كمان! #dr_hiba #surprised
@@ -148,7 +148,7 @@ EXTERNAL chose(knot)
 إذا ناوي على خير، بيعرف وين بيت أهلي. لحد [[هسّا]]… ولا كلمة لخالتك سميرة. #dr_hiba #smile
 -> END
 
-// [draft] Level 10: she asks the cousins to cater her wedding. Gives a night jasmine.
+// Level 10: she asks the cousins to cater her wedding. Gives a night jasmine.
 === dr_hiba_10 ===
 هاني إجا مع أهله لبيتنا، وأبوي وافق. قرينا الفاتحة يوم الجمعة! #dr_hiba #smile
 مبروك يا دكتورة! والله الخبر أحلى من القهوة. #salma #surprised
@@ -157,7 +157,7 @@ EXTERNAL chose(knot)
 التنتين، متلكم. وخدي شتلة [[مسك الليل]] هاي من جنينة أمي: بتفتّح بالليل، متلي ومتل قهوتكم. #dr_hiba #smile
 -> END
 
-// [draft] Level 3: he busks with an oud outside; Salma invites him in.
+// Level 3: he busks with an oud outside; Salma invites him in.
 === yazan_3 ===
 برّا عالرصيف، يزن بيعزف عالعود، وقدّامه علبة فيها كم قرش. #sys
 يزن! ليش دايمًا برّا بالبرد؟ [[فوت]] لجوّا واعزف عنّا. #salma
@@ -166,7 +166,7 @@ EXTERNAL chose(knot)
 عيني إلك. بس انتبهي، رح أعزف لحد ما تطرديني. #yazan #smile
 -> END
 
-// [draft] Level 6: he plays Teta's radio song (memory 7 comes later and plays it again).
+// Level 6: he plays Teta's radio song (memory 7 comes later and plays it again).
 === yazan_6 ===
 يزن [[بيدوزن]] العود، وبعدين بيعزف لحن قديم وبطيء. #sys
 استنّى… هاي الغنية! ستّي كانت تغنّيها كل جمعة مع الراديو. #salma #surprised
@@ -175,7 +175,7 @@ EXTERNAL chose(knot)
 خلص، صارت غنية القهوة. كل ما تطلبوها، بعزفها. #yazan #smile
 -> END
 
-// [draft] Level 10: he will play the wedding. Gives his old oud.
+// Level 10: he will play the wedding. Gives his old oud.
 === yazan_10 ===
 سلمى! عرس الدكتورة هبة… طلبوني أعزف فيه. أول عرس إلي، وبأجرة كمان! #yazan #smile
 من الرصيف لعرس؟ يا يزن، إنت صرت فنّان! #salma #smile
@@ -183,7 +183,7 @@ EXTERNAL chose(knot)
 خدي عودي القديم، اللي كنت أعزف عليه برّا بالبرد. علّقيه عالحيط، يمكن حدا تاني يلاقي حاله فيه. #yazan
 -> END
 
-// [draft] Level 3: newlyweds, arguing gently over money. One tag for the couple; the line names who speaks.
+// Level 3: newlyweds, arguing gently over money. One tag for the couple; the line names who speaks.
 === sara_noor_3 ===
 سارة ونور، عرسان جداد، قاعدين عطاولة وحدة وبيحسبوا على [[محرمة]]. #sys
 سارة: إذا ما اشترينا الكنباية [[هسّا]]، رح نضل قاعدين عالأرض لآخر الشهر. #sara_noor
@@ -191,7 +191,7 @@ EXTERNAL chose(knot)
 فنجانين على حسابي. وبس تخلّصوا الحساب، احكولي مين ربح. #salma #smile
 -> END
 
-// [draft] Level 6: they're expecting a baby girl.
+// Level 6: they're expecting a baby girl.
 === sara_noor_6 ===
 سارة: عنّا خبر… بس لسّا ما حكينا لحدا. #sara_noor #smile
 نور: يعني حكينا لنص الحارة. بس إنتو أول ناس بالقهوة. #sara_noor
@@ -200,7 +200,7 @@ EXTERNAL chose(knot)
 أخيرًا، [[هوشة]] على فلوس تستاهل. #lana #smile
 -> END
 
-// [draft] Level 10: the café is the first place they'll bring her. Gives the little wooden chair.
+// Level 10: the café is the first place they'll bring her. Gives the little wooden chair.
 === sara_noor_10 ===
 سارة: قرّرنا. أول مشوار إلها برّا البيت، رح يكون لهون. #sara_noor #smile
 نور: وبنقعّدها على نفس الطاولة اللي كنّا نتخانق عليها عالمصاري. #sara_noor
@@ -208,7 +208,7 @@ EXTERNAL chose(knot)
 سارة: لسّا ما اتفقنا… بس اتفقنا على هالكرسي الخشب الصغير. خلّيه هون يا سلمى، يستنّاها. #sara_noor
 -> END
 
-// [draft] Level 3: he apologises for a letter he never delivered.
+// Level 3: he apologises for a letter he never delivered.
 === postman_3 ===
 يا بنتي، بدّي أعتذر منك… وما بعرف من وين أبدا. #postman
 تعتذر؟ عن شو يا عمّو؟ #salma #surprised
@@ -216,7 +216,7 @@ EXTERNAL chose(knot)
 ضلّت على قلبي متل الحجر. عطيني وقت يا بنتي… اليوم بدّي فنجان وبس. #postman
 -> END
 
-// [draft] Level 6: the letter was to Teta, from Riyadh, 2007, from Nawal.
+// Level 6: the letter was to Teta, from Riyadh, 2007, from Nawal.
 === postman_6 ===
 الرسالة اللي حكيتلك عنها… كانت لستّك. من الرياض، سنة 2007. #postman
 من الرياض؟ سنة 2007؟ #salma #thinking
@@ -225,7 +225,7 @@ EXTERNAL chose(knot)
 لقيتها ورا خزانة الفرز لما سكّروا المكتب القديم. إجيت عالباب تلات مرات، وما قدرت أدقّ. #postman #sad
 -> END
 
-// [draft] Level 10: he hands it over; Lana reads her mother's apology. Gives a wooden letterbox.
+// Level 10: he hands it over; Lana reads her mother's apology. Gives a wooden letterbox.
 === postman_10 ===
 يا لانا، هاي إلك هسّا. كان لازم توصل من زمان… سامحيني. #postman
 لانا بتفتح الظرف. خطّ أمّها، والتاريخ: الرياض، 2007. #sys
@@ -234,7 +234,7 @@ EXTERNAL chose(knot)
 ويا سلمى، هاد صندوق بريد خشب للباب. من اليوم، ولا رسالة بتضيع عن هالقهوة. #postman
 -> END
 
-// [draft] Level 3: she taught Rana at school and asks about her.
+// Level 3: she taught Rana at school and asks about her.
 === mrs_odeh_3 ===
 إنتِ بنت رنا؟ والله نفس العيون. أنا علّمت إمّك عربي، بصف التاسع. #mrs_odeh #smile
 الست عودة؟ ماما بتذكرك كتير. #salma #surprised
@@ -243,7 +243,7 @@ EXTERNAL chose(knot)
 سلّميلي عليها، وقوليلها: الست عودة لسّا بتستنّى الواجب. #mrs_odeh #smile
 -> END
 
-// [draft] Level 6: Rana was her best pupil, and her angriest.
+// Level 6: Rana was her best pupil, and her angriest.
 === mrs_odeh_6 ===
 إمّك كانت أشطر بنت عندي… وأعصب بنت كمان. #mrs_odeh
 ماما؟ عصبية؟ ماما لما تزعل بتسكت. #salma #surprised
@@ -252,7 +252,7 @@ EXTERNAL chose(knot)
 اللي بيسكت هيك يا بنات، مش زعلان. موجوع. #mrs_odeh #sad
 -> END
 
-// [draft] Level 10: she calls Rana and asks her to the wedding. Gives her school bell.
+// Level 10: she calls Rana and asks her to the wedding. Gives her school bell.
 === mrs_odeh_10 ===
 الست عودة طلّعت تلفونها، ودقّت رقم بتحفظه من غير ما تدوّر عليه. #sys
 رنا؟ أنا الست عودة. في عرس بحارة إمّك، وبدّي إياكِ تقعدي جنبي. #mrs_odeh
@@ -261,7 +261,7 @@ EXTERNAL chose(knot)
 وهاد إلك يا سلمى: جرس المدرسة النحاس، رنّيته تلاتين سنة. علّقيه جنب الباب… يمكن يوم يرنّ لرنا. #mrs_odeh
 -> END
 
-// [draft] Level 3: a "normal customer" who knows too much about the menu. Plays before chapter 8.
+// Level 3: a "normal customer" who knows too much about the menu. Plays before chapter 8.
 === faris_3 ===
 الهيل عندكم فوق الستاندرد بشوي. اختيار جريء… بحترم الكونسبت. #faris
 إنت شو، مفتّش صحة؟ #salma #surprised
@@ -270,7 +270,7 @@ EXTERNAL chose(knot)
 …وإنت كيف بتعرف شو كان زمان؟ #salma #thinking
 -> END
 
-// [draft] Level 6: he grew up on Teta's knafeh. Waits for chapter 9 (storyFromChapter), after his offer in chapter 8.
+// Level 6: he grew up on Teta's knafeh. Waits for chapter 9 (storyFromChapter), after his offer in chapter 8.
 === faris_6 ===
 قلتلكم إنّي كنت أجي مع أبوي كل جمعة. بس ما حكيتلكم شو كنت آكل. #faris
 ستّكم كانت تعطيني قطعة الكنافة اللي عالطرف، المقرمشة، وتقلّي: هاي للشاطرين بس. #faris #smile
@@ -279,7 +279,7 @@ EXTERNAL chose(knot)
 يمكن الطعم ما كان بالوصفة يا فارس. كان بالإيد اللي بتعطيك القطعة. #salma
 -> END
 
-// [draft] Level 10: after the page, he offers beans for a Riyadh café. Waits for chapter 10. Gives his father's first grinder.
+// Level 10: after the page, he offers beans for a Riyadh café. Waits for chapter 10. Gives his father's first grinder.
 === faris_10 ===
 عرفت شو كلّفت صفقة أبوي ستّكم. تلاتطعشر سنة وهي تدفع، فنجان ورا فنجان. #faris #sad
 وش تبي تقول يا فارس؟ #lana
@@ -288,7 +288,7 @@ EXTERNAL chose(knot)
 اعتذار. وخدي هاي، مطحنة أبوي الأولى، من أول دكّانة فتحها. مكانها هون، مش عنّا. #faris #smile
 -> END
 
-// [draft] Level 3: a retired woman from Jeddah, revisiting Amman. Hejazi, as in chapter 5, with her Amman years in it.
+// Level 3: a retired woman from Jeddah, revisiting Amman. Hejazi, as in chapter 5, with her Amman years in it.
 === tourist_3 ===
 ممكن أجلس جنب الشبّاك؟ وفنجان سادة، لو سمحتي. #tourist
 أكيد. أول مرة ضيفة من جدّة بتطلب قهوتها سادة. #salma #smile
@@ -296,7 +296,7 @@ EXTERNAL chose(knot)
 القهوة عندكم حلوة [[مرّة]]… زي ما كانت. #tourist #thinking
 -> END
 
-// [draft] Level 6: she asks about a man who used to wait at the window.
+// Level 6: she asks about a man who used to wait at the window.
 === tourist_6 ===
 يا بنتي، كان فيه رجّال يقعد هنا كل جمعة، قدّام الشبّاك… لسّا يجي؟ #tourist
 عمّو أبو فادي؟ بييجي كل يوم! هاي طاولته، [[محجوزة]] إله. #salma
@@ -305,7 +305,7 @@ EXTERNAL chose(knot)
 ما بعرف… بس صار عندي سؤال لعمّو. #salma #thinking
 -> END
 
-// [draft] Level 10: she leaves a letter for Abu Fadi (season 2 teaser). Gives a small roshan.
+// Level 10: she leaves a letter for Abu Fadi (season 2 teaser). Gives a small roshan.
 === tourist_10 ===
 بكرة راجعة جدّة. بس قبل ما أمشي… هادي الرسالة لأبو فادي. #tourist
 ليش ما بتعطيه إياها بإيدك؟ هو جاي بعد شوي! #salma #surprised

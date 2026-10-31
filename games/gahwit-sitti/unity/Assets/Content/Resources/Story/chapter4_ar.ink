@@ -1,11 +1,10 @@
 // Chapter 4 in neutral Arabic, shown as subtitles under the dialect lines when the player turns them on
-// (COMPLETE_SPEC.md section 4). [draft] Written by Claude Code from chapter4.ink; it follows that file line for line
+// (COMPLETE_SPEC.md section 4). Written by Claude Code from chapter4.ink; it follows that file line for line
 // (the parity test in Story/Tests checks it). Change the dialect file first, then this one. No glossary marks: the
 // subtitle is the explanation.
 
 EXTERNAL chose(knot)
 
-// [draft]
 === workbench ===
 يا عمّ كريم، كم تريد مقابل العمل كلّه؟ قل رقمًا ولا تستحِ. #salma
 ولا قرش. هذا مقهى الحاجّة أم خليل. #karim
@@ -14,7 +13,6 @@ EXTERNAL chose(knot)
 حسنًا، من اليوم طبقك وفنجانك علينا. #salma #smile
 -> END
 
-// [draft]
 === dallah_shelf ===
 واحدة، اثنتان، ثلاث… ستّ. كانت سبعًا! #salma #surprised
 صنعته مثل رفّ معلّمي القديم، لسبع دلال. وآخر مكان، الصغير، فارغ. #karim
@@ -23,7 +21,6 @@ EXTERNAL chose(knot)
 لا يوجد غيرها يا لانا. هذه التي لم يكن يصبّ منها أحد غير جدّتي. #salma
 -> END
 
-// [draft]
 === counter_repair ===
 مهلًا يا مديرتي… هناك شيء محفور تحت المنضدة. #karim #surprised
 «صبحي، 1974». هذه يد معلّمي. أعرفها من بين مئة يد. #karim
@@ -32,7 +29,6 @@ EXTERNAL chose(knot)
 الخشب يتذكّر من عامله جيدًا. خمسون سنة وهو يحفظ كلماتها. #karim
 -> END
 
-// [draft]
 === small_dallah ===
 خذي، لمّعتها. كانت عندي منذ أول ليلة. #lana
 الدلّة الصغيرة! يا عمّ، انظر، عادت. #salma #surprised
@@ -46,7 +42,6 @@ EXTERNAL chose(knot)
 لهذا أخذتها. أردت أن أتذكّر يدها. #lana #sad
 -> END
 
-// [draft]
 === frames ===
 مغلّف بخطّ جدّتي: «يوم الافتتاح، 1974. لا ترموها.» وفي داخله قطع صورة. #salma #surprised
 يا للفضيحة! أقسم بحياة أولادي، أنا من مزّقتها! #samira #surprised
@@ -55,20 +50,17 @@ EXTERNAL chose(knot)
 سنعيدها كما كانت يا خالتي. حتى العبوس. #salma #smile
 -> END
 
-// [draft]
 === photo_frame ===
 الإطار جاهز، والزجاج جديد. لا ينقصه إلا الصورة. #karim
 نرتّبها معًا؟ عليّ الأطراف، وعليكِ الوجوه. #lana
 اتفقنا. هيّا نرى من كان هنا في أول يوم. #salma #smile
 -> END
 
-// [draft]
 === m4_lead ===
 أترين هذه اليد التي تمسك فنجانًا؟ هذه يدي. كنت أنا أيضًا في الصورة. #abu_fadi #smile
 وكان معلّمي خلف الكاميرا. كان يقول: «لا يتحرّك أحد، الصورة تعيش أطول منّا». #karim
 -> END
 
-// [draft]
 === m4_intro ===
 ارجعوا إلى الوراء قليلًا يا جماعة. أريد أن يظهر الخشب كله. #karim_master_1974
 يا معلّم صبحي، صوّر الناس، لا الخشب! #teta_young #smile
@@ -77,24 +69,20 @@ EXTERNAL chose(knot)
 يا سميرة، ابتسمي للمعلّم، رضي الله عنكِ. #samira_mother_1974
 -> END
 
-// [draft]
 === m4_perfect ===
 كل وجه في مكانه، ولم يرمش أحد. هذه صورة ستعيش. #karim_master_1974
 -> END
 
-// [draft]
 === m4_ok ===
 لا يهمّ إن رمش أحد. المهمّ أننا كلنا فيها. #teta_young
 -> END
 
-// [draft]
 === m4_outro ===
 وأنت يا معلّم؟ أنت من صنع هذا الخشب كله، وليس لك مكان في الصورة؟ #teta_young
 من يصوّر لا يظهر في الصورة يا سيدتي. لكني سأصوّر عملي وحده، لنفسي. #karim_master_1974
 صوّر صبحي المنضدة وحدها، وعلّق الصورة في ورشته. وبعد سنين، تعلّم الصنعة تحتها صبيّ اسمه كريم. #sys
 -> END
 
-// [draft]
 === m4_return ===
 صورة المنضدة ما زالت عندي في الورشة. كبرت وأنا أنظر إليها. #karim
 وهذه أنا، انظروا! عابسة كما قلت لكم. #samira #smile

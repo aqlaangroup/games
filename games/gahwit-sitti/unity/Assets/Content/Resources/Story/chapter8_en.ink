@@ -1,10 +1,9 @@
-// Chapter 8: Faris's offer, in English. [draft] Translated by Claude Code from chapter8.ink; it follows that file line
+// Chapter 8: Faris's offer, in English. Translated by Claude Code from chapter8.ink; it follows that file line
 // for line (same knots, lines, speakers, expressions and choice ids; the parity test in Story/Tests checks it). Change
 // the dialect file first, then this one. [[word]] marks a tap-to-explain word; its English meaning is in the Glossary table.
 
 EXTERNAL chose(knot)
 
-// [draft]
 === accounts_desk ===
 I've done the sums three times at the new desk. The roof needs twice what we've got. #lana #thinking
 The roof's worn out, girls. The beams are thirsty, and the first winter rain will drip right onto the counter. #karim
@@ -13,7 +12,6 @@ At least the desk doesn't leak. #lana #smile
 I'll start tomorrow. We'll settle up later. The [[Hajjeh]] never made a roof wait for money. #karim
 -> END
 
-// [draft]
 === roof_repair ===
 The roof's done. The new beams have made friends with the old ones, and the leak is gone. #karim #smile
 Congratulations on the roof, everyone! Today everything's on me… call it an investment in the neighbourhood. #faris #smile
@@ -22,7 +20,7 @@ He's a generous customer, Lana. What's wrong with that? #salma
 Just one small question: the knafeh… why isn't it on the menu? #faris
 -> END
 
-// [draft] The choice c8_offer, saved under this knot (see chapter8.ink).
+// The choice c8_offer, saved under this knot (see chapter8.ink).
 === faris_table ===
 Let me be transparent with you: I'm Faris. The brand you see in every mall in Amman is my father's. #faris
 And I have an offer for the whole building. A great price, cash, and the sign stays exactly as it is. #faris
@@ -34,7 +32,6 @@ So all those visits, you were studying the place? #lana #surprised
 - Faris left a small slip of paper with a number on it. Lana couldn't take her eyes off it. #sys
 -> END
 
-// [draft]
 === family_photos ===
 Salma, just hear me out. With his money we fix everything and start over somewhere else. #lana #thinking
 Somewhere else? Look at this photo, Lana: my mother and yours on the same chair. Right here. #salma #angry
@@ -43,7 +40,6 @@ Salma didn't answer. She hung the photo, straightened it, then straightened it a
 Don't go quiet on me. My mother's silence is enough. #lana #sad
 -> END
 
-// [draft]
 === knafeh_sign ===
 The knafeh board used to hang here. I came every Friday with my father when I was a boy. #faris
 So why did it come down? #salma
@@ -52,7 +48,6 @@ Teta made a deal? With your father? What did she sell? #lana #surprised
 That's what I don't know. Every time I ask, my father says: it was a deal. Then he goes quiet. #faris #thinking
 -> END
 
-// [draft]
 === decision_table ===
 Before she sat down, Lana straightened the photo Salma had straightened twice. #sys
 Right. So what do we decide? #lana
@@ -63,20 +58,18 @@ First time we've ever agreed on not agreeing. #salma #smile
 
 // Memory 8 (choose): young Teta haggles at the souk for her first dallah, 1974.
 
-// [draft]
 === m8_lead ===
 Your Teta? She never paid the first price. Not once in her life. #abu_fadi #smile
 She bought her first dallah downtown, a month before she opened. She told it a hundred times… and each time, the price dropped. #abu_fadi
 -> END
 
-// [draft]
 === m8_intro ===
 Uncle, that [[dallah]] in the window… how much? #teta_young
 Real copper, made by hand. Ten lira, ma'am, and not a piastre less. #seller_1974
 Not a piastre? All right. Let's talk. #teta_young #smile
 -> END
 
-// [draft] The timed conversation: six rounds, each a good and a weak answer.
+// The timed conversation: six rounds, each a good and a weak answer.
 === m8_game ===
 Look at that engraving, ma'am. There isn't another like it in the whole souk. #seller_1974
 * [“Lovely engraving… but the spout's a little crooked.” #good]
@@ -116,24 +109,20 @@ My last word? Nine lira. #seller_1974
 -
 -> END
 
-// [draft]
 === m8_perfect ===
 I swear I've never come down that far for anyone. Enjoy your dallah, ma'am. #seller_1974
 -> END
 
-// [draft]
 === m8_ok ===
 You drive a hard bargain, ma'am… God help your husband. #seller_1974 #smile
 -> END
 
-// [draft]
 === m8_outro ===
 My very first dallah. I'll pour from it for my first customer… and for my children, if God gives me any. #teta_young #smile
 And if He does, don't teach them to haggle. You've ruined my market. #seller_1974
 Don't worry. I'll teach them something harder: that some things have no price. #teta_young
 -> END
 
-// [draft]
 === m8_return ===
 “Some things have no price”… but Teta herself sold something to Faris's father. #lana #thinking
 Uncle Abu Fadi… do you know what she sold? #salma

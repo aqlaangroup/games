@@ -1,11 +1,10 @@
 // Chapter 9 in neutral Arabic, shown as subtitles under the dialect lines when the player turns them on
-// (COMPLETE_SPEC.md section 4). [draft] Written by Claude Code from chapter9.ink; it follows that file line for line
+// (COMPLETE_SPEC.md section 4). Written by Claude Code from chapter9.ink; it follows that file line for line
 // (the parity test in Story/Tests checks it). Change the dialect file first, then this one. No glossary marks: the
 // subtitle is the explanation.
 
 EXTERNAL chose(knot)
 
-// [draft]
 === recipe_shelf ===
 وضعت الدفتر على الرفّ، وعدت أنظر إلى مكان الصفحة المقطوعة. «كنافة أم خليل»… ولا شيء بعدها. #salma #thinking
 انظري إلى القطع: مستقيم، ومرتّب جدًّا. هذه لم تنقطع خطأً. #lana
@@ -13,7 +12,6 @@ EXTERNAL chose(knot)
 من يقطع صفحة هكذا لا يرميها. بل يخبّئها عند شخص يثق به. #lana
 -> END
 
-// [draft]
 === knafeh_station ===
 أول صينية من ركن الكنافة: الجبن مالح، وأسفلها محترق. #sys
 لا، لا، أكملوا. أنا أتفرّج فقط. #abu_fadi #smile
@@ -22,7 +20,6 @@ EXTERNAL chose(knot)
 إذن نعيدها غدًا. #salma #smile
 -> END
 
-// [draft]
 === abu_fadi_chair ===
 كرسيّك يا أبا فادي. شددت أرجله، ولم أغيّر ولا خشبة واحدة. الكرسي يعرف صاحبه. #karim
 قالت لي جدّتكم: حين تصير بنات البنات تحت سقف واحد… #abu_fadi #thinking
@@ -32,7 +29,6 @@ EXTERNAL chose(knot)
 غدًا صباحًا. أحضرا فنجانين، وتعاليا إلى النافذة. #abu_fadi
 -> END
 
-// [draft]
 === window_seat ===
 أخرج أبو فادي من جيبه ظرفًا قديمًا، ووضعه بينهما. #sys
 سنة 2006 أعطتني إياها كاملة. وسنة 2019 أخذتها ليلة واحدة، وأعادتها هكذا… قطعًا. #abu_fadi
@@ -42,7 +38,6 @@ EXTERNAL chose(knot)
 وعدتها يا ابنتي. #abu_fadi
 -> END
 
-// [draft]
 === book_case ===
 الدفاتر في الخزانة، والصفحة على الطاولة قطعًا قطعًا. اتّصلت لانا بأمّها. #sys
 يا أمّي، ردّي… أريد أن أسألكِ عن شيء واحد فقط. #lana
@@ -51,7 +46,7 @@ EXTERNAL chose(knot)
 حسنًا. نجمعها نحن، ونأخذها إليهما. #lana
 -> END
 
-// [draft] Faris's apology, with the callback for c8_offer (see chapter9.ink).
+// Faris's apology, with the callback for c8_offer (see chapter9.ink).
 === the_page ===
 قبل أن تجمعا الصفحة، دخل فارس. بلا بدلة، وبلا ابتسامة العمل. #sys
 {
@@ -68,20 +63,18 @@ EXTERNAL chose(knot)
 
 // Memory 9 (reassemble): the torn knafeh page; its back is letter_5.
 
-// [draft]
 === m9_lead ===
 أتعرفان من أول من ذاق هذه الكنافة؟ #abu_fadi #smile
 صيف 74. كنت جالسًا عند النافذة، وخرجت الرائحة إلى الشارع… #abu_fadi
 -> END
 
-// [draft]
 === m9_intro ===
 يا فادي! تعال وتذوّق، وقل لي الحقيقة. بلا مجاملة. #teta_young
 كنافة؟ في المقهى؟ منذ متى يا سيدة أم خليل؟ #fadi_young #surprised
 منذ اليوم. إن أعجبتك. #teta_young #smile
 -> END
 
-// [draft] The page's front, one strip per line in the right order.
+// The page's front, one strip per line in the right order.
 === m9_page ===
 كنافة أم خليل #letter
 رطل جبن نابلسي، يُنقع في الماء من الليل. #letter
@@ -92,31 +85,27 @@ EXTERNAL chose(knot)
 — أم خليل، صيف 74. والشاهد: فادي، أكل صحنين. #letter_signature
 -> END
 
-// [draft]
 === m9_perfect ===
 يا سيدة أم خليل… هذه ليست كنافة. هذا عيد. #fadi_young #surprised
 -> END
 
-// [draft]
 === m9_ok ===
 ينقصها قليل… لكننا سنصل. #teta_young #thinking
 -> END
 
-// [draft]
 === m9_outro ===
 اكتبي لي الوصفة يا سيدة أم خليل. أريد أن أصنعها لأمّي. #fadi_young
 الوصفة تُكتب في دفتري، وتبقى فيه. هذه لا تُباع ولا تُعطى. #teta_young #smile
 وبعد اثنتين وثلاثين سنة، قُطعت الصفحة من الدفتر. #sys
 -> END
 
-// [draft]
 === m9_return ===
 يا سلمى… على ظهر الصفحة كتابة. بخطّ جدّتي. #lana #surprised
 هذه ليست لي لأقرأها. سأشرب قهوتي في الخارج. #abu_fadi
 وضعتا الصفحة على المنضدة، قرب الدرج، وجلستا تقرآن ظهرها معًا. #sys
 -> END
 
-// [draft] Letter 5, the back of the page, to Rana and Nawal.
+// Letter 5, the back of the page, to Rana and Nawal.
 === letter_5 ===
 يا رنا ويا نوال، يا حبيبتيّ، #letter
 سنة 2006 غرقنا في الدين، وطلب أبو فارس كنافتي واسمها. #letter
@@ -128,12 +117,10 @@ EXTERNAL chose(knot)
 — أمّكما #letter_signature
 -> END
 
-// [draft]
 === voice_5 ===
 يا حبيبتيّ… إن قرأتماها، فخذاها إلى أمّيكما. أنا لم أستطع. #teta
 -> END
 
-// [draft]
 === notify_5 ===
 وصلتني الصورة يا لانا. عشرين سنة وأنا ساكتة… والآن حجزت إلى عمّان. #nawal
 -> END

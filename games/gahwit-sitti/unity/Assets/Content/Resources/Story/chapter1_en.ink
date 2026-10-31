@@ -1,4 +1,4 @@
-// Chapter 1: Homecoming, in English. [draft] Translated by Claude Code from chapter1.ink; it follows that file line
+// Chapter 1: Homecoming, in English. Translated by Claude Code from chapter1.ink; it follows that file line
 // for line (same knots, lines, speakers and choice ids; the parity test in Story/Tests checks it). Change the dialect
 // file first, then this one. [[word]] marks a tap-to-explain word; its English meaning is in the Glossary table.
 
@@ -19,19 +19,16 @@ Uncle Abu Fadi, tell me about her. I was away for so long. #salma
 She used to say: the first cup is for the guest, the second for talk, the third for love. Come every day, and I'll tell you. #abu_fadi
 -> END
 
-// [draft]
 === floor ===
 Look at these tiles! Teta used to say they're older than the whole neighbourhood. #salma
 Every tile has a story. I broke my first cup right here as a boy, and your Teta never said one harsh word. #abu_fadi
 -> END
 
-// [draft]
 === chairs ===
 This is my table. Thirty years I've sat here, facing the window. #abu_fadi
 That's settled, Uncle. From today, this table is reserved for you. #salma
 -> END
 
-// [draft]
 === dallahs ===
 They shine like new… Teta polished them every Friday. #salma
 And the little [[dallah]]? That one was hers alone. No one poured from it but her. #abu_fadi
@@ -41,13 +38,11 @@ And the little [[dallah]]? That one was hers alone. No one poured from it but he
     Tomorrow… if the cup comes out right. #abu_fadi
 - -> END
 
-// [draft]
 === lights ===
 The café's lit up! Even the neighbours are leaning out of their windows. #salma
 A café with its lights on never stays empty. You'll see tomorrow. #abu_fadi
 -> END
 
-// [draft]
 === counter ===
 Here you are, Uncle Abu Fadi. The first cup from the little dallah. #salma
 That's how she made it… with cardamom, and never in a hurry. God rest her soul. #abu_fadi

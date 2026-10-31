@@ -1,11 +1,10 @@
 // Chapter 6 in neutral Arabic, shown as subtitles under the dialect lines when the player turns them on
-// (COMPLETE_SPEC.md section 4). [draft] Written by Claude Code from chapter6.ink; it follows that file line for line
+// (COMPLETE_SPEC.md section 4). Written by Claude Code from chapter6.ink; it follows that file line for line
 // (the parity test in Story/Tests checks it). Change the dialect file first, then this one. No glossary marks: the
 // subtitle is the explanation.
 
 EXTERNAL chose(knot)
 
-// [draft]
 === rooftop_stairs ===
 يا يزن، العود لاحقًا. الصندوق أولًا، ثم تغنّي. #karim
 لكن اسمع هذا الدرج يا معلّم… لكل درجة نغمة. #yazan #smile
@@ -14,7 +13,6 @@ EXTERNAL chose(knot)
 يا يزن، أنت تعزف على الرصيف كل يوم. في ليلة الافتتاح، السطح لك. #salma #smile
 -> END
 
-// [draft]
 === rooftop_lights ===
 يا الله… من هنا تظهر عمّان كلها. الجبال كلها أضواء. #salma #surprised
 ما هذا المنظر؟ كأن البيوت تنزل من السماء. #lana #surprised
@@ -23,7 +21,6 @@ EXTERNAL chose(knot)
 حسنًا، لكن لا تبكي قبل أن نعلّق الأضواء. #lana #smile
 -> END
 
-// [draft]
 === new_sign ===
 في دبي كنّا نعقد اجتماعًا كاملًا من أجل اسم واحد… حسنًا، نسيت أنني عدت. #salma #smile
 أريد اسمًا يعرفه أهل الرياض أيضًا. #lana #thinking
@@ -32,7 +29,6 @@ EXTERNAL chose(knot)
 وحين تقولينها أنتِ، تصبح جدّتك. فالاسم لنا نحن الاثنتين. #salma #smile
 -> END
 
-// [draft]
 === invitations ===
 كتبتِ دعوة لكل بيت في الحيّ… ولمن هذه الأخيرة؟ #lana
 لأمّي. #salma #sad
@@ -41,7 +37,6 @@ EXTERNAL chose(knot)
 ربما هكذا تبدأ الأشياء… بنظرة. #salma
 -> END
 
-// [draft]
 === flowers ===
 وصل ورد أبيض كثير، وبين الورد أغصان ريحان. ولا توجد أيّ بطاقة. #sys
 بلا اسم؟ من يرسل وردًا ولا يكتب اسمه؟ #lana #surprised
@@ -50,7 +45,6 @@ EXTERNAL chose(knot)
 لم تأتِ… لكن رائحتها أتت. هذه خطوة يا ابنتي. #abu_fadi
 -> END
 
-// [draft]
 === opening_night ===
 المقهى ممتلئ عن آخره، والسطح أيضًا. حتى الدرج جلس عليه الناس. #sys
 {
@@ -64,14 +58,12 @@ EXTERNAL chose(knot)
 تنظر سلمى إلى الباب كل قليل. الكرسي الذي خلف المنضدة ما زال فارغًا. #sys
 -> END
 
-// [draft]
 === m6_lead ===
 هذا السطح شهد عرسًا قبل الليلة. عرس أمّي، سنة 74. #samira
 عرس أمّك؟ لكنكِ كنتِ موجودة سنة 74! #salma #surprised
 توفّي أبي، رحمه الله، وأنا صغيرة. وفي تلك السنة تزوّجت أمّي من جديد… وخاطت جدّتكما فستانها. #samira
 -> END
 
-// [draft]
 === m6_intro ===
 يا أم خليل، سيتكلّم الناس. أرملة وتلبس الأبيض؟ #samira_mother_1974
 دعيهم يتكلّمون. العروس عروس، في المرة الأولى أو الثانية. #teta_young
@@ -79,24 +71,20 @@ EXTERNAL chose(knot)
 الخطّ مرسوم بالطباشير. الإبرة تمشي خلفه، لا أمامه. #teta_young
 -> END
 
-// [draft]
 === m6_perfect ===
 ولا غرزة خرجت عن الخطّ. هكذا يُخاط فستان العمر. #teta_young #smile
 -> END
 
-// [draft]
 === m6_ok ===
 غرزة عوجاء هنا وهناك… لن يراها أحد. العريس لن يرى إلا العروس. #teta_young #smile
 -> END
 
-// [draft]
 === m6_outro ===
 والله يا أم خليل… لم أظنّ أنني سألبس الأبيض مرة أخرى. #samira_mother_1974
 يا حبيبتي، للقلب أكثر من باب. والليلة سيرقص الحيّ كله على السطح. #teta_young #smile
 في تلك الليلة، رقصت سميرة الصغيرة حتى نامت في حضن جدّتي. وعادت علبة الخياطة إلى رفّها. #sys
 -> END
 
-// [draft]
 === m6_return ===
 ما زالت أمّي تقول إلى اليوم: «خاطت لي أم خليل فستانًا، وخاطت معه حظّي.» #samira #smile
 هيّا، على من الدور الآن؟ عندي عريس جاهز… #samira

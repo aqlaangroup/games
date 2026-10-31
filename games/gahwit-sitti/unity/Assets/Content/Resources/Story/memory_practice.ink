@@ -1,8 +1,8 @@
 // Practice content for the memory games (missing/12): what the timed-choice and torn-letter games need until
-// chapters 2–9 are written (missing/11). [draft] All of it was drafted by Claude Code and waits for the Amman dialect
+// chapters 2–9 are written (missing/11). All of it was drafted by Claude Code and waits for the Amman dialect
 // writers (CLAUDE.md, writing style). The speaker is the first tag on a line; a choice tagged #good is the good answer.
 
-// [draft] Choose (chapter 8's type): young Teta buys cardamom at the souk in 1974 and haggles.
+// Choose (chapter 8's type): young Teta buys cardamom at the souk in 1974 and haggles.
 === practice_choose ===
 صباح الخير يا عمّي. بكم كيلو الهيل اليوم؟ #teta_young
 بخمس ليرات يا ستّ، هيل درجة أولى. #seller_1974
@@ -43,7 +43,7 @@
 -
 -> END
 
-// [draft] Reassemble (chapter 9's type): the strips of a torn note, in their right order. Each line is one strip.
+// Reassemble (chapter 9's type): the strips of a torn note, in their right order. Each line is one strip.
 === practice_letter ===
 يا أمّي، #letter
 القهوة فتحت اليوم، والكراسي كلها ملانة. #letter

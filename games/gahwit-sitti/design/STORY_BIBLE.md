@@ -1,6 +1,6 @@
-# Gahwit Sitti: story bible, season 1 [draft]
+# Gahwit Sitti: story bible, season 1
 
-**Status:** `[draft]`, written by Claude Code on 2026-10-31 from `CONCEPT.md`, `GAME_SYSTEMS.md` 9, `SYSTEMS_B.md` 3–5 and `chapter1.ink`. It is a starting point for the writers, not approved story.
+**Status:** approved by the owner on 2026-10-31, with all 10 chapters and the regulars' scenes. Written by Claude Code from `CONCEPT.md`, `GAME_SYSTEMS.md` 9, `SYSTEMS_B.md` 3–5 and `chapter1.ink`. The Ink files settled some details differently (DEVLOG 2026-10-31, "the whole season written"); where they differ, the Ink files win.
 
 **Needs approval from:**
 - the story lead (everything);

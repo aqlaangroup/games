@@ -1,7 +1,7 @@
-// The memory games' practice content in English. [draft] Translated by Claude Code from memory_practice.ink; it
+// The memory games' practice content in English. Translated by Claude Code from memory_practice.ink; it
 // follows that file line for line (the parity test in Story/Tests checks it). A choice tagged #good is the good answer.
 
-// [draft] Choose: young Teta buys cardamom at the souk in 1974 and haggles.
+// Choose: young Teta buys cardamom at the souk in 1974 and haggles.
 === practice_choose ===
 Good morning, uncle. How much is a kilo of cardamom today? #teta_young
 Five lira, ma'am. First-grade cardamom. #seller_1974
@@ -42,7 +42,7 @@ Come on, four and a half and we're done? #seller_1974
 -
 -> END
 
-// [draft] Reassemble: the strips of a torn note, in their right order. Each line is one strip.
+// Reassemble: the strips of a torn note, in their right order. Each line is one strip.
 === practice_letter ===
 Mother, #letter
 The café opened today, and every chair was taken. #letter

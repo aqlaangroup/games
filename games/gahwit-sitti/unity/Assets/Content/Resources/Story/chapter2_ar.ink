@@ -1,11 +1,10 @@
 // Chapter 2 in neutral Arabic, shown as subtitles under the dialect lines when the player turns them on.
-// [draft] Written by Claude Code from chapter2.ink; it follows that file line for line (the parity test in
+// Written by Claude Code from chapter2.ink; it follows that file line for line (the parity test in
 // Story/Tests checks it). Change the dialect file first, then this one. No glossary marks: the subtitle is the
 // explanation.
 
 EXTERNAL chose(knot)
 
-// [draft]
 === curtains ===
 أهلًا أهلًا! أقسم بحياة أولادي إن ستائركِ أجمل من ستائري. #samira #smile
 لكن الكراسي ليست على خط واحد، والفناجين جافّة، وأنتِ… أين الكحل يا بنت؟ #samira
@@ -13,7 +12,6 @@ EXTERNAL chose(knot)
 للأمرين يا حبيبتي. أنا لا أفعل شيئًا واحدًا فقط أبدًا. #samira #smile
 -> END
 
-// [draft]
 === sweets_case ===
 ما أجمل واجهة العرض! تليق بالكنافة… وبالضيوف المهمّين أيضًا. #samira
 ضيوف مهمّون؟ #salma #thinking
@@ -23,7 +21,6 @@ EXTERNAL chose(knot)
 غدًا في الخامسة… سأحضر كرسيّي وأجلس لأتفرّج. #abu_fadi #smile
 -> END
 
-// [draft]
 === basil_pots ===
 مساء الخير… أنا هاني. خالتكِ سميرة قالت إن… أعني… الريحان جميل على النافذة. #hani
 كانت جدّتي تزرعه في المكان نفسه. هل تحبّ الريحان؟ #salma #smile
@@ -34,7 +31,6 @@ EXTERNAL chose(knot)
     الحمد لله… أعني، أفهمكِ. وأنا أيضًا جئت من أجل خالتكِ. #hani #smile
 - -> END
 
-// [draft]
 === wall_photos ===
 لحظة، لحظة… هذه أنا! الفتاة ذات الضفائر، هذه أنا! #samira #surprised
 وهذه أمّي رحمها الله، وهذه جدّتكِ تمسك يدي. سنة 74. #samira
@@ -42,7 +38,6 @@ EXTERNAL chose(knot)
 صامتة لأن جدّتكِ وضعت قطعة معمول في فمي. هكذا كانت تُسكتني. #samira #smile
 -> END
 
-// [draft]
 === tablecloths ===
 يا سلمى، سؤال… هل يبقى المقهى مفتوحًا حتى آخر الليل؟ أنا مناوب في الصيدلية حتى الفجر. #hani
 أسمعتِ؟ يريد أن يأتي ليلًا ليراكِ! هذا عريس جادّ. #samira #smile
@@ -51,7 +46,6 @@ EXTERNAL chose(knot)
 طبيبة؟ انسي الطبيبة! ركّزي يا سلمى، ركّزي. #samira
 -> END
 
-// [draft]
 === eid_corner ===
 قوالب المعمول! هذا المستدير للتمر، وهذا الطويل للجوز، وهذا المقبّب للفستق. #samira #surprised
 في آخر عيد صنعنا فيه المعمول هنا، كنتِ أنتِ ولانا بهذا الحجم، تتشاجران على القوالب. #samira
@@ -59,37 +53,31 @@ EXTERNAL chose(knot)
 وأنتِ كنتِ تسرقين التمر. أنتما تشبهان خالتكما سميرة. #samira #smile
 -> END
 
-// [draft]
 === m2_lead ===
 هذا قالب أمّي. كانت تطرقه على الطاولة مع الأغنية، طرقة بعد طرقة، ولم تخطئ مرة. #samira
 وكنت أجلس تحت الطاولة، أعدّ الطرقات… وآكل. #samira #smile
 -> END
 
-// [draft]
 === m2_intro ===
 هيّا يا جارات، غدًا العيد! مع الأغنية: طرقة بالقالب، وقلبة على الصينية. #samira_mother_1974
 ومن تُضيّع الإيقاع، تصنع القهوة للحيّ كله! #teta_young #smile
 يا سميرة يا حبيبتي، الفستق للمعمول، لا لفمكِ! #samira_mother_1974
 -> END
 
-// [draft]
 === m2_perfect ===
 انظري! مصفوفة مثل حبّات المسبحة. هكذا يكون المعمول، وإلا فلا. #teta_young #smile
 -> END
 
-// [draft]
 === m2_ok ===
 لا يهمّ الشكل، الطعم واحد… اسألي سميرة، أكلت ثلاثًا. #samira_mother_1974 #smile
 -> END
 
-// [draft]
 === m2_outro ===
 متى سيكون لكِ أولاد يملؤون هذا المقهى يا أم خليل؟ #samira_mother_1974
 حين يشاء الله. وحتى ذلك اليوم، سميرة ابنتي. #teta_young
 قضت سميرة نصف طفولتها في المقهى. وفي كل عيد، كان قالبها ينتظرها على الطاولة. #sys
 -> END
 
-// [draft]
 === m2_return ===
 انظري إليّ، أبكي على معمول! دخل الطحين في عينيّ، لا أكثر. #samira #sad
 في هذا العيد سنصنع المعمول هنا يا خالتي. معًا. #salma #smile

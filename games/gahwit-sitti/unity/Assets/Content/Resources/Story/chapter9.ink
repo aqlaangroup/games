@@ -1,5 +1,5 @@
 // Chapter 9: الصفحة الناقصة · The missing page
-// [draft] Every knot here was drafted by Claude Code from STORY_BIBLE.md (sections 3–8) and waits for the Amman and
+// Every knot here was drafted by Claude Code from STORY_BIBLE.md (sections 3–8) and waits for the Amman and
 // Najdi dialect writers (CLAUDE.md, writing style). The speaker is the first tag on a line; the second is the expression.
 // [[word]] marks a tap-to-explain word; its meaning is in the Glossary table.
 // chapter9_en.ink (English) and chapter9_ar.ink (neutral-Arabic subtitles) follow this file line for line
@@ -10,7 +10,6 @@
 // The saved choice for a knot ("" before it's made), bound by the game (STORY_BIBLE.md section 8).
 EXTERNAL chose(knot)
 
-// [draft]
 === recipe_shelf ===
 حطّيت الدفتر عالرف، ورجعت شفت مكان الصفحة المقطوعة. «كنافة أم خليل»… وبعدها ولا إشي. #salma #thinking
 شوفي القطع: مستقيم، [[مرّة]] مرتّب. هذي ما انقطعت بالغلط. #lana
@@ -18,7 +17,6 @@ EXTERNAL chose(knot)
 اللي يقطع صفحة كذا ما يرميها. يخبّيها عند أحد يثق فيه. #lana
 -> END
 
-// [draft]
 === knafeh_station ===
 أول صينية من محطّة الكنافة: الجبنة مالحة، وتحتها محروق. #sys
 لا، لا، كمّلوا. أنا بس بتفرّج. #abu_fadi #smile
@@ -27,7 +25,7 @@ EXTERNAL chose(knot)
 يعني بنعيدها بكرا. #salma #smile
 -> END
 
-// [draft] "When both girls' girls are under one roof" (STORY_BIBLE.md section 3): the roof mended in chapter 8, and
+// "When both girls' girls are under one roof" (STORY_BIBLE.md section 3): the roof mended in chapter 8, and
 // the table where they decided together.
 === abu_fadi_chair ===
 كرسيك يا أبو فادي. شدّيت رجليه، وما غيّرت ولا خشبة. الكرسي بيعرف صاحبه. #karim
@@ -38,7 +36,6 @@ EXTERNAL chose(knot)
 بكرا الصبح. جيبوا فنجانين، وتعالوا عالشبّاك. #abu_fadi
 -> END
 
-// [draft]
 === window_seat ===
 أبو فادي طلّع من جيبته ظرف قديم، وحطّه بيناتهم. #sys
 سنة 2006 أعطتني إياها كاملة. وسنة 2019 أخدتها ليلة وحدة، ورجّعتها هيك… قطع. #abu_fadi
@@ -48,7 +45,6 @@ EXTERNAL chose(knot)
 وعدتها يا بنتي. #abu_fadi
 -> END
 
-// [draft]
 === book_case ===
 الدفاتر بالخزانة، والصفحة على الطاولة قطع قطع. لانا اتّصلت بأمّها. #sys
 يمّه، ردّي… أبغى أسألك عن شي واحد بس. #lana
@@ -57,7 +53,7 @@ EXTERNAL chose(knot)
 طيب. نلمّها إحنا، ونوديها لهم. #lana
 -> END
 
-// [draft] Faris's apology, with the callback for c8_offer (chosen in chapter 8's faris_table; STORY_BIBLE.md section 8).
+// Faris's apology, with the callback for c8_offer (chosen in chapter 8's faris_table; STORY_BIBLE.md section 8).
 // He talks plainer now, without his English work words (voice sheet). He withdraws before he knows the page's back.
 === the_page ===
 قبل ما يلمّوا الصفحة، دخل فارس. من غير بدلة، ومن غير ابتسامة الشغل. #sys
@@ -76,20 +72,18 @@ EXTERNAL chose(knot)
 // Memory 9 (reassemble): the torn knafeh page. Its front is the recipe, from the day Teta invented it in 1974 with
 // young Fadi tasting; its back is letter_5 (STORY_BIBLE.md sections 6 and 7).
 
-// [draft]
 === m9_lead ===
 بتعرفوا مين أول واحد داق هالكنافة؟ #abu_fadi #smile
 صيف 74. كنت قاعد عالشبّاك، والريحة طلعت للشارع… #abu_fadi
 -> END
 
-// [draft]
 === m9_intro ===
 فادي! تعال دوق، وقلّي الحقيقة. مش مجاملة. #teta_young
 كنافة؟ بالقهوة؟ من إيمتى يا ستّ أم خليل؟ #fadi_young #surprised
 من اليوم. إذا عجبتك. #teta_young #smile
 -> END
 
-// [draft] The page's front, one strip per line in the right order (ReassembleGame shuffles them; balance.json
+// The page's front, one strip per line in the right order (ReassembleGame shuffles them; balance.json
 // levelB.memories.reassemble.strips is 7). No tap-to-explain marks: the strips are not tappable.
 === m9_page ===
 كنافة أم خليل #letter
@@ -101,31 +95,27 @@ EXTERNAL chose(knot)
 — أم خليل، صيف 74. والشاهد: فادي، أكل صحنين. #letter_signature
 -> END
 
-// [draft]
 === m9_perfect ===
 يا ستّ أم خليل… هاي مش كنافة. هاي عيد. #fadi_young #surprised
 -> END
 
-// [draft]
 === m9_ok ===
 ناقصها شوي… بس بنوصل. #teta_young #thinking
 -> END
 
-// [draft]
 === m9_outro ===
 اكتبيلي الوصفة يا ستّ أم خليل. بدّي أعملها لأمّي. #fadi_young
 الوصفة بتنكتب بدفتري، وبتضل فيه. هاي لا بتنباع ولا بتنعطى. #teta_young #smile
 وبعد اتنين وتلاتين سنة، انقطعت الصفحة من الدفتر. #sys
 -> END
 
-// [draft]
 === m9_return ===
 سلمى… ورا الصفحة كتابة. بخطّ ستّي. #lana #surprised
 هاي مش إلي أقرأها. أنا بشرب قهوتي برّا. #abu_fadi
 حطّوا الصفحة عالكاونتر، جنب الدرج، وقعدوا يقرأوا ضهرها سوا. #sys
 -> END
 
-// [draft] Letter 5, the back of the page, to Rana and Nawal: the whole 2006 truth (STORY_BIBLE.md section 3), signed,
+// Letter 5, the back of the page, to Rana and Nawal: the whole 2006 truth (STORY_BIBLE.md section 3), signed,
 // with the line Teta added in 2019. The longest letter: check that it fits the paper at large text.
 === letter_5 ===
 رنا ونوال، يا روحي، #letter
@@ -138,12 +128,12 @@ EXTERNAL chose(knot)
 — أمّكم #letter_signature
 -> END
 
-// [draft] Teta's voice note after letter 5. Needs the voice actor (missing/14).
+// Teta's voice note after letter 5. Needs the voice actor (missing/14).
 === voice_5 ===
 يا روحي… إذا قرأتوها، خدوها لأمّهاتكم. أنا ما قدرت. #teta
 -> END
 
-// [draft] Lana sent her mother a photo of the page; Nawal answers at last (she didn't in book_case).
+// Lana sent her mother a photo of the page; Nawal answers at last (she didn't in book_case).
 === notify_5 ===
 وصلتني الصورة يا لانا. عشرين سنة وأنا ساكتة… الحين حجزت على عمّان. #nawal
 -> END

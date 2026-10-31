@@ -1,11 +1,11 @@
 // Chapter 10 in neutral Arabic, shown as subtitles under the dialect lines when the player turns them on
-// (COMPLETE_SPEC.md section 4). [draft] Written by Claude Code from chapter10.ink; it follows that file line for line
+// (COMPLETE_SPEC.md section 4). Written by Claude Code from chapter10.ink; it follows that file line for line
 // (the parity test in Story/Tests checks it). Change the dialect file first, then this one. No glossary marks: the
 // subtitle is the explanation.
 
 EXTERNAL chose(knot)
 
-// [draft] The callback for c2_groom, saved under chapter 2's basil_pots (see chapter10.ink).
+// The callback for c2_groom, saved under chapter 2's basil_pots (see chapter10.ink).
 === wedding_lights ===
 أترون الأضواء؟ ألم أقل لكم إنه رجل طيّب؟ أنا جئت به إلى المقهى، إذن أنا التي زوّجته للدكتورة هبة! #samira #smile
 {
@@ -18,7 +18,6 @@ EXTERNAL chose(knot)
 طبعًا! وحياة أولادي، العرس القادم عرسك. #samira
 -> END
 
-// [draft]
 === street_arch ===
 صار قوس الورد على باب المقهى، ووصلت أم رامي بأول قدر. #sys
 طلبية العرس كلها عليّ: منسف للحيّ كله. أول طلبية كبيرة لي. #um_rami #smile
@@ -27,7 +26,6 @@ EXTERNAL chose(knot)
 تحت قوس ورد، ومنسف أم رامي… لكانت جدّتي رقصت. #salma #smile
 -> END
 
-// [draft]
 === dessert_table ===
 يا عمّ، تذوّق. وقل لي الحقيقة، بلا مجاملة. #salma
 أكل أبو فادي لقمة، وسكت. ثم أكل الثانية. #sys
@@ -35,7 +33,6 @@ EXTERNAL chose(knot)
 أي إنها نجحت؟ أخيرًا! #lana #smile
 -> END
 
-// [draft]
 === family_table ===
 وصلت نوال من الرياض قبل المغرب. #sys
 سلمى؟ يا الله… تشبهين أمّي كثيرًا. #nawal #smile
@@ -45,7 +42,6 @@ EXTERNAL chose(knot)
 أعرف. كانت جدّتك ترسل لي صورك في كل عيد. #rana #sad
 -> END
 
-// [draft]
 === two_chairs ===
 كرسيّان متجاوران. جلست نوال، وبعد قليل جلست رنا. ولم تتكلّم أيّ منهما. #sys
 هل قرأت أمّك الصفحة؟ #lana
@@ -54,7 +50,7 @@ EXTERNAL chose(knot)
 لا شيء. كانت جدّتي تقول: الفنجان الأول للضيف، والثاني للحديث. #salma
 -> END
 
-// [draft] The last two lines are the season 2 teaser.
+// The last two lines are the season 2 teaser.
 === wedding_night ===
 عزف يزن، ورقص الحيّ كله الدبكة تحت الأضواء، والعروسان في الوسط. #sys
 يا سلمى… لا أريد أن أبيع نصفي. #lana
@@ -66,30 +62,25 @@ EXTERNAL chose(knot)
 
 // Memory 10 (pour): in the present, not 1974.
 
-// [draft]
 === m10_lead ===
 الرسالة تنتظر. لهذه الليلة عمل آخر. #abu_fadi
 أوصت جدّتكما بفنجانين. هيا يا بنات، أحضرا الدلّة الصغيرة. #abu_fadi #smile
 -> END
 
-// [draft]
 === m10_intro ===
 فنجانان، كما أوصت جدّتي: واحد لي، وواحد لكِ. #salma
 لا. أنتِ تصبّين لأمّي، وأنا أصبّ لأمّك. #lana
 مثل الضيوف. الفنجان الأول للضيف. #salma #smile
 -> END
 
-// [draft]
 === m10_perfect ===
 هكذا تمامًا. صبر ويد ثابتة… مثلها. #abu_fadi #smile
 -> END
 
-// [draft]
 === m10_ok ===
 كانت جدّتي تقول: القهوة تسامح، مثل الناس الطيبين. #salma #smile
 -> END
 
-// [draft]
 === m10_outro ===
 وضعت سلمى الفنجان أمام خالتها نوال، ولانا أمام خالتها رنا. #sys
 عشرون سنة يا نوال… #rana #sad
@@ -97,13 +88,12 @@ EXTERNAL chose(knot)
 لم تردّ رنا. مدّت يدها على الطاولة، وأمسكت يد أختها. #sys
 -> END
 
-// [draft]
 === m10_return ===
 قالت لي جدّتكما: لن تجلسا معًا إلا في عرس. وحين تجلسان، أعطهما هذه. #abu_fadi
 وضعتها في الدرج يا بنات، مكان الرسالة الأولى. #abu_fadi #smile
 -> END
 
-// [draft] Letter 6, to Salma and Lana.
+// Letter 6, to Salma and Lana.
 === letter_6 ===
 إلى سلمى ولانا، #letter
 إن وصلتكما هذه الورقة، فمعناه أن أمّيكما شربتا القهوة إلى طاولة واحدة. الحمد لله. #letter
@@ -114,12 +104,10 @@ EXTERNAL chose(knot)
 — جدّتكما #letter_signature
 -> END
 
-// [draft]
 === voice_6 ===
 يا حبيبتيّ، الأعراس تجمع من فرّقهم الغضب. ألف مبروك للعروسين، أيًّا كانا. #teta
 -> END
 
-// [draft]
 === notify_6 ===
 وصلتني الصورة: اسمي واسم أختي تحت لافتة أمّي. غدًا صباحًا سأدخل. #rana
 -> END

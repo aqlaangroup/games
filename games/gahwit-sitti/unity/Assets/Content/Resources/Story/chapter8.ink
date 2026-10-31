@@ -1,5 +1,5 @@
 // Chapter 8: عرض فارس · Faris's offer
-// [draft] Every knot here was drafted by Claude Code from STORY_BIBLE.md (sections 3–8) and waits for the Amman and
+// Every knot here was drafted by Claude Code from STORY_BIBLE.md (sections 3–8) and waits for the Amman and
 // Najdi dialect writers (CLAUDE.md, writing style). The speaker is the first tag on a line; the second is the expression.
 // [[word]] marks a tap-to-explain word; its meaning is in the Glossary table.
 // chapter8_en.ink (English) and chapter8_ar.ink (neutral-Arabic subtitles) follow this file line for line
@@ -9,7 +9,6 @@
 // The saved choice for a knot ("" before it's made), bound by the game (STORY_BIBLE.md section 8).
 EXTERNAL chose(knot)
 
-// [draft]
 === accounts_desk ===
 حسبتها ثلاث مرّات على المكتب الجديد. السقف يبغى ضعف اللي معنا. #lana #thinking
 السقف تعبان يا بنات. الجسور عطشانة، وأول شتوة رح [[يدلف]] عالكاونتر. #karim
@@ -18,7 +17,6 @@ EXTERNAL chose(knot)
 ببلّش بكرا، والحساب بعدين. الحجّة ما كانت تخلّي سقف يستنّى مصاري. #karim
 -> END
 
-// [draft]
 === roof_repair ===
 خلص السقف. الجسور الجديدة تصاحبت مع القديمة، وما عاد في دلف. #karim #smile
 مبروك السقف يا جماعة! اليوم الحساب كلّه عليّ… اعتبروه إنفستمنت بالحارة. #faris #smile
@@ -27,7 +25,7 @@ EXTERNAL chose(knot)
 بس سؤال صغير: الكنافة… ليش مش عالمنيو؟ #faris
 -> END
 
-// [draft] The choice c8_offer (STORY_BIBLE.md section 8): hear him out, or ask him to leave. The game saves a choice
+// The choice c8_offer (STORY_BIBLE.md section 8): hear him out, or ask him to leave. The game saves a choice
 // under the knot it was made in (CafeScene.PlayScene), so chapter 9's the_page reads it with chose("faris_table").
 === faris_table ===
 خلّيني أكون صريح معكم: أنا فارس. البراند اللي بكل مول بعمّان، براند أبوي. #faris
@@ -40,7 +38,7 @@ EXTERNAL chose(knot)
 - فارس ترك ورقة صغيرة عليها رقم. ولانا ما شالت عيونها عنها. #sys
 -> END
 
-// [draft] The cousins' first argument since chapter 3. Salma goes quiet instead of getting cruel (voice sheet).
+// The cousins' first argument since chapter 3. Salma goes quiet instead of getting cruel (voice sheet).
 === family_photos ===
 سلمى، اسمعيني بس. بفلوسه نصلّح كل شي، ونبدأ بمكان ثاني. #lana #thinking
 بمكان تاني؟ شوفي الصورة يا لانا: أمّي وأمّك على نفس الكرسي، هون. #salma #angry
@@ -49,7 +47,7 @@ EXTERNAL chose(knot)
 لا تسكتين. سكوت أمّي يكفيني. #lana #sad
 -> END
 
-// [draft] Faris thinks his father's 2006 papers give him the first right to buy the building (STORY_BIBLE.md section 3).
+// Faris thinks his father's 2006 papers give him the first right to buy the building (STORY_BIBLE.md section 3).
 === knafeh_sign ===
 هون كان لوح الكنافة. كنت أجي مع أبوي كل جمعة، وأنا صغير. #faris
 وليش انشال اللوح؟ #salma
@@ -58,7 +56,7 @@ EXTERNAL chose(knot)
 هاد اللي ما بعرفه. كل ما أسأل أبوي بيقول: كانت ديل. وبيسكت. #faris #thinking
 -> END
 
-// [draft] Lana straightens the photo: her apology, without words.
+// Lana straightens the photo: her apology, without words.
 === decision_table ===
 قبل ما تقعد، لانا عدّلت الصورة اللي سلمى عدّلتها مرّتين. #sys
 زين. وش نقرّر؟ #lana
@@ -70,20 +68,18 @@ EXTERNAL chose(knot)
 // Memory 8 (choose): young Teta haggles at the souk for her first dallah, 1974 (STORY_BIBLE.md section 6).
 // The prices are story, not game numbers (lira, as in memory_practice.ink).
 
-// [draft]
 === m8_lead ===
 ستّكم؟ عمرها ما دفعت أول سعر. ولا مرّة بحياتها. #abu_fadi #smile
 أول دلّة إلها اشترتها من [[البلد]] قبل ما تفتح بشهر. حكتلي القصة مية مرة… وكل مرة السعر بينزل. #abu_fadi
 -> END
 
-// [draft]
 === m8_intro ===
 يا عمّي، هاي الدلّة اللي بالواجهة… بكم؟ #teta_young
 نحاس أصلي، شغل إيد. بعشر ليرات يا ستّ، ولا قرش أقل. #seller_1974
 ولا قرش؟ طيّب. خلّينا نحكي. #teta_young #smile
 -> END
 
-// [draft] The timed conversation (ChooseGame): six rounds, one per balance.json levelB.memories.choose.choices, so
+// The timed conversation (ChooseGame): six rounds, one per balance.json levelB.memories.choose.choices, so
 // six good answers can reach the third star. Each round is the seller's line, then a good and a weak answer.
 === m8_game ===
 شوفي النقش يا ستّ. ما في متلها بكل السوق. #seller_1974
@@ -124,24 +120,22 @@ EXTERNAL chose(knot)
 -
 -> END
 
-// [draft] After 3 stars: every answer was good, so the last price was seven.
+// After 3 stars: every answer was good, so the last price was seven.
 === m8_perfect ===
 والله بعمري ما نزّلت هالقدّ لحدا. مبروكة الدلّة يا ستّ. #seller_1974
 -> END
 
-// [draft]
 === m8_ok ===
 إنتِ صعبة يا ستّ… الله يعين جوزك. #seller_1974 #smile
 -> END
 
-// [draft]
 === m8_outro ===
 أول دلّة إلي. منها بصبّ لأول زبون… ولولادي، إذا الله أعطاني. #teta_young #smile
 وإذا أعطاكِ، لا تعلّميهم المفاصلة. خرّبتي سوقي. #seller_1974
 لا تخاف. بعلّمهم إشي أصعب: إنه في أشيا ما إلها سعر. #teta_young
 -> END
 
-// [draft] Abu Fadi keeps his promise: he changes the subject instead of lying (voice sheet).
+// Abu Fadi keeps his promise: he changes the subject instead of lying (voice sheet).
 === m8_return ===
 «في أشيا ما إلها سعر»… بس ستّي نفسها باعت شي لأبو فارس. #lana #thinking
 عمّو أبو فادي… إنت بتعرف شو باعت؟ #salma

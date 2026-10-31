@@ -1,5 +1,5 @@
 // Chapter 5: قهوتين · Two coffees
-// [draft] Written by Claude Code from STORY_BIBLE.md sections 5–8; every line waits for the Amman dialect writer and the
+// Written by Claude Code from STORY_BIBLE.md sections 5–8; every line waits for the Amman dialect writer and the
 // Najdi writer (CLAUDE.md, writing style). The cousins serve Ammani and Saudi coffee and work together for the first
 // time: Salma speaks Amman, Lana Najdi, Nawal Amman with Najdi words, the guest from Jeddah light Hijazi.
 // The speaker is the first tag on a line, the expression the second. [[word]] marks a tap-to-explain word; its meaning
@@ -9,7 +9,7 @@
 // The saved choice for a knot ("" before it's made), bound by the game (STORY_BIBLE.md section 8).
 EXTERNAL chose(knot)
 
-// [draft] Task 1: the Saudi coffee station. Lana teaches Salma Saudi coffee; Salma laughs at the colour.
+// Task 1: the Saudi coffee station. Lana teaches Salma Saudi coffee; Salma laughs at the colour.
 === saudi_station ===
 هذي القهوة السعودية: بن أشقر، وهيل، وزعفران. شوفي وتعلّمي. #lana
 لانا… هاي قهوة ولا شاي بحليب؟ لونها أصفر! #salma #smile
@@ -18,7 +18,7 @@ EXTERNAL chose(knot)
 ما قلت شي. وجهي هو اللي قال. #lana #smile
 -> END
 
-// [draft] Task 2 (styles): the majlis bench. The guest from Jeddah sits in it and feels at home. She is this season's
+// Task 2 (styles): the majlis bench. The guest from Jeddah sits in it and feels at home. She is this season's
 // tourist (STORY_BIBLE.md section 9); her look at the window is for her level-6 scene.
 === majlis_bench ===
 يا سلام… كأنّي في بيت أمّي في جدّة. كدا كانت الجلسة بالضبط. #tourist #smile
@@ -27,7 +27,7 @@ EXTERNAL chose(knot)
 والشبّاك هذا… لسّا زي ما هو. #tourist #thinking
 -> END
 
-// [draft] Task 3: the menu board with both coffees. Which goes first is the choice c5_menu (ammani / saudi). The game
+// Task 3: the menu board with both coffees. Which goes first is the choice c5_menu (ammani / saudi). The game
 // saves a choice under its knot, so chapter 6's opening night reads it with chose("menu_board").
 === menu_board ===
 طيب، ميتنغ سريع… يعني، قعدة. شو بنكتب أول عاللوح؟ #salma #thinking
@@ -40,7 +40,7 @@ EXTERNAL chose(knot)
 يا بنات، اللوح ما بيشرب. المهم شو بالفنجان. #abu_fadi
 -> END
 
-// [draft] Task 4: a bowl of dates on every table. Nawal messages Lana and asks about the café.
+// Task 4: a bowl of dates on every table. Nawal messages Lana and asks about the café.
 === dates_bowl ===
 أمّي أرسلت لي. #lana #surprised
 طمّنيني، القهوة زينة؟ لسّا الدلال على الرف؟ ولا تقولي لحدا إنّي سألت. #nawal
@@ -49,7 +49,7 @@ EXTERNAL chose(knot)
 وأقول لها إنّك حطّيتي تمر على كل طاولة، على طريقتنا. #lana #smile
 -> END
 
-// [draft] Task 5: cardamom and saffron jars. Salma minds her mother's silence less than she misses her voice.
+// Task 5: cardamom and saffron jars. Salma minds her mother's silence less than she misses her voice.
 === cardamom_jars ===
 مرطبان للهيل، ومرطبان للزعفران… ستّي كانت تكتب على كل شي؟ #lana
 على كل شي، إلا على اللي بقلبها. #salma #sad
@@ -58,7 +58,7 @@ EXTERNAL chose(knot)
 يلّا نعبّي المرطبانات. على الأقل هدول بيتعبّوا. #salma
 -> END
 
-// [draft] Task 6: two matching cups on the counter. They stop splitting the ledger and find the two-city coffee in
+// Task 6: two matching cups on the counter. They stop splitting the ledger and find the two-city coffee in
 // Teta's book (recipe two_cities; Salma reads its clue). Memory 5 (find) plays after this scene, then letter 3.
 === two_cups ===
 فنجانين متل بعض عالكاونتر. واحد إلي، وواحد إلك. #salma #smile
@@ -72,30 +72,26 @@ EXTERNAL chose(knot)
 // Memory 5 (find): the 1974 kitchen and the first coffee roast. Teta keeps two jars: one for the house, one "for
 // later". Letter 3 waits in the second one.
 
-// [draft]
 === m5_lead ===
 ستّكم كانت تحمّص البن بإيدها، بالمطبخ اللي ورا. ريحته توصل لآخر الحارة. #abu_fadi
 وكان عندها مرطبانين. واحد تفتحه كل يوم… والتاني عمري ما شفتها فتحته. #abu_fadi #thinking
 -> END
 
-// [draft] 1974: older Amman speech, no modern loanwords.
+// 1974: older Amman speech, no modern loanwords.
 === m5_intro ===
 يا أم سميرة، أول تحميصة بقهوتي! بس المطبخ لسّا مقلوب فوق تحت. #teta_young #smile
 ولا يهمّك، بدوّر معك. شو بدّك [[هسّع]]؟ #samira_mother_1974
 كل إشي! بسرعة يا روحي، قبل ما يحترق البن. #teta_young
 -> END
 
-// [draft]
 === m5_perfect ===
 يسلموا إيديكِ! ولا حبّة احترقت. #teta_young #smile
 -> END
 
-// [draft]
 === m5_ok ===
 احترق شوي؟ ولا يهمّك. التحميصة متل التربية: نار هادية وصبر. #teta_young
 -> END
 
-// [draft]
 === m5_outro ===
 ليش مرطبانين يا أم خليل؟ البن واحد. #samira_mother_1974
 هاد للبيت، كل يوم. وهاد بكتب عليه: «لبعدين». #teta_young
@@ -103,14 +99,14 @@ EXTERNAL chose(knot)
 لليوم اللي ما بينحكى فيه الحكي. هداك اليوم، بيحكي الفنجان. #teta_young
 -> END
 
-// [draft] The game opens every letter from the counter drawer, so Lana puts it there.
+// The game opens every letter from the counter drawer, so Lana puts it there.
 === m5_return ===
 لقيته! بآخر الرف: «لبعدين»، بخطّ ستّي. #salma #surprised
 ما فيه قهوة… فيه ورقة مطويّة، ومكتوب عليها اسمي. #lana #surprised
 ضلّت لانا ماسكة الورقة شوي، وبعدين حطّتها بدرج الكاونتر، جنب رسالة ستّي الأولى. #sys
 -> END
 
-// [draft] Letter 3 (STORY_BIBLE.md section 7), from the "for later" jar: to Lana, about Nawal as a girl. One tag per
+// Letter 3 (STORY_BIBLE.md section 7), from the "for later" jar: to Lana, about Nawal as a girl. One tag per
 // line style, like letter_1.
 === letter_3 ===
 لانا يا روحي، يا بنت نوال، #letter
@@ -122,12 +118,12 @@ EXTERNAL chose(knot)
 — ستّك #letter_signature
 -> END
 
-// [draft] Teta's voice note after letter 3. Needs the voice actor (missing/14).
+// Teta's voice note after letter 3. Needs the voice actor (missing/14).
 === voice_3 ===
 لانا يا روحي… إذا لقيتي رسالتي، لا تسألي أمّك شو صار. اسأليها كيف حالها، وهي بتحكيلك لحالها. #teta
 -> END
 
-// [draft] The message after letter 3: Lana writes to Salma that night.
+// The message after letter 3: Lana writes to Salma that night.
 === notify_3 ===
 سألت أمّي كيف حالها، مثل ما قالت ستّي. سكتت شوي… وبعدين سألت عن خالتي رنا. #lana
 -> END
