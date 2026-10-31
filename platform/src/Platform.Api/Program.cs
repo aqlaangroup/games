@@ -138,6 +138,7 @@ PurchaseEndpoints.Map(signedIn);
 AdminEndpoints.MapGame(games);
 LiveOpsEndpoints.Map(games);
 StoreNotificationEndpoints.Map(games);
+LegalPages.Map(games);
 
 app.Run();
 

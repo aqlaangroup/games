@@ -598,7 +598,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 83242471383106
-    m_Localized: Write to us below and we'll answer within 48 hours.
+    m_Localized: Tap Restore purchases in Settings or the shop. If it still hasn't
+      arrived, write to us below and we'll answer within 48 hours.
     m_Metadata:
       m_Items: []
   - m_Id: 83242471383107
@@ -1923,6 +1924,33 @@ MonoBehaviour:
   - m_Id: 139309578444843
     m_Localized: Events bring a small board with its own chain. Serve its orders
       for tokens and rewards.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 141108913889280
+    m_Localized: I ran out of energy. What can I do?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 141108922277888
+    m_Localized: "Energy fills up on its own over time. Meanwhile, sell pieces you
+      don't need, merge what's on the board, and visit the caf\xE9."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 141108922277889
+    m_Localized: Can I play offline?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 141108922277890
+    m_Localized: Yes. Your progress is saved on your phone and goes to the cloud
+      when you're back online. Events and the shop need a connection.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 141108922277891
+    m_Localized: How do I change the language or text size?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 141108922277892
+    m_Localized: "In Settings: choose \u0627\u0644\u0639\u0631\u0628\u064A\u0629
+      or English, and turn on Large text for bigger text."
     m_Metadata:
       m_Items: []
   references:

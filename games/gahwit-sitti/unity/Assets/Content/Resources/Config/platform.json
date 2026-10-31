@@ -1,9 +1,9 @@
 {
-  "$comment": "Where the game finds the shared platform (platform/README.md). Values in [brackets] are not set yet; the game then plays offline as a guest. The Editor uses editorBaseUrl, so a local platform (dotnet run) works without a deploy.",
+  "$comment": "Where the game finds the shared platform (platform/README.md). Values in [brackets] are not set yet; the game then plays offline as a guest. The Editor uses editorBaseUrl, so a local platform (dotnet run) works without a deploy. privacyUrl and termsUrl are paths the platform serves from games/gahwit-sitti/legal/, opened in the player's language.",
   "slug": "gahwit-sitti",
   "baseUrl": "[set after the platform is deployed]",
   "editorBaseUrl": "http://localhost:5080",
-  "privacyUrl": "[set after the privacy page is live]",
-  "termsUrl": "[set after the terms page is live]",
+  "privacyUrl": "/legal/privacy",
+  "termsUrl": "/legal/terms",
   "storeUrl": "[set after App Store Connect setup]"
 }

@@ -1903,6 +1903,30 @@ MonoBehaviour:
     m_Key: unlock.mini_board_event.text
     m_Metadata:
       m_Items: []
+  - m_Id: 141108913889280
+    m_Key: help.q5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 141108922277888
+    m_Key: help.a5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 141108922277889
+    m_Key: help.q6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 141108922277890
+    m_Key: help.a6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 141108922277891
+    m_Key: help.q7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 141108922277892
+    m_Key: help.a7
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

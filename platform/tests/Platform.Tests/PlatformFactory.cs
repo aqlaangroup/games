@@ -85,6 +85,8 @@ public class PlatformFactory : WebApplicationFactory<Program>, IAsyncLifetime
               "events": { "templates": { "miniBoard": { "milestoneRewards": [ { "coins": 200 }, { "gems": 5 } ] } } }
             }
             """);
+        Directory.CreateDirectory(Path.Combine(gamesDir, GameA, "legal"));
+        File.WriteAllText(Path.Combine(gamesDir, GameA, "legal", "privacy.ar.html"), "<html lang=\"ar\">خصوصية</html>");
         Write(GameB, $$"""
             {
               "slug": "{{GameB}}",

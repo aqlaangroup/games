@@ -9,7 +9,7 @@ namespace Gahwit.UI
     // game version and phone model by itself, so the player only writes the message.
     public sealed class HelpView : MonoBehaviour
     {
-        public const int Questions = 4;
+        public const int Questions = 7;
 
         IAccountUi account;
         Toast toast;

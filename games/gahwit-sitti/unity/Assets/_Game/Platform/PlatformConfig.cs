@@ -18,6 +18,15 @@ namespace Gahwit.Platform
         // Values in [brackets] are placeholders until the real address exists.
         public static bool IsSet(string value) => !string.IsNullOrEmpty(value) && !value.StartsWith("[");
 
+        // A legal page: a full address, or a path the platform serves for this game ("/legal/privacy"), in the
+        // player's language. Null when the address isn't known yet.
+        public string Page(string url, string language)
+        {
+            if (!IsSet(url)) return null;
+            if (!url.StartsWith("/")) return url;
+            return IsSet(ActiveBaseUrl) ? $"{ActiveBaseUrl.TrimEnd('/')}/games/{Slug}{url}?lang={language}" : null;
+        }
+
         public static PlatformConfig Load() =>
             JsonConvert.DeserializeObject<PlatformConfig>(Resources.Load<TextAsset>("Config/platform").text);
     }

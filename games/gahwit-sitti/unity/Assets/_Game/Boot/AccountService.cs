@@ -427,12 +427,12 @@ namespace Gahwit.Boot
             restart(null);
         }
 
-        public void OpenPrivacy() => Open(config.PrivacyUrl);
-        public void OpenTerms() => Open(config.TermsUrl);
+        public void OpenPrivacy() => Open(config.Page(config.PrivacyUrl, Language));
+        public void OpenTerms() => Open(config.Page(config.TermsUrl, Language));
 
         void Open(string url)
         {
-            if (PlatformConfig.IsSet(url)) Application.OpenURL(url);
+            if (url != null) Application.OpenURL(url);
             else Ui?.Toast.Show(Loc.T("legal.soon"));
         }
 

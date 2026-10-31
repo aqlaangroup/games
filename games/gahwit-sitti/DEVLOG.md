@@ -2,6 +2,17 @@
 
 Decisions and known gaps. Newest first. Read this at the start of each session (`/CLAUDE.md`).
 
+## 2026-10-31: privacy policy, terms, privacy forms, store listing, FAQ (missing/21)
+
+- **Legal pages:** a privacy policy and terms of use in Arabic and English (`legal/`, built by `legal/build_pages.py`), written from what the code actually collects. They're drafts: the company details are `[brackets]`, and they need a lawyer's review. The support email isn't filled in on purpose; it would make an address public.
+- **The platform serves them** at `/games/{slug}/legal/privacy|terms?lang=ar|en`, from each game's `legal/` folder; other names get 404 (tested). Settings opens them in the player's language (`platform.json` paths, `PlatformConfig.Page`).
+- **Data inventory** (`legal/DATA_INVENTORY.md`): every field, where it lives and why, with draft answers for Apple's privacy label and Google's Data safety form. No tracking, no ad or analytics SDKs today; IP addresses are used in memory for rate limits only.
+- **iOS privacy manifest** (`Plugins/iOS/PrivacyInfo.xcprivacy`): no tracking, the collected types, and the system boot time reason `35F9.1` for the uptime clock behind trusted time.
+- **Store listing** (`store/listing.md`): name, subtitles, promotional text, descriptions and keywords in both languages, the 6 screenshots with captions, the 30-second video's shot list, and draft age-rating answers (expected 9+ under Apple's 2025 bands).
+- **Help:** 7 questions now, including restore purchases, energy, offline play, language and text size.
+- **Licences** (`art/licences/README.md`): the font, the packages, and the AI tools whose plans must allow commercial use.
+- **Still missing:** see "Still open" in missing/21. That covers the company and store accounts, the bracketed details, a legal review, the store questionnaires, and who answers support.
+
 ## 2026-10-31: remote config, daily gift and tasks, events, the mini board (missing/18)
 
 - **Remote config:**

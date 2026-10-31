@@ -101,4 +101,16 @@ public class LiveOpsTests(PlatformFactory api)
             .GetProperty("alreadyClaimed").GetBoolean());
         Assert.Equal(HttpStatusCode.BadRequest, (await client.PostAsJsonAsync($"/games/{GameA}/players/me/rewards", new { id = $"event:{id}:9" })).StatusCode);
     }
+
+    [Fact]
+    public async Task EachGamesLegalPagesArePublicAndOnlyThoseTwo()
+    {
+        var privacy = await api.Client().GetAsync($"/games/{GameA}/legal/privacy?lang=ar");
+        Assert.Equal(HttpStatusCode.OK, privacy.StatusCode);
+        Assert.Equal("text/html", privacy.Content.Headers.ContentType!.MediaType);
+        Assert.Contains("خصوصية", await privacy.Content.ReadAsStringAsync());
+        Assert.Equal(HttpStatusCode.NotFound, (await api.Client().GetAsync($"/games/{GameA}/legal/privacy?lang=en")).StatusCode);
+        Assert.Equal(HttpStatusCode.NotFound, (await api.Client().GetAsync($"/games/{GameA}/legal/..%2Fgame.json")).StatusCode);
+        Assert.Equal(HttpStatusCode.NotFound, (await api.Client().GetAsync($"/games/{GameA}/legal/secrets")).StatusCode);
+    }
 }
