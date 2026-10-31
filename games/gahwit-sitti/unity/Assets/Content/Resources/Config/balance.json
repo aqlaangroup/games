@@ -1010,7 +1010,8 @@
       "frenzy": {
         "ar": "ويكند الضعف",
         "durationHours": 48,
-        "effect": "order coins x2"
+        "effect": "order coins x2",
+        "coinMultiplier": 2
       },
       "hospitality": {
         "ar": "عزومة",

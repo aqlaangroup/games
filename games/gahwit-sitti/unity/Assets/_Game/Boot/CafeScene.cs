@@ -133,6 +133,7 @@ namespace Gahwit.Boot
             gems = new GemShop(services.Platform, game);
             ui.SetGems(() => gems.Buy("storageSlot:" + game.NextStorageSlot));
             WireShopAndAds();
+            WireLiveOps();
             ui.OutOfEnergy = ShowOutOfEnergy;
             ui.BubbleTapped = ShowBubble;
             unlocks = new Unlocks(game, Newtonsoft.Json.Linq.JObject.Parse(Resources.Load<TextAsset>("Content/unlock_cards").text)["cards"]
@@ -318,7 +319,7 @@ namespace Gahwit.Boot
         void TrackGame()
         {
             sessionStartedAt = Time.realtimeSinceStartup;
-            Track("session_start", "energy", game.State.Energy, "level", game.State.Level);
+            Track("session_start", "energy", game.State.Energy, "level", game.State.Level, "config", RemoteConfig.Version);
             game.ItemSpawned += cell =>
             {
                 var item = game.ItemAt(cell);
@@ -656,6 +657,63 @@ namespace Gahwit.Boot
             });
         }
 
+        // ---------- Daily systems and events (missing/18) ----------
+
+        LiveEvents liveEvents;
+        float nextEventCheck;
+        bool giftOffered;
+
+        void WireLiveOps()
+        {
+            liveEvents = new LiveEvents(Services.Current.Platform, game, () => time.NowMs);
+            ui.SetLiveOps(liveEvents, () => Today, () => time.NowMs, account.ClaimNow, PayMilestones);
+            Run(liveEvents.Refresh);
+            cafe.Decor.Settled += _ => game.Progress("place_decor", 1);
+            wardrobe.Changed += () => game.Progress("wear_outfit", 1);
+        }
+
+        // Mini board milestones: their coins and energy now, their gems through the platform.
+        void PayMilestones(MiniBoard board)
+        {
+            foreach (int milestone in board.Due())
+            {
+                var reward = board.Pay(milestone);
+                if (reward == null) continue;
+                Track("event_progress", "event", board.EventId, "milestone", milestone);
+                ui.Toast.Show(Loc.T("mini.milestone", milestone));
+            }
+            account.ClaimNow();
+            dirty = true;
+        }
+
+        // The daily gift, once a session when it's due and nothing else is on screen.
+        void OfferDailyGift()
+        {
+            if (giftOffered || !game.State.TutorialDone || !game.GiftDue(Today) || ui.ModalOpen || ui.Dialogue.IsOpen) return;
+            giftOffered = true;
+            var gift = game.GiftToday;
+            ui.Prompt.Show(Loc.T("today.giftDay", game.GiftDay), null, Loc.T("today.giftText"), new[]
+            {
+                PromptView.Primary(Loc.T("today.take"), () =>
+                {
+                    if (game.ClaimGift(Today) == null) return;
+                    Track("daily_gift", "day", game.State.LoginDay);
+                    account.ClaimNow();
+                    dirty = true;
+                }),
+                PromptView.Quiet(Loc.T("today.open"), () => ui.Today.Show())
+            }, celebrate: true);
+        }
+
+        // Called from Update: events start and end while the game is open.
+        void TickLiveOps()
+        {
+            if (Time.unscaledTime < nextEventCheck || liveEvents == null) return;
+            nextEventCheck = Time.unscaledTime + 30f;
+            liveEvents.Apply();
+            OfferDailyGift();
+        }
+
         // ---------- Shop and rewarded ads (missing/17) ----------
 
         PurchaseService purchases;
@@ -800,6 +858,7 @@ namespace Gahwit.Boot
         void Update()
         {
             if (account == null) return; // still starting
+            TickLiveOps();
             if (Time.unscaledTime >= nextUnlockCheck)
             {
                 nextUnlockCheck = Time.unscaledTime + 5f;
@@ -839,7 +898,7 @@ namespace Gahwit.Boot
             if (!paused)
             {
                 sessionStartedAt = Time.realtimeSinceStartup;
-                Track("session_start", "energy", game.State.Energy, "level", game.State.Level);
+                Track("session_start", "energy", game.State.Energy, "level", game.State.Level, "config", RemoteConfig.Version);
                 notifications.Clear();
                 return;
             }

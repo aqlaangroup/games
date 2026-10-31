@@ -46,7 +46,7 @@ public class PurchaseTests(PlatformFactory api)
         Assert.Equal("eid", bought.GetProperty("items").GetProperty("decorSet").GetString());
         Assert.False(bought.GetProperty("items").TryGetProperty("gems", out _));
         Assert.Equal(60, bought.GetProperty("wallet").GetProperty("gems").GetInt64());
-        Assert.Equal(1, bought.GetProperty("wallet").EnumerateObject().Count());
+        Assert.Single(bought.GetProperty("wallet").EnumerateObject());
 
         var list = await (await client.GetAsync($"/games/{GameA}/players/me/purchases")).Json();
         Assert.Equal("decor", list[0].Str("sku"));

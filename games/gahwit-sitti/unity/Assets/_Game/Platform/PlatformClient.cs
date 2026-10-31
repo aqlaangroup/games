@@ -137,6 +137,32 @@ namespace Gahwit.Platform
             new JObject { ["provider"] = provider, ["idToken"] = idToken, ["nonce"] = nonce };
 
         // The oldest game version the platform still serves (game.json minGameVersion), or null.
+        // The balance.json staff published on the platform, as text, with its version (missing/18). No sign-in needed.
+        public async Task<Reply<(string Json, string Version)>> Config()
+        {
+            if (!Configured) return Reply<(string, string)>.Fail(Outcome.Offline);
+            HttpReply raw;
+            try
+            {
+                raw = await http.Send("GET", root + "/config", null, null);
+            }
+            catch (Exception e)
+            {
+                UnityEngine.Debug.LogWarning($"[Platform] GET /config: {e.Message}");
+                return Reply<(string, string)>.Fail(Outcome.Offline);
+            }
+            if (raw.Status == 0) return Reply<(string, string)>.Fail(Outcome.Offline);
+            if (raw.Status != 200) return Reply<(string, string)>.Fail(Outcome.Failed, "http_" + raw.Status);
+            return Reply<(string, string)>.Of((raw.Body, raw.ConfigVersion));
+        }
+
+        // The events running now (missing/18). No sign-in needed.
+        public async Task<Reply<JArray>> Events()
+        {
+            if (!Configured) return Reply<JArray>.Fail(Outcome.Offline);
+            return await Send<JArray>("GET", "/events", null, null);
+        }
+
         public async Task<Reply<string>> MinVersion()
         {
             if (!Configured) return Reply<string>.Fail(Outcome.Offline);
@@ -229,17 +255,19 @@ namespace Gahwit.Platform
             }
             if (raw.Status == 0) return Reply<T>.Fail(Outcome.Offline);
 
-            JObject parsed = null;
+            JToken parsed = null;
             try
             {
-                if (!string.IsNullOrWhiteSpace(raw.Body) && raw.Body.TrimStart().StartsWith("{")) parsed = JObject.Parse(raw.Body);
+                string start = raw.Body?.TrimStart() ?? "";
+                if (start.StartsWith("{") || start.StartsWith("[")) parsed = JToken.Parse(raw.Body);
             }
             catch (JsonException) { }
-            string error = parsed?.Value<string>("error");
+            var detail = parsed as JObject;
+            string error = detail?.Value<string>("error");
 
-            if (raw.Status == 401) return Reply<T>.Fail(Outcome.SignedOut, error, parsed);
-            if (raw.Status == 409) return Reply<T>.Fail(Outcome.Conflict, error, parsed);
-            if (raw.Status < 200 || raw.Status >= 300) return Reply<T>.Fail(Outcome.Failed, error ?? "http_" + raw.Status, parsed);
+            if (raw.Status == 401) return Reply<T>.Fail(Outcome.SignedOut, error, detail);
+            if (raw.Status == 409) return Reply<T>.Fail(Outcome.Conflict, error, detail);
+            if (raw.Status < 200 || raw.Status >= 300) return Reply<T>.Fail(Outcome.Failed, error ?? "http_" + raw.Status, detail);
             if (parsed == null) return Reply<T>.Of(default);
             if (parsed is T same) return Reply<T>.Of(same);
             return Reply<T>.Of(parsed.ToObject<T>());

@@ -112,7 +112,7 @@ namespace Gahwit.Merge
         public int SecondsToNextEnergy(long nowMs) =>
             State.Energy >= EnergyCap ? 0 : (int)Math.Max(0, (RegenMs - (nowMs - State.EnergyStampMs) + 999) / 1000);
 
-        void SpendEnergy(int amount, long nowMs)
+        public void SpendEnergy(int amount, long nowMs)
         {
             // Refill starts counting the moment energy drops below the cap.
             if (State.Energy >= EnergyCap && State.Energy - amount < EnergyCap) State.EnergyStampMs = nowMs;
@@ -132,6 +132,8 @@ namespace Gahwit.Merge
             if (spawnedAt < 0) return TapResult.BoardFull;
 
             SpendEnergy(cost, nowMs);
+            Progress("tap_generators", 1);
+            Progress("spend_energy", cost);
             int level = Math.Min(RollGeneratorOutput(generator.Level), MaxLevel(generator.Chain));
             State.Board[spawnedAt] = new Item(generator.Chain, level);
             ItemSpawned?.Invoke(spawnedAt);
@@ -218,6 +220,8 @@ namespace Gahwit.Merge
             {
                 State.Board[to] = new Item(moving.Chain, moving.Level + 1, moving.Generator);
                 State.Board[from] = null;
+                Progress("merge", 1);
+                if (!moving.IsGenerator && moving.Level + 1 == 5) Progress("make_level5", 1);
                 MaybeBubble(State.Board[to]);
                 ItemsMerged?.Invoke(to);
                 Changed?.Invoke();
@@ -241,6 +245,8 @@ namespace Gahwit.Merge
             int coins = SellValue(item);
             State.Board[cell] = null;
             State.Coins += coins;
+            Progress("sell", 1);
+            Progress("earn_coins", coins);
             Changed?.Invoke();
             return coins;
         }
@@ -294,7 +300,12 @@ namespace Gahwit.Merge
 
             State.Orders.Remove(order);
             State.OrdersServed++;
-            State.Coins += order.Coins;
+            // A double weekend (missing/18) multiplies the coins while it runs.
+            LastServedCoins = order.Coins * Math.Max(1, CoinMultiplier);
+            State.Coins += LastServedCoins;
+            Progress("serve", 1);
+            Progress("earn_coins", LastServedCoins);
+            if (order.IsCharacter) Progress("serve_regular", 1);
             OrderServed?.Invoke(order);
             AddXp(order.Xp);
             FillOrders();

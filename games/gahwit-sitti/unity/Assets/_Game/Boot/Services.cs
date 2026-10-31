@@ -35,7 +35,7 @@ namespace Gahwit.Boot
             if (Current != null) yield break;
             var services = new Services
             {
-                Config = BalanceConfig.Load(),
+                Config = RemoteConfig.Load(), // the last good published config over the game's own (missing/18)
                 Content = ChapterContent.Load()
             };
             services.Saves = new SaveService(services.Config, services.Content);
@@ -52,6 +52,7 @@ namespace Gahwit.Boot
             services.Audio = AudioService.Shared;
             services.Analytics = new PlatformAnalytics(services.Platform, () => services.Time.NowMs, "gahwit-sitti-events");
             services.Analytics.CatchErrors();
+            _ = RemoteConfig.Refresh(services.Platform); // for the next launch
             Current = services;
         }
 

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Gahwit.Cafe;
 using Gahwit.Core;
 using Gahwit.Decor;
@@ -51,7 +52,8 @@ namespace Gahwit.UI
                                  || AgeGate.IsOpen || UpdateRequired.gameObject.activeSelf || Letter.IsOpen || Memory.IsPlaying
                                  || decorShop != null && decorShop.IsOpen || wardrobe != null && wardrobe.IsOpen
                                  || Prompt.IsOpen || Storage != null && Storage.IsOpen
-                                 || Pan != null && Pan.IsOpen || RecipeBook != null && RecipeBook.IsOpen || Shop != null && Shop.IsOpen;
+                                 || Pan != null && Pan.IsOpen || RecipeBook != null && RecipeBook.IsOpen || Shop != null && Shop.IsOpen
+                                 || Today != null && Today.IsOpen || MiniBoard != null && MiniBoard.IsOpen;
 
         public static GameUi Create(Game game, CafeCamera cafeCamera, CafeRoom room, Func<long> now, Action openDrawer, IAccountUi account,
             TutorialFlow tutorial, bool canSkipTutorial)
@@ -250,6 +252,26 @@ namespace Gahwit.UI
 
         public PanView Pan { get; private set; }
         public ShopView Shop { get; private set; }
+        public TodayView Today { get; private set; }
+        public MiniBoardView MiniBoard { get; private set; }
+
+        // Today and the events (missing/18): the daily gift and tasks, and the mini board.
+        public void SetLiveOps(ILiveEventsUi events, Func<string> today, Func<long> now, Action claimed, Action<MiniBoard> paid)
+        {
+            var safe = transform.Find("SafeArea");
+            MiniBoard = UiKit.Rect(safe, "MiniBoard").Stretch().gameObject.AddComponent<MiniBoardView>();
+            MiniBoard.Init(game, now, paid);
+            Today = UiKit.Rect(safe, "Today").Stretch().gameObject.AddComponent<TodayView>();
+            Today.Init(game, events, today, now, claimed, id =>
+            {
+                var board = events.Board(id);
+                if (board == null) return;
+                var info = events.Running.FirstOrDefault(e => e.Id == id);
+                MiniBoard.Show(board, info?.Settings.Value<string>(game.English ? "nameEn" : "name") ?? Loc.T("event.miniBoard"));
+            });
+            cafe.SetToday(() => Today.Show());
+            KeepOnTop();
+        }
         Button adOffer;
         float adOfferUntil;
 

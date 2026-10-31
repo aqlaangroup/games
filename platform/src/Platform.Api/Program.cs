@@ -114,7 +114,9 @@ games.MapGet("/config", async (HttpContext http, PlatformDb db, CancellationToke
     var gameId = http.Game().Id;
     var config = await db.Configs.Where(c => c.GameId == gameId && c.IsActive)
         .OrderByDescending(c => c.Version).FirstOrDefaultAsync(ct);
-    return config is null ? Results.NotFound() : Results.Text(config.Json, "application/json");
+    if (config is null) return Results.NotFound();
+    http.Response.Headers["X-Config-Version"] = config.Version.ToString(); // for analytics: results by config version
+    return Results.Text(config.Json, "application/json");
 });
 
 games.MapGet("/events", async (HttpContext http, PlatformDb db, TimeProvider clock, CancellationToken ct) =>
@@ -134,6 +136,7 @@ RewardEndpoints.Map(me);
 EventEndpoints.Map(me);
 PurchaseEndpoints.Map(signedIn);
 AdminEndpoints.MapGame(games);
+LiveOpsEndpoints.Map(games);
 StoreNotificationEndpoints.Map(games);
 
 app.Run();

@@ -1744,6 +1744,187 @@ MonoBehaviour:
     m_Localized: Tap the gems at the top. The starter pack is a one-time offer.
     m_Metadata:
       m_Items: []
+  - m_Id: 139309565861888
+    m_Localized: Today
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444800
+    m_Localized: Today
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444801
+    m_Localized: Daily gift
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444802
+    m_Localized: 'Daily gift: day {0} of 7'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444803
+    m_Localized: A gift for coming by today. Come back tomorrow for the next one.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444804
+    m_Localized: The daily gift opens at level {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444805
+    m_Localized: Today's gift is yours. Day {0} waits for you tomorrow.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444806
+    m_Localized: Take it
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444807
+    m_Localized: Later
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444808
+    m_Localized: +{0} coins
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444809
+    m_Localized: A decor piece
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444810
+    m_Localized: Today's tasks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444811
+    m_Localized: '{0} gems'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444812
+    m_Localized: Claim
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444813
+    m_Localized: Done
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444814
+    m_Localized: Events
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444815
+    m_Localized: Events need a connection. They'll show when you're back online.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444816
+    m_Localized: No events right now. Check back later.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444817
+    m_Localized: Ends in {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444818
+    m_Localized: '{0} days'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444819
+    m_Localized: Play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444820
+    m_Localized: Serve {0} orders
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444821
+    m_Localized: Merge {0} times
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444822
+    m_Localized: Spend {0} energy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444823
+    m_Localized: Tap generators {0} times
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444824
+    m_Localized: Serve a regular {0} times
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444825
+    m_Localized: Make {0} level-5 items
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444826
+    m_Localized: Sell {0} items
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444827
+    m_Localized: Earn {0} coins
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444828
+    m_Localized: Place or move a decor piece
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444829
+    m_Localized: Change Salma's outfit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444830
+    m_Localized: Send {0} gifts to friends
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444831
+    m_Localized: Give {0} items to a hosting order
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444832
+    m_Localized: Friday market
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444833
+    m_Localized: Double weekend
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444834
+    m_Localized: "Order coins \xD7{0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444835
+    m_Localized: "{0} tokens \xB7 next milestone at {1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444836
+    m_Localized: "{0} tokens \xB7 every milestone reached"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444837
+    m_Localized: "{0} \xB7 +{1} tokens"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444838
+    m_Localized: Stall
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444839
+    m_Localized: Milestone {0} reached!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444840
+    m_Localized: A gift every day
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444841
+    m_Localized: Come by every day for a new gift, with three small tasks under Today.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444842
+    m_Localized: The Friday market
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444843
+    m_Localized: Events bring a small board with its own chain. Serve its orders
+      for tokens and rewards.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

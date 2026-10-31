@@ -2,6 +2,26 @@
 
 Decisions and known gaps. Newest first. Read this at the start of each session (`/CLAUDE.md`).
 
+## 2026-10-31: remote config, daily gift and tasks, events, the mini board (missing/18)
+
+- **Remote config:**
+  - Staff publish a whole balance.json on the platform (`POST /games/{slug}/admin/config`, producer), or go back to an older version. A file that isn't JSON or lacks a core section is refused there.
+  - The game lays the published copy over its own (`Core/BalanceCheck.cs`), so a missing section keeps the game's numbers, and checks the result before using it (tested).
+  - It plays with the last good copy and fetches the newest for the next launch (`Boot/RemoteConfig.cs`), so starting never waits on the network.
+  - `session_start` records the config version (the platform's `X-Config-Version` header).
+- **Daily gift** (`Game.Daily.cs`, tested): from level 3, once a local day by trusted time, the next of the 7 `dailyLogin` gifts. Energy and coins are applied in the game; gems come from the platform (`daily:<date>`), which counts the gifts claimed before to know the day. A card offers it once a session; Today shows it too.
+- **Daily tasks:** 3 a day, picked from `dailyTasks.list` for the player's level, the same all day. Serving, merging, tapping, selling, decor and the wardrobe count toward them. A finished task gives 50 pass points in the game and 2 gems from the platform (`task:<date>:<id>`, at most `perDay` a day).
+- **Events:** `LiveEvents` fetches what staff scheduled (`POST /games/{slug}/admin/events`) at launch, checks times with trusted time, and shows a gentle line offline.
+  - **Mini board** (`Merge/MiniBoard.cs`, tested): a 5 × 6 board, a stall making the chain's first item for 1 energy, two orders, 2 tokens a serve, and 10 milestones. Milestone gems come from the platform (`event:<id>:<n>`); coins, energy and decor are applied in the game. The event's settings can replace the chain, milestones, rewards and name, so a new theme needs no update. It opens at level 8.
+  - **Double weekend:** order coins × `coinMultiplier` (2) while it runs, for everyone.
+  - A finished mini board's progress is dropped once the platform no longer lists it.
+- **Gems earned in play** wait in the save (`daily.pendingRewards`) and go through the same claim loop as level-ups. Offline, they're paid later; a claim more than a day old is refused and dropped.
+- **Today** (the café's new side button): the gift, the 3 tasks with progress and Claim, and the running events.
+- **Save schema v11:** the daily section (gift day, today's tasks, pass points, pending rewards) and `events."miniBoard:<id>"`, with a test.
+- **Platform:** live-ops routes for staff, and reward rules for `daily:`, `task:` and `event:` ids (5 new tests, 61 in all).
+- **Checked in the Editor:** a mini board and a double weekend scheduled on the local platform both showed up in Today; the mini board played, and order coins doubled.
+- **Still missing:** see "Still open" in missing/18. That covers the pass, the album and hosting, the calendar's repeating schedule, and event art.
+
 ## 2026-10-31: purchases, shop, restore, refunds and rewarded ads (missing/17)
 
 - **Platform** (`/platform`, 8 new tests, 56 in all):

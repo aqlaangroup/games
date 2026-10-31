@@ -79,7 +79,10 @@ public class PlatformFactory : WebApplicationFactory<Program>, IAsyncLifetime
               "board": { "inventorySlotGemCosts": [30, 60] },
               "energy": { "gemRefill": { "amount": 100, "gemCostsByPurchaseOfDay": [30, 45] } },
               "chapters": [ { "n": 1, "taskCosts": [10, 20], "reward": { "gems": 20 } }, { "n": 2, "taskCosts": [30], "reward": { "gems": 25 } } ],
-              "levelB": { "memories": { "skipRetryGems": 10 } }
+              "levelB": { "memories": { "skipRetryGems": 10 } },
+              "dailyLogin": [ { "day": 1, "energy": 25 }, { "day": 2, "gems": 5 }, { "day": 3, "gems": 20 } ],
+              "dailyTasks": { "perDay": 2, "rewardEach": { "gems": 2 }, "list": [ { "id": "serve_10" }, { "id": "merge_30" }, { "id": "sell_5" } ] },
+              "events": { "templates": { "miniBoard": { "milestoneRewards": [ { "coins": 200 }, { "gems": 5 } ] } } }
             }
             """);
         Write(GameB, $$"""

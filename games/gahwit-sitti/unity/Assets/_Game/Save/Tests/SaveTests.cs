@@ -246,6 +246,34 @@ namespace Gahwit.Save.Tests
         }
 
         [Test]
+        public void DailyProgressAndMiniBoardsRoundTrip()
+        {
+            var time = new TimeService(new FakeClock(), null);
+            var state = PlayedState();
+            state.LoginDay = 3;
+            state.LastGiftDate = "2026-10-31";
+            state.TasksDate = "2026-10-31";
+            state.DailyTasks.Add(new DailyTaskState { Id = "serve_10", Progress = 4 });
+            state.PassPoints = 50;
+            var board = new Item[30];
+            board[27] = new Item(MiniBoard.Chain, 1, MiniBoard.Stall);
+            board[3] = new Item(MiniBoard.Chain, 4);
+            state.MiniBoards["e1"] = new MiniBoardState { Board = board, Orders = { 2, 3 }, Tokens = 12, Paid = { 1 }, Rng = 99 };
+
+            var loaded = SaveService.FromJson(WriteJson(state, time), config, content, out _, out _);
+            Assert.AreEqual(3, loaded.LoginDay);
+            Assert.AreEqual("2026-10-31", loaded.LastGiftDate);
+            Assert.AreEqual(4, loaded.DailyTasks.Single().Progress);
+            Assert.AreEqual(50, loaded.PassPoints);
+            var mini = loaded.MiniBoards["e1"];
+            Assert.IsTrue(mini.Board[27].IsGenerator);
+            Assert.AreEqual(4, mini.Board[3].Level);
+            CollectionAssert.AreEqual(new[] { 2, 3 }, mini.Orders);
+            Assert.AreEqual(12, mini.Tokens);
+            CollectionAssert.AreEqual(new[] { 1 }, mini.Paid);
+        }
+
+        [Test]
         public void SectionsTheGameDoesNotUseYetSurviveASave()
         {
             var time = new TimeService(new FakeClock(), null);

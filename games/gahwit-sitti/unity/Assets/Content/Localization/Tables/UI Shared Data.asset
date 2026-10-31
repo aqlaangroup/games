@@ -1723,6 +1723,186 @@ MonoBehaviour:
     m_Key: unlock.shop.text
     m_Metadata:
       m_Items: []
+  - m_Id: 139309565861888
+    m_Key: today.button
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444800
+    m_Key: today.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444801
+    m_Key: today.gift
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444802
+    m_Key: today.giftDay
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444803
+    m_Key: today.giftText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444804
+    m_Key: today.giftLater
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444805
+    m_Key: today.giftTomorrow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444806
+    m_Key: today.take
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444807
+    m_Key: today.open
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444808
+    m_Key: today.coins
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444809
+    m_Key: today.decor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444810
+    m_Key: today.tasks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444811
+    m_Key: today.taskReward
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444812
+    m_Key: today.claim
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444813
+    m_Key: today.claimed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444814
+    m_Key: today.events
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444815
+    m_Key: today.offline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444816
+    m_Key: today.noEvents
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444817
+    m_Key: today.left
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444818
+    m_Key: today.days
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444819
+    m_Key: today.play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444820
+    m_Key: task.serve
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444821
+    m_Key: task.merge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444822
+    m_Key: task.spend_energy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444823
+    m_Key: task.tap_generators
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444824
+    m_Key: task.serve_regular
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444825
+    m_Key: task.make_level5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444826
+    m_Key: task.sell
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444827
+    m_Key: task.earn_coins
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444828
+    m_Key: task.place_decor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444829
+    m_Key: task.wear_outfit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444830
+    m_Key: task.send_gifts
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444831
+    m_Key: task.help_hosting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444832
+    m_Key: event.miniBoard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444833
+    m_Key: event.frenzy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444834
+    m_Key: event.frenzyText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444835
+    m_Key: mini.tokens
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444836
+    m_Key: mini.allMilestones
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444837
+    m_Key: mini.order
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444838
+    m_Key: mini.stall
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444839
+    m_Key: mini.milestone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444840
+    m_Key: unlock.daily_gift.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444841
+    m_Key: unlock.daily_gift.text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444842
+    m_Key: unlock.mini_board_event.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139309578444843
+    m_Key: unlock.mini_board_event.text
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

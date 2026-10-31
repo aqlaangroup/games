@@ -27,6 +27,9 @@ namespace Gahwit.Core
         public WeatherConfig Weather;
         public UiConfig Ui;
         public LevelBConfig LevelB;
+        public List<DailyGiftDef> DailyLogin;
+        public DailyTasksConfig DailyTasks;
+        public EventsConfig Events;
 
         public static BalanceConfig Parse(string json) => JsonConvert.DeserializeObject<BalanceConfig>(json);
 
@@ -287,6 +290,42 @@ namespace Gahwit.Core
         public RegularsConfig Regulars;
         public MemoriesConfig Memories;
         public RecipesConfig Recipes;
+    }
+
+    public sealed class DailyGiftDef
+    {
+        public int Day;
+        public int Energy;
+        public int Coins;
+        public int Gems;      // granted by the platform ("daily:<date>")
+        public string Decor;
+    }
+
+    public sealed class DailyTasksConfig
+    {
+        public int PerDay;
+        public DailyTaskReward RewardEach;
+        public List<DailyTaskDef> List;
+    }
+
+    public sealed class DailyTaskReward
+    {
+        public int Gems;      // granted by the platform ("task:<date>:<id>")
+        public int PassPoints;
+    }
+
+    public sealed class DailyTaskDef
+    {
+        public string Id;     // "serve_10": what counts ("serve") and the target
+        public string En;
+        public int Target;
+        public int FromLevel;
+    }
+
+    // Template defaults (balance.json events.templates); a scheduled event's settings lay over them.
+    public sealed class EventsConfig
+    {
+        public Newtonsoft.Json.Linq.JObject Templates;
     }
 
     public sealed class RecipesConfig

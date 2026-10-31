@@ -8,6 +8,7 @@ namespace Gahwit.Platform
     {
         public int Status;    // 0 when the platform couldn't be reached
         public string Body;
+        public string ConfigVersion; // the X-Config-Version header of /config
     }
 
     public interface IPlatformHttp
@@ -34,7 +35,12 @@ namespace Gahwit.Platform
             request.SendWebRequest().completed += _ =>
             {
                 bool reached = request.result == UnityWebRequest.Result.Success || request.result == UnityWebRequest.Result.ProtocolError;
-                done.SetResult(new HttpReply { Status = reached ? (int)request.responseCode : 0, Body = request.downloadHandler.text });
+                done.SetResult(new HttpReply
+                {
+                    Status = reached ? (int)request.responseCode : 0,
+                    Body = request.downloadHandler.text,
+                    ConfigVersion = request.GetResponseHeader("X-Config-Version")
+                });
                 request.Dispose();
             };
             return done.Task;

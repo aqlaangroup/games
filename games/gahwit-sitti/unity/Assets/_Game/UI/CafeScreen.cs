@@ -294,8 +294,18 @@ namespace Gahwit.UI
             Tweens.Instance?.PopOf(cosiness.rectTransform, 0.12f);
         }
 
+        Button todayButton;
+
+        // Today's gift, tasks and events (missing/18), under the side buttons.
+        public void SetToday(System.Action open)
+        {
+            todayButton = UiKit.Button(transform, "Today", Loc.T("today.button"), Palette.Gold, Palette.Ink, 24, () => open(), 60);
+            ((RectTransform)todayButton.transform).Pin(new Vector2(0, 1), new Vector2(20, -444), new Vector2(UiKit.MinTouch, UiKit.MinTouch));
+        }
+
         public void Refresh()
         {
+            if (todayButton != null) todayButton.gameObject.SetActive(!decorMode);
             taskCard.SetActive(!decorMode);
             decorBar.SetActive(decorMode);
             decorButton.gameObject.SetActive(decor != null && decor.ShopOpen && !decorMode);

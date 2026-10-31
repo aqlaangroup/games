@@ -114,7 +114,7 @@ All JSON is camelCase. Errors look like `{ "error": "code" }`. Every game route 
 |---|---|
 | `GET /health` | Health check |
 | `GET /games/{slug}/time` | `{ now, nowMs }`: server time, so energy can't be cheated by changing the phone clock |
-| `GET /games/{slug}/config` | The active balance settings. A game's `balance.json` (game.json `balanceConfig`) is published as version 1 when none exists; in Development a changed file is published again |
+| `GET /games/{slug}/config` | The active balance settings, with its version in the `X-Config-Version` header. A game's `balance.json` (game.json `balanceConfig`) is published as version 1 when none exists; in Development a changed file is published again. Staff publish new versions (below) |
 | `GET /games/{slug}/version` | `{ minVersion }` from game.json `minGameVersion`; older games show "update required" |
 | `GET /games/{slug}/events` | Live events running now |
 | `POST /games/{slug}/players/guest` | `{ device, gameVersion }` → a new guest's `AuthResponse` |
@@ -136,7 +136,7 @@ All JSON is camelCase. Errors look like `{ "error": "code" }`. Every game route 
 | `GET /games/{slug}/players/me/save` | `{ version, save, summary: { level, chapter }, updatedAt, device }`, or `204` with no save |
 | `PUT /games/{slug}/players/me/save` | `{ baseVersion, save, device, force? }` → `{ version }`. `409 conflict { server: { version, summary, updatedAt, device } }` |
 | `GET /games/{slug}/players/me/wallet` | `{ wallet: { gems } }` |
-| `POST /games/{slug}/players/me/rewards` | `{ id: "levelUp:7" \| "chapter:2" }` → `{ granted: { gems }, wallet }`, or `{ alreadyClaimed, wallet }`. Each id grants once. The latest cloud save must show it: `409 not_earned_yet` until the game uploads it. `400 unknown_reward` |
+| `POST /games/{slug}/players/me/rewards` | `{ id: "levelUp:7" \| "chapter:2" \| "daily:2026-10-31" \| "task:2026-10-31:serve_10" \| "event:<id>:3" }` → `{ granted: { gems }, wallet }`, or `{ alreadyClaimed, wallet }`. Each id grants once. Level-ups and chapters: the latest cloud save must show it, `409 not_earned_yet` until the game uploads it. Daily gifts, tasks and event milestones can't be seen in a save, so they're limited instead: the date within a day of today (`400 wrong_day`), `dailyTasks.perDay` tasks a day (`400 daily_limit`), a running mini board (`400 event_over`); the gift's day in its 7-day cycle is how many gifts were claimed before. `400 unknown_reward` |
 | `POST /games/{slug}/players/me/spend` | `{ item, requestId }` → `{ item, gems, grant, wallet }`. Items: `energyRefill` (each refill today costs more), `storageSlot:N` (once), `bubble:L` or `bubble:L:chain` (the chain comes back in the grant), `memoryRetry:<memory>`. A repeated `requestId` returns `{ alreadySpent }` without spending again. `409 not_enough_gems`, `409 already_owned`, `400 unknown_item`. The game applies `grant` only after this reply |
 | `POST /games/{slug}/players/me/events` | `{ events: [{ name, fields, timeMs, sessionId }], gameVersion, device }` (up to 200) → `202 { accepted }`. Bad events are dropped, not the batch |
 | `POST /games/{slug}/players/me/support` | `{ message, email?, gameVersion, device, language }` → `201 { ticketId }` |
@@ -160,6 +160,12 @@ All JSON is camelCase. Errors look like `{ "error": "code" }`. Every game route 
 | `DELETE /games/{slug}/admin/staff/{adminId}` | owner | Remove from this game. `400 last_owner` |
 | `GET /games/{slug}/admin/audit` | owner | The newest 200 staff writes |
 | `GET /games/{slug}/admin/metrics?days=30` | viewer | Tester gate numbers from game events: players, sessions, players per tutorial step, reached the first memory, found the letter, day 1 return, average session length, error-free sessions |
+| `GET /games/{slug}/admin/config` | viewer | Published balance.json versions |
+| `POST /games/{slug}/admin/config` | producer | Body: a whole balance.json → `{ version }`, now active. Refused if it isn't JSON or lacks a core section (`energy`, `orders`, `board`, `chains`, `formulas`, `chapters`) |
+| `POST /games/{slug}/admin/config/{version}/activate` | producer | Go back (or forward) to a published version |
+| `GET /games/{slug}/admin/events` | viewer | Scheduled events, newest first |
+| `POST /games/{slug}/admin/events` | producer | `{ template, startsAt, endsAt, settings }`: `miniBoard`, `frenzy`, `pass`, `album` or `hospitality`, up to 60 days. `settings` lay over the template's numbers in balance.json (a mini board's `chain`, `milestoneTokens`, `milestoneRewards`, `name`, `nameEn`) |
+| `DELETE /games/{slug}/admin/events/{id}` | producer | Cancel an event |
 
 **Store notifications** (anonymous; always `200` once read, so the stores stop retrying):
 - `POST /games/{slug}/stores/apple/notifications`: App Store Server Notifications v2. The platform reads the transaction id from the notification, asks Apple for that transaction with its own key, and refunds it when Apple says it's revoked.

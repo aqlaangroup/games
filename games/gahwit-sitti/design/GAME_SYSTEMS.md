@@ -226,10 +226,17 @@ That's about 20 events a month, which matches Gossip Harbor's early calendar.
 
 The simulator checks the pass: a typical player reaches tier 30 in 28 days, and a casual player reaches tier 24.
 
+**Decided 2026-10-31 (missing/18):**
+- **Templates built:** the mini board and the double weekend. The pass, the album and hosting wait for their content and social features (13, 20).
+- **The mini board** is its own small board: a stall makes the chain's first item for 1 of the main energy, two orders ask for one item each (from level 2, higher as milestones are reached), each serve gives `tokensPerOrder` tokens, and milestones give their rewards once. Its chain, milestones, rewards and name can come with the scheduled event, so a new theme needs no app update.
+- **The double weekend** is for every player, at any level, and multiplies the coins of orders served while it runs.
+- **Remote config:** the published balance.json lays over the game's own copy, so a section it lacks keeps the game's numbers. The game plays with the last good published copy and fetches the newest for its next launch, so starting never waits on the network.
+
 ## 14. Daily systems
 
 - **Login, days 1–7:** 25 energy, 50 coins, 5 gems, 50 energy, 100 coins, 10 gems, then 20 gems plus a cushion decor.
 - **Daily tasks:** 3 a day, such as "serve 10 orders". Each gives 2 gems and 50 pass points.
+- **A new day** starts at the player's local midnight, by trusted time (decided 2026-10-31). The gift's day in its 7-day cycle counts gifts claimed, not days in a row. The 3 tasks are picked from `dailyTasks.list` for the player's level, the same all day.
 - **Gifting** (from level 10): send 5 energy gifts a day and visit friends' cafés. Players add friends by code, and there is no open chat.
 
 ## 15. Analytics: events Unity must log

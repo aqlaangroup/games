@@ -42,6 +42,13 @@ namespace Gahwit.Merge
         public Dictionary<string, int> AdsWatched = new Dictionary<string, int>(); // placement → ads watched that day
         public List<string> PurchasesApplied = new List<string>(); // platform purchase ids whose items are in this save
         public List<string> Entitlements = new List<string>();     // bought switches such as passPremium (missing/18)
+        public int LoginDay;          // daily gifts claimed so far; the next gift is dailyLogin[LoginDay % 7]
+        public string LastGiftDate;   // the local day the last gift was claimed
+        public string TasksDate;      // the local day DailyTasks are for
+        public List<DailyTaskState> DailyTasks = new List<DailyTaskState>();
+        public int PassPoints;        // from daily tasks, for the season pass (missing/18)
+        public List<string> PendingRewards = new List<string>(); // platform reward ids earned in play, not paid yet
+        public Dictionary<string, MiniBoardState> MiniBoards = new Dictionary<string, MiniBoardState>(); // by event id
         public ulong Rng;
     }
 
@@ -97,6 +104,23 @@ namespace Gahwit.Merge
         public int Coins;
         public int Xp;
         public string Recipe; // a signature dish asked for by name (SYSTEMS_B.md section 4), or null
+    }
+
+    // One mini board event's progress (missing/18), kept until the event ends.
+    public sealed class MiniBoardState
+    {
+        public Item[] Board;
+        public List<int> Orders = new List<int>(); // the level each order wants
+        public int Tokens;
+        public List<int> Paid = new List<int>();   // milestones (1-based) already rewarded
+        public ulong Rng;
+    }
+
+    public sealed class DailyTaskState
+    {
+        public string Id;
+        public int Progress;
+        public bool Claimed;
     }
 
     // A found recipe a customer can ask for: its id and the two items that make it.

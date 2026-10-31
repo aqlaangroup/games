@@ -84,6 +84,24 @@ namespace Gahwit.Save
             into.Recipes["wrongStreak"] = state.RecipeWrongStreak;
             into.Recipes["pan"] = new JArray(state.Pan.Select(p => new JObject { ["chain"] = p.Chain, ["level"] = p.Level }));
             into.Daily["adsDate"] = state.AdsDate;
+            into.Daily["loginDay"] = state.LoginDay;
+            into.Daily["lastLoginDate"] = state.LastGiftDate;
+            into.Daily["tasksDate"] = state.TasksDate;
+            into.Daily["tasks"] = new JArray(state.DailyTasks.Select(t => new JObject { ["id"] = t.Id, ["progress"] = t.Progress, ["claimed"] = t.Claimed }));
+            into.Daily["passPoints"] = state.PassPoints;
+            into.Daily["pendingRewards"] = new JArray(state.PendingRewards);
+            foreach (var old in into.Events.Properties().Where(p => p.Name.StartsWith(MiniBoardKey)).ToList()) old.Remove();
+            foreach (var mini in state.MiniBoards)
+                into.Events[MiniBoardKey + mini.Key] = new JObject
+                {
+                    ["cells"] = new JArray(mini.Value.Board.Select((p, i) => (p, i)).Where(x => x.p != null)
+                        .Select(x => new JObject { ["i"] = x.i, ["level"] = x.p.Level, ["stall"] = x.p.IsGenerator })),
+                    ["size"] = mini.Value.Board.Length,
+                    ["orders"] = new JArray(mini.Value.Orders),
+                    ["tokens"] = mini.Value.Tokens,
+                    ["paid"] = new JArray(mini.Value.Paid),
+                    ["rng"] = mini.Value.Rng.ToString()
+                };
             into.Daily["adsWatched"] = JObject.FromObject(state.AdsWatched);
             into.Purchases["applied"] = new JArray(state.PurchasesApplied);
             into.Purchases["entitlements"] = new JArray(state.Entitlements);
@@ -131,6 +149,17 @@ namespace Gahwit.Save
                 RecipesFound = data.Recipes["found"]?.Values<string>().ToList() ?? new List<string>(),
                 RecipeWrongStreak = data.Recipes.Value<int?>("wrongStreak") ?? 0,
                 AdsDate = data.Daily.Value<string>("adsDate"),
+                LoginDay = data.Daily.Value<int?>("loginDay") ?? 0,
+                LastGiftDate = data.Daily.Value<string>("lastLoginDate"),
+                TasksDate = data.Daily.Value<string>("tasksDate"),
+                DailyTasks = (data.Daily["tasks"] as JArray)?.OfType<JObject>().Select(t => new DailyTaskState
+                {
+                    Id = t.Value<string>("id"), Progress = t.Value<int?>("progress") ?? 0, Claimed = t.Value<bool?>("claimed") ?? false
+                }).Where(t => t.Id != null).ToList() ?? new List<DailyTaskState>(),
+                PassPoints = data.Daily.Value<int?>("passPoints") ?? 0,
+                PendingRewards = data.Daily["pendingRewards"]?.Values<string>().ToList() ?? new List<string>(),
+                MiniBoards = data.Events.Properties().Where(p => p.Name.StartsWith(MiniBoardKey) && p.Value is JObject)
+                    .ToDictionary(p => p.Name.Substring(MiniBoardKey.Length), p => ReadMiniBoard((JObject)p.Value)),
                 AdsWatched = (data.Daily["adsWatched"] as JObject)?.Properties().Where(p => p.Value.Type == JTokenType.Integer)
                     .ToDictionary(p => p.Name, p => (int)p.Value) ?? new Dictionary<string, int>(),
                 PurchasesApplied = data.Purchases["applied"]?.Values<string>().ToList() ?? new List<string>(),
@@ -194,6 +223,29 @@ namespace Gahwit.Save
                 state.NextOrderId = Math.Max(state.NextOrderId, id + 1);
             }
             return state;
+        }
+
+        // A mini board's progress sits in the events section under "miniBoard:<event id>".
+        const string MiniBoardKey = "miniBoard:";
+
+        static MiniBoardState ReadMiniBoard(JObject saved)
+        {
+            var board = new Item[saved.Value<int?>("size") ?? 30];
+            foreach (var cell in (saved["cells"] as JArray)?.OfType<JObject>() ?? Enumerable.Empty<JObject>())
+            {
+                int i = cell.Value<int>("i");
+                if (i < 0 || i >= board.Length) continue;
+                bool stall = cell.Value<bool?>("stall") ?? false;
+                board[i] = new Item(MiniBoard.Chain, cell.Value<int?>("level") ?? 1, stall ? MiniBoard.Stall : null);
+            }
+            return new MiniBoardState
+            {
+                Board = board,
+                Orders = saved["orders"]?.Values<int>().ToList() ?? new List<int>(),
+                Tokens = saved.Value<int?>("tokens") ?? 0,
+                Paid = saved["paid"]?.Values<int>().ToList() ?? new List<int>(),
+                Rng = ulong.TryParse(saved.Value<string>("rng"), out var rng) ? rng : 1
+            };
         }
 
         public static TimeService.Anchor ReadClock(SaveData data) =>

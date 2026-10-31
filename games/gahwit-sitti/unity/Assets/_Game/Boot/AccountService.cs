@@ -211,6 +211,9 @@ namespace Gahwit.Boot
             SetCloud(put.Outcome == Outcome.Offline ? CloudStatus.Offline : CloudStatus.NotSaved);
         }
 
+        // Daily gifts, tasks and event milestones pay at once, without waiting for an upload.
+        public void ClaimNow() => Run(ClaimRewards);
+
         // Asks for the gems of every level-up and finished chapter this save has earned; the platform pays each once.
         // It runs after an upload, so the platform's copy of the save already shows them.
         async Task ClaimRewards()
@@ -225,12 +228,19 @@ namespace Gahwit.Boot
             }
             long gained = 0;
             int before = paid.Ids.Count;
-            foreach (var id in EarnedRewards.All(game.State.Level, game.State.Chapter))
+            // Level-ups and chapters from the save, then gems earned in daily play and events (missing/18).
+            foreach (var id in EarnedRewards.All(game.State.Level, game.State.Chapter).Concat(game.State.PendingRewards.ToList()))
             {
-                if (paid.Ids.Contains(id)) continue;
+                if (paid.Ids.Contains(id))
+                {
+                    game.State.PendingRewards.Remove(id);
+                    continue;
+                }
                 var reply = await client.ClaimReward(id);
                 if (reply.Outcome == Outcome.Conflict) continue; // not in the cloud save yet: after the next upload
-                if (!reply.Ok) break;                            // offline: next time
+                if (reply.Outcome == Outcome.Offline || reply.Outcome == Outcome.SignedOut) break; // next time
+                game.State.PendingRewards.Remove(id);
+                if (!reply.Ok) continue;                         // refused, such as a day too long ago: nothing to pay
                 paid.Ids.Add(id);
                 gained += reply.Value["granted"]?["gems"]?.Value<long>() ?? 0;
                 Wallet.ApplyPlatformBalance(PlatformClient.WalletGems(reply.Value));

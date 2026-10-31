@@ -33,7 +33,9 @@ public static class RewardEndpoints
         using var balance = await GameBalance.ActiveAsync(db, game.Id, ct);
         if (balance is null) return RequestContext.Error("no_config", StatusCodes.Status503ServiceUnavailable);
         var save = await db.Saves.AsNoTracking().FirstOrDefaultAsync(s => s.PlayerId == player.Id, ct);
-        var (gems, error) = RewardRules.Reward(id, balance.RootElement, save);
+        var (gems, error) = LiveRewards.Handles(id)
+            ? await LiveRewards.RewardAsync(id, balance.RootElement, db, game.Id, player.Id, clock.GetUtcNow(), ct)
+            : RewardRules.Reward(id, balance.RootElement, save);
         if (error == "not_earned_yet") return RequestContext.Error(error, StatusCodes.Status409Conflict);
         if (error is not null) return RequestContext.Error(error);
 

@@ -21,7 +21,8 @@ namespace Gahwit.Save
             [6] = SplitNotifications,
             [7] = AddMemoryAssist,
             [8] = AddRecipes,
-            [9] = AddPurchases
+            [9] = AddPurchases,
+            [10] = AddDailyAndEvents
         };
 
         public static JObject Upgrade(JObject raw, BalanceConfig config)
@@ -211,6 +212,19 @@ namespace Gahwit.Save
             if (daily["adsWatched"] == null) daily["adsWatched"] = new JObject();
             save["daily"] = daily;
             save["schemaVersion"] = 10;
+            return save;
+        }
+
+        // Version 11 (2026-10-31) uses the daily section (the gift's day, today's tasks, pass points) and keeps each
+        // mini board under events."miniBoard:<event id>". Older saves had nothing there to keep.
+        static JObject AddDailyAndEvents(JObject save, BalanceConfig config)
+        {
+            var daily = save["daily"] as JObject ?? new JObject();
+            if (!(daily["tasks"] is JArray)) daily["tasks"] = new JArray();
+            if (daily["loginDay"] == null) daily["loginDay"] = 0;
+            save["daily"] = daily;
+            if (!(save["events"] is JObject)) save["events"] = new JObject();
+            save["schemaVersion"] = 11;
             return save;
         }
 
