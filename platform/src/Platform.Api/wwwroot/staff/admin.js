@@ -302,8 +302,27 @@ const PAGES = {
       el("p", { class: "note" }, "Players deleted these accounts in the game. The purge removes them by deleteBy; purchases stay for accounting, unlinked.")));
   },
 
-  async metrics() {
-    view.replaceChildren(card("Tester gate (30 days)", pairs(await api("GET", game("/metrics?days=30")))));
+  // The tester gate and the soft-launch gates (PLAN.md section 2). Ad payback needs the spend, which only the ad
+  // accounts know, so it's typed in here: store revenue in that currency over these days divided by the spend.
+  async metrics(days = 30) {
+    const m = await api("GET", game(`/metrics?days=${days}`));
+    const choose = el("select", {}, ...[30, 60, 90].map(d => el("option", { value: d, ...(d === days ? { selected: "" } : {}) }, `${d} days`)));
+    choose.addEventListener("change", () => PAGES.metrics(Number(choose.value)));
+    const spend = el("input", { type: "number", min: "0", step: "0.01", placeholder: "Ad spend for these days" });
+    const currency = el("input", { type: "text", maxlength: "3", value: "USD", "aria-label": "Currency" });
+    const payback = el("p", { class: "note" }, "Type the ad spend to see payback.");
+    const show = () => {
+      const revenue = Number((m.storeRevenue || {})[currency.value.toUpperCase()] || 0), cost = Number(spend.value);
+      payback.textContent = cost > 0 ? `Payback: ${(100 * revenue / cost).toFixed(1)}% (${revenue} ${currency.value.toUpperCase()} from the stores; Google's sales and ad revenue aren't in it yet)` : "Type the ad spend to see payback.";
+    };
+    spend.addEventListener("input", show);
+    currency.addEventListener("input", show);
+    const byCountry = m.payersByCountry;
+    delete m.payersByCountry;
+    view.replaceChildren(
+      card(`Tester and soft-launch gates (${days} days)`, el("p", {}, choose), pairs(m)),
+      card("Paying players by country", table(Object.entries(byCountry || {}).map(([country, c]) => ({ country, ...c })))),
+      card("Ad payback", el("p", {}, spend, " ", currency), payback));
   },
 
   async game() {
