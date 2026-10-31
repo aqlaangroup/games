@@ -35,12 +35,13 @@ Each test run creates a throwaway database (`platform_test_<guid>`) on `Host=loc
 Player buys in the game (Unity IAP)
   → Apple / Google charge the player and send the game a receipt
   → the game sends the receipt to   POST /games/{slug}/purchases/verify   (signed in)
-  → the platform checks it directly with Apple (App Store Server API)
-    or Google (Play Developer API), using that game's own app ids
-  → if valid: record the purchase once (store transaction id is unique),
-    grant the items from that game's product list, return the new balances
-  → Apple / Google later call   POST /webhooks/apple   or   /webhooks/google
-    for refunds and pass renewals; the platform takes back or extends items
+  → the platform checks it directly with Apple (App Store Server API, by transaction id)
+    or Google (Play Developer API, by purchase token, then acknowledges it), using that game's own app ids
+  → if valid: record the purchase once (store transaction id is unique), add its gems to the wallet,
+    and return its other items (energy, a generator copy, a decor set, an outfit, the pass) with a purchase id;
+    the game applies those to its save once per purchase id, then finishes the store transaction
+  → Apple / Google later call   POST /games/{slug}/stores/apple/notifications   or   .../stores/google/notifications
+    for refunds; the platform marks the purchase refunded and takes its gems back
 Apple and Google pay the company bank account monthly (minus 15–30%).
 Ad networks pay monthly too; their reports are imported for the admin panel.
 ```
@@ -139,7 +140,8 @@ All JSON is camelCase. Errors look like `{ "error": "code" }`. Every game route 
 | `POST /games/{slug}/players/me/spend` | `{ item, requestId }` → `{ item, gems, grant, wallet }`. Items: `energyRefill` (each refill today costs more), `storageSlot:N` (once), `bubble:L` or `bubble:L:chain` (the chain comes back in the grant), `memoryRetry:<memory>`. A repeated `requestId` returns `{ alreadySpent }` without spending again. `409 not_enough_gems`, `409 already_owned`, `400 unknown_item`. The game applies `grant` only after this reply |
 | `POST /games/{slug}/players/me/events` | `{ events: [{ name, fields, timeMs, sessionId }], gameVersion, device }` (up to 200) → `202 { accepted }`. Bad events are dropped, not the batch |
 | `POST /games/{slug}/players/me/support` | `{ message, email?, gameVersion, device, language }` → `201 { ticketId }` |
-| `POST /games/{slug}/purchases/verify` | `{ store, sku, receipt }` → `{ granted, wallet }` or `{ alreadyGranted, wallet }` |
+| `POST /games/{slug}/purchases/verify` | `{ store, sku, receipt }` (Apple: the transaction id; Google: the purchase token) → `{ granted, purchaseId, items, wallet }`. Sent again it returns `{ alreadyGranted, purchaseId, items, wallet }` without granting gems twice; a non-consumable restored to another account brings its items only. `400 not_confirmed`, `400 refunded`, `400 unknown_product` |
+| `GET /games/{slug}/players/me/purchases` | `[{ purchaseId, sku, status, purchasedAt, items }]`, for restoring items after a reinstall and hiding one-off offers |
 
 **Staff** (`Authorization: Bearer <staff accessToken>`)
 
@@ -159,14 +161,22 @@ All JSON is camelCase. Errors look like `{ "error": "code" }`. Every game route 
 | `GET /games/{slug}/admin/audit` | owner | The newest 200 staff writes |
 | `GET /games/{slug}/admin/metrics?days=30` | viewer | Tester gate numbers from game events: players, sessions, players per tutorial step, reached the first memory, found the letter, day 1 return, average session length, error-free sessions |
 
-**Store notifications:** `POST /webhooks/apple` and `POST /webhooks/google` (to do: refunds, renewals, cancellations).
+**Store notifications** (anonymous; always `200` once read, so the stores stop retrying):
+- `POST /games/{slug}/stores/apple/notifications`: App Store Server Notifications v2. The platform reads the transaction id from the notification, asks Apple for that transaction with its own key, and refunds it when Apple says it's revoked.
+- `POST /games/{slug}/stores/google/notifications?token=<Stores:Google:PushToken>`: Google Play real-time developer notifications through a Pub/Sub push subscription. A voided purchase is refunded by its order id. A wrong token gets `401`.
+- **Refunds:** the purchase is marked refunded and its gems are taken back. A balance never goes below zero: if some gems are already spent, what's left is taken and the ledger notes the shortfall.
+
+**Store keys** (configuration or a secret store, never the repo):
+- `Stores:Apple:IssuerId`, `KeyId`, `PrivateKey`: an App Store Connect in-app purchase key (the `.p8` file's text).
+- `Stores:Google:ServiceAccountEmail`, `PrivateKey`, `PushToken`: a service account with access to the app in the Play Console, and the secret in the Pub/Sub push URL.
+- A store without keys refuses every receipt. On a desk only, `Stores:AllowDevReceipts` (in `appsettings.Development.json`) accepts the Editor's `dev:` receipts so the whole flow can be tried without a store.
 
 ## Still needs you
 
 - **Signing key:** a 32+ byte `Auth:SigningKey` in a secret store for every non-Development server.
 - **Google sign-in:** create OAuth client ids in Google Cloud (Android, plus a web client id if the game asks for an id token with it). Put them in `game.json` under `stores.google.signInClientIds`.
 - **Apple sign-in:** turn on the Sign in with Apple capability for the bundle id. To revoke Apple tokens when an account is deleted (Apple asks for this), the platform needs the Sign in with Apple key (`.p8`, key id, team id) and the Apple refresh token from the first sign-in. Until then `IAppleTokenRevoker` only logs.
-- **Store verification:** the Apple and Google receipt checks are still stubs that refuse every receipt, so nothing is granted by mistake. They need the App Store Server API key and a Google Play service account.
+- **Store keys:** the App Store in-app purchase key and a Google Play service account (above), the Pub/Sub topic and push subscription for Google's notifications, and the App Store Server Notifications URL in App Store Connect. Until then each store refuses every receipt, so nothing is granted by mistake.
 
 ## Admin panel (to come)
 

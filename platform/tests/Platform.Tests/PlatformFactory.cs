@@ -25,6 +25,7 @@ public class PlatformFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
     public const string GameA = "test-a", GameB = "test-b";
     public const string AppleAudienceA = "com.aqlaan.testa", GoogleClientA = "test-a.apps.googleusercontent.com";
+    public const string GooglePushToken = "test-push-token";
 
     readonly string database = $"platform_test_{Guid.NewGuid():N}";
     readonly string gamesDir = Path.Combine(Path.GetTempPath(), $"platform_games_{Guid.NewGuid():N}");
@@ -43,6 +44,7 @@ public class PlatformFactory : WebApplicationFactory<Program>, IAsyncLifetime
         builder.UseSetting("Auth:SigningKey", "a-test-signing-key-that-is-long-enough-for-hmac");
         builder.UseSetting("RateLimits:AuthPerMinute", AuthPerMinute.ToString());
         builder.UseSetting("Accounts:PurgeIntervalMinutes", "0");
+        builder.UseSetting("Stores:Google:PushToken", GooglePushToken);
         builder.ConfigureServices(services =>
         {
             services.RemoveAll<IJwksProvider>();
@@ -200,7 +202,7 @@ public sealed class TestJwks : IJwksProvider
     }
 }
 
-/// <summary>Accepts receipts written "ok:transactionId".</summary>
+/// <summary>Accepts receipts written "ok:transactionId". A transaction whose id contains "refunded" is revoked.</summary>
 public sealed class FakeStoreVerifier(Store store) : IStoreVerifier
 {
     public Store Store { get; } = store;
@@ -209,6 +211,9 @@ public sealed class FakeStoreVerifier(Store store) : IStoreVerifier
         Task.FromResult(request.Receipt.StartsWith("ok:")
             ? new VerifiedReceipt(request.Receipt[3..], request.Sku, 0.99m, "USD", DateTimeOffset.UtcNow)
             : null);
+
+    public Task<StoreTransaction?> LookUpAsync(Game game, string transactionId, CancellationToken ct) =>
+        Task.FromResult<StoreTransaction?>(new StoreTransaction(transactionId, "", transactionId.Contains("refunded")));
 }
 
 public static class HttpExtensions

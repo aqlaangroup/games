@@ -20,7 +20,8 @@ namespace Gahwit.Save
             [5] = AddUnlockCards,
             [6] = SplitNotifications,
             [7] = AddMemoryAssist,
-            [8] = AddRecipes
+            [8] = AddRecipes,
+            [9] = AddPurchases
         };
 
         public static JObject Upgrade(JObject raw, BalanceConfig config)
@@ -195,6 +196,21 @@ namespace Gahwit.Save
             if (recipes["pan"] == null) recipes["pan"] = new JArray();
             save["recipes"] = recipes;
             save["schemaVersion"] = 9;
+            return save;
+        }
+
+        // Version 10 (2026-10-31) keeps the purchases whose items are in the save, bought switches, and the day the
+        // rewarded-ad counts are for.
+        static JObject AddPurchases(JObject save, BalanceConfig config)
+        {
+            var purchases = save["purchases"] as JObject ?? new JObject();
+            if (purchases["applied"] == null) purchases["applied"] = new JArray();
+            if (purchases["entitlements"] == null) purchases["entitlements"] = new JArray();
+            save["purchases"] = purchases;
+            var daily = save["daily"] as JObject ?? new JObject();
+            if (daily["adsWatched"] == null) daily["adsWatched"] = new JObject();
+            save["daily"] = daily;
+            save["schemaVersion"] = 10;
             return save;
         }
 

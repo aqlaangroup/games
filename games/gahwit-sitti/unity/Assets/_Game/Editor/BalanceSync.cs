@@ -6,13 +6,18 @@ using UnityEngine;
 
 namespace Gahwit.EditorTools
 {
-    // design/balance.json is the single source of truth. The game reads a copy in Resources/Config,
-    // refreshed when the Editor loads, before every build, and from the menu.
+    // design/balance.json is the single source of truth for numbers, and game.json for the products the shop sells
+    // (the platform registers the same file). The game reads copies in Resources/Config, refreshed when the Editor
+    // loads, before every build, and from the menu.
     public sealed class BalanceSync : IPreprocessBuildWithReport
     {
-        const string Target = "Assets/Content/Resources/Config/balance.json";
+        static readonly (string source, string target)[] Files =
+        {
+            ("../../design/balance.json", "Assets/Content/Resources/Config/balance.json"),
+            ("../../game.json", "Assets/Content/Resources/Config/game.json"),
+        };
 
-        static string Source => Path.GetFullPath(Path.Combine(Application.dataPath, "../../design/balance.json"));
+        static string Full(string relative) => Path.GetFullPath(Path.Combine(Application.dataPath, relative));
 
         public int callbackOrder => 0;
 
@@ -24,18 +29,25 @@ namespace Gahwit.EditorTools
         [MenuItem("Gahwit Sitti/Sync balance.json")]
         public static void Sync()
         {
-            if (!File.Exists(Source))
+            foreach (var (source, target) in Files)
             {
-                Debug.LogError($"[BalanceSync] Not found: {Source}");
-                return;
+                if (!File.Exists(Full(source)))
+                {
+                    Debug.LogError($"[BalanceSync] Not found: {Full(source)}");
+                    continue;
+                }
+                Directory.CreateDirectory(Path.GetDirectoryName(target));
+                File.Copy(Full(source), target, true);
+                AssetDatabase.ImportAsset(target);
             }
-            Directory.CreateDirectory(Path.GetDirectoryName(Target));
-            File.Copy(Source, Target, true);
-            AssetDatabase.ImportAsset(Target);
-            Debug.Log("[BalanceSync] Copied design/balance.json into the game.");
+            Debug.Log("[BalanceSync] Copied design/balance.json and game.json into the game.");
         }
 
-        static bool IsStale() =>
-            File.Exists(Source) && (!File.Exists(Target) || File.ReadAllText(Source) != File.ReadAllText(Target));
+        static bool IsStale()
+        {
+            foreach (var (source, target) in Files)
+                if (File.Exists(Full(source)) && (!File.Exists(target) || File.ReadAllText(Full(source)) != File.ReadAllText(target))) return true;
+            return false;
+        }
     }
 }

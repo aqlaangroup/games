@@ -1547,6 +1547,182 @@ MonoBehaviour:
     m_Key: recipe.morning_majlis
     m_Metadata:
       m_Items: []
+  - m_Id: 135007824764928
+    m_Key: shop.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930752
+    m_Key: shop.note
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930753
+    m_Key: shop.restore
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930754
+    m_Key: shop.owned
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930755
+    m_Key: shop.loading
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930756
+    m_Key: shop.notReady
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930757
+    m_Key: shop.gems
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930758
+    m_Key: shop.energy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930759
+    m_Key: shop.generator
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930760
+    m_Key: shop.pass
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930761
+    m_Key: shop.decorSet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930762
+    m_Key: shop.outfit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930763
+    m_Key: shop.later
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930764
+    m_Key: shop.result.done
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930765
+    m_Key: shop.result.offline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930766
+    m_Key: shop.result.failed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930767
+    m_Key: shop.result.unavailable
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930768
+    m_Key: shop.result.notenoughgems
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930769
+    m_Key: shop.restored.done
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930770
+    m_Key: shop.restored.offline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930771
+    m_Key: shop.restored.failed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930772
+    m_Key: shop.restored.unavailable
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930773
+    m_Key: shop.restored.cancelled
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930774
+    m_Key: shop.restored.notenoughgems
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930775
+    m_Key: product.gs.starter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930776
+    m_Key: product.gs.gems.s
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930777
+    m_Key: product.gs.gems.m
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930778
+    m_Key: product.gs.gems.l
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930779
+    m_Key: product.gs.gems.xl
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930780
+    m_Key: product.gs.gems.xxl
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930781
+    m_Key: product.gs.gems.max
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930782
+    m_Key: product.gs.energy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930783
+    m_Key: product.gs.decor.eid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930784
+    m_Key: product.gs.pass
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930785
+    m_Key: ads.energy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930786
+    m_Key: ads.bubble
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930787
+    m_Key: ads.left
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930788
+    m_Key: ads.none
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930789
+    m_Key: ads.later
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930790
+    m_Key: ads.thanks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930791
+    m_Key: ads.double
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930792
+    m_Key: ads.doubled
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930793
+    m_Key: unlock.shop.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930794
+    m_Key: unlock.shop.text
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -503,6 +503,7 @@
     "minTouchTargetPt": 44,
     "panelSlideSeconds": 0.35,
     "smallestPhoneWidthPt": 360,
+    "adOfferSeconds": 6,
     "graphics": {
       "autoLowAtOrBelowMb": 3072,
       "lowFps": 30,
@@ -513,7 +514,7 @@
       "lowEnergy": 5,
       "nearlyFullEmptySquares": 8
     },
-    "notes": "COMPLETE_SPEC.md sections 5 and 8; CLAUDE.md for touch targets. kitchenHints say when the kitchen shows 'low energy' and 'board nearly full'. Large text multiplies every size by largeTextScale and lifts anything under minTextPt to it, measured on the narrowest phone (smallestPhoneWidthPt, proposed 2026-10-31). graphics: 'auto' picks low on phones with autoLowAtOrBelowMb of memory or less (the 3 GB phone in CLAUDE.md); low runs at lowFps without shadows, high at highFps with them (CLAUDE.md performance targets). After perfSampleSeconds of play (proposed) the game sends one 'perf' event: average fps and the share of frames slower than lowFps."
+    "notes": "COMPLETE_SPEC.md sections 5 and 8; CLAUDE.md for touch targets. kitchenHints say when the kitchen shows 'low energy' and 'board nearly full'. Large text multiplies every size by largeTextScale and lifts anything under minTextPt to it, measured on the narrowest phone (smallestPhoneWidthPt, proposed 2026-10-31). graphics: 'auto' picks low on phones with autoLowAtOrBelowMb of memory or less (the 3 GB phone in CLAUDE.md); low runs at lowFps without shadows, high at highFps with them (CLAUDE.md performance targets). adOfferSeconds (proposed 2026-10-31): how long the 'double the coins with an ad' button stays after serving. After perfSampleSeconds of play (proposed) the game sends one 'perf' event: average fps and the share of frames slower than lowFps."
   },
   "chapters": [
     {

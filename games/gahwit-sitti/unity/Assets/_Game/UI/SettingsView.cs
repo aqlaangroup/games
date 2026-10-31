@@ -63,6 +63,7 @@ namespace Gahwit.UI
             LanguageRow(column);
             linkValue = LinkRow(column, Loc.T("settings.link"), Palette.Ink, LinkAccount);
             LinkRow(column, Loc.T("settings.help"), Palette.Ink, help.Show);
+            LinkRow(column, Loc.T("shop.restore"), Palette.Ink, RestorePurchases);
             LegalRow(column);
             LinkRow(column, Loc.T("settings.delete"), Palette.Hex("#9B2C3F"), AskDelete);
 
@@ -225,6 +226,14 @@ namespace Gahwit.UI
                 var chip = UiKit.Button(chips, label, label, Palette.Cream, Palette.Teal, 24, open, 24);
                 chip.gameObject.AddComponent<LayoutElement>().flexibleWidth = 1;
             }
+        }
+
+        public System.Func<System.Threading.Tasks.Task<ActionResult>> Restore; // set once the shop exists (missing/17)
+
+        async void RestorePurchases()
+        {
+            var result = Restore == null ? ActionResult.Unavailable : await Restore();
+            toast.Show(Loc.T("shop.restored." + result.ToString().ToLowerInvariant()));
         }
 
         async void LinkAccount()

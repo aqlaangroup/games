@@ -38,6 +38,10 @@ namespace Gahwit.Merge
         public List<string> RecipesFound = new List<string>();
         public int RecipeWrongStreak; // wrong pairs in a row; a hint shows after a few (Recipes.RecipeBook)
         public List<Item> Pan = new List<Item>(); // up to two items waiting in the cooking pan
+        public string AdsDate;    // the local day the ad counts below are for
+        public Dictionary<string, int> AdsWatched = new Dictionary<string, int>(); // placement → ads watched that day
+        public List<string> PurchasesApplied = new List<string>(); // platform purchase ids whose items are in this save
+        public List<string> Entitlements = new List<string>();     // bought switches such as passPremium (missing/18)
         public ulong Rng;
     }
 

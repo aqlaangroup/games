@@ -35,6 +35,74 @@ public class PurchaseTests(PlatformFactory api)
         Assert.Equal(HttpStatusCode.BadRequest, unknown.StatusCode);
     }
 
+    static string Jws(object payload) =>
+        $"e30.{Platform.Api.Stores.Jws.Base64Url(System.Text.Encoding.UTF8.GetBytes(System.Text.Json.JsonSerializer.Serialize(payload)))}.sig";
+
+    [Fact]
+    public async Task OnlyGemsGoToTheWalletAndOtherGrantsComeBackAsItems()
+    {
+        var client = api.Client((await api.Guest()).Str("accessToken"));
+        var bought = await (await client.PostAsJsonAsync($"/games/{GameA}/purchases/verify", new { store = "apple", sku = "decor", receipt = $"ok:d-{Guid.NewGuid():N}" })).Json();
+        Assert.Equal("eid", bought.GetProperty("items").GetProperty("decorSet").GetString());
+        Assert.False(bought.GetProperty("items").TryGetProperty("gems", out _));
+        Assert.Equal(60, bought.GetProperty("wallet").GetProperty("gems").GetInt64());
+        Assert.Equal(1, bought.GetProperty("wallet").EnumerateObject().Count());
+
+        var list = await (await client.GetAsync($"/games/{GameA}/players/me/purchases")).Json();
+        Assert.Equal("decor", list[0].Str("sku"));
+        Assert.Equal(bought.Str("purchaseId"), list[0].Str("purchaseId"));
+    }
+
+    [Fact]
+    public async Task ANonConsumableRestoresItsItemsToANewAccountButNotItsGems()
+    {
+        string receipt = $"ok:r-{Guid.NewGuid():N}";
+        var first = api.Client((await api.Guest()).Str("accessToken"));
+        (await first.PostAsJsonAsync($"/games/{GameA}/purchases/verify", new { store = "apple", sku = "decor", receipt })).EnsureSuccessStatusCode();
+
+        var second = api.Client((await api.Guest()).Str("accessToken"));
+        var restored = await (await second.PostAsJsonAsync($"/games/{GameA}/purchases/verify", new { store = "apple", sku = "decor", receipt })).Json();
+        Assert.True(restored.GetProperty("alreadyGranted").GetBoolean());
+        Assert.Equal("eid", restored.GetProperty("items").GetProperty("decorSet").GetString());
+        Assert.False(restored.GetProperty("wallet").TryGetProperty("gems", out _));
+    }
+
+    [Fact]
+    public async Task AnAppleRefundNotificationTakesTheGemsBackOnce()
+    {
+        var client = api.Client((await api.Guest()).Str("accessToken"));
+        string id = $"refunded-{Guid.NewGuid():N}";
+        (await client.PostAsJsonAsync($"/games/{GameA}/purchases/verify", new { store = "apple", sku = "gems.s", receipt = $"ok:{id}" })).EnsureSuccessStatusCode();
+        // Spend some first: the refund takes what's left.
+        (await client.PostAsJsonAsync($"/games/{GameA}/players/me/spend", new { item = "energyRefill", requestId = "r-" + id })).EnsureSuccessStatusCode();
+
+        var notification = new { signedPayload = Jws(new { notificationType = "REFUND", data = new { signedTransactionInfo = Jws(new { transactionId = id }) } }) };
+        for (int i = 0; i < 2; i++)
+            Assert.Equal(HttpStatusCode.OK, (await api.Client().PostAsJsonAsync($"/games/{GameA}/stores/apple/notifications", notification)).StatusCode);
+
+        var wallet = (await (await client.GetAsync($"/games/{GameA}/players/me/wallet")).Json()).GetProperty("wallet");
+        Assert.Equal(0, wallet.TryGetProperty("gems", out var gems) ? gems.GetInt64() : 0);
+        var again = await client.PostAsJsonAsync($"/games/{GameA}/purchases/verify", new { store = "apple", sku = "gems.s", receipt = $"ok:{id}" });
+        Assert.Equal(HttpStatusCode.BadRequest, again.StatusCode);
+        Assert.Equal("refunded", (await again.Json()).Str("error"));
+    }
+
+    [Fact]
+    public async Task GoogleNotificationsNeedTheTokenAndVoidedPurchasesAreRefunded()
+    {
+        var client = api.Client((await api.Guest()).Str("accessToken"));
+        string order = $"GPA.{Guid.NewGuid():N}";
+        (await client.PostAsJsonAsync($"/games/{GameA}/purchases/verify", new { store = "google", sku = "gems.s", receipt = $"ok:{order}" })).EnsureSuccessStatusCode();
+        string data = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(
+            System.Text.Json.JsonSerializer.Serialize(new { voidedPurchaseNotification = new { orderId = order, purchaseToken = "t" } })));
+        var push = new { message = new { data } };
+
+        Assert.Equal(HttpStatusCode.Unauthorized, (await api.Client().PostAsJsonAsync($"/games/{GameA}/stores/google/notifications?token=wrong", push)).StatusCode);
+        Assert.Equal(HttpStatusCode.OK, (await api.Client().PostAsJsonAsync($"/games/{GameA}/stores/google/notifications?token={GooglePushToken}", push)).StatusCode);
+        var wallet = (await (await client.GetAsync($"/games/{GameA}/players/me/wallet")).Json()).GetProperty("wallet");
+        Assert.Equal(0, wallet.TryGetProperty("gems", out var gems) ? gems.GetInt64() : 0);
+    }
+
     [Fact]
     public async Task ServerTimeIsGivenInMilliseconds()
     {

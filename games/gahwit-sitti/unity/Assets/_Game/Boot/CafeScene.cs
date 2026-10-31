@@ -132,6 +132,7 @@ namespace Gahwit.Boot
             nextSync = Time.unscaledTime + game.Config.Saves.CloudEverySeconds; // COMPLETE_SPEC.md section 9
             gems = new GemShop(services.Platform, game);
             ui.SetGems(() => gems.Buy("storageSlot:" + game.NextStorageSlot));
+            WireShopAndAds();
             ui.OutOfEnergy = ShowOutOfEnergy;
             ui.BubbleTapped = ShowBubble;
             unlocks = new Unlocks(game, Newtonsoft.Json.Linq.JObject.Parse(Resources.Load<TextAsset>("Content/unlock_cards").text)["cards"]
@@ -627,7 +628,7 @@ namespace Gahwit.Boot
                     if (result == ActionResult.Done) CountRefill();
                     ui.Toast.Show(Loc.T("gems." + result.ToString().ToLowerInvariant()));
                 })),
-                new PromptView.Choice { Label = Loc.T("ads.soon"), Color = Palette.Muted, Enabled = false },
+                AdChoice(AdPlacement.Energy, Loc.T("ads.energy", game.Config.Energy.RewardedAdAmount), () => ui.Toast.Show(Loc.T("ads.thanks"))),
                 PromptView.Quiet(Loc.T("common.close"))
             });
         }
@@ -650,9 +651,75 @@ namespace Gahwit.Boot
                     var result = await gems.Buy($"bubble:{offer.Level}:{offer.Chain}");
                     ui.Toast.Show(Loc.T("gems." + result.ToString().ToLowerInvariant()));
                 })),
-                new PromptView.Choice { Label = Loc.T("ads.soon"), Color = Palette.Muted, Enabled = false },
+                AdChoice(AdPlacement.Bubble, Loc.T("ads.bubble"), () => ui.Toast.Show(Loc.T("ads.thanks"))),
                 PromptView.Quiet(Loc.T("bubble.no"), game.LetBubbleGo)
             });
+        }
+
+        // ---------- Shop and rewarded ads (missing/17) ----------
+
+        PurchaseService purchases;
+        IAds ads;
+
+        // The player's local day, from trusted time: rewarded-ad caps count per day.
+        string Today => DateTimeOffset.FromUnixTimeMilliseconds(time.NowMs).ToLocalTime().ToString("yyyy-MM-dd");
+
+        void WireShopAndAds()
+        {
+            var catalogue = PurchaseService.Catalogue();
+#if GAHWIT_IAP && !UNITY_EDITOR
+            IStore store = new UnityIapStore();
+#elif UNITY_EDITOR
+            IStore store = new EditorTestStore(PurchaseService.UsdTiers());
+#else
+            IStore store = new NoStore(); // Unity IAP isn't installed yet (it needs a Unity Hub sign-in)
+#endif
+            purchases = new PurchaseService(store, Services.Current.Platform, game, catalogue, (key, value) =>
+            {
+                // Decor sets and outfits have no content yet (missing/13): kept as entitlements so nothing is lost.
+                string entitlement = key + ":" + value;
+                if (!game.State.Entitlements.Contains(entitlement)) game.State.Entitlements.Add(entitlement);
+                Debug.LogWarning($"[Store] {entitlement} is owned but has no content yet.");
+            });
+            purchases.Finished += (sku, result) => Track("purchase", "sku", sku, "result", result.ToString());
+            ui.SetShop(purchases, purchases.Restore);
+            Run(purchases.Start);
+
+#if UNITY_EDITOR
+            ads = new EditorTestAds();
+#else
+            ads = new NoAds(); // LevelPlay comes with the publisher's account (missing/17)
+#endif
+            ads.Personalised = account.PersonalisedAdsAllowed;
+            // Doubling a served order's coins: offered for a few seconds after serving.
+            game.OrderServed += order =>
+            {
+                if (order.Coins > 0 && ads.Ready && game.CanWatchAd(AdPlacement.DoubleCoins, Today))
+                    ui.OfferAd(Loc.T("ads.double", order.Coins), () => Run(async () =>
+                    {
+                        if (await ads.Show("doubleCoins") && game.RewardAd(AdPlacement.DoubleCoins, Today, order.Coins))
+                            ui.Toast.Show(Loc.T("ads.doubled", order.Coins));
+                    }), game.Config.Ui.AdOfferSeconds);
+            };
+        }
+
+        // A rewarded-ad button for a card: shown only when an ad is ready and today's cap isn't reached.
+        PromptView.Choice AdChoice(AdPlacement placement, string label, Action thanks)
+        {
+            bool can = ads != null && ads.Ready && game.CanWatchAd(placement, Today);
+            return new PromptView.Choice
+            {
+                Label = can ? label + " " + Loc.T("ads.left", game.AdsLeft(placement, Today)) : game.AdsOpen ? Loc.T("ads.none") : Loc.T("ads.later", game.Config.Unlocks.NoShopOrAdsBeforeLevel),
+                Color = can ? Palette.Teal : Palette.Muted,
+                Enabled = can,
+                Act = () => Run(async () =>
+                {
+                    Track("ad_offer", "placement", Game.Key(placement));
+                    if (!await ads.Show(Game.Key(placement))) return;
+                    Track("ad_watched", "placement", Game.Key(placement));
+                    if (game.RewardAd(placement, Today)) thanks();
+                })
+            };
         }
 
         // The free-space offer (GAME_SYSTEMS.md section 2): after a chapter, or after a long time away.

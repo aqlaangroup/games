@@ -2,6 +2,26 @@
 
 Decisions and known gaps. Newest first. Read this at the start of each session (`/CLAUDE.md`).
 
+## 2026-10-31: purchases, shop, restore, refunds and rewarded ads (missing/17)
+
+- **Platform** (`/platform`, 8 new tests, 56 in all):
+  - **Apple:** `AppleStoreVerifier` asks the App Store Server API for the transaction id the game sends, production first and then the sandbox, with a short ES256 token from the in-app purchase key. It accepts only the right bundle id and product, and nothing Apple has revoked.
+  - **Google:** `GooglePlayVerifier` asks the Play Developer API for the purchase token with a service-account token, accepts only completed purchases, and acknowledges them.
+  - The keys come from configuration (`Stores:Apple`, `Stores:Google`), never the repo. Without them a store refuses every receipt.
+  - **Refunds:** `/games/{slug}/stores/apple/notifications` asks Apple about the transaction named, and `/games/{slug}/stores/google/notifications` (with its secret token) takes voided purchases. A refund marks the purchase and takes its gems back, never below zero; the ledger notes any shortfall.
+  - **Only gems go in the wallet.** Before this, a product's `energy` would have become a wallet currency. Now the reply returns everything else as items with a purchase id, and `GET /players/me/purchases` lists them.
+  - **Restore:** a non-consumable sent again from another account brings its items, not its gems.
+  - **On a desk,** `Stores:AllowDevReceipts` (Development only) lets the Editor's test store buy with `dev:` receipts.
+- **Game:**
+  - `PurchaseService` runs the flow: the store says paid, the platform checks, the game applies items once per purchase id and shows the new gems, and only then is the store transaction finished. An unconfirmed purchase is sent again on the next launch.
+  - **Unity IAP couldn't be installed:** Unity's package server asks for a Unity Hub sign-in. `UnityIapStore` is written for Unity IAP 5 behind `GAHWIT_IAP`, which the Boot assembly defines once the package is present. Until then the Editor uses `EditorTestStore` and phones `NoStore`.
+  - **The shop** opens from the HUD's gems from level 3. It lists every product's exact contents from `game.json` (now copied into the game by `BalanceSync`) with the store's own price, the starter pack first until bought, and Restore purchases. Restore is in Settings too.
+  - **Rewarded ads** (`Game.Ads.cs`, tested): +25 energy from the out-of-energy card, a bubble for an ad, and "double +N with an ad" for 6 s after serving (`ui.adOfferSeconds`, proposed). Each placement counts its own daily cap (5, 3, 2) per local day, none before level 3. Personalised ads are off for under-13s and unknown ages. The ad network is LevelPlay once its account exists; the Editor plays a test ad.
+  - **Save schema v10:** `purchases.applied`, `purchases.entitlements` and `daily.adsDate`, with a migration test.
+- **Checked in the Editor:** buying the starter pack against the local platform gave 80 gems from the platform, and the game added +200 energy and a coffee-tin copy once.
+- **Decisions** are in GAME_SYSTEMS.md section 12: the pass is a one-off purchase per 28-day season; refunds; restore; the starter pack; ads.
+- **Still missing:** see "Still open" in missing/17. That covers the Hub sign-in for Unity IAP, the store keys and products, sandbox tests, the LevelPlay account, and the Eid set's content.
+
 ## 2026-10-31: recipes (missing/10)
 
 - **Content:** 20 recipes in `Content/Resources/Content/recipes.json`, each two items from different chains, in any order. They run from coffee + sweets in chapter 1 to dairy in chapter 7; `two_cities` is the spec's example (Saudi cup + coffee with cardamom). 5 are marked as story-clue recipes. The pairs and names are proposed; the clue texts wait for the story bible (11).

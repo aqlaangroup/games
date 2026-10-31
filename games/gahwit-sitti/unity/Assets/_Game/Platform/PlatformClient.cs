@@ -158,6 +158,14 @@ namespace Gahwit.Platform
         public Task<Reply<JObject>> Spend(string item, string requestId) =>
             Call<JObject>("POST", "/players/me/spend", new JObject { ["item"] = item, ["requestId"] = requestId });
 
+        // A store receipt for the platform to check with Apple or Google (missing/17). The reply's items apply once per
+        // purchaseId; its wallet carries the gems. Sent again, it returns the items without granting twice.
+        public Task<Reply<JObject>> VerifyPurchase(string store, string sku, string receipt) =>
+            Call<JObject>("POST", "/purchases/verify", new JObject { ["store"] = store, ["sku"] = sku, ["receipt"] = receipt });
+
+        // This player's purchases with their items, for restoring after a reinstall and hiding once-only offers.
+        public Task<Reply<JArray>> Purchases() => Call<JArray>("GET", "/players/me/purchases", null);
+
         public Task<Reply<JObject>> SendEvents(JArray events) =>
             Call<JObject>("POST", "/players/me/events", new JObject
             {

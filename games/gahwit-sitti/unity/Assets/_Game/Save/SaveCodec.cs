@@ -83,6 +83,10 @@ namespace Gahwit.Save
             into.Recipes["found"] = new JArray(state.RecipesFound);
             into.Recipes["wrongStreak"] = state.RecipeWrongStreak;
             into.Recipes["pan"] = new JArray(state.Pan.Select(p => new JObject { ["chain"] = p.Chain, ["level"] = p.Level }));
+            into.Daily["adsDate"] = state.AdsDate;
+            into.Daily["adsWatched"] = JObject.FromObject(state.AdsWatched);
+            into.Purchases["applied"] = new JArray(state.PurchasesApplied);
+            into.Purchases["entitlements"] = new JArray(state.Entitlements);
             into.Cafe.Placed = new JArray(state.PlacedDecor.Select(p => new JObject
                 { ["id"] = p.Id, ["x"] = p.X, ["z"] = p.Z, ["rot"] = p.Rot * 90 }));
             foreach (var regular in state.Regulars)
@@ -126,6 +130,11 @@ namespace Gahwit.Save
                     .ToDictionary(p => int.Parse(p.Name), p => (int)p.Value) ?? new Dictionary<int, int>(),
                 RecipesFound = data.Recipes["found"]?.Values<string>().ToList() ?? new List<string>(),
                 RecipeWrongStreak = data.Recipes.Value<int?>("wrongStreak") ?? 0,
+                AdsDate = data.Daily.Value<string>("adsDate"),
+                AdsWatched = (data.Daily["adsWatched"] as JObject)?.Properties().Where(p => p.Value.Type == JTokenType.Integer)
+                    .ToDictionary(p => p.Name, p => (int)p.Value) ?? new Dictionary<string, int>(),
+                PurchasesApplied = data.Purchases["applied"]?.Values<string>().ToList() ?? new List<string>(),
+                Entitlements = data.Purchases["entitlements"]?.Values<string>().ToList() ?? new List<string>(),
                 Pan = (data.Recipes["pan"] as JArray)?.OfType<JObject>()
                     .Where(p => p.Value<string>("chain") != null && config.Chains.ContainsKey(p.Value<string>("chain")))
                     .Select(p => new Item(p.Value<string>("chain"), p.Value<int>("level"))).ToList() ?? new List<Item>(),

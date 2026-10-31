@@ -19,6 +19,7 @@ namespace Gahwit.UI
         float nextTimerUpdate;
 
         public RectTransform CoinsRect { get; private set; } // where served coins fly to
+        public Action GemsTapped;
 
         public void Init(Game game, Func<long> now)
         {
@@ -54,6 +55,11 @@ namespace Gahwit.UI
             var gemPill = Pill("Gems", 180);
             Badge(gemPill, UiSprites.Gem, Palette.Lilac);
             gems = Value(gemPill, 34);
+            // Tapping the gems opens the shop. The pill is shorter than a touch target, so an invisible area of the
+            // full size sits over it.
+            var tap = UiKit.Rect(gemPill, "Tap").Pin(new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(180, UiKit.MinTouch));
+            tap.gameObject.AddComponent<Image>().color = Color.clear;
+            tap.gameObject.AddComponent<Button>().onClick.AddListener(() => GemsTapped?.Invoke());
         }
 
         RectTransform Pill(string name, float width)

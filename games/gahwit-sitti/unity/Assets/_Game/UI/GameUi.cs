@@ -51,7 +51,7 @@ namespace Gahwit.UI
                                  || AgeGate.IsOpen || UpdateRequired.gameObject.activeSelf || Letter.IsOpen || Memory.IsPlaying
                                  || decorShop != null && decorShop.IsOpen || wardrobe != null && wardrobe.IsOpen
                                  || Prompt.IsOpen || Storage != null && Storage.IsOpen
-                                 || Pan != null && Pan.IsOpen || RecipeBook != null && RecipeBook.IsOpen;
+                                 || Pan != null && Pan.IsOpen || RecipeBook != null && RecipeBook.IsOpen || Shop != null && Shop.IsOpen;
 
         public static GameUi Create(Game game, CafeCamera cafeCamera, CafeRoom room, Func<long> now, Action openDrawer, IAccountUi account,
             TutorialFlow tutorial, bool canSkipTutorial)
@@ -249,6 +249,49 @@ namespace Gahwit.UI
         }
 
         public PanView Pan { get; private set; }
+        public ShopView Shop { get; private set; }
+        Button adOffer;
+        float adOfferUntil;
+
+        // The shop (missing/17): from the HUD's gems, from the shop's level.
+        public void SetShop(IShopUi shop, System.Func<System.Threading.Tasks.Task<ActionResult>> restore)
+        {
+            Shop = UiKit.Rect(transform.Find("SafeArea"), "Shop").Stretch().gameObject.AddComponent<ShopView>();
+            Shop.Init(shop, game, Toast);
+            hud.GemsTapped = () =>
+            {
+                if (game.AdsOpen) Shop.Show();
+                else Toast.Show(Loc.T("shop.later", game.Config.Unlocks.NoShopOrAdsBeforeLevel));
+            };
+            Settings.Restore = restore;
+            KeepOnTop();
+        }
+
+        // A short-lived offer over the screen, such as doubling a served order's coins with an ad.
+        public void OfferAd(string label, System.Action act, float seconds)
+        {
+            if (adOffer == null)
+            {
+                adOffer = UiKit.Button(transform.Find("SafeArea"), "AdOffer", "", Palette.Teal, Color.white, 28, null, 40);
+                ((RectTransform)adOffer.transform).Pin(new Vector2(0.5f, 1), new Vector2(0, -150), new Vector2(560, UiKit.MinTouch));
+            }
+            adOffer.onClick.RemoveAllListeners();
+            adOffer.onClick.AddListener(() => UiSound.Play("ui_tap"));
+            adOffer.onClick.AddListener(() =>
+            {
+                adOffer.gameObject.SetActive(false);
+                act();
+            });
+            adOffer.Label().text = label;
+            adOffer.gameObject.SetActive(true);
+            adOffer.transform.SetAsLastSibling();
+            adOfferUntil = Time.unscaledTime + seconds;
+        }
+
+        void Update()
+        {
+            if (adOffer != null && adOffer.gameObject.activeSelf && Time.unscaledTime > adOfferUntil) adOffer.gameObject.SetActive(false);
+        }
         public RecipeBookView RecipeBook { get; private set; }
 
         public void SetWardrobe(WardrobeRules rules)

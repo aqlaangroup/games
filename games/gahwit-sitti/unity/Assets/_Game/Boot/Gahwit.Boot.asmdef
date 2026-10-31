@@ -16,7 +16,8 @@
         "Gahwit.Story",
         "Gahwit.Tutorial",
         "Gahwit.Cafe",
-        "Gahwit.UI"
+        "Gahwit.UI",
+        "Unity.Purchasing"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -25,6 +26,12 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.purchasing",
+            "expression": "5.0.0",
+            "define": "GAHWIT_IAP"
+        }
+    ],
     "noEngineReferences": false
 }

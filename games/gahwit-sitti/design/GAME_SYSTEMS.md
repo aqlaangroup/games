@@ -187,6 +187,14 @@ How the four player types compare:
 - Double an order's coins, 3 times a day.
 - Pop a bubble, 2 times a day.
 
+**Decided 2026-10-31 (missing/17):**
+- **Gems** are the only thing the platform's wallet holds. Every other thing a product gives (energy, a generator copy, a decor set, an outfit, the pass) comes back in the platform's reply as items, and the game applies them to its save once per purchase id (`purchases.applied` in the save).
+- **The season pass** is a one-off purchase for each 28-day season (a non-renewing subscription on Apple, a one-time product on Google), because Apple has no 28-day renewal period.
+- **Refunds** take back the purchase's gems, never below a zero balance; the ledger records any shortfall. Items already used (energy) stay; owned items stop counting once the purchase is marked refunded.
+- **Restore purchases** (Settings and the shop) asks the store to re-send what the store account owns and fills in items from the platform's purchase list. A non-consumable restored to a new account brings its items, not its gems.
+- **The starter pack** is hidden once bought; the stores can't block a second purchase, so the platform grants it if one happens.
+- **Ads:** Unity LevelPlay, once the publisher account exists. Ads give their rewards in the game (they aren't bought with money); the caps count per local day in the save. Personalised ads are off for players under 13 or whose age is unknown.
+
 ## 13. Live events
 
 Five templates, reused with new art and story each time:

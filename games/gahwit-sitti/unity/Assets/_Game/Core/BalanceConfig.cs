@@ -124,6 +124,7 @@ namespace Gahwit.Core
         public int RegenSeconds;
         public int StartingEnergy;
         public int RewardedAdAmount;
+        public int RewardedAdsPerDay;
         public GemRefillConfig GemRefill;
     }
 
@@ -171,6 +172,7 @@ namespace Gahwit.Core
         public float TwoItemOrderChance;
         public int TwoItemOrderFromLevel;
         public float CharacterOrderChance;
+        public int RewardedAdDoubleCoinsPerDay;
     }
 
     public sealed class ChapterConfig
@@ -205,6 +207,7 @@ namespace Gahwit.Core
         public Dictionary<string, List<string>> ByPlayerLevel;
         public Dictionary<string, List<string>> ByChapter;
         public int UnlockCardsPerSession;
+        public int NoShopOrAdsBeforeLevel;
 
         // The player level a feature opens at (balance.json unlocks), or 1 when it isn't listed.
         public int Level(string feature)
@@ -257,6 +260,7 @@ namespace Gahwit.Core
         public float MinTouchTargetPt;
         public float PanelSlideSeconds;
         public float SmallestPhoneWidthPt;
+        public float AdOfferSeconds;
         public GraphicsConfig Graphics;
         public KitchenHintsConfig KitchenHints;
     }

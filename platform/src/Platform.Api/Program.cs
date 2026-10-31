@@ -9,6 +9,7 @@ using Platform.Api.Auth;
 using Platform.Api.Data;
 using Platform.Api.Games;
 using Platform.Api.Players;
+using Platform.Api.Stores;
 using Platform.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,9 +36,25 @@ services.AddScoped<AccountPurger>();
 services.AddScoped<StaffAccounts>();
 services.AddHostedService<AccountPurgeService>();
 
-// Store verification is a stub that refuses every receipt until the real Apple and Google calls are added.
-services.AddSingleton<IStoreVerifier>(new NotConfiguredVerifier(Store.Apple));
-services.AddSingleton<IStoreVerifier>(new NotConfiguredVerifier(Store.Google));
+// Store checks: the App Store Server API and the Play Developer API, with keys from configuration (Stores:Apple,
+// Stores:Google; never the repo). A store without keys refuses every receipt.
+services.AddSingleton(sp => sp.GetRequiredService<IConfiguration>().GetSection("Stores:Apple").Get<AppleStoreOptions>() ?? new AppleStoreOptions());
+services.AddSingleton(sp => sp.GetRequiredService<IConfiguration>().GetSection("Stores:Google").Get<GooglePlayOptions>() ?? new GooglePlayOptions());
+services.AddHttpClient("apple-store");
+services.AddHttpClient("google-play");
+services.AddSingleton<IStoreVerifier>(sp => DevReceipts(sp, sp.GetRequiredService<AppleStoreOptions>().Configured
+    ? ActivatorUtilities.CreateInstance<AppleStoreVerifier>(sp)
+    : new NotConfiguredVerifier(Store.Apple)));
+services.AddSingleton<IStoreVerifier>(sp => DevReceipts(sp, sp.GetRequiredService<GooglePlayOptions>().Configured
+    ? ActivatorUtilities.CreateInstance<GooglePlayVerifier>(sp)
+    : new NotConfiguredVerifier(Store.Google)));
+
+// The Editor's test store, on a desk only (Stores:AllowDevReceipts in Development).
+static IStoreVerifier DevReceipts(IServiceProvider sp, IStoreVerifier verifier) =>
+    sp.GetRequiredService<IHostEnvironment>().IsDevelopment() && sp.GetRequiredService<IConfiguration>().GetValue<bool>("Stores:AllowDevReceipts")
+        ? new DevReceiptVerifier(verifier, sp.GetRequiredService<TimeProvider>())
+        : verifier;
+services.AddScoped<Refunds>();
 
 // Two kinds of access token: players (one game each) and staff.
 services.AddAuthentication().AddJwtBearer(AuthSchemes.Player).AddJwtBearer(AuthSchemes.Admin);
@@ -117,9 +134,7 @@ RewardEndpoints.Map(me);
 EventEndpoints.Map(me);
 PurchaseEndpoints.Map(signedIn);
 AdminEndpoints.MapGame(games);
-
-app.MapPost("/webhooks/apple", () => Results.Ok());   // TODO: App Store Server Notifications v2
-app.MapPost("/webhooks/google", () => Results.Ok());  // TODO: Real-time developer notifications
+StoreNotificationEndpoints.Map(games);
 
 app.Run();
 

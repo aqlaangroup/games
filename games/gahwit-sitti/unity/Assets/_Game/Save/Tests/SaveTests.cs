@@ -223,6 +223,29 @@ namespace Gahwit.Save.Tests
         }
 
         [Test]
+        public void AdCountsAndAppliedPurchasesRoundTripAndAVersionNineSaveGetsThem()
+        {
+            var time = new TimeService(new FakeClock(), null);
+            var state = PlayedState();
+            state.AdsDate = "2026-10-31";
+            state.AdsWatched["energy"] = 3;
+            state.PurchasesApplied.Add("p-1");
+            state.Entitlements.Add("passPremium");
+            var loaded = SaveService.FromJson(WriteJson(state, time), config, content, out _, out _);
+            Assert.AreEqual("2026-10-31", loaded.AdsDate);
+            Assert.AreEqual(3, loaded.AdsWatched["energy"]);
+            CollectionAssert.AreEqual(new[] { "p-1" }, loaded.PurchasesApplied);
+            CollectionAssert.AreEqual(new[] { "passPremium" }, loaded.Entitlements);
+
+            var v9 = JObject.Parse(WriteJson(PlayedState(), time));
+            v9["schemaVersion"] = 9;
+            v9.Remove("purchases");
+            SaveService.FromJson(v9.ToString(), config, content, out var data, out _);
+            Assert.AreEqual(SaveData.CurrentSchema, data.SchemaVersion);
+            Assert.AreEqual(0, ((JArray)data.Purchases["applied"]).Count);
+        }
+
+        [Test]
         public void SectionsTheGameDoesNotUseYetSurviveASave()
         {
             var time = new TimeService(new FakeClock(), null);

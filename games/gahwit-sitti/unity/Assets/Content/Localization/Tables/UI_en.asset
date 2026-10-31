@@ -1568,6 +1568,182 @@ MonoBehaviour:
     m_Localized: Morning majlis
     m_Metadata:
       m_Items: []
+  - m_Id: 135007824764928
+    m_Localized: Shop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930752
+    m_Localized: Every pack lists exactly what's in it. Nothing is random.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930753
+    m_Localized: Restore purchases
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930754
+    m_Localized: Owned
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930755
+    m_Localized: "\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930756
+    m_Localized: The store isn't available right now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930757
+    m_Localized: '{0} gems'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930758
+    m_Localized: +{0} energy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930759
+    m_Localized: A copy of {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930760
+    m_Localized: Premium season pass
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930761
+    m_Localized: "A decor set for the caf\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930762
+    m_Localized: An outfit for Salma
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930763
+    m_Localized: The shop opens at level {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930764
+    m_Localized: Thank you! Your purchase is in.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930765
+    m_Localized: No connection. The purchase completes when you're back online.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930766
+    m_Localized: We couldn't confirm the purchase yet; we'll try again.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930767
+    m_Localized: The store isn't available right now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930768
+    m_Localized: Not enough gems
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930769
+    m_Localized: Purchases restored
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930770
+    m_Localized: No connection. Try again later.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930771
+    m_Localized: Couldn't restore. Try again later.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930772
+    m_Localized: The store isn't available right now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930773
+    m_Localized: Cancelled
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930774
+    m_Localized: Couldn't restore. Try again later.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930775
+    m_Localized: Starter pack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930776
+    m_Localized: Handful of gems
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930777
+    m_Localized: Bag of gems
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930778
+    m_Localized: Box of gems
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930779
+    m_Localized: Big box of gems
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930780
+    m_Localized: Chest of gems
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930781
+    m_Localized: Teta's treasure
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930782
+    m_Localized: Energy pack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930783
+    m_Localized: Eid bundle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930784
+    m_Localized: Season pass
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930785
+    m_Localized: 'Watch an ad: +{0} energy'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930786
+    m_Localized: Watch an ad to take it
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930787
+    m_Localized: ({0} left today)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930788
+    m_Localized: No ads available right now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930789
+    m_Localized: Ads from level {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930790
+    m_Localized: Thanks! Your reward is in.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930791
+    m_Localized: Double +{0} with an ad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930792
+    m_Localized: +{0} more coins
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930793
+    m_Localized: The shop is open
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135007849930794
+    m_Localized: Tap the gems at the top. The starter pack is a one-time offer.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

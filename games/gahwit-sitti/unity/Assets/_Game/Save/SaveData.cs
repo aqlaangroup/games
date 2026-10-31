@@ -9,7 +9,7 @@ namespace Gahwit.Save
     // so a save written by a newer build loses nothing here.
     public sealed class SaveData
     {
-        public const int CurrentSchema = 9;
+        public const int CurrentSchema = 10;
 
         public int SchemaVersion = CurrentSchema;
         public long SaveVersion;
@@ -25,6 +25,7 @@ namespace Gahwit.Save
         public CafeSave Cafe = new CafeSave();
         public JObject Regulars = new JObject();
         public JObject Recipes = new JObject();
+        public JObject Purchases = new JObject(); // applied: platform purchase ids already in this save; entitlements
         public JObject Memories = new JObject();
         public JObject Wardrobe = new JObject();
         public JObject Events = new JObject();
